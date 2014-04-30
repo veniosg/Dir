@@ -123,7 +123,7 @@ public class AboutActivity extends BaseActivity {
         findViewById(R.id.beta).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openWebLink("http://google.com");
+                openWebLink("https://plus.google.com/communities/101972691290551957751");
             }
         });
         findViewById(R.id.contribute).setOnClickListener(new View.OnClickListener() {
