@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2014 George Venios
+ * Copyright (C) 2012 OpenIntents.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <!-- Light (default) theme -->
+    <style name="Theme.Dir.SolidBars" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <!-- Text and AB styling -->
+        <item name="android:textViewStyle">@style/Widget.Dir.TextViewStyle</item>
+        <item name="android:buttonStyle">@style/Widget.Dir.ButtonStyle</item>
+        <item name="android:editTextStyle">@style/Widget.Dir.EditTextStyle</item>
+        <item name="android:textAppearanceLarge">@style/TextAppearance.Dir.Large</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearance.Dir.Medium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearance.Dir.Small</item>
+        <item name="android:actionModeStyle">@style/Widget.Dir.ActionMode</item>
+        <item name="android:actionBarStyle">@style/Widget.Dir.ActionBar</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.Dir.Widget</item>
+        <item name="android:actionModeBackground">@drawable/cab_background_top_dir</item>
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_dir</item>
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Dir</item>
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_dir</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Dir</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Dir</item>
+
+        <!-- Coloring -->
+        <item name="android:editTextBackground">@drawable/dir_edit_text_holo_light</item>
+        <item name="android:textColorHighlight">#99210030</item>
+        <item name="android:textSelectHandleLeft">@drawable/dir_text_select_handle_left</item>
+        <item name="android:textSelectHandleRight">@drawable/dir_text_select_handle_right</item>
+        <item name="android:textSelectHandle">@drawable/dir_text_select_handle_middle</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/dir_btn_check_holo_light</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/dir_list_selector_holo_light</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/dir_activated_background_holo_light</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/dir_fastscroll_thumb_holo</item>
+
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+        <item name="pathBarBackground">@drawable/bg_pathbar</item>
+        <item name="pathBarItemBackground">@drawable/dir_btn_pathbar_skewed</item>
+
+        <item name="android:alertDialogTheme">@style/Theme.Dir.Dialog.Alert</item>
+    </style>
+
+    <style name="Theme.Dir" parent="@style/Theme.Dir.SolidBars" tools:ignore="ResourceCycle">
+    </style>
+
+    <style name="Theme.Dir.Dialog.Alert" parent="@android:style/Theme.Holo.Light.Dialog">
+        <item name="android:textAppearanceLarge">@style/TextAppearance.Dir.Large</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearance.Dir.Medium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearance.Dir.Small</item>
+        <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/dir_btn_check_holo_light</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/dir_list_selector_holo_light</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/dir_activated_background_holo_light</item>
+
+        <!-- Dialog thingies -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowTitleStyle">@style/DialogWindowTitle</item>
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+    </style>
+</resources>

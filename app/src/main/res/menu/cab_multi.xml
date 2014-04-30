@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2014 George Venios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_file_ops"
+        android:icon="@drawable/ic_action_edit"
+        android:title="@string/menu_file_ops">
+        <menu>
+            <group android:checkableBehavior="none">
+                <item
+                    android:id="@+id/menu_move"
+                    android:icon="@drawable/ic_action_cut"
+                    android:title="@string/menu_move" />
+                <item
+                    android:id="@+id/menu_copy"
+                    android:icon="@drawable/ic_action_copy"
+                    android:title="@string/menu_copy" />
+                <item
+                    android:id="@+id/menu_compress"
+                    android:icon="@drawable/ic_action_box"
+                    android:title="@string/menu_compress" />
+                <item
+                    android:id="@+id/menu_delete"
+                    android:icon="@drawable/ic_action_delete"
+                    android:title="@string/menu_delete" />
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/menu_send"
+        android:icon="@drawable/ic_action_share"
+        android:title="@string/menu_share" />
+    <item
+        android:id="@+id/menu_select_all"
+        android:showAsAction="never"
+        android:title="@string/menu_check_all" />
+
+</menu>

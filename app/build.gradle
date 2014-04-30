@@ -1,0 +1,68 @@
+apply plugin: 'android'
+
+project.archivesBaseName = "dir"
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.0.3"
+
+    def Properties versionProps = new Properties()
+    versionProps.load(new FileInputStream(file('version.properties')))
+
+    lintOptions {
+        abortOnError false
+    }
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 19
+        versionName versionProps['name']
+        versionCode versionProps['code'].toInteger()
+
+        testPackageName "com.veniosg.dir.test"
+        testInstrumentationRunner "android.test.InstrumentationTestRunner"
+    }
+
+    signingConfigs {
+        release {
+            def Properties localProps = new Properties()
+            localProps.load(new FileInputStream(file('../local.properties')))
+            def Properties keyProps = new Properties()
+            keyProps.load(new FileInputStream(file('../keystore.properties')))
+            storeFile file(keyProps["store"])
+            keyAlias keyProps["alias"]
+            storePassword keyProps["storePass"]
+            keyPassword keyProps["pass"]
+        }
+    }
+
+    buildTypes {
+        release {
+            runProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-rules.txt')
+            signingConfig signingConfigs.release
+        }
+
+        publicBeta.initWith(buildTypes.release)
+        publicBeta {
+            runProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-rules.txt')
+            versionNameSuffix " " + versionProps['betaNumber']
+        }
+
+        publicDebug.initWith(buildTypes.publicBeta)
+        publicDebug {
+            debuggable true
+            runProguard true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-rules.txt')
+            versionNameSuffix " Debug " + versionProps['betaNumber']
+        }
+    }
+}
+
+dependencies {
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.0.+'
+
+    compile 'com.android.support:support-v13:19.0.1'
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+}

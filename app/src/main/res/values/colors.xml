@@ -1,0 +1,16 @@
+<resources>
+    <color name="navbar_details">#CCFFFFFF</color>
+
+    <color name="dark">#210030</color>
+    <color name="light">#57007F</color>
+    <color name="accent">#D6D6D6</color>
+    <!-- Also used for list item icons -->
+    <color name="accent_sec">#222222</color>
+    <color name="window">#e4e4e4</color>
+    <color name="secondary_neutral">#808080</color>
+    <color name="side_pane_background">#CCC</color>
+
+    <color name="fade_covered">#BB222222</color>
+    <color name="fade_slider">#CCD6D6D6</color>
+
+</resources>

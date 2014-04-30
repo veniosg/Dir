@@ -1,13 +1,12 @@
-filemanager
+Dir
 ===========
 
-OpenIntents file manager, see [http://www.openintents.org/en/filemanager](http://www.openintents.org/en/filemanager)
-
-Requires requires distribution repositiory to build
+An Android file manager application. For more information see <insert page here>. 
 
 License
 --------
 
+	Copyright (C) 2014 George Venios
     Copyright (C) 2007-2014 OpenIntents.org
 
     Licensed under the Apache License, Version 2.0 (the "License");

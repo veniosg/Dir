@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="pathBarItemBackground" format="reference" />
+    <attr name="pathBarBackground" format="reference" />
+    <attr name="topBarBackground" format="reference" />
+    <attr name="listBackground" format="reference" />
+</resources>

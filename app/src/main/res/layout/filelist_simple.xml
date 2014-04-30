@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/browseRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.veniosg.dir.view.PathBar
+        android:id="@+id/pathbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="?attr/pathBarBackground" />
+
+    <com.veniosg.dir.view.ZoomView
+        android:id="@+id/zoomview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/window">
+
+        <include layout="@layout/filelist" />
+    </com.veniosg.dir.view.ZoomView>
+
+</LinearLayout>
