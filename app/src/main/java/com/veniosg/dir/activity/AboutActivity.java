@@ -64,7 +64,7 @@ public class AboutActivity extends BaseActivity {
         findViewById(R.id.dirTitle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openWebLink("market://details?id=com.veniosg.dir");     // TODO change to github page
+                openWebLink("http://veniosg.github.io/Dir/");
             }
         });
         findViewById(R.id.forkedFrom).setOnClickListener(new View.OnClickListener() {
@@ -82,7 +82,7 @@ public class AboutActivity extends BaseActivity {
         findViewById(R.id.thanksOifm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openWebLink("http://www.openintents.org/"); // TODO change to google+ group
+                openWebLink("http://www.openintents.org/");
             }
         });
         findViewById(R.id.gplay).setOnClickListener(new View.OnClickListener() {

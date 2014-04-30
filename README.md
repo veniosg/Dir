@@ -1,7 +1,8 @@
 Dir
 ===========
 
-An Android file manager application. For more information see <insert page here>. 
+For more information see http://veniosg.github.io/Dir/.
+
 
 License
 --------
