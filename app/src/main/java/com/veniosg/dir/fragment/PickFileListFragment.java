@@ -42,7 +42,7 @@ import com.veniosg.dir.view.PickBar.OnPickRequestedListener;
 
 import java.io.File;
 
-public class PickFileListFragment extends SimpleFileListFragment{
+public class PickFileListFragment extends SimpleFileListFragment {
 	private PickBar mPickBar;
 	
 	@Override
@@ -50,8 +50,15 @@ public class PickFileListFragment extends SimpleFileListFragment{
 			Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.filelist_pick, null);
 	}
-	
-	@Override
+
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.removeItem(R.id.menu_bookmark);
+    }
+
+    @Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		ViewFlipper modeSelector = (ViewFlipper) view.findViewById(R.id.modeSelector);

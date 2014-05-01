@@ -316,29 +316,33 @@ public class SimpleFileListFragment extends FileListFragment {
 
             case R.id.menu_bookmark:
                 mode.finish();
-                String path = fItem.getFile().getAbsolutePath();
-                Cursor query = getActivity().getContentResolver().query(BookmarkProvider.CONTENT_URI,
-                        new String[]{BookmarkProvider._ID},
-                        BookmarkProvider.PATH + "=?",
-                        new String[]{path},
-                        null);
-                if (!query.moveToFirst()) {
-                    ContentValues values = new ContentValues();
-                    values.put(BookmarkProvider.NAME, fItem.getName());
-                    values.put(BookmarkProvider.PATH, path);
-                    getActivity().getContentResolver().insert(BookmarkProvider.CONTENT_URI, values);
-
-                    Activity act = getActivity();
-                    if (act != null && act instanceof BookmarkListFragment.BookmarkContract) {
-                        ((BookmarkListFragment.BookmarkContract) act).showBookmarks();
-                    }
-                }
-                query.close();
+                addBookmark(fItem.getFile());
                 return true;
 
             default:
                 return false;
         }
+    }
+
+    private void addBookmark(File file) {
+        String path = file.getAbsolutePath();
+        Cursor query = getActivity().getContentResolver().query(BookmarkProvider.CONTENT_URI,
+                new String[]{BookmarkProvider._ID},
+                BookmarkProvider.PATH + "=?",
+                new String[]{path},
+                null);
+        if (!query.moveToFirst()) {
+            ContentValues values = new ContentValues();
+            values.put(BookmarkProvider.NAME, file.getName());
+            values.put(BookmarkProvider.PATH, path);
+            getActivity().getContentResolver().insert(BookmarkProvider.CONTENT_URI, values);
+
+            Activity act = getActivity();
+            if (act != null && act instanceof BookmarkListFragment.BookmarkContract) {
+                ((BookmarkListFragment.BookmarkContract) act).showBookmarks();
+            }
+        }
+        query.close();
     }
 
     @Override
@@ -546,6 +550,10 @@ public class SimpleFileListFragment extends FileListFragment {
 
             case R.id.menu_media_scan_exclude:
                 excludeFromMediaScan();
+                return true;
+
+            case R.id.menu_bookmark:
+                addBookmark(new File(getPath()));
                 return true;
 
             case R.id.menu_paste:
