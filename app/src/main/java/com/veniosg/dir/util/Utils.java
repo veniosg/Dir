@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -266,5 +267,19 @@ public abstract class Utils {
             result = 1;
         }
         return result;
+    }
+
+    /**
+     *
+     * @param mat The matrix to set this transformation on.
+     * @param b The darkness value. 1 means totally black, 0 means original color.
+     */
+    public static void setDrawableDarkness(ColorMatrix mat, float b) {
+        b = 1-b;
+        mat.set(new float[]{
+                b, 0, 0, 0, 0,
+                0, b, 0, 0, 0,
+                0, 0, b, 0, 0,
+                0, 0, 0, 1, 0});
     }
 }

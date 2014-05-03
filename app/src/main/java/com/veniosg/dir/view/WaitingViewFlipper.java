@@ -19,17 +19,15 @@ package com.veniosg.dir.view;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ViewFlipper;
+
+import com.veniosg.dir.AnimationConstants;
 
 /**
  * Children must always follow the PAGE_INDEX_* indexing.
  * @author George Venios
  */
 public class WaitingViewFlipper extends ViewFlipper {
-    private static final long DEFAULT_DELAY_MILLIS = 30;
-
     public static final int PAGE_INDEX_CONTENT = 0;
     public static final int PAGE_INDEX_LOADING = 1;
 
@@ -56,7 +54,7 @@ public class WaitingViewFlipper extends ViewFlipper {
                 WaitingViewFlipper.this.setDisplayedChild(child);
             }
         };
-        mWaiterHandler.postDelayed(mWaiter, DEFAULT_DELAY_MILLIS);
+        mWaiterHandler.postDelayed(mWaiter, AnimationConstants.ANIM_START_DELAY);
         mWaitingChild = child;
     }
 

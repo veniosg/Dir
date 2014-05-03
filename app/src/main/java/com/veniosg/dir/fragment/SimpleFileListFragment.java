@@ -59,10 +59,10 @@ import com.veniosg.dir.util.CopyHelper;
 import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.MediaScannerUtils;
 import com.veniosg.dir.util.Utils;
+import com.veniosg.dir.view.AnimatedFileListContainer;
 import com.veniosg.dir.view.PathBar;
 import com.veniosg.dir.view.PathBar.Mode;
 import com.veniosg.dir.view.PathBar.OnDirectoryChangedListener;
-import com.veniosg.dir.view.ZoomView;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,7 +84,7 @@ public class SimpleFileListFragment extends FileListFragment {
     private int lastItemWidth, lastItemHeight;
     private int lastTopInParent, lastLeftInParent;
     private PathBar mPathBar;
-    private ZoomView mZoomView;
+    private AnimatedFileListContainer mZoomView;
     private boolean mActionsEnabled = true;
     private int mNavigationDirection = 0;
 
@@ -359,7 +359,7 @@ public class SimpleFileListFragment extends FileListFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mPathBar = (PathBar) view.findViewById(R.id.pathbar);
-        mZoomView = (ZoomView) view.findViewById(R.id.zoomview);
+        mZoomView = (AnimatedFileListContainer) view.findViewById(R.id.zoomview);
 
         // Handle mPath differently if we restore state or just initially create the view.
         if (savedInstanceState == null)
@@ -483,7 +483,7 @@ public class SimpleFileListFragment extends FileListFragment {
 
         // Save required data for animation
         mNavigationDirection = Utils.getNavigationDirection(new File(getPath()), fileholder.getFile());
-        mZoomView.saveScreenshot();
+        mZoomView.setupAnimations(mNavigationDirection);
 
         // Load
         setPath(fileholder.getFile());
@@ -712,12 +712,12 @@ public class SimpleFileListFragment extends FileListFragment {
     protected void onLoadingChanged(boolean loading) {
         if (loading) {
             if (mNavigationDirection == 1) {
-                mZoomView.doZoomIn(lastItemWidth, lastItemHeight, lastLeftInParent, lastTopInParent);
+                mZoomView.animateFwd(lastItemWidth, lastItemHeight, lastLeftInParent, lastTopInParent);
             } else if (mNavigationDirection == -1) {
-                mZoomView.doZoomOut();
+                mZoomView.animateBwd();
             } else {
                 // Do not animate.
-                mZoomView.clearZoom();
+                mZoomView.clearAnimations();
             }
             clearLastTouchData();
         }

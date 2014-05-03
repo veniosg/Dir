@@ -43,6 +43,7 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.veniosg.dir.R;
+import com.veniosg.dir.AnimationConstants;
 import com.veniosg.dir.util.Logger;
 
 import java.io.File;
@@ -186,9 +187,9 @@ public class PathBar extends ViewFlipper {
 			mPathButtons.setLayoutParams(layoutParams);
 			mPathButtons.setNavigationBar(this);
             LayoutTransition transition = new LayoutTransition();
-            transition.setDuration(getContext().getResources()
-                    .getInteger(android.R.integer.config_shortAnimTime));
-            transition.setStartDelay(LayoutTransition.APPEARING, 0);
+            // Next two values should be the same as in AnimatedFileListContainer
+            transition.setDuration(AnimationConstants.ANIM_DURATION);
+            transition.setStartDelay(LayoutTransition.APPEARING, AnimationConstants.ANIM_START_DELAY);
             transition.setAnimator(LayoutTransition.APPEARING, createAppearingAnimator(transition));
             transition.setAnimator(LayoutTransition.DISAPPEARING, createDisappearingAnimator(transition));
             mPathButtons.setLayoutTransition(transition);

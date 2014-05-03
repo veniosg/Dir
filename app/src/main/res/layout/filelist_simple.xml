@@ -10,13 +10,13 @@
         android:layout_height="?android:attr/actionBarSize"
         android:background="?attr/pathBarBackground" />
 
-    <com.veniosg.dir.view.ZoomView
+    <com.veniosg.dir.view.AnimatedFileListContainer
         android:id="@+id/zoomview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/window">
 
         <include layout="@layout/filelist" />
-    </com.veniosg.dir.view.ZoomView>
+    </com.veniosg.dir.view.AnimatedFileListContainer>
 
 </LinearLayout>

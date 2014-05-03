@@ -117,8 +117,9 @@ class PathButtonLayout extends LinearLayout implements OnLongClickListener {
 			if ((cChar == '/' || i == path.length() - 1)) { // if folder name ended, or path string ended but not if we 're on root
                 if (cDir++ >= firstDir) {
                     // Add a button
-                    this.addView(PathButtonFactory.newButton(cPath.toString(),
-                            mPathBar));
+                    addView(PathButtonFactory.newButton(cPath.toString(), mPathBar));
+                    if(firstDir != 0) // if not on first draw
+                        getChildAt(getChildCount()-1).setAlpha(0); // So that it doesn't flash due to the animation's delay
                 }
 			}
 		}

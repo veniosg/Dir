@@ -1,13 +1,11 @@
 package com.veniosg.dir;
 
 import android.app.Application;
-import android.content.pm.ApplicationInfo;
 import android.view.ViewConfiguration;
 
 import com.veniosg.dir.misc.MimeTypes;
 import com.veniosg.dir.misc.ThumbnailLoader;
 import com.veniosg.dir.util.CopyHelper;
-import com.veniosg.dir.util.Logger;
 
 import java.lang.reflect.Field;
 
