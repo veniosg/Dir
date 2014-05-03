@@ -1,7 +1,7 @@
 Dir
 ===========
 
-A modern Android File Manager.
+A modern Android file manager.
 For more information see http://veniosg.github.io/Dir/.
 
 
