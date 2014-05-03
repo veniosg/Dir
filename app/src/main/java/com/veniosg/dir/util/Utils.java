@@ -223,28 +223,36 @@ public abstract class Utils {
 
     /**
      * Get the directory index where two files are intersected last.
-     * Effectively the last common directory in two files' paths.
+     * Effectively the last common directory in two files' paths. <br/>
+     * This method seems kind of silly, if anyone has a more elegant solution, please lmk.
      * @param file1
      * @param file2
      * @return
      */
-    public static int findDirDifference(File file1, File file2) {
+    public static int lastCommonDirectoryIndex(File file1, File file2) {
         String[] parts1 = file1.getAbsolutePath().split("/");
         String[] parts2 = file2.getAbsolutePath().split("/");
         int index = 0;
 
-        for (String oldPart : parts1) {
-            if(parts2.length <= index
-                    || !parts2[index].equals(oldPart)) {
+        for (String part1 : parts1) {
+            if (parts2.length <= index) {
+                // Reached the end of the second input.
+                // The first input was fully contained in it.
+                if(index > 0)
+                    // If the index has been incremented, it is now
+                    // outside the second path's bounds.
+                    index--;
+                // If it was 0, it meant that the second input was just the root.
                 break;
-            } else {
+            } else if (!part1.equals(parts2[index])) {
+                // Found a difference between the two paths.
+                // Last common directory was the previous one.
+                index--;
+                break;
+            } else if (!parts1[parts1.length-1].equals(part1)) {
+                // The end of the first path has not been reached.
                 index++;
             }
-        }
-
-        // Such the hackiness
-        if (index <= 1) {
-            index++;
         }
 
         return index;

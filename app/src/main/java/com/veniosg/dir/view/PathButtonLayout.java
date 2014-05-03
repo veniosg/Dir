@@ -79,22 +79,23 @@ class PathButtonLayout extends LinearLayout implements OnLongClickListener {
 	}
 
 	/**
-	 * Call to properly refresh this {@link PathButtonLayout}'s contents based on the fPath parameter.
+	 * Call to properly refresh this {@link PathButtonLayout}'s contents based on the newDir parameter.
 	 */
-	public void refresh(File oldDir, File fPath) {
+	public void refresh(File oldDir, File newDir) {
         // Remove only the non-matching buttons.
-        int firstDifferentDir;
+        int lastCommonDirectory;
         if(oldDir != null && getChildCount() > 0) {
-            firstDifferentDir = Utils.findDirDifference(oldDir, fPath);
+            lastCommonDirectory = Utils.lastCommonDirectoryIndex(oldDir, newDir);
         } else {
-            firstDifferentDir = 0;
+            // First layout, init by hand.
+            lastCommonDirectory = -1;
         }
-        for (int i = getChildCount()-1; i >= firstDifferentDir; i--) {
+        for (int i = getChildCount()-1; i > lastCommonDirectory; i--) {
             removeViewAt(i);
         }
 
 		// Reload buttons.
-		addPathButtons(firstDifferentDir, fPath);
+		addPathButtons(lastCommonDirectory+1, newDir);
 
 		// Redraw.
 		invalidate();
