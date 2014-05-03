@@ -102,7 +102,7 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_action_lab"
+                android:src="@drawable/ic_action_gplus"
                 android:contentDescription="@string/about_beta"
                 android:layout_weight="1.0" />
             <ImageButton
