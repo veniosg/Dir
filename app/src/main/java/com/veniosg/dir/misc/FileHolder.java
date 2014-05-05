@@ -105,9 +105,14 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 	}
 	
 	public CharSequence getFormattedModificationDate(){
-        return mContext.getString(R.string.modified) + " " +
-                DateUtils.getRelativeDateTimeString(mContext, mFile.lastModified(),
-                DateUtils.MINUTE_IN_MILLIS, DateUtils.YEAR_IN_MILLIS*10, 0);
+        // Catch weird exception reported on Play store.
+        if (mFile == null) {
+            return "";
+        } else {
+            return mContext.getString(R.string.modified) + " " +
+                    DateUtils.getRelativeDateTimeString(mContext, mFile.lastModified(),
+                            DateUtils.MINUTE_IN_MILLIS, DateUtils.YEAR_IN_MILLIS * 10, 0);
+        }
 	}
 	
 	/**
