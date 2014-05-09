@@ -50,8 +50,7 @@ public abstract class Utils {
             String mimeType = mimeTypes.getMimeType(f.getName());
 
             result.add(new FileHolder(f, mimeType,
-                    getIconForFile(mimeTypes, mimeType, f, context),
-                    context));
+                    getIconForFile(mimeTypes, mimeType, f, context)));
         }
 
         if (recursive && (maxLevel-- != 0)) {

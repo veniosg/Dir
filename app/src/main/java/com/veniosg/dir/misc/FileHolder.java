@@ -18,7 +18,6 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 	private File mFile;
 	private Drawable mIcon;
 	private String mMimeType = "";
-	private Context mContext;
 	private String mExtension;
 	
 	public FileHolder(File f, Context c){
@@ -27,7 +26,6 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
         MimeTypes mimeTypes = ((FileManagerApplication) c.getApplicationContext()).getMimeTypes();
 		mMimeType = mimeTypes.getMimeType(f.getName());
         mIcon = Utils.getIconForFile(mimeTypes, mMimeType, mFile, c);
-		mContext = c;
 	}
 
     public FileHolder(File f, Drawable i, Context c){
@@ -37,14 +35,12 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
         MimeTypes mimeTypes = ((FileManagerApplication) c.getApplicationContext()).getMimeTypes();
         mMimeType = mimeTypes.getMimeType(f.getName());
         mIcon = Utils.getIconForFile(mimeTypes, mMimeType, mFile, c);
-		mContext = c;
 	}
 
 	public FileHolder(File f, String m, Context c) {
 		mFile = f;
 		mExtension = parseExtension();
 		mMimeType = m;
-		mContext = c;
         MimeTypes mimeTypes = ((FileManagerApplication) c.getApplicationContext()).getMimeTypes();
         mIcon = Utils.getIconForFile(mimeTypes, mMimeType, mFile, c);
 	}
@@ -52,12 +48,11 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 	/**
 	 * Fastest constructor as it takes everything ready.
 	 */
-	public FileHolder(File f, String m, Drawable i, Context c){
+	public FileHolder(File f, String m, Drawable i){
 		mFile = f;
 		mIcon = i;
 		mExtension = parseExtension();
 		mMimeType = m;
-		mContext = c;
 	}
 	
 	private FileHolder(Parcel in){
@@ -104,15 +99,10 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 		return mMimeType;
 	}
 	
-	public CharSequence getFormattedModificationDate(){
-        // Catch weird exception reported on Play store.
-        if (mFile == null) {
-            return "";
-        } else {
-            return mContext.getString(R.string.modified) + " " +
-                    DateUtils.getRelativeDateTimeString(mContext, mFile.lastModified(),
-                            DateUtils.MINUTE_IN_MILLIS, DateUtils.YEAR_IN_MILLIS * 10, 0);
-        }
+	public CharSequence getFormattedModificationDate(Context c){
+        return c.getString(R.string.modified) + " " +
+                DateUtils.getRelativeDateTimeString(c, mFile.lastModified(),
+                        DateUtils.MINUTE_IN_MILLIS, DateUtils.YEAR_IN_MILLIS * 10, 0);
 	}
 	
 	/**
