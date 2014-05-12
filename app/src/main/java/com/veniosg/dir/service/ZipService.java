@@ -20,6 +20,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 import com.veniosg.dir.fragment.FileListFragment;
 import com.veniosg.dir.misc.FileHolder;
@@ -40,6 +41,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
+import java.util.zip.ZipException;
 
 /**
  * @author George Venios
@@ -66,6 +68,9 @@ public class ZipService extends IntentService {
         if (ACTION_COMPRESS.equals(intent.getAction())) {
             try {
                 compress(files, to);
+            } catch(ZipException ze) {
+                ze.printStackTrace();
+                Notifier.showCompressDoneNotification(true, files.hashCode(), to, this);
             } catch (Exception e) {
                 // Cleanup
                 to.delete();
@@ -141,6 +146,7 @@ public class ZipService extends IntentService {
      */
     private void compress(List<FileHolder> list, File to) throws IOException, NullPointerException {
         int fileCount = FileUtils.getFileCount(list);
+        Log.w("WARNING", "Inside compress with fileCount: " + fileCount);
         int filesCompressed = 0;
         ZipOutputStream zipStream = new ZipOutputStream(
                 new BufferedOutputStream(
@@ -167,6 +173,9 @@ public class ZipService extends IntentService {
                              int filesCompressed, final int fileCount, File zipFile) throws IOException {
         Notifier.showCompressProgressNotification(
                 filesCompressed, fileCount, notId, zipFile, toCompress, this);
+        if (fileCount == 0) {
+            return 0;
+        }
         if (internalPath == null)
             internalPath = "";
 
@@ -176,9 +185,12 @@ public class ZipService extends IntentService {
             FileInputStream in = new FileInputStream(toCompress);
 
             // Create internal zip file entry.
-            if (internalPath.length() > 0)
+            if (internalPath.length() > 0) {
+                Log.w("FAIL", "Hi");
                 zipStream.putNextEntry(new ZipEntry(internalPath + "/" + toCompress.getName()));
+            }
             else {
+                Log.w("SUCCESS", "Hi s");
                 zipStream.putNextEntry(new ZipEntry(toCompress.getName()));
             }
 
