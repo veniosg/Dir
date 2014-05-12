@@ -8,16 +8,19 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.util.FileUtils;
+import com.veniosg.dir.util.Utils;
 
 import java.io.File;
 
-public class DetailsDialog extends DialogFragment {
+public class DetailsDialog extends DarkTitleDialogFragment {
 	private FileHolder mFileHolder;
 	private TextView mSizeView;
 
@@ -28,7 +31,7 @@ public class DetailsDialog extends DialogFragment {
 		mFileHolder = getArguments().getParcelable(IntentConstants.EXTRA_DIALOG_FILE_HOLDER);
 	}
 
-	@Override
+    @Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		File f = mFileHolder.getFile();
 		// Inflate the view to display
@@ -51,20 +54,22 @@ public class DetailsDialog extends DialogFragment {
                 mFileHolder.getFormattedModificationDate(getActivity()));
 		
 		// Finally create the dialog
-		return new AlertDialog.Builder(getActivity())
-				.setTitle(mFileHolder.getName())
-				.setIcon(mFileHolder.getIcon())
-				.setView(v)
-				.setPositiveButton(android.R.string.ok,
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								dismiss();
-							}
-						}).create();
+        return new AlertDialog.Builder(getActivity())
+                .setTitle(mFileHolder.getName())
+                .setIcon(mFileHolder.getIcon())
+                .setView(v)
+                .setPositiveButton(android.R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dismiss();
+                            }
+                        }
+                )
+                .create();
 	}
-	
+
 	/**
 	 * This task doesn't update the text viewed to the user until it's finished, 
 	 * so that the user knows the size he sees is indeed the final one.

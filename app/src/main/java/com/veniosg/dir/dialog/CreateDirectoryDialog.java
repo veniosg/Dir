@@ -4,10 +4,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -21,7 +24,7 @@ import com.veniosg.dir.fragment.FileListFragment;
 
 import java.io.File;
 
-public class CreateDirectoryDialog extends DialogFragment implements Overwritable {
+public class CreateDirectoryDialog extends DarkTitleDialogFragment implements Overwritable {
 	private File mIn;
 	
 	@Override
@@ -31,7 +34,8 @@ public class CreateDirectoryDialog extends DialogFragment implements Overwritabl
 		mIn = new File(getArguments().getString(IntentConstants.EXTRA_DIR_PATH));
 	}
 
-	@Override
+
+    @Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		LayoutInflater inflater = LayoutInflater.from(getActivity());
 		LinearLayout view = (LinearLayout) inflater.inflate(
@@ -61,6 +65,7 @@ public class CreateDirectoryDialog extends DialogFragment implements Overwritabl
 							}
 						})
                 .setNegativeButton(android.R.string.cancel, null)
+                .setIcon(getResources().getDrawable(R.drawable.ic_item_folder))
 				.create();
 	}
 

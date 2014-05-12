@@ -20,7 +20,7 @@ import com.veniosg.dir.service.ZipService;
 
 import java.io.File;
 
-public class SingleCompressDialog extends DialogFragment implements Overwritable {
+public class SingleCompressDialog extends DarkTitleDialogFragment implements Overwritable {
 	private FileHolder mFileHolder;
     private File tbcreated;
     private String zipname;
@@ -57,6 +57,7 @@ public class SingleCompressDialog extends DialogFragment implements Overwritable
 					}
 				})
                 .setNegativeButton(android.R.string.cancel, null)
+                .setIcon(getResources().getDrawable(R.drawable.ic_action_box))
                 .create();
 	}
 	

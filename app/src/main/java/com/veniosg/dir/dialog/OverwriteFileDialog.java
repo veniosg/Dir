@@ -8,7 +8,7 @@ import android.support.v4.app.DialogFragment;
 
 import com.veniosg.dir.R;
 
-class OverwriteFileDialog extends DialogFragment {
+class OverwriteFileDialog extends DarkTitleDialogFragment {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

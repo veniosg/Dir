@@ -19,7 +19,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MultiDeleteDialog extends DialogFragment {
+public class MultiDeleteDialog extends DarkTitleDialogFragment {
 	private List<FileHolder> mFileHolders;
 	
 	@Override
@@ -40,7 +40,8 @@ public class MultiDeleteDialog extends DialogFragment {
 					}
 				})
 				.setNegativeButton(R.string.no, null)
-				.create();
+                .setIcon(getResources().getDrawable(R.drawable.ic_action_delete))
+                .create();
 	}
 	
 	private class RecursiveDeleteTask extends AsyncTask<Void, Void, Void> {

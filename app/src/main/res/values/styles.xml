@@ -79,7 +79,7 @@
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-thin</item>
     </style>
     <style name="TextAppearance.Dir.Large.DialogTitle">
-        <item name="android:textStyle">italic</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
     </style>
 

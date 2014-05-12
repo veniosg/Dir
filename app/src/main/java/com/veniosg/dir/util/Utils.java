@@ -107,9 +107,9 @@ public abstract class Utils {
         shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_NAME, fileholder.getName());
         try {
             shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON, ((BitmapDrawable) fileholder
-                    .getIcon()).getBitmap());
+                    .getBestIcon()).getBitmap());
         } catch (Exception ex) {
-            ex.printStackTrace();
+            Logger.log(ex);
             Parcelable icon = Intent.ShortcutIconResource.fromContext(
                     context.getApplicationContext(), R.drawable.ic_launcher);
             shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);

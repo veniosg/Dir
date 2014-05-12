@@ -48,7 +48,7 @@ public class BookmarkListAdapter extends CursorAdapter {
         ViewHolder holder = (com.veniosg.dir.view.ViewHolder) convertView.getTag();
         FileHolder item = new FileHolder(new File(cursor.getString(2)), convertView.getContext());
 
-        holder.icon.setImageDrawable(item.getIcon());
+        holder.icon.setImageDrawable(item.getBestIcon());
         holder.primaryInfo.setText(item.getName());
         holder.secondaryInfo.setMaxLines(3);
         holder.secondaryInfo.setText(item.getFile().getAbsolutePath());

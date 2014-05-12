@@ -2,6 +2,7 @@ package com.veniosg.dir.misc;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.PictureDrawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.format.DateUtils;
@@ -17,6 +18,7 @@ import java.io.File;
 public class FileHolder implements Parcelable, Comparable<FileHolder> {
 	private File mFile;
 	private Drawable mIcon;
+    private Drawable mPreview;
 	private String mMimeType = "";
 	private String mExtension;
 	
@@ -25,15 +27,6 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 		mExtension = parseExtension();
         MimeTypes mimeTypes = ((FileManagerApplication) c.getApplicationContext()).getMimeTypes();
 		mMimeType = mimeTypes.getMimeType(f.getName());
-        mIcon = Utils.getIconForFile(mimeTypes, mMimeType, mFile, c);
-	}
-
-    public FileHolder(File f, Drawable i, Context c){
-		mFile = f;
-		mIcon = i;
-		mExtension = parseExtension();
-        MimeTypes mimeTypes = ((FileManagerApplication) c.getApplicationContext()).getMimeTypes();
-        mMimeType = mimeTypes.getMimeType(f.getName());
         mIcon = Utils.getIconForFile(mimeTypes, mMimeType, mFile, c);
 	}
 
@@ -76,8 +69,36 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 	public void setIcon(Drawable icon) {
 		mIcon = icon;
 	}
-	
-	/**
+
+    /**
+     * Get the preview for this file. E.g. if it's an image file, this is a scaled thumbnail.
+     * @return The thumbnail of this file. May be null!
+     */
+    public Drawable getPreview() {
+        return mPreview;
+    }
+
+    /**
+     * See getPreview()
+     * @param preview
+     */
+    public void setPreview(Drawable preview) {
+        this.mPreview = preview;
+    }
+
+    /**
+     * Use this method to get the best iconic represenation for this holder.
+     * @return The preview of this holder, if one exists, else the icon.
+     */
+    public Drawable getBestIcon() {
+        if(mPreview != null) {
+            return mPreview;
+        } else {
+            return mIcon;
+        }
+    }
+
+    /**
 	 * Shorthand for getFile().getName().
 	 * @return This file's name. 
 	 */

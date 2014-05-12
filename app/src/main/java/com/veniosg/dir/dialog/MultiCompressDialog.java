@@ -21,7 +21,7 @@ import com.veniosg.dir.service.ZipService;
 import java.io.File;
 import java.util.List;
 
-public class MultiCompressDialog extends DialogFragment implements Overwritable {
+public class MultiCompressDialog extends DarkTitleDialogFragment implements Overwritable {
 	private List<FileHolder> mFileHolders;
 
 	@Override
@@ -55,7 +55,9 @@ public class MultiCompressDialog extends DialogFragment implements Overwritable 
 						compress(v.getText().toString());
 					}
 				})
-                .setNegativeButton(android.R.string.cancel, null).create();
+                .setIcon(getResources().getDrawable(R.drawable.ic_action_box))
+                .setNegativeButton(android.R.string.cancel, null)
+                .create();
 	}
 	
 	private void compress(final String zipname){

@@ -23,7 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RenameDialog extends DialogFragment {
+public class RenameDialog extends DarkTitleDialogFragment {
 	private FileHolder mFileHolder;
 	
 	@Override

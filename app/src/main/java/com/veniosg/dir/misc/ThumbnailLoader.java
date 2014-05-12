@@ -120,11 +120,11 @@ public class ThumbnailLoader {
 			if(bitmap != null){
 				// We're still in the UI thread so we just update the icons from here.
 				imageView.setImageBitmap(bitmap);
-				holder.setIcon(new BitmapDrawable(imageView.getResources(), bitmap));
+				holder.setPreview(new BitmapDrawable(imageView.getResources(), bitmap));
 			} else {
 				// Give a drawable based on mimetype. Generic file drawable for undefined types.
 				if(holder.getFile().isFile())
-					holder.setIcon(getScaledDrawableForMimetype(holder, imageView.getContext()));
+					holder.setPreview(getScaledDrawableForMimetype(holder, imageView.getContext()));
 					
 				if (!cancel) {
 					// Submit the file for decoding.
@@ -317,7 +317,7 @@ public class ThumbnailLoader {
                         activity.runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								thumb.imageView.setImageDrawable(thumb.holder.getIcon());
+								thumb.imageView.setImageDrawable(thumb.holder.getBestIcon());
 								thumb = null;
 							}
 						});
@@ -344,7 +344,7 @@ public class ThumbnailLoader {
 		public void run() {
 			if(bitmap != null && !cancel){
 				thumb.imageView.setImageBitmap(bitmap);
-				thumb.holder.setIcon(new BitmapDrawable(thumb.imageView.getResources(), bitmap));
+				thumb.holder.setPreview(new BitmapDrawable(thumb.imageView.getResources(), bitmap));
 			}
 			thumb = null;
 		}
