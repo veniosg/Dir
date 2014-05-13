@@ -92,6 +92,13 @@ public class FileManagerActivityTest extends ActivityInstrumentationTestCase2<Fi
         solo.goBack();
     }
 
+    public void testZipCompression() throws IOException {
+        // create empty directory
+        TestUtils.createDirectory(sdcardPath + "emptyFolder");
+        // create empty subdirectory
+        TestUtils.createDirectory(sdcardPath + "emptyFolder/emptySubFolder");
+    }
+
     public void testBookmarks() throws IOException {
         String fn = "oi-bookmark-" + new Random().nextInt(1000);
         TestUtils.createDirectory(sdcardPath + "oi-filemanager-tests/" + fn);

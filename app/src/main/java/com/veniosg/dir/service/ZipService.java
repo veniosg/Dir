@@ -156,8 +156,9 @@ public class ZipService extends IntentService {
             filesCompressed = compressCore(list.hashCode(), zipStream, file.getFile(),
                     null, filesCompressed, fileCount, to);
         }
-
+        
         zipStream.flush();
+        zipStream.closeEntry();
         zipStream.close();
 
         MediaScannerUtils.informFileAdded(getApplicationContext(), to);
@@ -173,12 +174,14 @@ public class ZipService extends IntentService {
                              int filesCompressed, final int fileCount, File zipFile) throws IOException {
         Notifier.showCompressProgressNotification(
                 filesCompressed, fileCount, notId, zipFile, toCompress, this);
-        if (fileCount == 0) {
-            return 0;
-        }
+        Log.w("WARN", "in compressCore with file: " + toCompress.getName());
         if (internalPath == null)
             internalPath = "";
-
+        if (toCompress.isDirectory() && toCompress.list().length == 0) {
+            // this is an empty directory
+            zipStream.putNextEntry(new ZipEntry(internalPath + "/" + toCompress.getName() + "/"));
+            return 0;
+        }
         if (toCompress.isFile()) {
             byte[] buf = new byte[BUFFER_SIZE];
             int len;
