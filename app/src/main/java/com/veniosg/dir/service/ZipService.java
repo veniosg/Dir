@@ -20,7 +20,6 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 
 import com.veniosg.dir.fragment.FileListFragment;
 import com.veniosg.dir.misc.FileHolder;
@@ -68,9 +67,6 @@ public class ZipService extends IntentService {
         if (ACTION_COMPRESS.equals(intent.getAction())) {
             try {
                 compress(files, to);
-            } catch(ZipException ze) {
-                ze.printStackTrace();
-                Notifier.showCompressDoneNotification(true, files.hashCode(), to, this);
             } catch (Exception e) {
                 // Cleanup
                 to.delete();
@@ -146,7 +142,6 @@ public class ZipService extends IntentService {
      */
     private void compress(List<FileHolder> list, File to) throws IOException, NullPointerException {
         int fileCount = FileUtils.getFileCount(list);
-        Log.w("WARNING", "Inside compress with fileCount: " + fileCount);
         int filesCompressed = 0;
         ZipOutputStream zipStream = new ZipOutputStream(
                 new BufferedOutputStream(
@@ -158,7 +153,6 @@ public class ZipService extends IntentService {
         }
         
         zipStream.flush();
-        zipStream.closeEntry();
         zipStream.close();
 
         MediaScannerUtils.informFileAdded(getApplicationContext(), to);
@@ -174,14 +168,9 @@ public class ZipService extends IntentService {
                              int filesCompressed, final int fileCount, File zipFile) throws IOException {
         Notifier.showCompressProgressNotification(
                 filesCompressed, fileCount, notId, zipFile, toCompress, this);
-        Log.w("WARN", "in compressCore with file: " + toCompress.getName());
         if (internalPath == null)
             internalPath = "";
-        if (toCompress.isDirectory() && toCompress.list().length == 0) {
-            // this is an empty directory
-            zipStream.putNextEntry(new ZipEntry(internalPath + "/" + toCompress.getName() + "/"));
-            return 0;
-        }
+
         if (toCompress.isFile()) {
             byte[] buf = new byte[BUFFER_SIZE];
             int len;
@@ -189,11 +178,9 @@ public class ZipService extends IntentService {
 
             // Create internal zip file entry.
             if (internalPath.length() > 0) {
-                Log.w("FAIL", "Hi");
                 zipStream.putNextEntry(new ZipEntry(internalPath + "/" + toCompress.getName()));
             }
             else {
-                Log.w("SUCCESS", "Hi s");
                 zipStream.putNextEntry(new ZipEntry(toCompress.getName()));
             }
 
@@ -203,8 +190,14 @@ public class ZipService extends IntentService {
             }
 
             filesCompressed++;
+            zipStream.closeEntry();
             in.close();
         } else {
+            // if i don't add this check the compression still works
+            // but resulting zip file is larger in bytes.
+            if (toCompress.list().length == 0) { 
+                zipStream.putNextEntry(new ZipEntry(internalPath + "/" + toCompress.getName() + "/"));
+            }
             // Recurse
             for (File child : toCompress.listFiles()) {
                 filesCompressed = compressCore(notId, zipStream, child,
