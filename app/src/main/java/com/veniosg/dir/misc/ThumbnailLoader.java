@@ -268,7 +268,7 @@ public class ThumbnailLoader {
 					}
 				}
 			} catch(Exception e) {
-                e.printStackTrace();
+                Logger.log(e);
             }
 		}
 		return null;
@@ -399,9 +399,9 @@ public class ThumbnailLoader {
 				ret = pm.getResourcesForApplication(context.getPackageName())
 						.getDrawable(iconResource);
 			} catch (NotFoundException e) {
-                e.printStackTrace();
+                Logger.log(e);
 			} catch (NameNotFoundException e) {
-                e.printStackTrace();
+                Logger.log(e);
 			}
 		}
 

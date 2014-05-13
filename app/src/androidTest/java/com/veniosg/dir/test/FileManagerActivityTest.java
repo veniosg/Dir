@@ -13,6 +13,7 @@ import com.robotium.solo.Solo;
 import com.veniosg.dir.R;
 import com.veniosg.dir.activity.FileManagerActivity;
 import com.veniosg.dir.util.FileUtils;
+import com.veniosg.dir.util.Logger;
 
 import junit.framework.Assert;
 
@@ -48,7 +49,7 @@ public class FileManagerActivityTest extends ActivityInstrumentationTestCase2<Fi
         try {
             this.solo.finishOpenedActivities();
         } catch (Throwable e) {
-            e.printStackTrace();
+            Logger.log(e);
         }
         super.tearDown();
         TestUtils.cleanDirectory(new File(sdcardPath + "oi-filemanager-tests"));

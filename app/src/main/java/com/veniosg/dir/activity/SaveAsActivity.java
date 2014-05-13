@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
+import com.veniosg.dir.util.Logger;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -139,14 +140,14 @@ public class SaveAsActivity extends BaseActivity {
 				try {
 					in.close();
 				} catch (IOException e) {
-                    e.printStackTrace();
+                    Logger.log(e);
                 }
 			}
 			if (out != null) {
 				try {
 					out.close();
 				} catch (IOException e) {
-                    e.printStackTrace();
+                    Logger.log(e);
                 }
 			}
 			

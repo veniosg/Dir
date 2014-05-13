@@ -57,6 +57,7 @@ import com.veniosg.dir.provider.BookmarkProvider;
 import com.veniosg.dir.service.ZipService;
 import com.veniosg.dir.util.CopyHelper;
 import com.veniosg.dir.util.FileUtils;
+import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.util.MediaScannerUtils;
 import com.veniosg.dir.util.Utils;
 import com.veniosg.dir.view.AnimatedFileListContainer;
@@ -617,7 +618,7 @@ public class SimpleFileListFragment extends FileListFragment {
             }
         } catch (IOException e) {
             // That didn't work.
-            e.printStackTrace();
+            Logger.log(e);
             Toast.makeText(getActivity(),
                     getString(R.string.error_media_scan), Toast.LENGTH_LONG)
                     .show();

@@ -24,6 +24,7 @@ import android.net.Uri;
 import com.veniosg.dir.fragment.FileListFragment;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.util.FileUtils;
+import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.util.MediaScannerUtils;
 import com.veniosg.dir.util.Notifier;
 import com.veniosg.dir.util.Utils;
@@ -70,7 +71,7 @@ public class ZipService extends IntentService {
                 // Cleanup
                 to.delete();
 
-                e.printStackTrace();
+                Logger.log(e);
                 Notifier.showCompressDoneNotification(false, files.hashCode(), to, this);
             }
         } else if (ACTION_EXTRACT.equals(intent.getAction())) {
@@ -80,7 +81,7 @@ public class ZipService extends IntentService {
                 // Cleanup
                 FileUtils.deleteDirectory(to);
 
-                e.printStackTrace();
+                Logger.log(e);
                 Notifier.showExtractDoneNotification(false, files.hashCode(), to, this);
             }
         }

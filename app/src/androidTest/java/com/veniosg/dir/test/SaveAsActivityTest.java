@@ -9,6 +9,7 @@ import android.test.InstrumentationTestCase;
 
 import com.robotium.solo.Solo;
 import com.veniosg.dir.activity.SaveAsActivity;
+import com.veniosg.dir.util.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class SaveAsActivityTest extends InstrumentationTestCase {
         try {
             this.solo.finishOpenedActivities();
         } catch (Throwable e) {
-            e.printStackTrace();
+            Logger.log(e);
         }
         super.tearDown();
         TestUtils.cleanDirectory(new File(sdcardPath + "oi-filemanager-tests"));

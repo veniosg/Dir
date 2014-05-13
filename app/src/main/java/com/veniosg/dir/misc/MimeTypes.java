@@ -23,6 +23,7 @@ import android.webkit.MimeTypeMap;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.FileUtils;
+import com.veniosg.dir.util.Logger;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -53,9 +54,9 @@ public class MimeTypes {
 		try {
 			mimeTypes = mtp.fromXmlResource(in);
 		} catch (XmlPullParserException e) {
-			e.printStackTrace();
+            Logger.log(e);
 		} catch (IOException e) {
-			e.printStackTrace();
+            Logger.log(e);
 		}
 		
 		return mimeTypes;

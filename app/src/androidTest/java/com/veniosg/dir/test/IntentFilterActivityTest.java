@@ -8,6 +8,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import com.robotium.solo.Solo;
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.activity.IntentFilterActivity;
+import com.veniosg.dir.util.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class IntentFilterActivityTest extends ActivityInstrumentationTestCase2<I
         try {
             this.solo.finishOpenedActivities();
         } catch (Throwable e) {
-            e.printStackTrace();
+            Logger.log(e);
         }
         super.tearDown();
         TestUtils.cleanDirectory(new File(sdcardPath + "oi-filemanager-tests"));
