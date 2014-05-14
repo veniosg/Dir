@@ -53,7 +53,7 @@ public class AboutActivity extends BaseActivity {
 
         // Fix paddings
         SystemBarTintManager tint = new SystemBarTintManager(this);
-        tint.setTintResource(R.color.dark);
+        tint.setTintResource(android.R.color.black);
         tint.setStatusBarTintEnabled(true);
         findViewById(R.id.about_root).setPadding(0, tint.getConfig().getPixelInsetTop(true),
                 tint.getConfig().getPixelInsetRight(), tint.getConfig().getPixelInsetBottom());

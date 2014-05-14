@@ -123,7 +123,7 @@ public class SearchListFragment extends ListFragment implements LoaderManager.Lo
 
     private void initDecorStyling(View view) {
         mTintManager = new SystemBarTintManager(getActivity());
-        mTintManager.setTintResource(R.color.dark);
+        mTintManager.setTintResource(android.R.color.black);
         mTintManager.setStatusBarTintEnabled(true);
         view.setPadding(view.getPaddingLeft(), view.getPaddingTop() +
                         (mTintManager.getConfig().getPixelInsetTop(false) != 0

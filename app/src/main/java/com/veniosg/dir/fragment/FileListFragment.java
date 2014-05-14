@@ -190,7 +190,7 @@ public abstract class FileListFragment extends ListFragment {
 
     private void initDecorStyling(View view) {
         mTintManager = new SystemBarTintManager(getActivity());
-        mTintManager.setTintResource(R.color.dark);
+        mTintManager.setTintResource(android.R.color.black);
         mTintManager.setStatusBarTintEnabled(true);
         view.setPadding(view.getPaddingLeft(), view.getPaddingTop() +
                         (mTintManager.getConfig().getPixelInsetTop(false) != 0
