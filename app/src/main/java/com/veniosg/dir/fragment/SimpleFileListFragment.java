@@ -337,12 +337,13 @@ public class SimpleFileListFragment extends FileListFragment {
             values.put(BookmarkProvider.NAME, file.getName());
             values.put(BookmarkProvider.PATH, path);
             getActivity().getContentResolver().insert(BookmarkProvider.CONTENT_URI, values);
-
-            Activity act = getActivity();
-            if (act != null && act instanceof BookmarkListFragment.BookmarkContract) {
-                ((BookmarkListFragment.BookmarkContract) act).showBookmarks();
-            }
         }
+
+        Activity act = getActivity();
+        if (act != null && act instanceof BookmarkListFragment.BookmarkContract) {
+            ((BookmarkListFragment.BookmarkContract) act).showBookmarks();
+        }
+        
         query.close();
     }
 
