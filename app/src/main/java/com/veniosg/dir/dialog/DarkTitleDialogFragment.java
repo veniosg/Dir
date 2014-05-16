@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.view.Themer;
 
 /**
  * This class' implementation depends on the internal android layout file "alert_dialog_holo".
@@ -61,12 +62,15 @@ public class DarkTitleDialogFragment extends DialogFragment {
                 TextView titleView = (TextView) titleTemplate.getChildAt(1);
 
                 icon.setImageDrawable(lightenDrawable(icon.getDrawable()));
-                topDivider.setBackgroundColor(getResources().getColor(R.color.secondary_neutral));
+                topDivider.setBackgroundColor(getResources().getColor(
+                        Themer.getThemedResourceId(getActivity(), R.attr.colorAccent)));
                 topDivider.setVisibility(View.GONE);
-                bottomDivider.setBackgroundColor(getResources().getColor(R.color.secondary_neutral));
+                bottomDivider.setBackgroundColor(getResources().getColor(
+                        Themer.getThemedResourceId(getActivity(), R.attr.colorAccent)));
                 bottomDivider.setVisibility(View.VISIBLE);
                 titleView.setTextColor(getActivity().getResources().getColor(R.color.navbar_details));
-                titleTemplate.setBackgroundResource(R.color.light);
+                titleTemplate.setBackgroundResource(
+                        Themer.getThemedResourceId(getActivity(), R.attr.colorLight));
                 titleTemplate.setPadding(ttlp.leftMargin, ttlp.topMargin, ttlp.rightMargin, ttlp.bottomMargin);
                 ttlp.setMargins(0, 0, 0, 0);
                 titleTemplate.requestLayout();

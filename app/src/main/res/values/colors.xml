@@ -1,16 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2014 George Venios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
 <resources>
+    <!-- Common colors -->
     <color name="navbar_details">#CCFFFFFF</color>
 
-    <color name="dark">#210030</color>
-    <color name="light">#57007F</color>
-    <color name="accent">#D6D6D6</color>
+    <!-- Dir colors -->
+    <color name="dir_dark">#210030</color>
+    <color name="dir_light">#57007F</color>
     <!-- Also used for list item icons -->
-    <color name="accent_sec">#222222</color>
-    <color name="window">#e4e4e4</color>
-    <color name="secondary_neutral">#808080</color>
-    <color name="side_pane_background">#CCC</color>
+    <color name="dir_accent_sec">#222222</color>
+    <color name="dir_window">#e4e4e4</color>
+    <color name="dir_side_pane_background">#CCC</color>
+    <color name="dir_accent">#D6D6D6</color>
+    <color name="dir_secondary_neutral">#808080</color>
+    <color name="dir_fade_covered">#BB222222</color>
+    <color name="dir_fade_slider">#CCD6D6D6</color>
 
-    <color name="fade_covered">#BB222222</color>
-    <color name="fade_slider">#CCD6D6D6</color>
+    <!-- Dark colors -->
+    <color name="dark_dark">#000</color>
+    <color name="dark_light">#1D1D1D</color>
+    <color name="dark_accent_sec">#0F0F0F</color>
+    <color name="dark_window">#0C0C0C</color>
+    <color name="dark_accent">#D6D6D6</color>
+    <color name="dark_secondary_neutral">#808080</color>
+    <color name="dark_side_pane_background">@color/dark_window</color>
+    <color name="dark_fade_covered">#B000</color>
+    <color name="dark_fade_slider">#EE131313</color>
 
+    <!-- HoloDark colors -->
+    <color name="holodark_dark">#000</color>
+    <color name="holodark_light">#282828</color>
+    <color name="holodark_window">#01000000</color>
+    <color name="holodark_accent">@android:color/holo_blue_light</color>
+    <color name="holodark_accent_sec">@color/holodark_light</color>
+    <color name="holodark_secondary_neutral">#808080</color>
+    <color name="holodark_side_pane_background">#3000</color>
+    <color name="holodark_fade_covered">#B000</color>
+    <color name="holodark_fade_slider">#EE131313</color>
+    <color name="holodark_pathbar_bg">#0C0C0C</color>
 </resources>

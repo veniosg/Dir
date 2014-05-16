@@ -131,7 +131,8 @@ public class PathBar extends ViewFlipper {
 
 			mSwitchToManualModeButton.setLayoutParams(layoutParams);
 			mSwitchToManualModeButton.setId(10);
-			mSwitchToManualModeButton.setBackgroundResource(R.drawable.dir_btn_pathbar_straight);
+			mSwitchToManualModeButton.setBackgroundResource(Themer.getThemedResourceId(getContext(),
+                    R.attr.pathBarItemBackgroundSquare));
 			mSwitchToManualModeButton.setVisibility(View.GONE);
 
 			standardModeLayout.addView(mSwitchToManualModeButton);
@@ -146,7 +147,8 @@ public class PathBar extends ViewFlipper {
 
 			cdToRootButton.setLayoutParams(layoutParams);
 			cdToRootButton.setId(11);
-			cdToRootButton.setBackgroundResource(R.drawable.dir_btn_pathbar_straight);
+			cdToRootButton.setBackgroundResource(Themer.getThemedResourceId(getContext(),
+                    R.attr.pathBarItemBackgroundSquare));
 			cdToRootButton.setImageResource(R.drawable.ic_navbar_home);
 			cdToRootButton.setScaleType(ScaleType.CENTER_INSIDE);
 			cdToRootButton.setOnClickListener(new View.OnClickListener() {
@@ -215,7 +217,8 @@ public class PathBar extends ViewFlipper {
 
 			mGoButton.setLayoutParams(layoutParams);
 			mGoButton.setId(20);
-			mGoButton.setBackgroundResource(R.drawable.dir_btn_pathbar_straight);
+			mGoButton.setBackgroundResource(Themer.getThemedResourceId(getContext(),
+                    R.attr.pathBarItemBackgroundSquare));
 			mGoButton.setImageResource(R.drawable.ic_navbar_accept);
 			mGoButton.setScaleType(ScaleType.CENTER_INSIDE);
 			mGoButton.setOnClickListener(new View.OnClickListener() {
@@ -281,8 +284,7 @@ public class PathBar extends ViewFlipper {
             }
 
             @Override
-            public void onAnimationEnd(Animator animation) {
-            }
+            public void onAnimationEnd(Animator animation) {}
 
             @Override
             public void onAnimationCancel(Animator animation) {}
@@ -363,7 +365,11 @@ public class PathBar extends ViewFlipper {
 	 * @param file The file to {@code cd} to.
 	 * @return Whether the path entered exists and can be navigated to.
 	 */
-	public boolean cd(File file) {
+    public boolean cd(File file) {
+        return cd(file, false);
+    }
+
+	public boolean cd(File file, boolean forceNoAnim) {
 		boolean res = false;
 
 		if (isFileOk(file)) {
@@ -373,7 +379,7 @@ public class PathBar extends ViewFlipper {
 			mCurrentDirectory = file;
 
 			// Refresh button layout.
-			mPathButtons.refresh(oldDir, mCurrentDirectory);
+			mPathButtons.refresh(forceNoAnim ? null : oldDir, mCurrentDirectory);
 
 			// Refresh manual input field.
 			mPathEditText.setText(file.getAbsolutePath());
@@ -516,26 +522,11 @@ public class PathBar extends ViewFlipper {
 		return isFileOK;
 	}
 
-    @Deprecated
-    /**
-     * This was useful when we had theming capabilities.
-     */
-	public Drawable getItemBackground(){
-		int[] attrs = new int[] {R.attr.pathBarItemBackground};
-
-		TypedArray ta = getContext().obtainStyledAttributes(attrs);
-		Drawable d = ta.getDrawable(0);
-
-		ta.recycle();
-
-		return d.mutate();
-	}
-
-    public int getItemBackground(String absolutePath) {
+    public int getItemBackground(Context c, String absolutePath) {
         if ("/".equals(absolutePath)) {
-            return R.drawable.dir_btn_pathbar_semistraight;
+            return Themer.getThemedResourceId(c, R.attr.pathBarItemBackgroundFirst);
         } else {
-            return R.drawable.dir_btn_pathbar_skewed;
+            return Themer.getThemedResourceId(c, R.attr.pathBarItemBackground);
         }
     }
 }

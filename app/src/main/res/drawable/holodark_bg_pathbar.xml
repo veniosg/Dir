@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- must follow the value for attr/colorSecondaryBarBackground -->
+    <item android:drawable="@color/holodark_pathbar_bg" />
+    <item android:drawable="@drawable/dark_bg_pathbar_shadow" />
+</layer-list>

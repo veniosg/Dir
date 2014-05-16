@@ -38,6 +38,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.veniosg.dir.R;
 import com.veniosg.dir.adapter.BookmarkListAdapter;
 import com.veniosg.dir.provider.BookmarkProvider;
+import com.veniosg.dir.view.Themer;
 import com.veniosg.dir.view.WaitingViewFlipper;
 
 import java.io.File;
@@ -81,7 +82,8 @@ public class BookmarkListFragment extends ListFragment implements LoaderManager.
             }
         });
         setListChoiceListener();
-        view.setBackgroundResource(R.color.side_pane_background);
+        view.setBackgroundResource(Themer.getThemedResourceId(getActivity(),
+                R.attr.colorSidePaneBackground));
 
         getLoaderManager().initLoader(0, null, this);
 	}

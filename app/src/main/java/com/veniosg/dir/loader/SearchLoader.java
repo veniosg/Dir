@@ -17,6 +17,7 @@
 package com.veniosg.dir.loader;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.AsyncTaskLoader;
 
 import com.veniosg.dir.FileManagerApplication;
@@ -33,19 +34,22 @@ public class SearchLoader extends AsyncTaskLoader<List<FileHolder>> {
     private List<FileHolder> mData;
     private File mRoot;
     private String mQuery;
+    private Drawable mIconsContainer;
 
     public SearchLoader(Context context, File root, String query) {
         super(context);
 
         mRoot = root;
         mQuery = query;
+        mIconsContainer = Utils.getThemedMimeIconsContainer(context);
     }
 
     @Override
     public List<FileHolder> loadInBackground() {
         return Utils.searchIn(mRoot, Utils.newFilter(mQuery),
                 ((FileManagerApplication) getContext().getApplicationContext())
-                        .getMimeTypes(), getContext(), true, 100);
+                        .getMimeTypes(),
+                getContext(), true, 100, mIconsContainer);
     }
 
     @Override
@@ -123,6 +127,6 @@ public class SearchLoader extends AsyncTaskLoader<List<FileHolder>> {
     }
 
     private void releaseResources(List<FileHolder> oldData) {
-        // Placeholder just in case
+        mIconsContainer = null;
     }
 }

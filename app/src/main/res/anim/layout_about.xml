@@ -17,6 +17,7 @@
 
 <layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
     android:animation="@anim/item_about"
-    android:delay="0.2"
+    android:duration="@android:integer/config_longAnimTime"
+    android:delay="0.3"
     android:animationOrder="reverse"
     android:interpolator="@android:anim/decelerate_interpolator" />

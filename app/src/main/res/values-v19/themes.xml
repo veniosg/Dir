@@ -16,7 +16,25 @@
  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.Dir" parent="@style/Theme.Dir.SolidBars" tools:ignore="ResourceCycle">
+    <style name="Theme.Dir.TranslucentNav">
+        <!-- Hide system chrome -->
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="Theme.Dir.Grayscale.TranslucentNav">
+        <!-- Hide system chrome -->
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="Theme.Dir.Dark.TranslucentNav">
+        <!-- Hide system chrome -->
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="Theme.Dir.HoloDark.TranslucentNav">
         <!-- Hide system chrome -->
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowTranslucentStatus">true</item>

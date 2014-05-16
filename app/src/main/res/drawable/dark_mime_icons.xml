@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2014 George Venios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/dark_ic_item_file" android:maxLevel="0"/>
+    <item android:drawable="@drawable/dark_ic_item_folder" android:maxLevel="1"/>
+    <item android:drawable="@drawable/dark_ic_item_image" android:maxLevel="2"/>
+    <item android:drawable="@drawable/dark_ic_item_audio" android:maxLevel="3"/>
+    <item android:drawable="@drawable/dark_ic_item_video" android:maxLevel="4"/>
+    <item android:drawable="@drawable/dark_ic_item_archive" android:maxLevel="5"/>
+    <item android:drawable="@drawable/dark_ic_item_text" android:maxLevel="6"/>
+    <item android:drawable="@drawable/dark_ic_item_text_web" android:maxLevel="7"/>
+    <item android:drawable="@drawable/dark_ic_item_text_csv" android:maxLevel="8"/>
+    <item android:drawable="@drawable/dark_ic_item_text_xml" android:maxLevel="9"/>
+    <item android:drawable="@drawable/dark_ic_item_android_package" android:maxLevel="10"/>
+    <item android:drawable="@drawable/dark_ic_item_sdcard" android:maxLevel="11"/>
+</level-list>

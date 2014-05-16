@@ -18,12 +18,14 @@ package com.veniosg.dir.misc;
 
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
 import android.webkit.MimeTypeMap;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.view.Themer;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -34,8 +36,11 @@ import java.util.Map;
 public class MimeTypes {
 	private Map<String, String> mMimeTypes = new HashMap<String,String>();
 	private Map<String, Integer> mIcons = new HashMap<String,Integer>();
+    private Context mContext;
 
-    MimeTypes() {}
+    MimeTypes(Context context) {
+        mContext = context.getApplicationContext();
+    }
 
 	/**
 	 * DO NOT USE. See FileManagerApplication#getMimeTypes().
@@ -52,7 +57,7 @@ public class MimeTypes {
 		XmlResourceParser in = c.getResources().getXml(R.xml.mimetypes);
 
 		try {
-			mimeTypes = mtp.fromXmlResource(in);
+			mimeTypes = mtp.fromXmlResource(c, in);
 		} catch (XmlPullParserException e) {
             Logger.log(e);
 		} catch (IOException e) {
@@ -101,10 +106,9 @@ public class MimeTypes {
 		return mimetype;
 	}
 	
-	public int getIcon(String mimetype){
-		Integer iconResId = mIcons.get(mimetype);
-		if(iconResId == null)
-			return 0; // Invalid identifier
-		return iconResId;
+	public int getIconIndex(String mimetype){
+		Integer index = mIcons.get(mimetype);
+
+        return index == null ? 0 : index;
 	}
 }

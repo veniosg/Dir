@@ -31,6 +31,7 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.view.CheatSheet;
+import com.veniosg.dir.view.Themer;
 
 public class AboutActivity extends BaseActivity {
     private String label;
@@ -161,5 +162,10 @@ public class AboutActivity extends BaseActivity {
         } else {
             return super.onMenuItemSelected(featureId, item);
         }
+    }
+
+    @Override
+    public Themer.Flavor getThemeFlavor() {
+        return Themer.Flavor.OPAQUE;
     }
 }

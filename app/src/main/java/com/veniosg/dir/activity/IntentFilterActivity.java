@@ -8,7 +8,9 @@ import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.fragment.FileListFragment;
 import com.veniosg.dir.fragment.PickFileListFragment;
+import com.veniosg.dir.fragment.PreferenceFragment;
 import com.veniosg.dir.util.FileUtils;
+import com.veniosg.dir.view.Themer;
 
 import java.io.File;
 
@@ -28,12 +30,12 @@ public class IntentFilterActivity extends BaseActivity {
 		if (!extras.containsKey(IntentConstants.EXTRA_DIR_PATH)) {
 			// Set a default path so that we launch a proper list.
 			File defaultFile = new File(
-					PreferenceActivity.getDefaultPickFilePath(this));
+                    PreferenceFragment.getDefaultPickFilePath(this));
 			if (!defaultFile.exists()) {
-				PreferenceActivity.setDefaultPickFilePath(this, Environment
+                PreferenceFragment.setDefaultPickFilePath(this, Environment
 						.getExternalStorageDirectory().getAbsolutePath());
 				defaultFile = new File(
-						PreferenceActivity.getDefaultPickFilePath(this));
+                        PreferenceFragment.getDefaultPickFilePath(this));
 			}
 			extras.putString(IntentConstants.EXTRA_DIR_PATH,
 					defaultFile.getAbsolutePath());
@@ -111,4 +113,8 @@ public class IntentFilterActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public Themer.Flavor getThemeFlavor() {
+        return Themer.Flavor.OPAQUE;
+    }
 }

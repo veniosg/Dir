@@ -33,17 +33,21 @@ import com.veniosg.dir.fragment.BookmarkListFragment;
 import com.veniosg.dir.fragment.SimpleFileListFragment;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.util.FileUtils;
+import com.veniosg.dir.view.Themer;
 
 import java.io.File;
 
-public class FileManagerActivity extends BaseActivity implements BookmarkListFragment.BookmarkContract {
+public class FileManagerActivity extends BaseActivity
+        implements BookmarkListFragment.BookmarkContract {
 	private SimpleFileListFragment mFragment;
     private SlidingPaneLayout mSpl;
 
     @Override
 	protected void onNewIntent(Intent intent) {
 		if(intent.getData() != null)
-			mFragment.openInformingPathBar(new FileHolder(FileUtils.getFile(intent.getData()), this));
+			mFragment.openInformingPathBar(new FileHolder(FileUtils.getFile(intent.getData()), this),
+                    true);  // We force no anim as the layout transition does not run properly
+                            // when the view is not visible and the buttons stay invisible.
 	}
 	
 	/**
@@ -102,11 +106,13 @@ public class FileManagerActivity extends BaseActivity implements BookmarkListFra
         // Side pane
         SystemBarTintManager tintManager = new SystemBarTintManager(this);
         mSpl = (SlidingPaneLayout) findViewById(R.id.drawer);
-        mSpl.setShadowResource(R.drawable.bg_drawer_shadow);
-        mSpl.setCoveredFadeColor(getResources().getColor(R.color.fade_covered));
-        mSpl.setSliderFadeColor(getResources().getColor(R.color.fade_slider));
+        mSpl.setShadowResource(Themer.getThemedResourceId(this, R.attr.drawerShadow));
+        mSpl.setCoveredFadeColor(getResources().getColor(
+                Themer.getThemedResourceId(this, R.attr.colorFadeCovered)));
+        mSpl.setSliderFadeColor(getResources().getColor(
+                Themer.getThemedResourceId(this, R.attr.colorFadeSlider)));
         mSpl.setPadding(0, 0, tintManager.getConfig().getPixelInsetRight(), 0);
-        int sidePaneWidth = (int) (getResources().getDisplayMetrics().widthPixels * 0.75F);
+        int sidePaneWidth = (int) (getResources().getDisplayMetrics().widthPixels * 0.8F);
         View bookmarks = findViewById(R.id.bookmarks);
         SlidingPaneLayout.LayoutParams params = new SlidingPaneLayout.LayoutParams(
                 bookmarks.getLayoutParams());
@@ -196,4 +202,8 @@ public class FileManagerActivity extends BaseActivity implements BookmarkListFra
         mSpl.openPane();
     }
 
+    @Override
+    public Themer.Flavor getThemeFlavor() {
+        return Themer.Flavor.TRANSLUCENT_NAV;
+    }
 }

@@ -38,6 +38,7 @@ import com.veniosg.dir.adapter.FileHolderListAdapter;
 import com.veniosg.dir.adapter.SearchListAdapter;
 import com.veniosg.dir.loader.SearchLoader;
 import com.veniosg.dir.misc.FileHolder;
+import com.veniosg.dir.view.Themer;
 import com.veniosg.dir.view.WaitingViewFlipper;
 
 import java.io.File;
@@ -84,13 +85,14 @@ public class SearchListFragment extends ListFragment implements LoaderManager.Lo
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        view.setBackgroundResource(
+                Themer.getThemedResourceId(getActivity(), R.attr.windowContentBackground));
+
         initDecorStyling(view);
 
         mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
         ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.search_empty);
         setLoading(true);
-
-        getListView().setBackgroundResource(R.color.window);
         getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {

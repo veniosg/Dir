@@ -83,6 +83,7 @@
     <string name="preference_displayhiddenfiles_summary_off">Hide hidden files</string>
     <string name="preference_sort_settings">Sort settings</string>
     <string name="preference_sortby">Sort by</string>
+    <string name="preference_theme">Theme</string>
     <string name="preference_sortby_ascending">In ascending order</string>
     <string name="preference_sortby_ascending_summary_on">Sort in ascending order</string>
     <string name="preference_sortby_ascending_summary_off">Sort in descending order</string>
@@ -96,6 +97,12 @@
         <item>Name</item>
         <item>Size</item>
         <item>Last modified</item>
+    </string-array>
+    <string-array name="preference_theme_names">
+        <item>Dir</item>
+        <item>Grayscale</item>
+        <item>Dark</item>
+        <item>Holo</item>
     </string-array>
 
     <!--

@@ -6,6 +6,7 @@ import android.view.MenuItem;
 
 import com.veniosg.dir.fragment.SearchListFragment;
 import com.veniosg.dir.util.Utils;
+import com.veniosg.dir.view.Themer;
 
 /**
  * The activity that handles queries and shows search results.
@@ -52,4 +53,8 @@ public class SearchableActivity extends BaseActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+    @Override
+    public Themer.Flavor getThemeFlavor() {
+        return Themer.Flavor.TRANSLUCENT_NAV;
+    }
 }

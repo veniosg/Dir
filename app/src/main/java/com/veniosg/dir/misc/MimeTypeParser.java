@@ -30,9 +30,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class MimeTypeParser {
-
-	private static final String LOG_TAG = "MimeTypeParser";
-
 	private static final String TAG_MIMETYPES = "MimeTypes";
 	private static final String TAG_TYPE = "type";
 	
@@ -49,28 +46,18 @@ public class MimeTypeParser {
 		this.packagename = packagename;
 		resources = ctx.getPackageManager().getResourcesForApplication(packagename);
 	}
-	
-	public MimeTypes fromXml(InputStream in)
-			throws XmlPullParserException, IOException {
-		XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
 
-		mXpp = factory.newPullParser();
-		mXpp.setInput(new InputStreamReader(in));
-
-		return parse();
-	}
-	
-	protected MimeTypes fromXmlResource(XmlResourceParser in)
+ 	protected MimeTypes fromXmlResource(Context context, XmlResourceParser in)
 	throws XmlPullParserException, IOException {
 		mXpp = in;
 		
-		return parse();
+		return parse(context);
 	}
 
-	MimeTypes parse()
+	MimeTypes parse(Context context)
 			throws XmlPullParserException, IOException {
 		
-		mMimeTypes = new MimeTypes();
+		mMimeTypes = new MimeTypes(context);
 		
 		int eventType = mXpp.getEventType();
 
@@ -100,15 +87,11 @@ public class MimeTypeParser {
 		String mimetype = mXpp.getAttributeValue(null, ATTR_MIMETYPE);
 		String icon = mXpp.getAttributeValue(null, ATTR_ICON);
 		
-		if(icon != null){
-			int id = resources.getIdentifier(icon.substring(1) /* to cut the @ */, null, packagename);
-			if(id > 0){
-				mMimeTypes.put(extension, mimetype, id);
-				return;
-			}
-		}
-		
-		mMimeTypes.put(extension, mimetype);
+		if(icon == null){
+            mMimeTypes.put(extension, mimetype, 0);
+		} else {
+            mMimeTypes.put(extension, mimetype, Integer.valueOf(icon));
+        }
 	}
 	
 }

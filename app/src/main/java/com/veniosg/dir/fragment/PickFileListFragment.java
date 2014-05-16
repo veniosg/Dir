@@ -125,8 +125,8 @@ public class PickFileListFragment extends SimpleFileListFragment {
 	private void pickFileOrFolder(File selection, boolean getContentInitiated){
 		Intent intent = new Intent();
 		intent.putExtras(getArguments());
-		
-		PreferenceActivity.setDefaultPickFilePath(getActivity(), selection.getParent() != null
+
+        PreferenceFragment.setDefaultPickFilePath(getActivity(), selection.getParent() != null
                 ?  selection.getParent() : "/");
 		
 		if(getContentInitiated)

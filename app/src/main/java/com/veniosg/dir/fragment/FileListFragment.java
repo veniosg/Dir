@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.graphics.drawable.DrawableContainer;
 import android.os.Bundle;
 import android.os.FileObserver;
 import android.os.Handler;
@@ -44,6 +45,7 @@ import com.veniosg.dir.misc.DirectoryContents;
 import com.veniosg.dir.misc.DirectoryScanner;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.util.Utils;
 import com.veniosg.dir.view.WaitingViewFlipper;
 
 import java.io.File;
@@ -84,7 +86,8 @@ public abstract class FileListFragment extends ListFragment {
 
 			// Prevent NullPointerException caused from this getting called
 			// after we have finish()ed the activity.
-			if (getActivity() != null)
+			if (getActivity() != null
+                    && !key.equals(PreferenceFragment.PREFS_THEME)) // We're restarting, no need for refresh
 				refresh();
 		}
 	};
@@ -253,12 +256,14 @@ public abstract class FileListFragment extends ListFragment {
 		boolean directoriesOnly = getArguments().getBoolean(
 				IntentConstants.EXTRA_DIRECTORIES_ONLY);
 
-		mScanner = new DirectoryScanner(new File(mPath), getActivity().getApplicationContext(),
+		mScanner = new DirectoryScanner(new File(mPath),
+                getActivity(),
 				new FileListMessageHandler(),
-                ((FileManagerApplication) getActivity().getApplicationContext())
-                        .getMimeTypes(),
+                ((FileManagerApplication) getActivity().getApplicationContext()).getMimeTypes(),
 				filetypeFilter == null ? "" : filetypeFilter,
-				mimetypeFilter == null ? "" : mimetypeFilter, writeableOnly,
+				mimetypeFilter == null ? "" : mimetypeFilter,
+                Utils.getThemedMimeIconsContainer(getActivity()),
+                writeableOnly,
 				directoriesOnly);
 		return mScanner;
 	}

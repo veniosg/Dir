@@ -39,6 +39,13 @@
     <PreferenceCategory
             android:title="@string/preference_advanced_features">
 
+        <ListPreference
+            android:key="themeindex"
+            android:defaultValue="0"
+            android:entries="@array/preference_theme_names"
+            android:entryValues="@array/theme_values"
+            android:title="@string/preference_theme" />
+
         <CheckBoxPreference
                 android:key="mediascan"
                 android:defaultValue="false"

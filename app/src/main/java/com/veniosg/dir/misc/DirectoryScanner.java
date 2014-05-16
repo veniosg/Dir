@@ -7,8 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 
-import com.veniosg.dir.R;
-import com.veniosg.dir.activity.PreferenceActivity;
+import com.veniosg.dir.fragment.PreferenceFragment;
 import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.util.Utils;
@@ -23,38 +22,41 @@ public class DirectoryScanner extends Thread {
 	/** List of contents is ready. */
 	public static final int MESSAGE_SHOW_DIRECTORY_CONTENTS = 500;	// List of contents is ready, obj = DirectoryContents
 	public static final int MESSAGE_SET_PROGRESS = 501;	// Set progress bar, arg1 = current value, arg2 = max value
-	
+
 	private File currentDirectory;
-	
+
 	private boolean running = false;
 	private boolean cancelled;
 
 	private String mSdCardPath;
-	private Context context;
+	private Context mContext;
     private MimeTypes mMimeTypes;
 	private Handler handler;
 	private String mFilterFiletype;
 	private String mFilterMimetype;
+    private Drawable mIcons;
 
 	private boolean mWriteableOnly;
 	private boolean mDirectoriesOnly;
-	
+
 	// Update progress bar every n files
 	static final private int PROGRESS_STEPS = 50;
-	
+
 	// Scan related variables.
 	private int totalCount, progress;
 	private long operationStartTime;
 	private boolean noMedia, displayHidden;
-	private Drawable sdIcon;
 	private File[] files;
 	/** We keep all these three instead of one, so that sorting is done separately on each. */
 	private List<FileHolder> listDir, listFile, listSdCard;
 
-	public DirectoryScanner(File directory, Context context, Handler handler, MimeTypes mimeTypes, String filterFiletype, String filterMimetype, boolean writeableOnly, boolean directoriesOnly) {
+	public DirectoryScanner(File directory, Context context, Handler handler,
+                            MimeTypes mimeTypes, String filterFiletype,
+                            String filterMimetype, Drawable mimeIconContainer,
+                            boolean writeableOnly, boolean directoriesOnly) {
 		super("Directory Scanner");
 		currentDirectory = directory;
-		this.context = context;
+		this.mContext = context.getApplicationContext();
 		this.handler = handler;
 		this.mMimeTypes = mimeTypes;
 		this.mFilterFiletype = filterFiletype;
@@ -62,6 +64,7 @@ public class DirectoryScanner extends Thread {
 		this.mSdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 		this.mWriteableOnly = writeableOnly;
 		this.mDirectoriesOnly = directoriesOnly;
+        this.mIcons = mimeIconContainer;
 	}
 
 	private void init(){
@@ -71,16 +74,15 @@ public class DirectoryScanner extends Thread {
             Logger.logV(Logger.TAG_DIRSCANNER, "Scan aborted");
 			return;
 		}
-		
+
 		totalCount = 0;
 		progress = 0;
 		files = currentDirectory.listFiles();
 		noMedia = false;
-		displayHidden = PreferenceActivity.getDisplayHiddenFiles(context);
-		sdIcon = context.getResources().getDrawable(R.drawable.ic_item_sdcard);
+		displayHidden = PreferenceFragment.getDisplayHiddenFiles(mContext);
 
 		operationStartTime = SystemClock.uptimeMillis();
-		
+
 		if (files == null) {
             Logger.logV(Logger.TAG_DIRSCANNER, "Returned null - inaccessible directory?");
 		} else {
@@ -95,80 +97,84 @@ public class DirectoryScanner extends Thread {
 		/** External storage container*/
 		listSdCard = new ArrayList<FileHolder>(3);
 	}
-	
+
 	public void run() {
 		running = true;
 		init();
-		
+
 		// Scan files
 		if (files != null) {
-			for (File currentFile : files){ 
+			for (File currentFile : files){
 				if (cancelled) {
                     Logger.logV(Logger.TAG_DIRSCANNER, "Scan aborted while checking files");
 					return;
 				}
-				
+
 				progress++;
 				updateProgress(progress, totalCount);
-				
+
 				// It's the noMedia file. Raise the flag.
 				if(currentFile.getName().equalsIgnoreCase(FileUtils.NOMEDIA_FILE_NAME))
 					noMedia = true;
-				
+
 				//If the user doesn't want to display hidden files and the file is hidden, ignore this file.
 				if (!displayHidden && currentFile.isHidden()){
 					continue;
 				}
-				
+
 				// It's a directory. Handle it.
-				if (currentFile.isDirectory()) { 
+				if (currentFile.isDirectory()) {
 					// It's the sd card.
 					if (currentFile.getAbsolutePath().equals(mSdCardPath)) {
-						listSdCard.add(new FileHolder(currentFile, mMimeTypes.getMimeType(currentFile.getName()), sdIcon));
+						listSdCard.add(new FileHolder(currentFile,
+                                mMimeTypes.getMimeType(currentFile.getName()),
+                                Utils.getSdCardIcon(mIcons, mContext)));
 					}
 					// It's a normal directory.
 					else {
-//						if (!mWriteableOnly || currentFile.canWrite()) {
+//                      if (!mWriteableOnly || currentFile.canWrite()) {
                             String mimetype = mMimeTypes.getMimeType(currentFile.getName());
-                            listDir.add(new FileHolder(currentFile, mimetype,
-                                    Utils.getIconForFile(mMimeTypes, mimetype, currentFile, context)));
-//                        }
-					} 
+                            listDir.add(new FileHolder(currentFile,
+                                    mMimeTypes.getMimeType(currentFile.getName()),
+                                    Utils.getIconForFile(mIcons, mMimeTypes, mimetype,
+                                            currentFile, mContext)));
+//                      }
+					}
 				// It's a file. Handle it too :P
-				} else { 
+				} else {
 					String fileName = currentFile.getName();
 
 					// Get the file's mimetype.
 					String mimetype = mMimeTypes.getMimeType(fileName);
 					String filetype = FileUtils.getExtension(fileName);
-					
+
 					boolean ext_allow = filetype.equalsIgnoreCase(mFilterFiletype) || mFilterFiletype == "";
-					boolean mime_allow = mFilterMimetype != null && 
+					boolean mime_allow = mFilterMimetype != null &&
 							(mimetype.contentEquals(mFilterMimetype) || mFilterMimetype.contentEquals("*/*") ||
 									mFilterFiletype == null);
 					if (!mDirectoriesOnly && (ext_allow || mime_allow)) {
 						listFile.add(new FileHolder(currentFile,
                                 mimetype,
                                 // Take advantage of the already parsed mimeType to set a specific icon.
-                                Utils.getIconForFile(mMimeTypes, mimetype,
-                                        currentFile, context)));
+                                Utils.getIconForFile(mIcons, mMimeTypes, mimetype,
+                                        currentFile, mContext)));
 					}
-				} 
+				}
 			}
 		}
-		
+
         Logger.logV(Logger.TAG_DIRSCANNER, "Sorting results...");
 
-        int sortBy = PreferenceActivity.getSortBy(context);
-		boolean ascending = PreferenceActivity.getAscending(context);
+        int sortBy = PreferenceFragment.getSortBy(mContext);
+		boolean ascending = PreferenceFragment.getAscending(mContext);
 
 		// Sort lists
 		if (!cancelled) {
-			Collections.sort(listSdCard); 
-			Collections.sort(listDir, Comparators.getForDirectory(sortBy, ascending)); 
-			Collections.sort(listFile, Comparators.getForFile(sortBy, ascending)); 
+			Collections.sort(listSdCard);
+			Collections.sort(listDir, Comparators.getForDirectory(sortBy, ascending));
+			Collections.sort(listFile, Comparators.getForFile(sortBy, ascending));
 		}
-		
+
 		// Return lists
 		if (!cancelled) {
             Logger.logV(Logger.TAG_DIRSCANNER, "Sending data back to main thread");
@@ -184,20 +190,20 @@ public class DirectoryScanner extends Thread {
 			msg.obj = contents;
 			msg.sendToTarget();
 		}
-		
+
 		running = false;
 	}
-		
+
 	private void updateProgress(int progress, int maxProgress) {
 		// Only update the progress bar every n steps...
 		if ((progress % PROGRESS_STEPS) == 0) {
 			// Also don't update for the first second.
 			long curTime = SystemClock.uptimeMillis();
-			
+
 			if (curTime - operationStartTime < 1000L) {
 				return;
 			}
-			
+
 			// Okay, send an update.
 			Message msg = handler.obtainMessage(MESSAGE_SET_PROGRESS);
 			msg.arg1 = progress;
@@ -213,7 +219,7 @@ public class DirectoryScanner extends Thread {
 	public boolean getNoMedia() {
 		return noMedia;
 	}
-	
+
 	public boolean isRunning(){
 		return running;
 	}
@@ -250,19 +256,19 @@ class Comparators{
 
 abstract class FileHolderComparator implements Comparator<FileHolder>{
 	private boolean ascending = true;
-	
+
 	FileHolderComparator(boolean asc){
 		ascending = asc;
 	}
-	
+
 	FileHolderComparator(){
 		this(true);
 	}
-	
+
 	public int compare(FileHolder f1, FileHolder f2){
 		return comp((ascending ? f1 : f2), (ascending ? f2 : f1));
 	}
-	
+
 	protected abstract int comp(FileHolder f1, FileHolder f2);
 }
 
@@ -270,7 +276,7 @@ class NameComparator extends FileHolderComparator{
 	public NameComparator(boolean asc){
 		super(asc);
 	}
-	
+
 	@Override
 	protected int comp(FileHolder f1, FileHolder f2) {
 	    return f1.getName().toLowerCase().compareTo(f2.getName().toLowerCase());
@@ -292,7 +298,7 @@ class ExtensionComparator extends FileHolderComparator{
 	public ExtensionComparator(boolean asc){
 		super(asc);
 	}
-	
+
 	@Override
 	protected int comp(FileHolder f1, FileHolder f2) {
 	    return f1.getExtension().compareTo(f2.getExtension());

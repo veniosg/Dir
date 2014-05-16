@@ -17,105 +17,59 @@
 package com.veniosg.dir.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.ListPreference;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.MenuItem;
 
+import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
+import com.veniosg.dir.fragment.PreferenceFragment;
+import com.veniosg.dir.fragment.SearchListFragment;
+import com.veniosg.dir.fragment.SimpleFileListFragment;
 import com.veniosg.dir.util.Utils;
+import com.veniosg.dir.view.Themer;
 
-public class PreferenceActivity extends android.preference.PreferenceActivity
-                                implements OnSharedPreferenceChangeListener {
-
-	private static final String PREFS_MEDIASCAN = "mediascan";
-	private static final String PREFS_DISPLAYHIDDENFILES = "displayhiddenfiles";
-    private static final String PREFS_DEFAULTPICKFILEPATH = "defaultpickfilepath";
-	private static final String PREFS_SORTBY = "sortby";
-	private static final String PREFS_ASCENDING = "ascending";
-    private static final String PREFS_USEBESTMATCH = "usebestmatch";
+public class PreferenceActivity extends BaseActivity {
+    private PreferenceFragment mFragment;
 
     @SuppressWarnings("ConstantConditions")
     @Override
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-        getWindow().setBackgroundDrawableResource(R.color.window);
-        addPreferencesFromResource(R.xml.preferences);
+
         getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		/* Register the onSharedPreferenceChanged listener to update the SortBy ListPreference summary */
-		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-		/* Set the onSharedPreferenceChanged listener summary to its initial value */
-		changeListPreferenceSummaryToCurrentValue((ListPreference)findPreference("sortby"));
-	}
+
+        mFragment = (PreferenceFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+        if(mFragment == null){
+            mFragment = new PreferenceFragment();
+            getFragmentManager()
+                    .beginTransaction()
+                    .add(android.R.id.content, mFragment, FRAGMENT_TAG)
+                    .commit();
+        }
+    }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			Utils.showHome(this);
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	public static boolean getMediaScanFromPreference(Context context) {
-		return PreferenceManager.getDefaultSharedPreferences(context)
-					.getBoolean(PREFS_MEDIASCAN, false);
-	}
-
-	static void setDisplayHiddenFiles(Context context, boolean enabled) {
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putBoolean(PREFS_DISPLAYHIDDENFILES, enabled);
-		editor.commit();
-	}
-
-	public static boolean getDisplayHiddenFiles(Context context) {
-		return PreferenceManager.getDefaultSharedPreferences(context)
-				.getBoolean(PREFS_DISPLAYHIDDENFILES, true);
-	}
-
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-		if(key.equals("sortby")){
-			changeListPreferenceSummaryToCurrentValue((ListPreference)findPreference(key));
+			return true;
+        default:
+            return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	private void changeListPreferenceSummaryToCurrentValue(ListPreference listPref){
-		listPref.setSummary(listPref.getEntry());
-	}
-	
 
-	public static int getSortBy(Context context) {
-		/* entryValues must be a string-array while we need integers */
-		return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context)
-								 .getString(PREFS_SORTBY, "1"));
-	}
-	
-	public static boolean getAscending(Context context) {
-		return PreferenceManager.getDefaultSharedPreferences(context)
-				.getBoolean(PREFS_ASCENDING, true);
-	}
 
-    public static void setDefaultPickFilePath(Context context, String path) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(PREFS_DEFAULTPICKFILEPATH, path);
-        editor.commit();
+
+    @Override
+    public Themer.Flavor getThemeFlavor() {
+        return Themer.Flavor.OPAQUE;
     }
-
-    public static String getDefaultPickFilePath(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(PREFS_DEFAULTPICKFILEPATH, Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) ? Environment.getExternalStorageDirectory().getAbsolutePath() : "/");
-    }
-
-    public static boolean getUseBestMatch(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PreferenceActivity.PREFS_USEBESTMATCH, true);
-    }
-
 }

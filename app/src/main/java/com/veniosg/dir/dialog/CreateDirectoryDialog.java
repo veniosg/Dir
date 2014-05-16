@@ -21,6 +21,7 @@ import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.dialog.OverwriteFileDialog.Overwritable;
 import com.veniosg.dir.fragment.FileListFragment;
+import com.veniosg.dir.util.Utils;
 
 import java.io.File;
 
@@ -56,16 +57,17 @@ public class CreateDirectoryDialog extends DarkTitleDialogFragment implements Ov
 				.setTitle(R.string.create_new_folder)
 				.setView(view)
 				.setPositiveButton(android.R.string.ok,
-						new DialogInterface.OnClickListener() {
+                        new DialogInterface.OnClickListener() {
 
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								createFolder(v.getText(), getActivity());
-							}
-						})
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                createFolder(v.getText(), getActivity());
+                            }
+                        }
+                )
                 .setNegativeButton(android.R.string.cancel, null)
-                .setIcon(getResources().getDrawable(R.drawable.ic_item_folder))
+                .setIcon(Utils.getFolderIcon(Utils.getThemedMimeIconsContainer(getActivity())))
 				.create();
 	}
 

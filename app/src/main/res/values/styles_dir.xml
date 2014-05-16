@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2014 George Venios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Text styles -->
+    <style name="TextAppearance.Dir.Title" parent="android:TextAppearance.Holo.Large.Inverse">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-thin</item>
+    </style>
+    <style name="TextAppearance.Dir.Subtitle" parent="android:TextAppearance.Holo.Small.Inverse">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-thin</item>
+    </style>
+    <style name="Widget.Dir.TextViewStyle" parent="android:Widget.Holo.Light.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
+    </style>
+    <style name="Widget.Dir.ButtonStyle" parent="android:Widget.Holo.Light.Button">
+        <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
+    </style>
+    <style name="Widget.Dir.EditTextStyle" parent="android:Widget.Holo.Light.EditText">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>
+    </style>
+    <style name="Widget.Dir.ActionMode" parent="android:Widget.Holo.Light.ActionMode.Inverse">
+        <item name="android:titleTextStyle">@style/TextAppearance.Dir.Title</item>
+        <item name="android:subtitleTextStyle">@style/TextAppearance.Dir.Subtitle</item>
+    </style>
+
+    <!-- Actionbar styling -->
+    <style name="Widget.Dir.ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:titleTextStyle">@style/TextAppearance.Dir.Title</item>
+        <item name="android:subtitleTextStyle">@style/TextAppearance.Dir.Subtitle</item>
+        <item name="android:background">@drawable/ab_solid_dir</item>
+        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_dir</item>
+        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_dir</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Dir</item>
+    </style>
+    <style name="ProgressBar.Dir" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_dir</item>
+    </style>
+    <style name="PopupMenu.Dir" parent="@android:style/Widget.Holo.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_dir</item>
+    </style>
+
+    <!-- This style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Dir.Widget" parent="android:Theme.Holo">
+        <item name="android:textAppearanceLargePopupMenu">@style/TextAppearance.Dir.LargePopupMenu</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Dir</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Dir</item>
+    </style>
+
+    <style name="Theme.Dir.Dialog.Alert" parent="@android:style/Theme.Holo.Light.Dialog">
+        <item name="android:textAppearanceLarge">@style/TextAppearance.Dir.Large</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearance.Dir.Medium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearance.Dir.Small</item>
+        <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/dir_btn_radio_holo_light</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/dir_btn_check_holo_light</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/dir_list_selector_holo_light</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/dir_activated_background_holo_light</item>
+
+        <!-- Dialog thingies -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowTitleStyle">@style/DialogWindowTitle</item>
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+    </style>
+
+    <style name="Widget.Dir.PathBar.Button" parent="@android:style/Widget.Holo.Button">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+</resources>

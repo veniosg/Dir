@@ -6,6 +6,7 @@ import android.view.ViewConfiguration;
 import com.veniosg.dir.misc.MimeTypes;
 import com.veniosg.dir.misc.ThumbnailLoader;
 import com.veniosg.dir.util.CopyHelper;
+import com.veniosg.dir.view.Themer;
 
 import java.lang.reflect.Field;
 
@@ -22,6 +23,7 @@ public class FileManagerApplication extends Application{
         mMimeTypes = MimeTypes.newInstance(this);
         mThumbnailLoader = new ThumbnailLoader(this);
 
+        // Force-enable the action overflow
         try {
             ViewConfiguration config = ViewConfiguration.get(this);
             Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
@@ -32,7 +34,7 @@ public class FileManagerApplication extends Application{
         } catch (Exception ex) {
             // Ignore
         }
-	}
+    }
 	
 	public CopyHelper getCopyHelper(){
 		return mCopyHelper;

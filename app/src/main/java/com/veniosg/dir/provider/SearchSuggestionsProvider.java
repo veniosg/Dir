@@ -67,8 +67,7 @@ public class SearchSuggestionsProvider extends ContentProvider {
         File root = Environment.getExternalStorageDirectory();
         List<FileHolder> results = Utils.searchIn(root, query,
                 ((FileManagerApplication) getContext().getApplicationContext())
-                        .getMimeTypes(), getContext()
-        );
+                        .getMimeTypes(), getContext(), null);
 
         MatrixCursor cursor = new MatrixCursor(new String[]{
                 SearchManager.SUGGEST_COLUMN_ICON_1,
@@ -77,12 +76,14 @@ public class SearchSuggestionsProvider extends ContentProvider {
                 SearchManager.SUGGEST_COLUMN_INTENT_DATA,
                 BaseColumns._ID});
         for (FileHolder fh : results)
-            cursor.newRow().add(Utils.getIconResourceForFile(
-                    ((FileManagerApplication) getContext().getApplicationContext())
-                            .getMimeTypes(),
-                    fh.getMimeType(),
-                    fh.getFile()
-            ))
+            cursor.newRow()
+                    // TODO reenable this sometime later
+//                    .add(Utils.getIconResourceForFile(
+//                        ((FileManagerApplication) getContext().getApplicationContext())
+//                                .getMimeTypes(),
+//                        fh.getMimeType(),
+//                        fh.getFile()))
+                    .add(android.R.color.transparent)
                     .add(fh.getName())
                     .add(fh.getFile().getPath())
                     .add(fh.getFile().getAbsolutePath())

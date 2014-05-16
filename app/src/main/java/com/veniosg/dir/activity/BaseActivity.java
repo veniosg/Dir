@@ -17,10 +17,42 @@
 package com.veniosg.dir.activity;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.LocalBroadcastManager;
+
+import com.veniosg.dir.IntentConstants;
+import com.veniosg.dir.view.Themer;
 
 @SuppressLint("Registered")
-class BaseActivity extends FragmentActivity {
+abstract class BaseActivity extends FragmentActivity implements Themer.Themable {
     protected static final String FRAGMENT_TAG = "content_fragment";
 
+    private BroadcastReceiver mThemeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            recreate();
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Themer.applyTheme(this);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mThemeReceiver,
+                new IntentFilter(IntentConstants.ACTION_REFRESH_THEME));
+    }
+
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mThemeReceiver);
+
+        super.onDestroy();
+    }
 }

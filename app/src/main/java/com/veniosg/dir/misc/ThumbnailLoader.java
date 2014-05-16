@@ -21,7 +21,7 @@ import android.widget.ImageView;
 
 import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.R;
-import com.veniosg.dir.activity.PreferenceActivity;
+import com.veniosg.dir.fragment.PreferenceFragment;
 import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.util.Utils;
@@ -104,7 +104,7 @@ public class ThumbnailLoader {
 			}
 		};
 
-        mUseBestMatch = PreferenceActivity.getUseBestMatch(context);
+        mUseBestMatch = PreferenceFragment.getUseBestMatch(context);
 	}
 
 	/**
@@ -122,10 +122,6 @@ public class ThumbnailLoader {
 				imageView.setImageBitmap(bitmap);
 				holder.setPreview(new BitmapDrawable(imageView.getResources(), bitmap));
 			} else {
-				// Give a drawable based on mimetype. Generic file drawable for undefined types.
-				if(holder.getFile().isFile())
-					holder.setPreview(getScaledDrawableForMimetype(holder, imageView.getContext()));
-					
 				if (!cancel) {
 					// Submit the file for decoding.
 					Thumbnail thumbnail = new Thumbnail(imageView, holder);
@@ -349,30 +345,19 @@ public class ThumbnailLoader {
 			thumb = null;
 		}
 	}
-	private Drawable getScaledDrawableForMimetype(FileHolder holder, Context context){
-		Drawable d = getDrawableForMimetype(holder, context);
-		
-		if (d == null) {
-			return new BitmapDrawable(context.getResources(), BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_item_file));
-		} else {
-			int size = thumbnailEdge;
-			// Resizing image.
-			return Utils.resizeDrawable(context.getResources(), d, size, size);
-		}
-	}
 	
 	/**
 	 * Return the Drawable that is associated with a specific mime type for the VIEW action.
+     * @return Can be null, denoting that a default file icon should be used.
 	 */
 	private Drawable getDrawableForMimetype(FileHolder holder, Context context) {
-		if (holder.getMimeType() == null
-                || "*/*".equals(holder.getMimeType())) {
+		if (holder.getMimeType() == null) {
 			return null;
 		}
 
         PackageManager pm = context.getPackageManager();
 
-		// Returns the icon packaged in files with the .apk MIME type.
+		// File is APK. Try to return the packaged icon.
 		if (MIME_APK.equals(holder.getMimeType())) {
 			String path = holder.getFile().getPath();
 			PackageInfo pInfo = pm.getPackageArchiveInfo(path,
@@ -391,23 +376,18 @@ public class ThumbnailLoader {
 			}
 		}
 
-		int iconResource = ((FileManagerApplication) context.getApplicationContext())
-                .getMimeTypes().getIcon(holder.getMimeType());
-		Drawable ret = null;
-		if (iconResource > 0) {
-			try {
-				ret = pm.getResourcesForApplication(context.getPackageName())
-						.getDrawable(iconResource);
-			} catch (NotFoundException e) {
-                Logger.log(e);
-			} catch (NameNotFoundException e) {
-                Logger.log(e);
-			}
-		}
+		Drawable iconForMime = Utils.getIconForFile(
+                ((FileManagerApplication) context.getApplicationContext()).getMimeTypes(),
+                holder.getMimeType(),
+                holder.getFile(),
+                context);
 
-		if (ret != null) {
-			return ret;
-		} else {
+        // If an icon was found, return it.
+		if (iconForMime != null) {
+			return iconForMime;
+		}
+        // If no icon was found, try to find the app used for such files
+        else {
             // Let's probe the intent exactly in the same way as the VIEW action
             // is performed in FileManagerActivity.openFile(..)
             Uri data = FileUtils.getUri(holder.getFile());

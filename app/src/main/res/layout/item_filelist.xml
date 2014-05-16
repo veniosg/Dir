@@ -15,7 +15,7 @@
  * limitations under the License.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/listItemBackground"
+    android:background="?android:attr/activatedBackgroundIndicator"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"

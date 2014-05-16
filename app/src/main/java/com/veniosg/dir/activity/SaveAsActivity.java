@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.view.Themer;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -152,5 +153,10 @@ public class SaveAsActivity extends BaseActivity {
 			}
 			
 		}
+    }
+
+    @Override
+    public Themer.Flavor getThemeFlavor() {
+        return Themer.Flavor.TRANSLUCENT_NAV;
     }
 }

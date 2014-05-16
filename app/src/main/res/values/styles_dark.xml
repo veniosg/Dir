@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2014 George Venios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Text styles -->
+    <style name="TextAppearance.Dir.Dark.Title" parent="android:TextAppearance.Holo.Large">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-thin</item>
+    </style>
+    <style name="TextAppearance.Dir.Dark.Subtitle" parent="android:TextAppearance.Holo.Small">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-thin</item>
+    </style>
+    <style name="Widget.Dir.Dark.TextViewStyle" parent="android:Widget.Holo.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
+    </style>
+    <style name="Widget.Dir.Dark.ButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
+    </style>
+    <style name="Widget.Dir.Dark.EditTextStyle" parent="android:Widget.Holo.EditText">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>
+    </style>
+    <style name="Widget.Dir.Dark.ActionMode" parent="android:Widget.Holo.ActionMode">
+        <item name="android:titleTextStyle">@style/TextAppearance.Dir.Dark.Title</item>
+        <item name="android:subtitleTextStyle">@style/TextAppearance.Dir.Dark.Subtitle</item>
+    </style>
+
+    <!-- Actionbar styling -->
+    <style name="Widget.Dir.Dark.ActionBar" parent="android:Widget.Holo.ActionBar.Solid">
+        <item name="android:titleTextStyle">@style/TextAppearance.Dir.Dark.Title</item>
+        <item name="android:subtitleTextStyle">@style/TextAppearance.Dir.Dark.Subtitle</item>
+        <item name="android:background">@drawable/ab_solid_dark</item>
+        <item name="android:backgroundStacked">@color/dark_light</item>
+        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_dark</item>
+        <item name="android:progressBarStyle">@style/ProgressBar.Dir.Dark</item>
+    </style>
+    <style name="ProgressBar.Dir.Dark">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_dir</item>
+    </style>
+    <style name="PopupMenu.Dir.Dark">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_dark</item>
+    </style>
+
+    <style name="Theme.Dir.Dark.Dialog.Alert" parent="@android:style/Theme.Holo.Dialog">
+        <item name="android:textAppearanceLarge">@style/TextAppearance.Dir.Large</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearance.Dir.Medium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearance.Dir.Small</item>
+        <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/dark_btn_radio_holo_dark</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/dark_btn_check_holo_dark</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/dark_list_selector_holo_dark</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/dark_activated_background_holo_dark</item>
+
+        <!-- Dialog thingies -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowTitleStyle">@style/DialogWindowTitle</item>
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+    </style>
+
+    <style name="Widget.Dir.Dark.PathBar.Button" parent="@android:style/Widget.Holo.Button">
+        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+</resources>

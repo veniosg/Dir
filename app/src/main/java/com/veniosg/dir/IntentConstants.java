@@ -115,4 +115,5 @@ public final class IntentConstants {
 
     public static final String EXTRA_FROM_OI_FILEMANAGER = "org.openintents.extra.FROM_OI_FILEMANAGER";
     public static final String ACTION_REFRESH_LIST = "org.openintents.action.REFRESH_LIST";
+    public static final String ACTION_REFRESH_THEME = "org.openintents.action.REFRESH_THEME";
 }

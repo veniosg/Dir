@@ -16,62 +16,202 @@
  * limitations under the License.
  -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Dir.Launch" parent="@android:style/Theme.DeviceDefault" >
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
     <!-- Light (default) theme -->
-    <style name="Theme.Dir.SolidBars" parent="@android:style/Theme.Holo.Light.DarkActionBar">
-        <!-- Text and AB styling -->
-        <item name="android:textViewStyle">@style/Widget.Dir.TextViewStyle</item>
-        <item name="android:buttonStyle">@style/Widget.Dir.ButtonStyle</item>
-        <item name="android:editTextStyle">@style/Widget.Dir.EditTextStyle</item>
+    <style name="Theme.Dir" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <!-- Common attributes -->
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Dir</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Dir</item>
+        <item name="android:windowBackground">@null</item>
         <item name="android:textAppearanceLarge">@style/TextAppearance.Dir.Large</item>
         <item name="android:textAppearanceMedium">@style/TextAppearance.Dir.Medium</item>
         <item name="android:textAppearanceSmall">@style/TextAppearance.Dir.Small</item>
+
+        <!-- Coloring and styling -->
+        <item name="android:textViewStyle">@style/Widget.Dir.TextViewStyle</item>
+        <item name="android:buttonStyle">@style/Widget.Dir.ButtonStyle</item>
+        <item name="android:editTextStyle">@style/Widget.Dir.EditTextStyle</item>
         <item name="android:actionModeStyle">@style/Widget.Dir.ActionMode</item>
         <item name="android:actionBarStyle">@style/Widget.Dir.ActionBar</item>
         <item name="android:actionBarWidgetTheme">@style/Theme.Dir.Widget</item>
-        <item name="android:actionModeBackground">@drawable/cab_background_top_dir</item>
-        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_dir</item>
-        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Dir</item>
+        <item name="android:actionModeBackground">@drawable/dir_bg_actionmode</item>
+        <item name="android:actionModeSplitBackground">@drawable/dir_bg_actionmode_split</item>
         <item name="android:actionBarItemBackground">@drawable/selectable_background_dir</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Dir</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView.Dir</item>
 
-        <!-- Coloring -->
         <item name="android:editTextBackground">@drawable/dir_edit_text_holo_light</item>
         <item name="android:textColorHighlight">#99210030</item>
         <item name="android:textSelectHandleLeft">@drawable/dir_text_select_handle_left</item>
         <item name="android:textSelectHandleRight">@drawable/dir_text_select_handle_right</item>
         <item name="android:textSelectHandle">@drawable/dir_text_select_handle_middle</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/dir_btn_radio_holo_light</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/dir_btn_check_holo_light</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/dir_list_selector_holo_light</item>
         <item name="android:activatedBackgroundIndicator">@drawable/dir_activated_background_holo_light</item>
         <item name="android:fastScrollThumbDrawable">@drawable/dir_fastscroll_thumb_holo</item>
-
-        <item name="android:windowBackground">@null</item>
-        <item name="android:windowDisablePreview">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-
-        <item name="pathBarBackground">@drawable/bg_pathbar</item>
-        <item name="pathBarItemBackground">@drawable/dir_btn_pathbar_skewed</item>
-
         <item name="android:alertDialogTheme">@style/Theme.Dir.Dialog.Alert</item>
+
+        <item name="pathBarBackground">@drawable/dir_bg_pathbar</item>
+        <item name="pathBarItemBackgroundFirst">@drawable/dir_btn_pathbar_semistraight</item>
+        <item name="pathBarItemBackground">@drawable/dir_btn_pathbar_skewed</item>
+        <item name="pathBarItemBackgroundSquare">@drawable/dir_btn_pathbar_straight</item>
+        <item name="windowContentBackground">@color/dir_window</item>
+        <item name="colorSecondaryNeutral">@color/dir_secondary_neutral</item>
+        <item name="colorAccent">@color/dir_accent</item>
+        <item name="colorFadeCovered">@color/dir_fade_covered</item>
+        <item name="colorFadeSlider">@color/dir_fade_slider</item>
+        <item name="colorSidePaneBackground">@color/dir_side_pane_background</item>
+        <item name="colorLight">@color/dir_light</item>
+        <item name="colorDark">@color/dir_dark</item>
+        <item name="drawerShadow">@drawable/dir_bg_drawer_shadow</item>
+        <item name="colorSecondaryBarBackground">@color/dir_accent</item>
+        <item name="pathbarItemStyle">@style/Widget.Dir.PathBar.Button</item>
+
+        <!-- Themed icons -->
+        <item name="ic_contact">@drawable/dir_ic_action_mail</item>
+        <item name="ic_googleplus">@drawable/dir_ic_action_gplus</item>
+        <item name="ic_github">@drawable/dir_ic_action_github</item>
+        <item name="ic_playstore">@drawable/dir_ic_action_google_play</item>
+        <item name="ic_mime_icons">@drawable/dir_mime_icons</item>
     </style>
 
-    <style name="Theme.Dir" parent="@style/Theme.Dir.SolidBars" tools:ignore="ResourceCycle">
-    </style>
+    <style name="Theme.Dir.TranslucentNav" />
 
-    <style name="Theme.Dir.Dialog.Alert" parent="@android:style/Theme.Holo.Light.Dialog">
+    <!-- Light grayscale theme -->
+    <style name="Theme.Dir.Grayscale" >
+        <!-- Common attributes -->
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Dir</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Dir</item>
+        <item name="android:windowBackground">@null</item>
         <item name="android:textAppearanceLarge">@style/TextAppearance.Dir.Large</item>
         <item name="android:textAppearanceMedium">@style/TextAppearance.Dir.Medium</item>
         <item name="android:textAppearanceSmall">@style/TextAppearance.Dir.Small</item>
-        <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/dir_btn_check_holo_light</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/dir_list_selector_holo_light</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/dir_activated_background_holo_light</item>
 
-        <!-- Dialog thingies -->
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowTitleStyle">@style/DialogWindowTitle</item>
-        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
-        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+        <!-- Coloring and styling -->
+        <!-- same as parent -->
+        <!-- same as parent -->
+        <!-- same as parent -->
+        <!-- same as parent -->
+        <item name="android:actionBarStyle">@style/Widget.Dir.Grayscale.ActionBar</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.Dir.Grayscale.Widget</item>
+        <item name="android:actionModeBackground">@drawable/dark_bg_actionmode</item>
+        <item name="android:actionModeSplitBackground">@drawable/dark_bg_actionmode_split</item>
+        <!-- same as parent -->
+        <item name="android:popupMenuStyle">@style/PopupMenu.Dir.Dark</item>
+
+        <item name="android:editTextBackground">@drawable/grayscale_edit_text_holo_light</item>
+        <item name="android:textColorHighlight">#99000000</item>
+        <item name="android:textSelectHandleLeft">@drawable/grayscale_text_select_handle_left</item>
+        <item name="android:textSelectHandleRight">@drawable/grayscale_text_select_handle_right</item>
+        <item name="android:textSelectHandle">@drawable/grayscale_text_select_handle_middle</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/grayscale_btn_radio_holo_light</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/grayscale_btn_check_holo_light</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/grayscale_list_selector_holo_light</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/grayscale_activated_background_holo_light</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/grayscale_fastscroll_thumb_holo</item>
+        <item name="android:alertDialogTheme">@style/Theme.Dir.Grayscale.Dialog.Alert</item>
+
+        <item name="pathBarItemBackgroundFirst">@drawable/dark_btn_pathbar_semistraight</item>
+        <item name="pathBarItemBackground">@drawable/dark_btn_pathbar_skewed</item>
+        <item name="pathBarItemBackgroundSquare">@drawable/dark_btn_pathbar_straight</item>
+        <item name="colorLight">@color/dark_light</item>
+        <item name="colorDark">@color/dark_dark</item>
+        <item name="colorSecondaryBarBackground">@color/dark_accent_sec</item>
+        <item name="pathbarItemStyle">@style/Widget.Dir.Dark.PathBar.Button</item>
     </style>
+
+    <style name="Theme.Dir.Grayscale.TranslucentNav" />
+
+    <!-- Dark theme -->
+    <style name="Theme.Dir.Dark" parent="@android:style/Theme.Holo" >
+        <!-- Common attributes -->
+        <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Dir</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView.Dir</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="android:textAppearanceLarge">@style/TextAppearance.Dir.Large</item>
+        <item name="android:textAppearanceMedium">@style/TextAppearance.Dir.Medium</item>
+        <item name="android:textAppearanceSmall">@style/TextAppearance.Dir.Small</item>
+
+        <!-- Coloring and styling -->
+        <item name="android:textViewStyle">@style/Widget.Dir.Dark.TextViewStyle</item>
+        <item name="android:buttonStyle">@style/Widget.Dir.Dark.ButtonStyle</item>
+        <item name="android:editTextStyle">@style/Widget.Dir.Dark.EditTextStyle</item>
+        <item name="android:actionModeStyle">@style/Widget.Dir.Dark.ActionMode</item>
+        <item name="android:actionBarStyle">@style/Widget.Dir.Dark.ActionBar</item>
+        <item name="android:textAppearanceLargePopupMenu">@style/TextAppearance.Dir.LargePopupMenu</item>
+        <item name="android:actionModeBackground">@drawable/dark_bg_actionmode</item>
+        <item name="android:actionModeSplitBackground">@drawable/dark_bg_actionmode_split</item>
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_dir</item>
+        <item name="android:popupMenuStyle">@style/PopupMenu.Dir.Dark</item>
+
+        <item name="android:editTextBackground">@drawable/dark_edit_text_holo_dark</item>
+        <item name="android:textColorHighlight">#99d6d6d6</item>
+        <item name="android:textSelectHandleLeft">@drawable/dark_text_select_handle_left</item>
+        <item name="android:textSelectHandleRight">@drawable/dark_text_select_handle_right</item>
+        <item name="android:textSelectHandle">@drawable/dark_text_select_handle_middle</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/dark_btn_radio_holo_dark</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/dark_btn_check_holo_dark</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/dark_list_selector_holo_dark</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/dark_activated_background_holo_dark</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/dark_fastscroll_thumb_holo</item>
+        <item name="android:alertDialogTheme">@style/Theme.Dir.Dark.Dialog.Alert</item>
+
+        <item name="pathBarBackground">@drawable/dark_bg_pathbar</item>
+        <item name="pathBarItemBackgroundFirst">@drawable/dark_btn_pathbar_semistraight</item>
+        <item name="pathBarItemBackground">@drawable/dark_btn_pathbar_skewed</item>
+        <item name="pathBarItemBackgroundSquare">@drawable/dark_btn_pathbar_straight</item>
+        <item name="windowContentBackground">@color/dark_window</item>
+        <item name="colorSecondaryNeutral">@color/dark_secondary_neutral</item>
+        <item name="colorAccent">@color/dark_accent</item>
+        <item name="colorFadeCovered">@color/dark_fade_covered</item>
+        <item name="colorFadeSlider">@color/dark_fade_slider</item>
+        <item name="colorSidePaneBackground">@color/dark_side_pane_background</item>
+        <item name="colorLight">@color/dark_light</item>
+        <item name="colorDark">@color/dark_dark</item>
+        <item name="drawerShadow">@drawable/dark_bg_drawer_shadow</item>
+        <item name="colorSecondaryBarBackground">@color/dark_accent_sec</item>
+        <item name="pathbarItemStyle">@style/Widget.Dir.Dark.PathBar.Button</item>
+
+        <!-- Themed icons -->
+        <item name="ic_contact">@drawable/dark_ic_action_mail</item>
+        <item name="ic_googleplus">@drawable/dark_ic_action_gplus</item>
+        <item name="ic_github">@drawable/dark_ic_action_github</item>
+        <item name="ic_playstore">@drawable/dark_ic_action_google_play</item>
+        <item name="ic_mime_icons">@drawable/dark_mime_icons</item>
+    </style>
+
+    <style name="Theme.Dir.Dark.TranslucentNav" />
+
+    <!-- Holo dark theme -->
+    <style name="Theme.Dir.HoloDark" parent="@android:style/Theme.Holo" >
+        <item name="android:actionBarStyle">@android:style/Widget.Holo.ActionBar</item>
+
+        <item name="pathBarBackground">@drawable/holodark_bg_pathbar</item>
+        <item name="pathBarItemBackgroundFirst">@drawable/dark_btn_pathbar_semistraight</item>
+        <item name="pathBarItemBackground">@drawable/dark_btn_pathbar_skewed</item>
+        <item name="pathBarItemBackgroundSquare">@drawable/dark_btn_pathbar_straight</item>
+        <item name="windowContentBackground">@color/holodark_window</item> <!-- workaround for side pane weirdness -->
+        <item name="colorSecondaryNeutral">@color/holodark_secondary_neutral</item>
+        <item name="colorAccent">@color/holodark_accent</item>
+        <item name="colorFadeCovered">@color/holodark_fade_covered</item>
+        <item name="colorFadeSlider">@color/holodark_fade_slider</item>
+        <item name="colorSidePaneBackground">@color/holodark_side_pane_background</item>
+        <item name="colorLight">@color/holodark_light</item>
+        <item name="colorDark">@color/holodark_dark</item>
+        <item name="drawerShadow">@drawable/dark_bg_drawer_shadow</item>
+        <item name="colorSecondaryBarBackground">@color/dark_accent_sec</item>
+        <item name="pathbarItemStyle">@style/Widget.Dir.HoloDark.PathBar.Button</item>
+
+        <!-- Themed icons -->
+        <item name="ic_contact">@drawable/dark_ic_action_mail</item>
+        <item name="ic_googleplus">@drawable/dark_ic_action_gplus</item>
+        <item name="ic_github">@drawable/dark_ic_action_github</item>
+        <item name="ic_playstore">@drawable/dark_ic_action_google_play</item>
+        <item name="ic_mime_icons">@drawable/dark_mime_icons</item>
+    </style>
+
+    <style name="Theme.Dir.HoloDark.TranslucentNav" />
 </resources>

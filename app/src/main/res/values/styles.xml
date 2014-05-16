@@ -15,50 +15,6 @@
  * limitations under the License.
  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-
-    <!-- Text styles -->
-    <style name="Widget.Dir.TextViewStyle" parent="android:Widget.Holo.Light.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
-    </style>
-    <style name="Widget.Dir.ButtonStyle" parent="android:Widget.Holo.Light.Button">
-        <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
-    </style>
-    <style name="Widget.Dir.EditTextStyle" parent="android:Widget.Holo.Light.EditText">
-        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>
-    </style>
-    <style name="Widget.Dir.ActionMode" parent="android:Widget.Holo.Light.ActionMode.Inverse">
-        <item name="android:titleTextStyle">@style/TextAppearance.Dir.Title</item>
-        <item name="android:subtitleTextStyle">@style/TextAppearance.Dir.Subtitle</item>
-    </style>
-
-    <!-- Actionbar styling -->
-    <style name="Widget.Dir.ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:titleTextStyle">@style/TextAppearance.Dir.Title</item>
-        <item name="android:subtitleTextStyle">@style/TextAppearance.Dir.Subtitle</item>
-        <item name="android:background">@drawable/ab_solid_dir</item>
-        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_dir</item>
-        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_dir</item>
-        <item name="android:progressBarStyle">@style/ProgressBar.Dir</item>
-    </style>
-    <style name="ProgressBar.Dir" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal_dir</item>
-    </style>
-    <style name="ActionButton.CloseMode.Dir" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
-        <item name="android:background">@drawable/btn_cab_done_dir</item>
-    </style>
-    <style name="DropDownListView.Dir" parent="@android:style/Widget.Holo.ListView.DropDown">
-        <item name="android:listSelector">@drawable/selectable_background_dir</item>
-    </style>
-    <style name="PopupMenu.Dir" parent="@android:style/Widget.Holo.ListPopupWindow">
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_dir</item>
-    </style>
-    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Dir.Widget" parent="android:Theme.Holo">
-        <item name="android:textAppearanceLargePopupMenu">@style/TextAppearance.Dir.LargePopupMenu</item>
-        <item name="android:popupMenuStyle">@style/PopupMenu.Dir</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView.Dir</item>
-    </style>
-
     <!-- Base text appearance values -->
     <style name="TextAppearance.Dir.Large" parent="android:TextAppearance.Holo.Large">
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-thin</item>
@@ -72,21 +28,25 @@
     <style name="TextAppearance.Dir.LargePopupMenu" parent="TextAppearance.Dir.Medium">
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
     </style>
-    <style name="TextAppearance.Dir.Title" parent="android:TextAppearance.Holo.Large.Inverse">
-        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-thin</item>
-    </style>
-    <style name="TextAppearance.Dir.Subtitle" parent="android:TextAppearance.Holo.Small.Inverse">
-        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-thin</item>
-    </style>
     <style name="TextAppearance.Dir.Large.DialogTitle">
         <item name="android:textStyle">bold</item>
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
     </style>
-
-    <!-- Misc styles -->
-    <style name="listItemBackground">
-        <item name="android:background">?android:attr/activatedBackgroundIndicator</item>
+    <style name="DialogWindowTitle" >
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:textAppearance">@style/TextAppearance.Dir.Large.DialogTitle</item>
     </style>
+
+    <!-- Misc -->
+    <style name="ActionButton.CloseMode.Dir" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_dir</item>
+    </style>
+    <style name="DropDownListView.Dir" parent="@android:style/Widget.Holo.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_dir</item>
+    </style>
+
+    <!-- Helper styles -->
     <style name="dialogDetailsPrimaryText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -98,11 +58,5 @@
         <item name="android:paddingLeft">8dp</item>
         <item name="android:layout_marginBottom">3dp</item>
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
-    </style>
-
-    <style name="DialogWindowTitle" >
-        <item name="android:maxLines">1</item>
-        <item name="android:scrollHorizontally">true</item>
-        <item name="android:textAppearance">@style/TextAppearance.Dir.Large.DialogTitle</item>
     </style>
 </resources>

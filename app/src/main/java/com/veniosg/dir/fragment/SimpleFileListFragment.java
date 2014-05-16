@@ -441,10 +441,14 @@ public class SimpleFileListFragment extends FileListFragment {
      * @param item The dir/file to open.
      */
     public void openInformingPathBar(FileHolder item) {
+        openInformingPathBar(item, false);
+    }
+
+    public void openInformingPathBar(FileHolder item, boolean forceNoAnim) {
         if (mPathBar == null)
             open(item);
         else
-            mPathBar.cd(item.getFile());
+            mPathBar.cd(item.getFile(), forceNoAnim);
     }
 
     /**
@@ -500,7 +504,7 @@ public class SimpleFileListFragment extends FileListFragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         // We only know about ".nomedia" once scanning is finished.
-        boolean showMediaScanMenuItem = PreferenceActivity.getMediaScanFromPreference(getActivity());
+        boolean showMediaScanMenuItem = PreferenceFragment.getMediaScanFromPreference(getActivity());
         if (!mScanner.isRunning() && showMediaScanMenuItem) {
             menu.findItem(R.id.menu_media_scan_include).setVisible(mScanner.getNoMedia());
             menu.findItem(R.id.menu_media_scan_exclude).setVisible(!mScanner.getNoMedia());

@@ -16,42 +16,42 @@
  -->
 <MimeTypes>
 	<!-- Image types -->
-	<type extension=".png" mimetype="image/png" icon="@drawable/ic_item_image" />
-	<type extension=".gif" mimetype="image/gif" icon="@drawable/ic_item_image" />
-	<type extension=".jpg" mimetype="image/jpeg" icon="@drawable/ic_item_image" />
-	<type extension=".jpeg" mimetype="image/jpeg" icon="@drawable/ic_item_image" />
-	<type extension=".bmp" mimetype="image/bmp" icon="@drawable/ic_item_image" />
+	<type extension=".png" mimetype="image/png" icon="2" />
+	<type extension=".gif" mimetype="image/gif" icon="2" />
+	<type extension=".jpg" mimetype="image/jpeg" icon="2" />
+	<type extension=".jpeg" mimetype="image/jpeg" icon="2" />
+	<type extension=".bmp" mimetype="image/bmp" icon="2" />
 	    
 	<!-- Audio types -->
-	<type extension=".mp3" mimetype="audio/mpeg" icon="@drawable/ic_item_audio" />
-	<type extension=".wav" mimetype="audio/x-wav" icon="@drawable/ic_item_audio" />
-	<type extension=".ogg" mimetype="application/ogg" icon="@drawable/ic_item_audio" />
-	<type extension=".mid" mimetype="audio/midi" icon="@drawable/ic_item_audio" />
-	<type extension=".midi" mimetype="audio/midi" icon="@drawable/ic_item_audio" />
-	<type extension=".amr" mimetype="audio/amr" icon="@drawable/ic_item_audio" />
-	<type extension=".aac" mimetype="audio/x-aac" icon="@drawable/ic_item_audio" /> <!-- NOT IN WEBKIT -->
+	<type extension=".mp3" mimetype="audio/mpeg" icon="3" />
+	<type extension=".wav" mimetype="audio/x-wav" icon="3" />
+	<type extension=".ogg" mimetype="application/ogg" icon="3" />
+	<type extension=".mid" mimetype="audio/midi" icon="3" />
+	<type extension=".midi" mimetype="audio/midi" icon="3" />
+	<type extension=".amr" mimetype="audio/amr" icon="3" />
+	<type extension=".aac" mimetype="audio/x-aac" icon="3" /> <!-- NOT IN WEBKIT -->
 	
 	<!-- Video types -->
-	<type extension=".mpeg" mimetype="video/mpeg" icon="@drawable/ic_item_video" />
-	<type extension=".3gp" mimetype="video/3gpp" icon="@drawable/ic_item_video" />
+	<type extension=".mpeg" mimetype="video/mpeg" icon="4" />
+	<type extension=".3gp" mimetype="video/3gpp" icon="4" />
 	
 	<!-- Package types -->
-	<type extension=".jar" mimetype="application/java-archive" icon="@drawable/ic_item_archive" />
-	<type extension=".zip" mimetype="application/zip" icon="@drawable/ic_item_archive" />
-	<type extension=".rar" mimetype="application/rar" icon="@drawable/ic_item_archive" />
-	<type extension=".gz" mimetype="application/gzip" icon="@drawable/ic_item_archive" /> <!-- NOT IN WEBKIT -->
+	<type extension=".jar" mimetype="application/java-archive" icon="3" />
+	<type extension=".zip" mimetype="application/zip" icon="5" />
+	<type extension=".rar" mimetype="application/rar" icon="5" />
+	<type extension=".gz" mimetype="application/gzip" icon="5" /> <!-- NOT IN WEBKIT -->
 	
 	<!-- Web browser types -->
-	<type extension=".htm" mimetype="text/html" icon="@drawable/ic_item_text_web" />
-	<type extension=".html" mimetype="text/html" icon="@drawable/ic_item_text_web" />
-	<type extension=".php" mimetype="text/php" icon="@drawable/ic_item_file" /> <!-- NOT IN WEBKIT -->
+	<type extension=".htm" mimetype="text/html" icon="7" />
+	<type extension=".html" mimetype="text/html" icon="7" />
+	<type extension=".php" mimetype="text/php" icon="1" /> <!-- NOT IN WEBKIT -->
 	
 	<!-- Text types -->
-	<type extension=".txt" mimetype="text/plain" icon="@drawable/ic_item_text" />
-	<type extension=".csv" mimetype="text/csv" icon="@drawable/ic_item_text_csv" />
-	<type extension=".xml" mimetype="text/xml" icon="@drawable/ic_item_text_xml" />
+	<type extension=".txt" mimetype="text/plain" icon="6" />
+	<type extension=".csv" mimetype="text/csv" icon="8" />
+	<type extension=".xml" mimetype="text/xml" icon="9" />
 	
 	<!-- Android specific -->
-	<type extension=".apk" mimetype="application/vnd.android.package-archive" icon="@drawable/ic_item_android_package" />
+	<type extension=".apk" mimetype="application/vnd.android.package-archive" icon="10" />
 	
 </MimeTypes>

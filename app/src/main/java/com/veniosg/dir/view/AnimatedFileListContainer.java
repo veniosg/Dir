@@ -47,7 +47,8 @@ public class AnimatedFileListContainer extends FrameLayout {
 
     private BitmapDrawable mScreenshot;
     private float mDimAmount = 0;
-    private int mDimColor = getResources().getColor(R.color.fade_covered);
+    private int mDimColor = getResources().getColor(
+            Themer.getThemedResourceId(getContext(), R.attr.colorFadeCovered));
 
     public AnimatedFileListContainer(Context context) {
         super(context);
