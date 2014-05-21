@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -27,14 +28,21 @@ import java.io.File;
 
 public class CreateDirectoryDialog extends DarkTitleDialogFragment implements Overwritable {
 	private File mIn;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		mIn = new File(getArguments().getString(IntentConstants.EXTRA_DIR_PATH));
 	}
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getDialog().getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
     @Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -45,13 +53,13 @@ public class CreateDirectoryDialog extends DarkTitleDialogFragment implements Ov
 		v.setHint(R.string.folder_name);
 
 		v.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-			public boolean onEditorAction(TextView text, int actionId,
-					KeyEvent event) {
-				if (actionId == EditorInfo.IME_ACTION_GO)
-					createFolder(text.getText(), getActivity());
-				return true;
-			}
-		});
+            public boolean onEditorAction(TextView text, int actionId,
+                                          KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_GO)
+                    createFolder(text.getText(), getActivity());
+                return true;
+            }
+        });
 
 		return new AlertDialog.Builder(getActivity())
 				.setTitle(R.string.create_new_folder)

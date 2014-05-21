@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -30,6 +33,14 @@ public class MultiCompressDialog extends DarkTitleDialogFragment implements Over
 		
 		mFileHolders = getArguments().getParcelableArrayList(IntentConstants.EXTRA_DIALOG_FILE_HOLDER);
 	}
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        getDialog().getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

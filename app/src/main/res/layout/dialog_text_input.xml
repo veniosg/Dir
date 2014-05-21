@@ -27,6 +27,8 @@
 	    android:selectAllOnFocus="true"
 	    android:layout_gravity="center"
 	    android:maxLines="1"
-	    android:layout_margin="16dp" />
+	    android:layout_margin="16dp" >
+        <requestFocus/>
+    </EditText>
 
 </LinearLayout>
