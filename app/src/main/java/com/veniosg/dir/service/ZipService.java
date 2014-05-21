@@ -189,13 +189,18 @@ public class ZipService extends IntentService {
             }
 
             filesCompressed++;
+            zipStream.closeEntry();
             in.close();
         } else {
-            // Recurse
-            for (File child : toCompress.listFiles()) {
-                filesCompressed = compressCore(notId, zipStream, child,
-                        internalPath + "/" + toCompress.getName(),
-                        filesCompressed, fileCount, zipFile);
+            if (toCompress.list().length == 0) {
+                zipStream.putNextEntry(new ZipEntry(internalPath + "/" + toCompress.getName() + "/"));
+                zipStream.closeEntry();
+            } else {
+                for (File child : toCompress.listFiles()) {
+                    filesCompressed = compressCore(notId, zipStream, child,
+                            internalPath + "/" + toCompress.getName(),
+                            filesCompressed, fileCount, zipFile);
+                }
             }
         }
 
