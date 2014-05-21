@@ -51,5 +51,5 @@
     <color name="holodark_side_pane_background">#3000</color>
     <color name="holodark_fade_covered">#B000</color>
     <color name="holodark_fade_slider">#EE131313</color>
-    <color name="holodark_pathbar_bg">#0C0C0C</color>
+    <color name="holodark_pathbar_bg">#08090A</color>
 </resources>

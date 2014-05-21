@@ -202,7 +202,7 @@
         <item name="colorLight">@color/holodark_light</item>
         <item name="colorDark">@color/holodark_dark</item>
         <item name="drawerShadow">@drawable/dark_bg_drawer_shadow</item>
-        <item name="colorSecondaryBarBackground">@color/dark_accent_sec</item>
+        <item name="colorSecondaryBarBackground">@color/holodark_pathbar_bg</item>
         <item name="pathbarItemStyle">@style/Widget.Dir.HoloDark.PathBar.Button</item>
 
         <!-- Themed icons -->
