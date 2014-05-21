@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
+import java.util.zip.ZipException;
 
 /**
  * @author George Venios
@@ -151,7 +152,7 @@ public class ZipService extends IntentService {
             filesCompressed = compressCore(list.hashCode(), zipStream, file.getFile(),
                     null, filesCompressed, fileCount, to);
         }
-
+        
         zipStream.flush();
         zipStream.close();
 
@@ -177,8 +178,9 @@ public class ZipService extends IntentService {
             FileInputStream in = new FileInputStream(toCompress);
 
             // Create internal zip file entry.
-            if (internalPath.length() > 0)
+            if (internalPath.length() > 0) {
                 zipStream.putNextEntry(new ZipEntry(internalPath + "/" + toCompress.getName()));
+            }
             else {
                 zipStream.putNextEntry(new ZipEntry(toCompress.getName()));
             }
@@ -189,8 +191,14 @@ public class ZipService extends IntentService {
             }
 
             filesCompressed++;
+            zipStream.closeEntry();
             in.close();
         } else {
+            // if i don't add this check the compression still works
+            // but resulting zip file is larger in bytes.
+            if (toCompress.list().length == 0) { 
+                zipStream.putNextEntry(new ZipEntry(internalPath + "/" + toCompress.getName() + "/"));
+            }
             // Recurse
             for (File child : toCompress.listFiles()) {
                 filesCompressed = compressCore(notId, zipStream, child,
