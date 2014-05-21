@@ -40,6 +40,10 @@
     <color name="dark_side_pane_background">@color/dark_window</color>
     <color name="dark_fade_covered">#B000</color>
     <color name="dark_fade_slider">#EE131313</color>
+    <color name="dark_activated">#4FFF</color>
+
+    <!-- Grayscale colors -->
+    <color name="grayscale_activated">#4000</color>
 
     <!-- HoloDark colors -->
     <color name="holodark_dark">#000</color>

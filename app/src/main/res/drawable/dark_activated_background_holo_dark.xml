@@ -15,6 +15,6 @@
 -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_activated="true" android:drawable="@drawable/dark_list_activated_holo" />
+    <item android:state_activated="true" android:drawable="@color/dark_activated" />
     <item android:drawable="@android:color/transparent" />
 </selector>
