@@ -125,12 +125,10 @@
     <string name="selected">selected</string>
 
     <string name="bookmark_empty">No bookmarks added.</string>
-    <string name="bookmark_added">خەتكۈش قوشۇلدى</string>
 
     <!-- Search related -->
     <string name="search_hint">Search files</string>
     <string name="query_error">Query error</string>
-    <string name="search_settings_descr">Files and folders in storage</string>
 
     <!-- icon content description -->
     <string name="item_icon">Item icon</string>

@@ -14,42 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  -->
- 
 <resources>
-	<!-- ***************************
-	     About information
-	     *************************** -->
     <string name="app_name">Dir</string>
-
-    <string-array name="about_authors"><!-- Add your name here if you helped out -->
-        <item>Peli</item>
-        <item>Friedger</item>
-        <item>"Nicolas 'plusminus' Gramlich"</item>
-        <item>Steven Osborn</item>
-        <item>"Michael 'EboMike' Krehan"</item>
-        <item>John Doe</item>
-        <item>Matěj Konečný</item>
-        <item>Philip Hayes</item>
-        <item>George Venios</item>
-    </string-array>
-    
-    <string-array name="about_documenters"><!-- Add your name here if you helped out -->
-        <!-- <item></item> -->
-    </string-array>
-    
-    <string-array name="about_translators"><!-- Add your name here if you helped out, but only in the arrays.xml for the localization that you helped to translate into! -->
-        <!-- <item></item>  -->
-    </string-array>
-    
-    <string-array name="about_artists"><!-- Add your name here if you helped out -->
-        <item>Peli</item>
-        <item>Androidicons www.androidicons.com</item>
-        <item>George Venios</item>
-    </string-array>
-
-    <!-- ***************************
-         Preferences
-         *************************** -->
+	
     <string-array name="sortby_values">
         <item>1</item>
         <item>2</item>

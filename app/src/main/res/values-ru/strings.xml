@@ -130,12 +130,10 @@
     <string name="selected">выбранный</string>
 
     <string name="bookmark_empty">Нет добавленных закладок</string>
-    <string name="bookmark_added">Закладка добавленна</string>
 
     <!-- Search related -->
     <string name="search_hint">Поиск файлов</string>
     <string name="query_error">Ошибочный запрос</string>
-    <string name="search_settings_descr">Файлы и папки</string>
 
     <!-- icon content description -->
     <string name="item_icon">Значок элемента</string>
