@@ -48,7 +48,7 @@ public class DetailsDialog extends DarkTitleDialogFragment {
 		String perms = (f.canRead() ? "R" : "-") + (f.canWrite() ? "W" : "-") + (FileUtils.canExecute(f) ? "X" : "-");
 		((TextView) v.findViewById(R.id.details_permissions_value)).setText(perms);
 		
-		((TextView) v.findViewById(R.id.details_hidden_value)).setText(f.isHidden() ? R.string.details_yes : R.string.details_no);
+		((TextView) v.findViewById(R.id.details_hidden_value)).setText(f.isHidden() ? R.string.yes : R.string.no);
 		
 		((TextView) v.findViewById(R.id.details_lastmodified_value)).setText(
                 mFileHolder.getFormattedModificationDate(getActivity()));

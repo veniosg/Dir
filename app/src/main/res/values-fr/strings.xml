@@ -1,49 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
- * Copyright (C) 2007-2008 OpenIntents.org
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- -->
 <resources>
-	<!-- ***************************
-	     About information
-	     *************************** -->
-	
-	<!-- Automatically filled in by Launchpad: -->
-	<string name="about_translators">Launchpad Contributions:
-  Abdessamad Derraz https://launchpad.net/~derraz
-  Anges https://launchpad.net/~az24
-  Arnaud https://launchpad.net/~arnaud-champollion
-  Peli https://launchpad.net/~peli0101
-  Stanislas Michalak https://launchpad.net/~stanislas-michalak
-  kawazzzzzz@yahoo.fr https://launchpad.net/~kawazzzzzz</string>
-	
-	<!-- ***************************
-	     Applicatio-specific strings
-	     *************************** -->
-    <string name="menu_bookmark">Bookmark</string>
-    
+    <!-- Bookmark action. This is a verb. -->
     <string name="create_new_folder">Créer un nouveau dossier</string>
     <string name="folder_name">Nom du dossier</string>
     <string name="this_folder_is_empty">Ce dossier est vide.</string>
     <string name="really_delete">Voulez-vous vraiment supprimer %s?</string>
-
-    <!-- Strings for a multi select feature -->
-	<string name="really_delete_multiselect">Voulez-vous vraiment supprimer %d fichiers?</string>
-
-    <string name="pick_title">File picker</string>
-    
-    <!-- Strings for details table -->
+    <string name="really_delete_multiselect">Voulez-vous vraiment supprimer %d fichiers?</string>
     <string name="details_type">Tapez</string>
     <string name="details_type_folder">dossier</string>
     <string name="details_type_file">fichier</string>
@@ -52,35 +14,18 @@
     <string name="details_permissions">autorisations</string>
     <string name="details_hidden">Invisible</string>
     <string name="details_lastmodified">Dernière mise à jour</string>
-    <string name="details_yes">Oui</string>
-    <string name="details_no">Non</string>
-    
-    <!-- Construct a unique file name of a file called %s. -->
     <string name="copied_file_name">Copie de %s</string>
-    
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="copied_file_name_2">Copie %1$d de %2$s</string>
-    
     <string name="error_generic">Une erreur s\'est produite:</string>
     <string name="error_media_scan">Impossible de changer les paramètres de numérisation des médias.</string>
-    
     <string name="send_not_available">Pas d\'application disponible pour l\'envoi</string>
-    
     <string name="application_not_available">Application non disponible</string>
-    
-	<!-- ***************************
-	     Preferences
-	     *************************** -->
-    <!-- Menu item for Settings -->
-	<string name="settings">Réglages</string>
-	
-    <!-- Category for preferences. -->
+    <string name="settings">Réglages</string>
     <string name="preference_advanced_features">Les fonctionnalités avancées</string>
-
     <string name="preference_displayhiddenfiles_title">Afficher les fichiers cachés</string>
     <string name="preference_displayhiddenfiles_summary_on">Afficher les fichiers cachés</string>
     <string name="preference_displayhiddenfiles_summary_off">Masquer les fichiers cachés</string>
-    
     <string name="preference_sort_settings">Trier Réglages</string>
     <string name="preference_sortby">Trier par</string>
     <string name="preference_sortby_ascending">Dans l\'ordre croissant</string>
@@ -91,77 +36,17 @@
         <item>Taille</item>
         <item>Dernière modification</item>
     </string-array>
-
-        
-    <!-- ***************************
-   		 Strings for the \'Save as\' feature
-    	 *************************** -->
     <string name="saveas_no_file_picked">Vous n\'avez pas choisi n\'importe quel fichier.</string>
     <string name="saveas_error">Une erreur s\'est produite</string>
     <string name="saveas_file_saved">Fichier sauvegardé avec succès</string>
-    
-    <!-- ***************************
-             Strings for the \'Compressing\' and \'Extracting\' feature
-          *************************** -->
-    <string name="extracting">Extracting…</string>
-    <string name="compressing">Compressing…</string>
-    
-    <!-- new menu strings -->
-    <string name="menu_search">Search</string>
-    <string name="menu_create_folder">Create folder</string>
-    <string name="menu_paste">Paste</string>
     <string name="menu_settings">Réglages</string>
-    
     <string name="menu_delete">Supprimer</string>
-    <string name="menu_move">Cut</string>
     <string name="menu_copy">Copier</string>
-    <string name="menu_compress">Compress</string>
     <string name="menu_rename">Renommer</string>
-    
-    <string name="menu_extract">Extract</string>
     <string name="menu_details">Détails</string>
-    <string name="menu_create_shortcut">Create shortcut</string>
-    <string name="send_chooser_title">Send using:</string>
-    
     <string name="menu_check_all">Check all</string>
-
-    <!-- Multi selection action strings -->
-    <string name="selected">selected</string>
-
-    <string name="bookmark_empty">No bookmarks added.</string>
-    <string name="bookmark_added">Signet ajouté</string>
-
-    <!-- Search related -->
-    <string name="search_hint">Search files</string>
-    <string name="query_error">Query error</string>
-    
-    <!-- icon content description -->
-    <string name="item_icon">Item icon</string>
-    
-    <!-- list layout -->
-    <string name="scanning">Scanning…</string>
-    
-    <!-- Dialogs -->
-    <string name="delete_success">Successfully deleted</string>
-    <string name="delete_failure">Some files not deleted</string>
-    <string name="deleting">Deleting…</string>
-    <string name="rename_success">Successfully renamed</string>
     <string name="rename_failure">Couldn\'t rename</string>
-    <string name="loading">Loading…</string>
-    <string name="create_dir_success">Successfully created directory</string>
     <string name="create_dir_failure">Couldn\'t create directory</string>
-    <string name="compressed_file_name">Zip file name</string>
-    <string name="file_exists">File exists</string>
-    <string name="overwrite_question">Overwrite old file?</string>
-    
-    <string name="directory_pick">Select current directory</string>
-    
-    <!-- CopyHelper statuses -->
-    <string name="copying">Copying…</string>
-    <string name="copied">Successfully copied</string>
     <string name="copy_error">Some or all items couldn\'t be copied!</string>
-    <string name="moving">Moving…</string>
-    <string name="moved">Successfully moved</string>
     <string name="move_error">Some or all items couldn\'t be moved!</string>
-    <string name="nothing_to_paste">Nothing to paste. Copy or cut files first.</string>
 </resources>
