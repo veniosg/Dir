@@ -93,20 +93,6 @@ public class FileManagerActivityTest extends ActivityInstrumentationTestCase2<Fi
         solo.goBack();
     }
 
-    /*public void testZipCompression() throws IOException {
-        // create empty directory
-        TestUtils.createDirectory(sdcardPath + "emptyFolder");
-        // create empty subdirectory
-        TestUtils.createDirectory(sdcardPath + "emptyFolder/emptySubFolder");
-        solo.clickLongOnText("emptyFolder");
-        clickOnCAB(R.id.menu_file_ops);
-        solo.clickOnText(solo.getString(R.string.menu_compress));
-        solo.enterText(0, "testzip");
-        solo.clickOnText(solo.getString(android.R.string.ok));
-        Utils.searchIn(new File(sdcardPath), null, );
-        assertTrue()
-    }*/
-
     public void testBookmarks() throws IOException {
         String fn = "oi-bookmark-" + new Random().nextInt(1000);
         TestUtils.createDirectory(sdcardPath + "oi-filemanager-tests/" + fn);
