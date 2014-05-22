@@ -49,17 +49,17 @@ import com.veniosg.dir.util.Logger;
 import java.io.File;
 
 /**
- * Provides a self contained way to represent the current path and provides a handy way of navigating. </br></br>
+ * Provides a self contained way to represent the current path and provides a handy way of navigating. <br/><br/>
  *
  * <b>Note 1:</b> If you need to allow directory navigation outside of this class (e.g. when the user clicks on a folder from a {@link ListView}), use {@link #cd(File)} or {@link #cd(String)}. This is a requirement for the views of this class to
- * properly refresh themselves. <i>You will get notified through the usual {@link OnDirectoryChangedListener}. </i></br>
+ * properly refresh themselves. <i>You will get notified through the usual {@link OnDirectoryChangedListener}. </i><br/><br/>
  *
  * <b>Note 2:</b> To switch between {@link Mode Modes} use the {@link #switchToManualInput()} and {@link #switchToStandardInput()} methods!
  *
  * @author George Venios
  */
 public class PathBar extends ViewFlipper {
-    private static final float NEW_ITEM_DISTANCE = 250F;
+    private static float NEW_ITEM_DISTANCE;
 
     /**
 	 * The available Modes of this PathBar. </br> See {@link PathBar#switchToManualInput() switchToManualInput()} and {@link PathBar#switchToStandardInput() switchToStandardInput()}.
@@ -98,12 +98,14 @@ public class PathBar extends ViewFlipper {
 
 	public PathBar(Context context) {
 		super(context);
+        NEW_ITEM_DISTANCE = getResources().getDisplayMetrics().widthPixels;
 		init();
 	}
 
 	public PathBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init();
+        NEW_ITEM_DISTANCE = getResources().getDisplayMetrics().widthPixels;
+        init();
 	}
 
 	private void init() {
@@ -269,8 +271,8 @@ public class PathBar extends ViewFlipper {
     private Animator createAppearingAnimator(final LayoutTransition transition) {
         AnimatorSet anim = new AnimatorSet();
         anim.setDuration(transition.getDuration(LayoutTransition.APPEARING));
-        anim.setInterpolator(new DecelerateInterpolator());
-        anim.playTogether(ObjectAnimator.ofFloat(null, "alpha", 0F, 1F),
+        anim.setInterpolator(new DecelerateInterpolator(AnimationConstants.INTERPOLATOR_EASING_FACTOR));
+        anim.playTogether(ObjectAnimator.ofFloat(null, "alpha", 0.3F, 1F),
                 ObjectAnimator.ofFloat(null, "translationX", NEW_ITEM_DISTANCE, 0));
         anim.addListener(new Animator.AnimatorListener() {
             @Override
@@ -298,17 +300,16 @@ public class PathBar extends ViewFlipper {
     private Animator createDisappearingAnimator(LayoutTransition transition) {
         AnimatorSet anim = new AnimatorSet();
         anim.setDuration(transition.getDuration(LayoutTransition.DISAPPEARING));
-        anim.setInterpolator(new AccelerateInterpolator());
+        anim.setInterpolator(new AccelerateInterpolator(AnimationConstants.INTERPOLATOR_EASING_FACTOR));
         anim.playTogether(ObjectAnimator.ofFloat(null, "translationX", 0, NEW_ITEM_DISTANCE),
-                ObjectAnimator.ofFloat(null, "alpha", 1F, 0F));
+                ObjectAnimator.ofFloat(null, "alpha", 1F, 0.3F));
         return anim;
     }
 
     /**
 	 * Sets the directory the parent activity showed first so that back behavior is fixed.
 	 *
-	 * @param initDir
-	 *            The directory.
+	 * @param initDir The directory.
 	 */
 	public void setInitialDirectory(File initDir) {
 		mInitialDirectory = initDir;

@@ -109,13 +109,9 @@ public class AnimatedFileListContainer extends FrameLayout {
         ObjectAnimator anim5 = ObjectAnimator.ofFloat(newContent, "alpha", 0.3F, 1F);
         ObjectAnimator anim6 = ObjectAnimator.ofFloat(this, "backgroundDim", 0F, 0.5F);
 
-        anim.setInterpolator(new AccelerateInterpolator());
-        anim2.setInterpolator(new AccelerateInterpolator());
-        anim3.setInterpolator(new AccelerateInterpolator());
-        anim4.setInterpolator(new DecelerateInterpolator());
-        anim5.setInterpolator(new DecelerateInterpolator());
-        anim6.setInterpolator(new DecelerateInterpolator());
         set.setDuration(animDuration);
+        set.setDuration(animDuration);
+        set.setInterpolator(new DecelerateInterpolator(AnimationConstants.INTERPOLATOR_EASING_FACTOR));
         set.setStartDelay(AnimationConstants.ANIM_START_DELAY);
 
         set.playTogether(
@@ -206,11 +202,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         ObjectAnimator anim4 = ObjectAnimator.ofFloat(oldContent, "alpha", 1F, 0.3F);
         ObjectAnimator anim5 = ObjectAnimator.ofFloat(this, "backgroundDim", 0.5F, 0F);
 
-        anim.setInterpolator(new DecelerateInterpolator());
-        anim2.setInterpolator(new DecelerateInterpolator());
-        anim3.setInterpolator(new AccelerateInterpolator());
-        anim4.setInterpolator(new AccelerateInterpolator());
-        anim5.setInterpolator(new AccelerateInterpolator());
+        set.setInterpolator(new AccelerateInterpolator(AnimationConstants.INTERPOLATOR_EASING_FACTOR));
         set.setDuration(animDuration);
 
         set.playTogether(
