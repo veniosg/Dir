@@ -47,12 +47,12 @@ public class FileManagerActivity extends BaseActivity
 		if(intent.getData() != null)
 			mFragment.openInformingPathBar(new FileHolder(FileUtils.getFile(intent.getData()), this),
                     true);  // We force no anim as the layout transition does not run properly
-                            // when the view is not visible and the buttons stay invisible.
+                            // when the view is not visible and consequently the buttons will stay invisible.
 	}
 	
 	/**
 	 * Either open the file and finish, or navigate to the designated directory.
-     * This gives FileManagerActivity the flexibility to actually handle file scheme data of any type.
+     * This gives FileManagerActivity the flexibility to handle file scheme data of any type.
 	 * @return The folder to navigate to, if applicable. Null otherwise.
 	 */
 	private File resolveIntentData(){
@@ -84,7 +84,7 @@ public class FileManagerActivity extends BaseActivity
 
 		// Add fragment only if it hasn't already been added.
 		mFragment = (SimpleFileListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-		if(mFragment == null){
+		if (mFragment == null) {
 			mFragment = new SimpleFileListFragment();
 			Bundle args = new Bundle();
 			if(data == null)
@@ -96,8 +96,7 @@ public class FileManagerActivity extends BaseActivity
 				args.putString(IntentConstants.EXTRA_DIR_PATH, data.toString());
 			mFragment.setArguments(args);
 			getSupportFragmentManager().beginTransaction().add(R.id.fragment, mFragment, FRAGMENT_TAG).commit();
-		}
-		else {
+		} else {
 			// If we didn't rotate and data wasn't null.
 			if(icicle == null && data!=null)
 				mFragment.openInformingPathBar(new FileHolder(new File(data.toString()), this));
@@ -130,55 +129,38 @@ public class FileManagerActivity extends BaseActivity
  	}
 
 	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		// Generate any additional actions that can be performed on the
-		// overall list. This allows other applications to extend
-		// our menu with their own actions.
-		Intent intent = new Intent(null, getIntent().getData());
-		intent.addCategory(Intent.CATEGORY_ALTERNATIVE);
-
-		// Workaround to add icons:
-		menu.addIntentOptions(Menu.CATEGORY_ALTERNATIVE, 0, 0,
-				new ComponentName(this, FileManagerActivity.class), null,
-				intent, 0, null);
-
-		return true;
-	}
-
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		
-		case R.id.menu_search:
-			onSearchRequested();
-			return true;
-		
-		case R.id.menu_settings:
-			Intent intent = new Intent(this, PreferenceActivity.class);
-			startActivity(intent);
-			return true;
+            case R.id.menu_search:
+                onSearchRequested();
+                return true;
 
-        case R.id.menu_about:
-            Intent about = new Intent(this, AboutActivity.class);
-            startActivity(about);
-            return true;
+            case R.id.menu_settings:
+                Intent intent = new Intent(this, PreferenceActivity.class);
+                startActivity(intent);
+                return true;
 
-		case android.R.id.home:
-			mFragment.browseToHome();
-			return true;
+            case R.id.menu_about:
+                Intent about = new Intent(this, AboutActivity.class);
+                startActivity(about);
+                return true;
+
+            case android.R.id.home:
+                mFragment.browseToHome();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
-
 	}
 
     @Override
     public void onBackPressed() {
-        if (!mSpl.isOpen()) {
+        if (mSpl.isOpen()) {
+            mSpl.closePane();
+        } else {
             if (!mFragment.pressBack()) {
                 super.onBackPressed();
             }
-        } else {
-            mSpl.closePane();
         }
     }
 
