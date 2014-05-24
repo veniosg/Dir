@@ -18,7 +18,7 @@ public class AnimationConstants {
      */
     public static final int ANIM_DURATION = 200;
 
-    public static final int ANIM_START_DELAY = 30;
+    public static final int ANIM_START_DELAY = 10;
 
     public static final float INTERPOLATOR_EASING_FACTOR = 2F;
 }
