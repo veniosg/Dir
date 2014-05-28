@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Bookmark action. This is a verb. -->
+    <string name="menu_bookmark">Zakładka</string>
     <string name="create_new_folder">Utwórz nowy katalog</string>
     <string name="folder_name">Nazwa katalogu</string>
     <string name="this_folder_is_empty">Ten katalog jest pusty.</string>
@@ -44,8 +45,4 @@
     <string name="menu_rename">Zmień nazwę</string>
     <string name="menu_details">Szczegóły</string>
     <string name="menu_check_all">Check all</string>
-    <string name="rename_failure">Couldn\'t rename</string>
-    <string name="create_dir_failure">Couldn\'t create directory</string>
-    <string name="copy_error">Some or all items couldn\'t be copied!</string>
-    <string name="move_error">Some or all items couldn\'t be moved!</string>
 </resources>

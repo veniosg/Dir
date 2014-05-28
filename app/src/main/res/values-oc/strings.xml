@@ -9,13 +9,8 @@
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="send_not_available">Pas d\'aplicacion disponibla pel mandadadís</string>
     <string name="application_not_available">Aplicacion pas disponibla</string>
-    <string name="saveas_no_file_picked">You haven\'t picked any file.</string>
     <string name="menu_delete">Suprimir</string>
     <string name="menu_copy">Copiar</string>
     <string name="menu_rename">Tornar nomenar</string>
     <string name="menu_check_all">Check all</string>
-    <string name="rename_failure">Couldn\'t rename</string>
-    <string name="create_dir_failure">Couldn\'t create directory</string>
-    <string name="copy_error">Some or all items couldn\'t be copied!</string>
-    <string name="move_error">Some or all items couldn\'t be moved!</string>
 </resources>

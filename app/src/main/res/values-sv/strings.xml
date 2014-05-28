@@ -45,8 +45,4 @@
     <string name="menu_rename">Byt Namn</string>
     <string name="menu_details">Detaljer</string>
     <string name="menu_check_all">Check all</string>
-    <string name="rename_failure">Couldn\'t rename</string>
-    <string name="create_dir_failure">Couldn\'t create directory</string>
-    <string name="copy_error">Some or all items couldn\'t be copied!</string>
-    <string name="move_error">Some or all items couldn\'t be moved!</string>
 </resources>

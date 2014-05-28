@@ -30,21 +30,36 @@
     <string name="preference_displayhiddenfiles_summary_off">Скрыть скрытые файлы</string>
     <string name="preference_sort_settings">Сортировать настройки</string>
     <string name="preference_sortby">Сортировать по</string>
+    <string name="preference_theme">Оформление</string>
     <string name="preference_sortby_ascending">В порядке возрастания</string>
     <string name="preference_sortby_ascending_summary_on">Сортировать в порядке возрастания</string>
     <string name="preference_sortby_ascending_summary_off">Сортировать в порядке убывания</string>
+    <string name="media_library_added">Добавлено в медиа библиотеку.</string>
+    <string name="media_library_removed">Удалено из медиа библиотеки.</string>
+    <string name="preference_medialib_title">Действия над медиа библиотекой</string>
+    <string name="preference_medialib_summary_on">Показывать действия над медиа библиотекой для папок</string>
+    <string name="preference_medialib_summary_off">Скрыть действия над медиа библиотекой для папок</string>
     <string-array name="preference_sortby_names">
         <item>Имя</item>
         <item>Размер</item>
         <item>Последнее изменение</item>
     </string-array>
+    <string-array name="preference_theme_names">
+        <item>Dir</item>
+        <item>Черно-белый</item>
+        <item>Темная</item>
+        <item>Holo</item>
+    </string-array>
     <string name="saveas_no_file_picked">Вы не выбрали файл.</string>
     <string name="saveas_error">Произошла ошибка.</string>
     <string name="saveas_file_saved">Файл успешно сохранён!</string>
+    <string name="extracting">\u0418\u0437\u0432\u043b\u0435\u0447\u0435\u043d\u0438\u0435&#8230;</string>
+    <string name="compressing">\u0410\u0440\u0445\u0438\u0432\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435&#8230;</string>
     <string name="menu_search">Поиск</string>
     <string name="menu_create_folder">Создать папку</string>
     <string name="menu_paste">Вставить</string>
     <string name="menu_settings">Параметры</string>
+    <string name="menu_file_ops">Операции</string>
     <string name="menu_delete">Удалить</string>
     <string name="menu_move">Вырезать</string>
     <string name="menu_copy">Копировать</string>
@@ -55,24 +70,78 @@
     <string name="menu_create_shortcut">Создать ярлык</string>
     <string name="send_chooser_title">Отправить с помощью:</string>
     <string name="menu_check_all">Выбрать все</string>
+    <plurals name="menu_copy_items_to">
+        <item quantity="one">Копировать %1$d элемент сюда</item>
+        <item quantity="other">Копировать %1$d элементов сюда</item>
+        <item quantity="few">Копировать %1$d элементов сюда</item>
+        <item quantity="many">Копировать %1$d элементов сюда</item>
+    </plurals>
+    <plurals name="menu_move_items_to">
+        <item quantity="one">Переместить %1$d элемент сюда</item>
+        <item quantity="other">Переместить %1$d элементов сюда</item>
+        <item quantity="many">Переместить %1$d элементов сюда</item>
+        <item quantity="few">Переместить %1$d элементов сюда</item>
+    </plurals>
+    <string name="menu_clear_clipboard">Очистить буфер</string>
+    <string name="menu_remove_bookmark">Удалить закладку</string>
+    <string name="menu_open_parent">Открыть папку содержимого</string>
+    <string name="menu_add_to_media">Добавить в медиа библиотеку</string>
+    <string name="menu_remove_from_media">Удалить из медиа библиотеки</string>
+    <string name="menu_share">Отправить</string>
+    <string name="notif_copying_item">Копирование %1$s в %2$s.</string>
+    <string name="notif_no_space">Недостаточно памяти</string>
+    <string name="notif_space_more">Вам нужно больше %1$s.</string>
+    <string name="notif_moving_item">Перемещение %1$s в %2$s.</string>
+    <string name="notif_compressed_success">Архивация завершена успешно</string>
+    <string name="notif_compressed_fail">Ошибка архивации</string>
+    <string name="notif_compressing_into">Добавление %1$s в %2$s.</string>
+    <string name="notif_extracting_from">Извлечение %1$s из %2$s.</string>
+    <string name="notif_extracted_success">Распаковка прошла успешно</string>
+    <string name="notif_extracted_fail">Ошибка распаковки</string>
     <string name="selected">выбранный</string>
     <string name="bookmark_empty">Нет добавленных закладок</string>
+    <string name="bookmark_already_exists">Файл уже добавлен в закладки</string>
     <string name="search_hint">Поиск файлов</string>
     <string name="query_error">Ошибочный запрос</string>
+    <string name="search_empty">Совпадений не найдено!</string>
     <string name="item_icon">Значок элемента</string>
+    <string name="scanning">\u0421\u043a\u0430\u043d\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435&#8230;</string>
     <string name="delete_success">Успешно удалено</string>
     <string name="delete_failure">Некоторые файлы не удалены</string>
+    <string name="deleting">\u0423\u0434\u0430\u043b\u0435\u043d\u0438\u0435&#8230;</string>
     <string name="rename_success">Успешно переименовано</string>
     <string name="rename_failure">Не удается переименовать</string>
+    <string name="loading">\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430&#8230;</string>
     <string name="create_dir_success">Папка успешно создана</string>
     <string name="create_dir_failure">Не удается создать папку</string>
     <string name="compressed_file_name">Имя Zip файла</string>
     <string name="file_exists">Файл уже существует</string>
     <string name="overwrite_question">Заменить старый файл?</string>
     <string name="directory_pick">Выберите папку</string>
+    <string name="filename_hint">Имя файла</string>
+    <string name="choose_filename">Имя файла не может быть пустым!</string>
+    <string name="pick_button_default">Выберите файл</string>
+    <string name="copying">\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435&#8230;</string>
     <string name="copied">Успешно скопировано</string>
     <string name="copy_error">Некоторые или все элементы не могут быть скопированы!</string>
+    <string name="moving">\u041f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u0435&#8230;</string>
     <string name="moved">Успешно перемещено</string>
     <string name="move_error">Некоторые или все элементы не могут быть перемещены!</string>
     <string name="nothing_to_paste">Нечего вставить. Скопируйте или переместите файлы.</string>
+    <string name="preference_usebestmatch_title">Иконки файлов</string>
+    <string name="preference_usebestmatch_summary_off">Использовать последнее установленное приложение</string>
+    <string name="preference_usebestmatch_summary_on">Использовать самое подходящее приложение</string>
+    <string name="modified">Изменён</string>
+    <string name="about_forked_from">Форк с OI File Manager</string>
+    <string name="about_created_by">Создано George Venios</string>
+    <string name="about_thanks_oifm">Спасибо OpenIntents и OIFM участникам!</string>
+    <string name="about">О программе</string>
+    <string name="about_share">Отправить</string>
+    <string name="about_shareSubject">Взять Dir на Google Play</string>
+    <string name="about_gplay">Посмотреть на Google Play</string>
+    <string name="about_contact">Обратить в поддержку</string>
+    <string name="about_beta">Присоедениться к сообществу Google+</string>
+    <string name="about_contribute">Посмотреть на Github</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>

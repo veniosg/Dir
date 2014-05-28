@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Bookmark action. This is a verb. -->
+    <string name="menu_bookmark">Yer işaretine ekle</string>
     <string name="create_new_folder">Yeni klasör oluştur</string>
     <string name="folder_name">Klasör adı</string>
     <string name="this_folder_is_empty">Bu klasör boş.</string>
-    <string name="really_delete">%s  gerçekten silmek istiyor musunuz?</string>
+    <string name="really_delete">%s gerçekten silmek istiyor musunuz?</string>
     <string name="really_delete_multiselect">%d dosyayı gerçekten silmek istediğinize emin misiniz?</string>
+    <string name="pick_title">Dosya seçici</string>
     <string name="details_type">Tür</string>
     <string name="details_type_folder">Klasör</string>
     <string name="details_type_file">Dosya</string>
@@ -28,25 +30,114 @@
     <string name="preference_displayhiddenfiles_summary_off">Gizli dosyaları gizle</string>
     <string name="preference_sort_settings">Sıralama ayarları</string>
     <string name="preference_sortby">Buna göre sırala</string>
+    <string name="preference_theme">Tema</string>
     <string name="preference_sortby_ascending">Artan sırada</string>
     <string name="preference_sortby_ascending_summary_on">Artan sıraya göre sıralama</string>
     <string name="preference_sortby_ascending_summary_off">Azalan sıraya göre sıralama</string>
+    <string name="media_library_added">Medya kütüphanesine eklendi.</string>
+    <string name="media_library_removed">Medya kütüphanesinden kaldır.</string>
+    <string name="preference_medialib_title">Medya kütüphane durumu</string>
+    <string name="preference_medialib_summary_on">Medya kütüphane durumunu klasörler için göster</string>
+    <string name="preference_medialib_summary_off">Medya kütüphane durumunu klasörler için gizle</string>
     <string-array name="preference_sortby_names">
         <item>İsim</item>
         <item>Boyut</item>
         <item>Son değişiklikler</item>
     </string-array>
+    <string-array name="preference_theme_names">
+        <item>Dir</item>
+        <item>Gri ton</item>
+        <item>Koyu</item>
+        <item>Holo</item>
+    </string-array>
     <string name="saveas_no_file_picked">Hiç bir dosya seçilmedi.</string>
     <string name="saveas_error">Hata oluştu.</string>
-    <string name="saveas_file_saved">Dosya başarılı bir şekilde kaydedildi.</string>
+    <string name="saveas_file_saved">Dosya başarılı bir şekilde kaydedildi!</string>
+    <string name="extracting">\u00c7\u0131kar\u0131l\u0131yor&#8230;</string>
+    <string name="compressing">S\u0131k\u0131\u015ft\u0131r\u0131l\u0131yor&#8230;</string>
+    <string name="menu_search">Ara</string>
+    <string name="menu_create_folder">Klasör oluştur</string>
+    <string name="menu_paste">Yapıştır</string>
     <string name="menu_settings">Ayarlar</string>
+    <string name="menu_file_ops">İşlemler</string>
     <string name="menu_delete">Sil</string>
+    <string name="menu_move">Kes</string>
     <string name="menu_copy">Kopyala</string>
+    <string name="menu_compress">Sıkıştır</string>
     <string name="menu_rename">Yeniden adlandır</string>
-    <string name="menu_details">Detaylar.</string>
-    <string name="menu_check_all">Check all</string>
+    <string name="menu_extract">Çıkart</string>
+    <string name="menu_details">Detaylar</string>
+    <string name="menu_create_shortcut">Kısayol oluştur</string>
+    <string name="send_chooser_title">Kullanarak yolla</string>
+    <string name="menu_check_all">Hepsini seç</string>
+    <plurals name="menu_copy_items_to">
+        <item quantity="one">%1$d tane öğeyi buraya kopyala</item>
+        <item quantity="other">%1$d tane öğeyi buraya kopyala</item>
+    </plurals>
+    <plurals name="menu_move_items_to">
+        <item quantity="one">%1$d tane öğeyi buraya taşı</item>
+        <item quantity="other">%1$d tane öğeyi buraya taşı</item>
+    </plurals>
+    <string name="menu_clear_clipboard">Panoyu temizle</string>
+    <string name="menu_remove_bookmark">Yer işaretini kaldır</string>
+    <string name="menu_open_parent">İçeren klasörü aç</string>
+    <string name="menu_add_to_media">Medya kütüphanesine ekle</string>
+    <string name="menu_remove_from_media">Medya kütüphanesinden kaldır</string>
+    <string name="menu_share">Paylaş</string>
+    <string name="notif_copying_item">%1$s\'dan %2$s\'a kopyalanıyor.</string>
+    <string name="notif_no_space">Yeterli hafıza bulunmamaktadır</string>
+    <string name="notif_space_more">%1$s\'lık alana ihtiyacınız var.</string>
+    <string name="notif_moving_item">%1$s öğesi %2$s\'ya taşınıyor.</string>
+    <string name="notif_compressed_success">Sıkıştırma başarılı şekilde tamamlandı</string>
+    <string name="notif_compressed_fail">Sıkıştırma gerçekleştirilemedi</string>
+    <string name="notif_compressing_into">%1$s öğesini %2$s\'ya ekliyor.</string>
+    <string name="notif_extracting_from">%2$s\'dan %1$s çıkarılıyor.</string>
+    <string name="notif_extracted_success">Çıkarma işlemi tamamlandı</string>
+    <string name="notif_extracted_fail">Çıkarma işlemi tamamlanamadı</string>
+    <string name="selected">Seçilen</string>
+    <string name="bookmark_empty">Eklenen yer işareti bulunmamaktadır.</string>
+    <string name="bookmark_already_exists">Bu dosya önceden yer işaretlerine eklenmiş</string>
+    <string name="search_hint">Dosya ara</string>
+    <string name="query_error">Sorgu hatası</string>
+    <string name="search_empty">Eşleşen dosya bulunmamaktadır!</string>
+    <string name="item_icon">Öğe ikonu</string>
+    <string name="scanning">Taran\u0131yor&#8230;</string>
+    <string name="delete_success">Silme işlemi tamamlandı</string>
+    <string name="delete_failure">Bazı dosyalar silinmedi</string>
+    <string name="deleting">Siliniyor&#8230;</string>
+    <string name="rename_success">Yeniden isimlendirme işlemi tamamlandı</string>
     <string name="rename_failure">Couldn\'t rename</string>
+    <string name="loading">Y\u00fckleniyor&#8230;</string>
+    <string name="create_dir_success">Dizin oluşturma işlemi tamamlandı</string>
     <string name="create_dir_failure">Couldn\'t create directory</string>
+    <string name="compressed_file_name">Zip dosya ismi</string>
+    <string name="file_exists">Dosya bulunmaktadır</string>
+    <string name="overwrite_question">Eski dosyanın üzerine yazılsın mı?</string>
+    <string name="directory_pick">Bulunduğun dizini seç</string>
+    <string name="filename_hint">Dosya ismi</string>
+    <string name="choose_filename">Dosya ismi boş bırakılamaz!</string>
+    <string name="pick_button_default">Dosya seç</string>
+    <string name="copying">Kopyalan\u0131yor&#8230;</string>
+    <string name="copied">Kopyalama tamamlandı</string>
     <string name="copy_error">Some or all items couldn\'t be copied!</string>
+    <string name="moving">Ta\u015f\u0131n\u0131yor&#8230;</string>
+    <string name="moved">Taşıma işlemi tamamlandı</string>
     <string name="move_error">Some or all items couldn\'t be moved!</string>
+    <string name="nothing_to_paste">Yapıştırılacak bir şey yok. Önce dosyayı kopyalayın.</string>
+    <string name="preference_usebestmatch_title">Dosya ikonları</string>
+    <string name="preference_usebestmatch_summary_off">En son yüklenen uygulamayı kullan</string>
+    <string name="preference_usebestmatch_summary_on">En uygun uygulamayı kullan</string>
+    <string name="modified">Değiştirildi</string>
+    <string name="about_forked_from">OI File Manager\'dan yeni süreç oluşturuldu</string>
+    <string name="about_created_by">George Venios tarafından oluşturuldu</string>
+    <string name="about_thanks_oifm">OpenIntents and OIFM katılımcılarına teşekkürler!</string>
+    <string name="about">Hakkında</string>
+    <string name="about_share">Paylaş</string>
+    <string name="about_shareSubject">Dir uygulamasını Google Play\'den indir</string>
+    <string name="about_gplay">Google Play\'de görüntüle</string>
+    <string name="about_contact">Arama desteği</string>
+    <string name="about_beta">Google+ Topluluğuna katıl</string>
+    <string name="about_contribute">Github\'da görüntüle</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
 </resources>

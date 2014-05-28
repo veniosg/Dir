@@ -6,12 +6,7 @@
     <string name="this_folder_is_empty">ໂຟເດີນີ້ແມ່ນວ່າງ</string>
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="application_not_available">Application not available</string>
-    <string name="saveas_no_file_picked">You haven\'t picked any file.</string>
     <string name="menu_delete">ລຶບ</string>
     <string name="menu_rename">ປ່ຽນຊື່</string>
     <string name="menu_check_all">Check all</string>
-    <string name="rename_failure">Couldn\'t rename</string>
-    <string name="create_dir_failure">Couldn\'t create directory</string>
-    <string name="copy_error">Some or all items couldn\'t be copied!</string>
-    <string name="move_error">Some or all items couldn\'t be moved!</string>
 </resources>

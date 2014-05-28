@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Bookmark action. This is a verb. -->
+    <string name="menu_bookmark">Oznaka</string>
+    <string name="create_new_folder">Napravi novu mapu</string>
+    <string name="folder_name">Naziv mape</string>
+    <string name="this_folder_is_empty">Ova mapa je prazna.</string>
+    <string name="really_delete">Da li je stvarno želite obrisati %s?</string>
+    <string name="really_delete_multiselect">Da li stvarno želite obrisati %d datoteke?</string>
+    <string name="pick_title">Izbor datoteke</string>
+    <string name="details_type">Vrsta</string>
+    <string name="details_type_folder">Mapa</string>
+    <string name="details_type_file">Datoteka</string>
+    <string name="details_type_other">Ostalo</string>
+    <string name="details_size">Veličina</string>
+    <string name="details_permissions">Dopuštenja</string>
+    <string name="details_hidden">Sakriveno</string>
+    <string name="details_lastmodified">Posljednje Izmjenjeno</string>
+    <string name="copied_file_name">Kopija %s</string>
+    <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
+    <string name="copied_file_name_2">Kopija %1$d od %2$s</string>
+    <string name="error_generic">Dogodila se greška: </string>
+    <string name="error_media_scan">Ne mogu promijeniti postavke skeniranja medija.</string>
+    <string name="send_not_available">Nema dostupne aplikacije slanja.</string>
+    <string name="application_not_available">Nema instalirane podudarajuće aplikacije.</string>
+    <string name="settings">Podešenja</string>
+    <string name="preference_advanced_features">Napredne značajke</string>
+    <string name="preference_displayhiddenfiles_title">Prikaži skrivene datoteke</string>
+    <string name="preference_displayhiddenfiles_summary_on">Prikaži skrivene datoteke</string>
+    <string name="preference_displayhiddenfiles_summary_off">Sakrij skrivene datoteke</string>
+    <string name="preference_sort_settings">Postavke sortiranja</string>
+    <string name="preference_sortby">Sorriraj po</string>
+    <string name="preference_theme">Tema</string>
+    <string name="preference_sortby_ascending">Uzlaznim poredkom</string>
+    <string name="preference_sortby_ascending_summary_on">Sortiraj uzlaznim poredkom</string>
+    <string name="preference_sortby_ascending_summary_off">Sortiraj silaznim poredkom</string>
+    <string name="media_library_added">Dodano u medijsku biblioteku.</string>
+    <string name="media_library_removed">Izbrisano iz medijske biblioteke.</string>
+    <string name="preference_medialib_title">Akcija medijske biblioteke</string>
+    <string name="preference_medialib_summary_on">Prikaži akcije medijske biblioteke za mape</string>
+    <string name="preference_medialib_summary_off">Sakrij akciju medijske biblioteke za mapu</string>
+    <string-array name="preference_sortby_names">
+        <item>Naziv</item>
+        <item>Veličina</item>
+        <item>Posljednje izmjenjeno</item>
+    </string-array>
+    <string-array name="preference_theme_names">
+        <item>Dir</item>
+        <item>Siva skala</item>
+        <item>Tamna</item>
+        <item>Holo</item>
+    </string-array>
+    <string name="saveas_no_file_picked">Niste još odabrali ni jednu datoteku</string>
+    <string name="saveas_error">Dogodila se greška.</string>
+    <string name="saveas_file_saved">Datoteka je uspješno spremljena!</string>
+    <string name="extracting">Ekstrahiram&#8230;</string>
+    <string name="compressing">Kompresiram&#8230;</string>
+    <string name="menu_search">Pretraži</string>
+    <string name="menu_create_folder">Kreiraj mapu</string>
+    <string name="menu_paste">Zalijepi</string>
+    <string name="menu_file_ops">Operacije</string>
+    <string name="menu_delete">Obriši</string>
+    <string name="menu_move">Izreži</string>
+    <string name="menu_copy">Kopiraj</string>
+    <string name="menu_compress">Kompresiraj</string>
+    <string name="menu_rename">Preimenuj</string>
+    <string name="menu_extract">Ekstrahirati</string>
+    <string name="menu_details">Detalji</string>
+    <string name="menu_create_shortcut">Kreiraj prečac</string>
+    <string name="send_chooser_title">Pošalji koristeći:</string>
+    <string name="menu_check_all">Odaberi sve</string>
+    <plurals name="menu_copy_items_to">
+        <item quantity="one">Kopiraj %1$d stavku ovdje</item>
+        <item quantity="other">Kopiraj %1$d stavke ovdje</item>
+        <item quantity="few">Kopiraj %1$d stavke ovdje</item>
+    </plurals>
+    <plurals name="menu_move_items_to">
+        <item quantity="one">Premjesti %1$d stavku ovdje</item>
+        <item quantity="other">Premjesti %1$d stavke ovdje</item>
+        <item quantity="few">Premjesti %1$d stavke ovdje</item>
+    </plurals>
+    <string name="menu_clear_clipboard">Očisti međuspremnik</string>
+    <string name="menu_remove_bookmark">Obriši oznaku</string>
+    <string name="menu_open_parent">Otvorite sadržajnu mapu</string>
+    <string name="menu_add_to_media">Sodaj u medijsku biblioteku</string>
+    <string name="menu_remove_from_media">Obrisati iz medijske biblioteke</string>
+    <string name="menu_share">Podijeli</string>
+    <string name="notif_copying_item">Kopiranje %1$s u %2$s.</string>
+    <string name="notif_no_space">Nema dovoljno dostupne memorije</string>
+    <string name="notif_space_more">Potrebno vam je %1$s više.</string>
+    <string name="notif_moving_item">Premještam %1$s u %2$s.</string>
+    <string name="notif_compressed_success">Uspješno kompresirano</string>
+    <string name="notif_compressed_fail">Kompresiranje nije uspijelo</string>
+    <string name="notif_compressing_into">Dodajem %1$s u %2$s.</string>
+    <string name="notif_extracting_from">Ekstrahiram %1$s iz %2$s.</string>
+    <string name="notif_extracted_success">Ekstrahiranje uspijelo</string>
+    <string name="notif_extracted_fail">Ekstrahiranje nije uspijelo</string>
+    <string name="selected">odabrano</string>
+    <string name="bookmark_empty">Nema dodanih oznaka.</string>
+    <string name="bookmark_already_exists">Ova datoteka je već označena</string>
+    <string name="search_hint">Pretraži datoteke</string>
+    <string name="query_error">Ispitivanje greške</string>
+    <string name="search_empty">Nisu pronađene podudarajuće datoteke!</string>
+    <string name="item_icon">Ikona stavke</string>
+    <string name="scanning">Skeniram&#8230;</string>
+    <string name="delete_success">Uspješno obrisano</string>
+    <string name="delete_failure">Neke datoteke nisu obrisane</string>
+    <string name="deleting">Bri\u0161em&#8230;</string>
+    <string name="rename_success">Uspješno preimenovano</string>
+    <string name="rename_failure">Ne mogu preimenovati</string>
+    <string name="loading">U\u010ditavam&#8230;</string>
+    <string name="create_dir_success">Mapa je uspješno kreirana</string>
+    <string name="create_dir_failure">Ne mogu kreirati mapu</string>
+    <string name="compressed_file_name">Stisni naziv datoteke</string>
+    <string name="file_exists">Datoteka postoji</string>
+    <string name="overwrite_question">Prepiši staru datoteku?</string>
+    <string name="directory_pick">Odaberite trenutnu mapu</string>
+    <string name="filename_hint">Naziv datoteke</string>
+    <string name="choose_filename">Naziv datoteke ne može biti prazan!</string>
+    <string name="pick_button_default">Odaberite datoteku</string>
+    <string name="copying">Kopiram&#8230;</string>
+    <string name="copied">Uspješno kopirano</string>
+    <string name="copy_error">Neke ili sve stavke ne mogu biti kopirane!</string>
+    <string name="moving">Premje\u0161tam&#8230;</string>
+    <string name="moved">Uspješno premješteno</string>
+    <string name="move_error">Neke ili sve stavke ne mogu biti premještene!</string>
+    <string name="nothing_to_paste">Nema ništa za zalijepiti. Prvo kopirajte ili izrežite datoteku.</string>
+    <string name="preference_usebestmatch_title">Ikone datoteka</string>
+    <string name="preference_usebestmatch_summary_off">Koristi nedavno instalirane aplikacije</string>
+    <string name="preference_usebestmatch_summary_on">Koristi najprikladniju aplikaciju</string>
+    <string name="modified">Izmjenjeno</string>
+    <string name="about_forked_from">Izdvojeno od OI File Manager-a</string>
+    <string name="about_created_by">Kreirao George Venios</string>
+    <string name="about_thanks_oifm">Hvala OpenIntents-u i OFIM suradnicima!</string>
+    <string name="about">O</string>
+    <string name="about_share">Podijelite</string>
+    <string name="about_shareSubject">Preuzmite Dir na Trgovini Market</string>
+    <string name="about_gplay">Pogledajte na Trgovini Market</string>
+    <string name="about_contact">Zatržite podršku</string>
+    <string name="about_beta">Pridružite se Google+ Zajednici</string>
+    <string name="about_contribute">Pogledajte na Github-u</string>
+    <string name="yes">Da</string>
+    <string name="no">Ne</string>
+</resources>

@@ -128,7 +128,7 @@
     <string name="preference_usebestmatch_summary_on">Χρήση της καταλληλότερης εφαρμογής</string>
     <string name="modified">Τροποποιημένο</string>
     <string name="about_forked_from">Fork του OI File Manager</string>
-    <string name="about_created_by">Αναπτύχθηκε από τον Γιώργο Βενιό.</string>
+    <string name="about_created_by">Αναπτύχθηκε από τον Γιώργο Βενιό</string>
     <string name="about_thanks_oifm">Ευχαριστούμε το OpenIntents και τους συνεισφέροντες σε αυτό!</string>
     <string name="about">Περί</string>
     <string name="about_share">Κοινοποίηση</string>

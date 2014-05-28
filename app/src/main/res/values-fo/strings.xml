@@ -9,12 +9,7 @@
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="send_not_available">Eingin nýtsluskipan tøk til sending.</string>
     <string name="application_not_available">Nýtsluskipan ikki tøk</string>
-    <string name="saveas_no_file_picked">You haven\'t picked any file.</string>
     <string name="menu_delete">Strika</string>
     <string name="menu_rename">Nýnevna</string>
     <string name="menu_check_all">Check all</string>
-    <string name="rename_failure">Couldn\'t rename</string>
-    <string name="create_dir_failure">Couldn\'t create directory</string>
-    <string name="copy_error">Some or all items couldn\'t be copied!</string>
-    <string name="move_error">Some or all items couldn\'t be moved!</string>
 </resources>
