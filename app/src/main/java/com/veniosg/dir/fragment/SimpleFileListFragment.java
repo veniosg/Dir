@@ -86,6 +86,7 @@ public class SimpleFileListFragment extends FileListFragment {
     private int lastTopInParent, lastLeftInParent;
     private PathBar mPathBar;
     private AnimatedFileListContainer mZoomView;
+    private ActionMode mActionMode;
     private boolean mActionsEnabled = true;
     private int mNavigationDirection = 0;
 
@@ -136,11 +137,13 @@ public class SimpleFileListFragment extends FileListFragment {
         public void onDestroyActionMode(android.view.ActionMode mode) {
             mPathBar.setEnabled(true);
             getTintManager().setTintResource(android.R.color.black);
+            mActionMode = null;
         }
 
         @Override
         public boolean onCreateActionMode(android.view.ActionMode mode,
                                           Menu menu) {
+            mActionMode = mode;
             mPathBar.setEnabled(false);
             getTintManager().setTintResource(android.R.color.black);
             return true;
@@ -742,6 +745,12 @@ public class SimpleFileListFragment extends FileListFragment {
         lastItemHeight = -1;
         lastLeftInParent = -1;
         lastTopInParent = -1;
+    }
+
+    public void closeActionMode() {
+        if (mActionMode != null) {
+            mActionMode.finish();
+        }
     }
 
     public static class ScrollPosition {

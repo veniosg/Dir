@@ -176,6 +176,7 @@ public class FileManagerActivity extends BaseActivity
     @Override
     public void onBookmarkSelected(String path) {
         mFragment.openInformingPathBar(new FileHolder(new File(path), this));
+        mFragment.closeActionMode();
         mSpl.closePane();
     }
 
