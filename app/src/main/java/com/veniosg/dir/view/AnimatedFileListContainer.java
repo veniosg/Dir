@@ -81,7 +81,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         Logger.log(Log.DEBUG, Logger.TAG_ANIMATION, "Recorded drawable");
     }
 
-    public void animateFwd(int fromWidth, int fromHeight, int fromLeftInParent, int fromTopInParent) {
+    public void animateFwd() {
         if(mScreenshot == null) {
             return;
         }

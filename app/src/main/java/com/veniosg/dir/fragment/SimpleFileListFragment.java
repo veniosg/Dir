@@ -82,8 +82,6 @@ public class SimpleFileListFragment extends FileListFragment {
 
     private static HashMap<String, ScrollPosition> sScrollPositions = new HashMap<String, ScrollPosition>();
 
-    private int lastItemWidth, lastItemHeight;
-    private int lastTopInParent, lastLeftInParent;
     private PathBar mPathBar;
     private AnimatedFileListContainer mZoomView;
     private ActionMode mActionMode;
@@ -439,10 +437,6 @@ public class SimpleFileListFragment extends FileListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         FileHolder item = (FileHolder) mAdapter.getItem(position);
-        lastItemHeight = v.getHeight();
-        lastItemWidth = v.getWidth();
-        lastLeftInParent = v.getLeft();
-        lastTopInParent = v.getTop();
         openInformingPathBar(item);
     }
 
@@ -729,22 +723,14 @@ public class SimpleFileListFragment extends FileListFragment {
     protected void onLoadingChanged(boolean loading) {
         if (loading) {
             if (mNavigationDirection == 1) {
-                mZoomView.animateFwd(lastItemWidth, lastItemHeight, lastLeftInParent, lastTopInParent);
+                mZoomView.animateFwd();
             } else if (mNavigationDirection == -1) {
                 mZoomView.animateBwd();
             } else {
                 // Do not animate.
                 mZoomView.clearAnimations();
             }
-            clearLastTouchData();
         }
-    }
-
-    private void clearLastTouchData() {
-        lastItemWidth = -1;
-        lastItemHeight = -1;
-        lastLeftInParent = -1;
-        lastTopInParent = -1;
     }
 
     public void closeActionMode() {
