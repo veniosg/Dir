@@ -119,7 +119,6 @@
         <item name="pathBarItemBackgroundSquare">@drawable/dark_btn_pathbar_straight</item>
         <item name="colorLight">@color/dark_light</item>
         <item name="colorDark">@color/dark_dark</item>
-        <item name="colorSecondaryBarBackground">@color/dark_accent_sec</item>
         <item name="pathbarItemStyle">@style/Widget.Dir.Dark.PathBar.Button</item>
     </style>
 
