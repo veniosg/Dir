@@ -16,6 +16,7 @@ import android.graphics.drawable.LevelListDrawable;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.veniosg.dir.R;
@@ -320,5 +321,9 @@ public abstract class Utils {
                 0, b, 0, 0, 0,
                 0, 0, b, 0, 0,
                 0, 0, 0, 1, 0});
+    }
+
+    public static boolean getItemChecked(ListView listView, int position) {
+        return listView.getCheckedItemPositions().get(position);
     }
 }

@@ -44,7 +44,7 @@ import android.widget.ViewFlipper;
 import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
-import com.veniosg.dir.activity.PreferenceActivity;
+import com.veniosg.dir.adapter.FileHolderListAdapter;
 import com.veniosg.dir.dialog.CreateDirectoryDialog;
 import com.veniosg.dir.dialog.DetailsDialog;
 import com.veniosg.dir.dialog.MultiCompressDialog;
@@ -174,6 +174,13 @@ public class SimpleFileListFragment extends FileListFragment {
                 // Force actions' refresh
                 mode.invalidate();
             }
+        }
+    };
+    private FileHolderListAdapter.OnItemToggleListener mOnItemToggleListener = new FileHolderListAdapter.OnItemToggleListener() {
+        @Override
+        public void onItemToggle(int position) {
+            getListView().setItemChecked(position,
+                    !Utils.getItemChecked(getListView(), position));
         }
     };
 
@@ -420,6 +427,7 @@ public class SimpleFileListFragment extends FileListFragment {
         if (mActionsEnabled) {
             getListView().setMultiChoiceModeListener(mMultiChoiceModeListener);
             getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+            ((FileHolderListAdapter) getListAdapter()).setOnItemToggleListener(mOnItemToggleListener);
 
             setHasOptionsMenu(true);
         }
