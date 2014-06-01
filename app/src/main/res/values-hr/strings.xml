@@ -29,7 +29,7 @@
     <string name="preference_displayhiddenfiles_summary_on">Prikaži skrivene datoteke</string>
     <string name="preference_displayhiddenfiles_summary_off">Sakrij skrivene datoteke</string>
     <string name="preference_sort_settings">Postavke sortiranja</string>
-    <string name="preference_sortby">Sorriraj po</string>
+    <string name="preference_sortby">Sortiraj po</string>
     <string name="preference_theme">Tema</string>
     <string name="preference_sortby_ascending">Uzlaznim poredkom</string>
     <string name="preference_sortby_ascending_summary_on">Sortiraj uzlaznim poredkom</string>

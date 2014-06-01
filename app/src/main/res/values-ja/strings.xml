@@ -47,7 +47,7 @@
     <string-array name="preference_theme_names">
         <item>Dir</item>
         <item>モノクロ</item>
-        <item>Dark</item>
+        <item>ダーク</item>
         <item>Holo</item>
     </string-array>
     <string name="saveas_no_file_picked">ファイルを選択していません。</string>
@@ -59,6 +59,7 @@
     <string name="menu_create_folder">フォルダを作成</string>
     <string name="menu_paste">貼り付け</string>
     <string name="menu_settings">設定</string>
+    <string name="menu_file_ops">操作</string>
     <string name="menu_delete">削除</string>
     <string name="menu_move">切り取り</string>
     <string name="menu_copy">コピー</string>
@@ -97,6 +98,7 @@
     <string name="search_hint">ファイル検索</string>
     <string name="query_error">クエリエラー</string>
     <string name="search_empty">一致するファイルが見つかりません</string>
+    <string name="item_icon">アイテムアイコン</string>
     <string name="scanning">\u30b9\u30ad\u30e3\u30f3\u4e2d&#8230;</string>
     <string name="delete_success">削除が完了しました</string>
     <string name="delete_failure">ファイルの一部を削除できませんでした</string>
@@ -111,7 +113,7 @@
     <string name="overwrite_question">ファイルを上書きしますか？</string>
     <string name="directory_pick">現在のディレクトリを選択</string>
     <string name="filename_hint">ファイル名</string>
-    <string name="choose_filename">ファイル名は空です！</string>
+    <string name="choose_filename">ファイル名を入力してください</string>
     <string name="pick_button_default">ファイルを選択</string>
     <string name="copying">\u30b3\u30d4\u30fc\u4e2d&#8230;</string>
     <string name="copied">コピーが完了しました</string>
@@ -124,8 +126,16 @@
     <string name="preference_usebestmatch_summary_off">一番最近インストールされたアプリを使用する</string>
     <string name="preference_usebestmatch_summary_on">一番適切なアプリを使用する</string>
     <string name="modified">変更日時：</string>
+    <string name="about_forked_from">OI File Managerからフォークされたファイルマネージャアプリです。</string>
+    <string name="about_created_by">作者: George Venios</string>
+    <string name="about_thanks_oifm">Thanks: OpenIntentsの皆様、OI File Manager 開発に参加された皆様！</string>
     <string name="about">Dirについて</string>
+    <string name="about_share">共有</string>
     <string name="about_shareSubject">Google PlayからDirをダウンロード</string>
+    <string name="about_gplay">Google Playをアクセス</string>
+    <string name="about_contact">サポート連絡</string>
+    <string name="about_beta">Google+コミュニティに参加</string>
+    <string name="about_contribute">Githubページをアクセス</string>
     <string name="yes">はい</string>
     <string name="no">いいえ</string>
 </resources>
