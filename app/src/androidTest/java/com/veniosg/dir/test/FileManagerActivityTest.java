@@ -231,13 +231,10 @@ public class FileManagerActivityTest extends ActivityInstrumentationTestCase2<Fi
         TestUtils.createDirectory(sdcardPath + dirPath);
         TestUtils.createFile(sdcardPath + dirPath + "/" + filename, "");
 
-		/*
-		 *  We start at the SD card.
-		 */
-        solo.clickLongOnText(Environment.getExternalStorageDirectory().getParentFile().getName());
+        solo.clickLongOnView(getActivity().findViewById(R.id.textView));
 
         solo.clickOnEditText(0); // Let the editText have focus to be able to send the enter key.
-        solo.enterText(0, "/"+dirPath);
+        solo.enterText(0, "/" + dirPath);
         solo.sendKey(Solo.ENTER);
 
         assertTrue(solo.searchText(filename));

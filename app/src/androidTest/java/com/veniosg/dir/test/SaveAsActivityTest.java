@@ -41,6 +41,7 @@ public class SaveAsActivityTest extends InstrumentationTestCase {
     }
 
     public void testIntentSaveAs() throws IOException {
+        // TODO fix test
         TestUtils.createDirectory(sdcardPath + "oi-filemanager-tests");
         TestUtils.createFile(sdcardPath + "oi-filemanager-tests/oi-to-open.txt", "bbb");
 
@@ -52,7 +53,7 @@ public class SaveAsActivityTest extends InstrumentationTestCase {
         solo.clickLongOnText(Environment.getExternalStorageDirectory().getParentFile().getName());
         solo.enterText(0, "oi-target.txt");
         solo.sendKey(Solo.ENTER);
-        assertTrue(new File(sdcardPath, "oi-filemanager-tests/oi-to-open.txtoi-target.txt").exists());
+        assertTrue(new File(sdcardPath, "oi-filemanager-tests/oi-target.txt").exists());
         solo.goBack();
         solo.goBack();
     }
