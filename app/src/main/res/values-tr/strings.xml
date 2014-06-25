@@ -105,7 +105,7 @@
     <string name="delete_success">Silme işlemi tamamlandı</string>
     <string name="delete_failure">Bazı dosyalar silinmedi</string>
     <string name="deleting">Siliniyor&#8230;</string>
-    <string name="rename_success">Yeniden isimlendirme işlemi tamamlandı</string>
+    <string name="rename_success">Yeniden adlandırma işlemi tamamlandı</string>
     <string name="rename_failure">Couldn\'t rename</string>
     <string name="loading">Y\u00fckleniyor&#8230;</string>
     <string name="create_dir_success">Dizin oluşturma işlemi tamamlandı</string>
