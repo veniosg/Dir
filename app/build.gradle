@@ -4,7 +4,7 @@ project.archivesBaseName = "dir"
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "19.1.0"
 
     def Properties versionProps = new Properties()
     versionProps.load(new FileInputStream(file('version.properties')))
