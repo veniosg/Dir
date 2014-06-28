@@ -49,6 +49,7 @@
         <item>Grayscale</item>
         <item>Dark</item>
         <item>Holo</item>
+        <item>Material</item>
     </string-array>
     <string name="saveas_no_file_picked">You haven\'t picked any file.</string>
     <string name="saveas_error">An error occured.</string>

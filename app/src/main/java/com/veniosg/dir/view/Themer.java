@@ -28,7 +28,8 @@ public class Themer {
         DIR,
         GRAYSCALE,
         DARK,
-        HOLO_DARK
+        HOLO_DARK,
+        MATERIAL_TEST
     }
     public static enum Flavor {
         TRANSLUCENT_NAV,
@@ -53,6 +54,9 @@ public class Themer {
                 break;
             case HOLO_DARK:
                 act.setTheme(trans ? R.style.Theme_Dir_HoloDark_TranslucentNav : R.style.Theme_Dir_HoloDark);
+                break;
+            case MATERIAL_TEST:
+                act.setTheme(R.style.Theme_Dir_Material);
                 break;
         }
     }

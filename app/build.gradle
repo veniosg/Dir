@@ -3,7 +3,7 @@ apply plugin: 'android'
 project.archivesBaseName = "dir"
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 'android-L'
     buildToolsVersion "19.1.0"
 
     def Properties versionProps = new Properties()
@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 19
+        targetSdkVersion 'L'
         versionName versionProps['name']
         versionCode versionProps['code'].toInteger()
 

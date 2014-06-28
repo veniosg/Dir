@@ -75,7 +75,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/source" />
       <excludeFolder url="file://$MODULE_DIR$/build/symbols" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 20, L preview Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="support-v13-19.0.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="robotium-solo-5.0.1" level="project" />
