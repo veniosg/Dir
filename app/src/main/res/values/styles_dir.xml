@@ -38,7 +38,7 @@
     </style>
 
     <!-- Actionbar styling -->
-    <style name="Widget.Dir.ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
+    <style name="Widget.Dir.ActionBar" parent="android:Widget.Material.ActionBar.Solid">
         <item name="android:titleTextStyle">@style/TextAppearance.Dir.Title</item>
         <item name="android:subtitleTextStyle">@style/TextAppearance.Dir.Subtitle</item>
         <item name="android:background">@drawable/ab_solid_dir</item>
@@ -54,7 +54,7 @@
     </style>
 
     <!-- This style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Dir.Widget" parent="android:Theme.Holo">
+    <style name="Theme.Dir.Widget" parent="android:Theme.Material">
         <item name="android:textAppearanceLargePopupMenu">@style/TextAppearance.Dir.LargePopupMenu</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Dir</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Dir</item>

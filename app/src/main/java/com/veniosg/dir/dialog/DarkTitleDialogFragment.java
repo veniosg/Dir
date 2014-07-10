@@ -22,6 +22,7 @@ import android.graphics.RadialGradient;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.ImageView;
@@ -50,7 +51,8 @@ public class DarkTitleDialogFragment extends DialogFragment {
 
         try {
             // If the internal dialog is shown, style its title
-            if (getShowsDialog()) {
+            if (getShowsDialog()
+                    && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
                 // Init everything as a field to catch exceptions before any styling occurs.
                 // Exceptions here indicate that the layout structure has changed.
                 ImageView icon = (ImageView) getDialog().findViewById(android.R.id.icon);
