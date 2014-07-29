@@ -16,9 +16,12 @@
 
 package com.veniosg.dir.util;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.provider.MediaStore;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -86,7 +89,10 @@ public abstract class MediaScannerUtils {
     }
 	
 	public static void informFileDeleted(Context c, File f) {
-        informFileAdded(c, f);
+        Uri fileUri = getImageContentUri(c, f);
+        c.getContentResolver().delete(fileUri, null, null);
+
+//        informFileAdded(c, f);
 	}
 
     public static void informFolderDeleted(Context c, File parentFile) {
@@ -96,5 +102,30 @@ public abstract class MediaScannerUtils {
     public static void informPathsDeleted(Context c, List<String> paths) {
         MediaScannerConnection.scanFile(c.getApplicationContext(), paths.toArray(new String[paths.size()]), null,
                 sLogScannerListener);
+    }
+
+
+    private static Uri getImageContentUri(Context context, File file) {
+        String filePath = file.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[] { MediaStore.Images.Media._ID },
+                MediaStore.Images.Media.DATA + "=? ",
+                new String[] { filePath }, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor
+                    .getColumnIndex(MediaStore.MediaColumns._ID));
+            Uri baseUri = Uri.parse("content://media/external/images/media");
+            return Uri.withAppendedPath(baseUri, "" + id);
+        } else {
+            if (file.exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DATA, filePath);
+                return context.getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            } else {
+                return null;
+            }
+        }
     }
 }
