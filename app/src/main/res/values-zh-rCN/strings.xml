@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Bookmark action. This is a verb. -->
-    <string name="menu_bookmark">书签</string>
+    <string name="menu_bookmark">添加书签</string>
     <string name="create_new_folder">新建文件夹</string>
     <string name="folder_name">文件夹名称</string>
     <string name="this_folder_is_empty">该文件夹为空。</string>
@@ -34,11 +34,11 @@
     <string name="preference_sortby_ascending">升序</string>
     <string name="preference_sortby_ascending_summary_on">按升序排序</string>
     <string name="preference_sortby_ascending_summary_off">按降充排序</string>
-    <string name="media_library_added">添加到媒体库。</string>
-    <string name="media_library_removed">从媒体库中删除。</string>
-    <string name="preference_medialib_title">媒体库设置</string>
-    <string name="preference_medialib_summary_on">显示媒体库设置的文件夹</string>
-    <string name="preference_medialib_summary_off">隐藏媒体库设置的文件夹</string>
+    <string name="media_library_added">添加到媒体库</string>
+    <string name="media_library_removed">从媒体库中删除</string>
+    <string name="preference_medialib_title">菜单中媒体库操作</string>
+    <string name="preference_medialib_summary_on">显示文件夹媒体库动作</string>
+    <string name="preference_medialib_summary_off">隐藏文件夹媒体库动作</string>
     <string-array name="preference_sortby_names">
         <item>名称</item>
         <item>大小</item>
@@ -46,17 +46,17 @@
     </string-array>
     <string-array name="preference_theme_names">
         <item>Dir</item>
-        <item>灰</item>
-        <item>暗</item>
+        <item>浅灰</item>
+        <item>黑色</item>
         <item>Holo</item>
     </string-array>
     <string name="saveas_no_file_picked">你没有选择任何文件。</string>
     <string name="saveas_error">发生错误。</string>
     <string name="saveas_file_saved">文件保存成功！</string>
-    <string name="extracting">\u63d0\u53d6&#8230;</string>
-    <string name="compressing">\u538b\u7f29&#8230;</string>
+    <string name="extracting">\u63d0\u53d6\u4e2d&#8230;</string>
+    <string name="compressing">\u538b\u7f29\u4e2d&#8230;</string>
     <string name="menu_search">搜索</string>
-    <string name="menu_create_folder">创建文件夹</string>
+    <string name="menu_create_folder">新建文件夹</string>
     <string name="menu_paste">粘贴</string>
     <string name="menu_settings">设置</string>
     <string name="menu_file_ops">操作</string>
@@ -67,75 +67,75 @@
     <string name="menu_rename">重命名</string>
     <string name="menu_extract">提取</string>
     <string name="menu_details">详细信息</string>
-    <string name="menu_create_shortcut">创建快捷</string>
-    <string name="send_chooser_title">发送使用：</string>
+    <string name="menu_create_shortcut">创建快捷方式</string>
+    <string name="send_chooser_title">发送途径：</string>
     <string name="menu_check_all">Check all</string>
     <plurals name="menu_copy_items_to">
-        <item quantity="other">复制%1$d 个项目在这里</item>
+        <item quantity="other">复制 %1$d 项至此</item>
     </plurals>
     <plurals name="menu_move_items_to">
-        <item quantity="other">移动%1$d 项目在这里</item>
+        <item quantity="other">移动 %1$d 项至此</item>
     </plurals>
-    <string name="menu_clear_clipboard">清除clipboard</string>
+    <string name="menu_clear_clipboard">清除剪贴板</string>
     <string name="menu_remove_bookmark">删除书签</string>
-    <string name="menu_open_parent">打开包含文件夹</string>
+    <string name="menu_open_parent">打开父文件夹</string>
     <string name="menu_add_to_media">添加到媒体库</string>
     <string name="menu_remove_from_media">从媒体库中删除</string>
     <string name="menu_share">分享</string>
-    <string name="notif_copying_item">复制%1$s 至%2$s.</string>
-    <string name="notif_no_space">没有足够的可用内存</string>
-    <string name="notif_space_more">您需要 %1$s 更多.</string>
-    <string name="notif_moving_item">Moving中 %1$s 至 %2$s.</string>
+    <string name="notif_copying_item">正在复制「%1$s」至「%2$s」</string>
+    <string name="notif_no_space">可用内存不足</string>
+    <string name="notif_space_more">您还需要 %1$s</string>
+    <string name="notif_moving_item">正在移动「%1$s」至「%2$s」</string>
     <string name="notif_compressed_success">压缩成功</string>
     <string name="notif_compressed_fail">压缩失败</string>
-    <string name="notif_compressing_into">添加中%1$s 至 %2$s.</string>
-    <string name="notif_extracting_from">提取中%1$s 从%2$s.</string>
-    <string name="notif_extracted_success">成功提取</string>
+    <string name="notif_compressing_into">正在添加「%1$s」至「%2$s」</string>
+    <string name="notif_extracting_from">正在从「%2$s」中提取「%1$s」</string>
+    <string name="notif_extracted_success">提取成功</string>
     <string name="notif_extracted_fail">提取失败</string>
-    <string name="selected">已选择</string>
-    <string name="bookmark_empty">无书签添加。</string>
-    <string name="bookmark_already_exists">此文件已添加到书签</string>
+    <string name="selected">项已选中</string>
+    <string name="bookmark_empty">无书签</string>
+    <string name="bookmark_already_exists">此文件已添加至书签</string>
     <string name="search_hint">搜索文件</string>
     <string name="query_error">查询错误</string>
-    <string name="search_empty">没有找到匹配的文件！</string>
+    <string name="search_empty">无匹配文件！</string>
     <string name="item_icon">项目图标</string>
     <string name="scanning">\u626b\u63cf\u4e2d&#8230;</string>
     <string name="delete_success">成功删除</string>
     <string name="delete_failure">某些文件未删除</string>
     <string name="deleting">\u5220\u9664\u4e2d&#8230;</string>
-    <string name="rename_success">重命名成功</string>
+    <string name="rename_success">成功重命名</string>
     <string name="rename_failure">无法重命名</string>
     <string name="loading">\u8f7d\u5165\u4e2d&#8230;</string>
-    <string name="create_dir_success">成功创建目录</string>
-    <string name="create_dir_failure">无法创建目录</string>
-    <string name="compressed_file_name">zip文件名</string>
-    <string name="file_exists">文件以存在</string>
-    <string name="overwrite_question">覆盖旧的文件？</string>
+    <string name="create_dir_success">成功新建目录</string>
+    <string name="create_dir_failure">无法新建目录</string>
+    <string name="compressed_file_name">Zip 文件名</string>
+    <string name="file_exists">文件已存在</string>
+    <string name="overwrite_question">覆盖旧有文件？</string>
     <string name="directory_pick">选择当前目录</string>
     <string name="filename_hint">文件名</string>
     <string name="choose_filename">文件名不能为空！</string>
     <string name="pick_button_default">选择文件</string>
     <string name="copying">\u590d\u5236\u4e2d&#8230;</string>
     <string name="copied">复制成功</string>
-    <string name="copy_error">部分或所有项目无法复制！</string>
-    <string name="moving">\u79fb\u52a8&#8230;</string>
+    <string name="copy_error">部分或所有项复制失败！</string>
+    <string name="moving">\u79fb\u52a8\u4e2d&#8230;</string>
     <string name="moved">移动成功</string>
-    <string name="move_error">部分或所有项目无法移动！</string>
-    <string name="nothing_to_paste">没什么可粘贴。先复制或剪切。</string>
+    <string name="move_error">部分或所有项移动失败！</string>
+    <string name="nothing_to_paste">无可粘贴项。请先进行复制或剪切操作。</string>
     <string name="preference_usebestmatch_title">文件图标</string>
     <string name="preference_usebestmatch_summary_off">使用最近安装的应用程序</string>
-    <string name="preference_usebestmatch_summary_on">用最合适的应用程序</string>
-    <string name="modified">改造</string>
-    <string name="about_forked_from">从OI文件管理器分叉</string>
-    <string name="about_created_by">创建者：George Venios</string>
-    <string name="about_thanks_oifm">多谢OpenIntents和OIFM贡献者！</string>
+    <string name="preference_usebestmatch_summary_on">使用最合适的应用程序</string>
+    <string name="modified">修改于</string>
+    <string name="about_forked_from">复刻自「OI 文件管理器」</string>
+    <string name="about_created_by">开发者：George Venios</string>
+    <string name="about_thanks_oifm">非常感谢 OpenIntents 和 OIFM 的贡献！</string>
     <string name="about">关于</string>
     <string name="about_share">分享</string>
-    <string name="about_shareSubject">下载Dir在谷歌商店</string>
-    <string name="about_gplay">查看谷歌商店</string>
+    <string name="about_shareSubject">从 Play 商店中获取 Dir</string>
+    <string name="about_gplay">在 Play 商店中查看</string>
     <string name="about_contact">寻求帮助</string>
-    <string name="about_beta">加入Google+社群</string>
-    <string name="about_contribute">查看Github</string>
+    <string name="about_beta">加入 Google+ 社群</string>
+    <string name="about_contribute">在 Github 中查看</string>
     <string name="yes">是</string>
     <string name="no">否</string>
 </resources>
