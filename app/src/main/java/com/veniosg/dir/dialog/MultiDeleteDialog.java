@@ -51,7 +51,6 @@ public class MultiDeleteDialog extends DarkTitleDialogFragment {
 		 */
 		private int mResult = 1;
 		private ProgressDialog dialog = new ProgressDialog(getActivity());
-        private Context bestAvailableContext;
 
         /**
 		 * Recursively delete a file or directory and all of its children.
