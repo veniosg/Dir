@@ -136,20 +136,23 @@ public abstract class MediaScannerUtils {
             List<String> paths = params[0].paths;
 
             if (paths == null) {
-                context.getContentResolver().delete(getFileContentUri(context, file), null, null);
+                safeDelete(context, file);
             } else {
-                Uri uri;
                 for (String path : paths) {
-                    uri = getFileContentUri(context, new File(path));
-                    if (uri != null) {
-                        context.getContentResolver().delete(uri, null, null);
-                    } else {
-                        Logger.logV(Logger.TAG_MEDIASCANNER, "Error in removing file at " + path + " from MediaStore");
-                    }
+                    safeDelete(context, new File(path));
                 }
             }
 
             return null;
+        }
+
+        private void safeDelete(Context context, File file) {
+            Uri uri = getFileContentUri(context, file);
+            if (uri != null) {
+                context.getContentResolver().delete(uri, null, null);
+            } else {
+                Logger.logV(Logger.TAG_MEDIASCANNER, "Error in removing file at " + file.getAbsolutePath() + " from MediaStore");
+            }
         }
 
         @Override
