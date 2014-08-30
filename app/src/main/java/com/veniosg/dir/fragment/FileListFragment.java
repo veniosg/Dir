@@ -51,6 +51,9 @@ import com.veniosg.dir.view.WaitingViewFlipper;
 import java.io.File;
 import java.util.ArrayList;
 
+import static com.veniosg.dir.IntentConstants.ACTION_REFRESH_LIST;
+import static com.veniosg.dir.IntentConstants.EXTRA_DIR_PATH;
+
 /**
  * A {@link ListFragment} that displays the contents of a directory.
  * <p>
@@ -104,7 +107,8 @@ public abstract class FileListFragment extends ListFragment {
     private BroadcastReceiver mRefreshReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (mPath.equals(intent.getStringExtra(IntentConstants.EXTRA_DIR_PATH))) {
+            String requestPath = intent.getStringExtra(EXTRA_DIR_PATH);
+            if (requestPath != null || requestPath.equals(mPath)) {
                 refresh();
             }
         }
@@ -116,7 +120,7 @@ public abstract class FileListFragment extends ListFragment {
 
         LocalBroadcastManager.getInstance(getActivity())
                 .registerReceiver(mRefreshReceiver,
-                        new IntentFilter(IntentConstants.ACTION_REFRESH_LIST));
+                        new IntentFilter(ACTION_REFRESH_LIST));
     }
 
     @Override
@@ -174,7 +178,7 @@ public abstract class FileListFragment extends ListFragment {
 
 		// Get arguments
 		if (savedInstanceState == null) {
-            setPath(new File(getArguments().getString(IntentConstants.EXTRA_DIR_PATH)));
+            setPath(new File(getArguments().getString(EXTRA_DIR_PATH)));
 			mFilename = getArguments().getString(
 					IntentConstants.EXTRA_FILENAME);
 		} else {
@@ -375,8 +379,8 @@ public abstract class FileListFragment extends ListFragment {
      * @param directory The directory to refresh.
      */
     public static void refresh(Context c, File directory) {
-        Intent i = new Intent(IntentConstants.ACTION_REFRESH_LIST);
-        i.putExtra(IntentConstants.EXTRA_DIR_PATH, directory.getAbsolutePath());
+        Intent i = new Intent(ACTION_REFRESH_LIST);
+        i.putExtra(EXTRA_DIR_PATH, directory.getAbsolutePath());
 
         LocalBroadcastManager.getInstance(c).sendBroadcast(i);
     }
