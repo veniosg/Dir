@@ -108,7 +108,7 @@ public abstract class FileListFragment extends ListFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             String requestPath = intent.getStringExtra(EXTRA_DIR_PATH);
-            if (requestPath != null || requestPath.equals(mPath)) {
+            if (requestPath != null && requestPath.equals(mPath)) {
                 refresh();
             }
         }
