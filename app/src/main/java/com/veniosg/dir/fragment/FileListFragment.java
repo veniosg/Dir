@@ -187,12 +187,11 @@ public abstract class FileListFragment extends ListFragment {
 					.getParcelableArrayList(INSTANCE_STATE_FILES);
 		}
 		pathCheckAndFix();
-		renewScanner();
+
 		mAdapter = new FileHolderListAdapter(mFiles);
-
 		setListAdapter(mAdapter);
-		mScanner.start();
 
+		renewScanner().start();
 	}
 
     private void initDecorStyling(View view) {
@@ -203,8 +202,8 @@ public abstract class FileListFragment extends ListFragment {
                         (mTintManager.getConfig().getPixelInsetTop(false) != 0
                                 ? mTintManager.getConfig().getPixelInsetTop(true)
                                 : 0),
-                view.getPaddingRight() + mTintManager.getConfig().getPixelInsetRight()
-                , view.getPaddingBottom());
+                view.getPaddingRight() + mTintManager.getConfig().getPixelInsetRight(),
+                view.getPaddingBottom());
 
         initBottomViewPaddings(view);
     }
