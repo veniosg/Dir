@@ -703,13 +703,6 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        sScrollPositions.clear();
-    }
-
-    @Override
     protected void onLoadingChanging(boolean loading) {
         if (!loading) {
             if (sScrollPositions.containsKey(getPath())) {
@@ -721,7 +714,7 @@ public class SimpleFileListFragment extends FileListFragment {
 
     @Override
     protected void onLoadingChanged(boolean loading) {
-        if (loading) {
+        if (loading && mZoomView != null) {
             if (mNavigationDirection == 1) {
                 mZoomView.animateFwd();
             } else if (mNavigationDirection == -1) {

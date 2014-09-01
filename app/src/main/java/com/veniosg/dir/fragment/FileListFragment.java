@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.graphics.drawable.DrawableContainer;
 import android.os.Bundle;
 import android.os.FileObserver;
 import android.os.Handler;
@@ -69,6 +68,7 @@ import static com.veniosg.dir.IntentConstants.EXTRA_DIR_PATH;
 public abstract class FileListFragment extends ListFragment {
 	private static final String INSTANCE_STATE_PATH = "path";
 	private static final String INSTANCE_STATE_FILES = "files";
+    private static final String INSTANCE_STATE_NEEDS_LOADING = "needsLoading";
 
     // Not an anonymous inner class because of:
 	// http://stackoverflow.com/questions/2542938/sharedpreferences-onsharedpreferencechangelistener-not-being-called-consistently
@@ -135,12 +135,13 @@ public abstract class FileListFragment extends ListFragment {
     }
 
     @Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
-		outState.putString(INSTANCE_STATE_PATH, mPath);
-		outState.putParcelableArrayList(INSTANCE_STATE_FILES, mFiles);
-	}
+        outState.putString(INSTANCE_STATE_PATH, mPath);
+        outState.putInt(INSTANCE_STATE_NEEDS_LOADING, isScannerRunning() ? 1 : 0);
+        outState.putParcelableArrayList(INSTANCE_STATE_FILES, mFiles);
+    }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -177,6 +178,7 @@ public abstract class FileListFragment extends ListFragment {
 		mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
 
 		// Get arguments
+        boolean needsLoading = true;
 		if (savedInstanceState == null) {
             setPath(new File(getArguments().getString(EXTRA_DIR_PATH)));
 			mFilename = getArguments().getString(
@@ -185,13 +187,18 @@ public abstract class FileListFragment extends ListFragment {
 			setPath(new File(savedInstanceState.getString(INSTANCE_STATE_PATH)));
 			mFiles = savedInstanceState
 					.getParcelableArrayList(INSTANCE_STATE_FILES);
+            needsLoading = savedInstanceState.getInt(INSTANCE_STATE_NEEDS_LOADING) != 0;
 		}
 		pathCheckAndFix();
+        renewScanner();
 
-		mAdapter = new FileHolderListAdapter(mFiles);
-		setListAdapter(mAdapter);
+        if (needsLoading) {
+            showLoading(true);
+            mScanner.start();
+        }
 
-		renewScanner().start();
+        mAdapter = new FileHolderListAdapter(mFiles);
+        setListAdapter(mAdapter);
 	}
 
     private void initDecorStyling(View view) {
@@ -226,14 +233,14 @@ public abstract class FileListFragment extends ListFragment {
 		mScanner = null;
 
 		// Indicate loading and start scanning.
-		setLoading(true);
+		showLoading(true);
 		renewScanner().start();
 	}
 
 	/**
 	 * Make the UI indicate loading.
 	 */
-	private void setLoading(boolean loading) {
+	private void showLoading(boolean loading) {
         onLoadingChanging(loading);
         if (loading) {
             mFlipper.setDisplayedChildDelayed(WaitingViewFlipper.PAGE_INDEX_LOADING);
@@ -271,7 +278,13 @@ public abstract class FileListFragment extends ListFragment {
 		return mScanner;
 	}
 
-	private class FileListMessageHandler extends Handler {
+    public boolean isScannerRunning() {
+        return mScanner != null
+                && mScanner.isAlive()
+                && mScanner.isRunning();
+    }
+
+    private class FileListMessageHandler extends Handler {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
@@ -285,7 +298,7 @@ public abstract class FileListFragment extends ListFragment {
 
                     mAdapter.notifyDataSetChanged();
                     getListView().setSelection(0);
-                    setLoading(false);
+                    showLoading(false);
                     onDataApplied();
                     break;
                 case DirectoryScanner.MESSAGE_SET_PROGRESS:
