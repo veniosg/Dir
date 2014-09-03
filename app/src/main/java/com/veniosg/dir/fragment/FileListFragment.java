@@ -297,7 +297,9 @@ public abstract class FileListFragment extends ListFragment {
                     onDataReady();
 
                     mAdapter.notifyDataSetChanged();
-                    getListView().setSelection(0);
+                    if (getView() != null) {
+                        getListView().setSelection(0);
+                    }
                     showLoading(false);
                     onDataApplied();
                     break;
