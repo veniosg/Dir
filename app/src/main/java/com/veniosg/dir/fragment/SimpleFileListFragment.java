@@ -87,6 +87,7 @@ public class SimpleFileListFragment extends FileListFragment {
     private ActionMode mActionMode;
     private boolean mActionsEnabled = true;
     private int mNavigationDirection = 0;
+    private View heroView;
 
     private AbsListView.MultiChoiceModeListener mMultiChoiceModeListener = new AbsListView.MultiChoiceModeListener() {
 
@@ -437,7 +438,9 @@ public class SimpleFileListFragment extends FileListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         FileHolder item = (FileHolder) mAdapter.getItem(position);
+        heroView = v;
         openInformingPathBar(item);
+        heroView = null;
     }
 
     /**
@@ -494,7 +497,7 @@ public class SimpleFileListFragment extends FileListFragment {
 
         // Save required data for animation
         mNavigationDirection = Utils.getNavigationDirection(new File(getPath()), fileholder.getFile());
-        mZoomView.setupAnimations(mNavigationDirection);
+        mZoomView.setupAnimations(mNavigationDirection, heroView);
 
         // Load
         setPath(fileholder.getFile());
