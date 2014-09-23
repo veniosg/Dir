@@ -25,18 +25,18 @@ import android.widget.HorizontalScrollView;
 /**
  * @author George Venios
  */
-public class ShadowedHorizontalScrollView extends HorizontalScrollView {
-    public ShadowedHorizontalScrollView(Context context) {
+public class ShadowFadingEdgeHorizontalScrollView extends HorizontalScrollView {
+    public ShadowFadingEdgeHorizontalScrollView(Context context) {
         super(context);
         init();
     }
 
-    public ShadowedHorizontalScrollView(Context context, AttributeSet attrs) {
+    public ShadowFadingEdgeHorizontalScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public ShadowedHorizontalScrollView(Context context, AttributeSet attrs, int defStyle) {
+    public ShadowFadingEdgeHorizontalScrollView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }

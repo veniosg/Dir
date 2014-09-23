@@ -35,7 +35,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -69,6 +68,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static android.R.integer.config_mediumAnimTime;
+import static android.R.integer.config_shortAnimTime;
+import static com.veniosg.dir.AnimationConstants.inInterpolator;
 
 /**
  * A file list fragment that supports CAB selection.
@@ -400,21 +403,20 @@ public class SimpleFileListFragment extends FileListFragment {
         root.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                View listRoot = root.findViewById(R.id.browseRoot);
                 getView().getViewTreeObserver().removeOnPreDrawListener(this);
 
-                listRoot.setTranslationY(-mPathBar.getHeight());
-                mPathBar.setPivotX(mPathBar.getWidth() / 2);
-                mPathBar.setPivotY(mPathBar.getHeight() / 2);
+                mPathBar.setTranslationZ(10F);
+                mPathBar.setScaleX(1.1F);
+                mPathBar.setScaleY(1.1F);
 
                 AnimatorSet set = new AnimatorSet();
-                ObjectAnimator anim = ObjectAnimator.ofFloat(listRoot, "translationY", listRoot.getTranslationY(), 0F);
-                ObjectAnimator anim2 = ObjectAnimator.ofFloat(mPathBar, "scaleX", 1.25F, 1F);
-                ObjectAnimator anim3 = ObjectAnimator.ofFloat(mPathBar, "alpha", 0.2F, 1F);
+                ObjectAnimator anim  = ObjectAnimator.ofFloat(mPathBar, "translationZ", 0F);
+                ObjectAnimator anim2 = ObjectAnimator.ofFloat(mPathBar, "scaleX", 1F);
+                ObjectAnimator anim3 = ObjectAnimator.ofFloat(mPathBar, "scaleY", 1F);
 
-                set.setDuration(getResources().getInteger(android.R.integer.config_longAnimTime));
-                set.setInterpolator(new DecelerateInterpolator());
-                set.setStartDelay(getResources().getInteger(android.R.integer.config_shortAnimTime));
+                set.setDuration(getResources().getInteger(config_mediumAnimTime));
+                set.setInterpolator(inInterpolator);
+                set.setStartDelay(getResources().getInteger(config_shortAnimTime));
                 set.playTogether(anim, anim2, anim3);
                 set.start();
                 return true;
@@ -514,8 +516,9 @@ public class SimpleFileListFragment extends FileListFragment {
         // We only know about ".nomedia" once scanning is finished.
         boolean showMediaScanMenuItem = PreferenceFragment.getMediaScanFromPreference(getActivity());
         if (!mScanner.isRunning() && showMediaScanMenuItem) {
-            menu.findItem(R.id.menu_media_scan_include).setVisible(mScanner.getNoMedia());
-            menu.findItem(R.id.menu_media_scan_exclude).setVisible(!mScanner.getNoMedia());
+            boolean noMedia = mScanner.getNoMedia();
+            menu.findItem(R.id.menu_media_scan_include).setVisible(noMedia);
+            menu.findItem(R.id.menu_media_scan_exclude).setVisible(!noMedia);
         } else {
             menu.findItem(R.id.menu_media_scan_include).setVisible(false);
             menu.findItem(R.id.menu_media_scan_exclude).setVisible(false);

@@ -22,18 +22,13 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
@@ -42,11 +37,10 @@ import com.veniosg.dir.util.Logger;
 
 import static android.graphics.PorterDuff.Mode.SRC_OVER;
 import static android.util.Log.DEBUG;
-import static android.util.TypedValue.COMPLEX_UNIT_DIP;
-import static android.util.TypedValue.applyDimension;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
-import static com.veniosg.dir.AnimationConstants.INTERPOLATOR_EASING_FACTOR;
+import static com.veniosg.dir.AnimationConstants.inInterpolator;
+import static com.veniosg.dir.AnimationConstants.outInterpolator;
 import static com.veniosg.dir.util.Logger.TAG_ANIMATION;
 
 /**
@@ -130,22 +124,18 @@ public class AnimatedFileListContainer extends FrameLayout {
         // Add and show last list state
         oldContent.setDrawable(mScreenshot);
         hero.setDrawable(mHeroshot);
-//        newContent.setElevation(2);
-//        hero.setElevation(2);
-//        oldContent.setElevation(0);
         addView(hero, 0);
         addView(oldContent, 0);
         newContent.setBackgroundDrawable(mBackground.mutate());
         Logger.log(DEBUG, TAG_ANIMATION, "Added new views. New count: " + getChildCount());
 
         // Init animations
-        contentAnim = forwardContentAnimation(newContent, oldContent);
+        contentAnim = forwardContentAnimation(newContent, oldContent, hero);
         heroAnim = forwardHeroAnimation(hero);
 
         // Play animations
         AnimatorSet scene = new AnimatorSet();
-        setupSceneAnimation(oldContent, hero, contentAnim, heroAnim,
-                new DecelerateInterpolator(INTERPOLATOR_EASING_FACTOR), scene);
+        setupSceneAnimation(oldContent, hero, contentAnim, heroAnim, inInterpolator, scene);
         Logger.log(DEBUG, TAG_ANIMATION, "Starting animation");
         scene.start();
     }
@@ -165,9 +155,6 @@ public class AnimatedFileListContainer extends FrameLayout {
         // Add and show last list state
         oldContent.setDrawable(mScreenshot);
         hero.setDrawable(mHeroshot);
-//        newContent.setElevation(0);
-//        hero.setElevation(2);
-//        oldContent.setElevation(2);
         addView(oldContent);
         addView(hero);    // Since this is the last child, it'll be overlaid on top of the others
         Logger.log(DEBUG, TAG_ANIMATION, "Added new views. New count: " + getChildCount());
@@ -178,26 +165,66 @@ public class AnimatedFileListContainer extends FrameLayout {
 
         // Play animations
         AnimatorSet scene = new AnimatorSet();
-        setupSceneAnimation(oldContent, hero, contentAnim, heroAnim,
-                new AccelerateInterpolator(INTERPOLATOR_EASING_FACTOR), scene);
+        setupSceneAnimation(oldContent, hero, contentAnim, heroAnim, outInterpolator, scene);
         Logger.log(DEBUG, TAG_ANIMATION, "Starting animation");
         scene.start();
     }
 
-    private AnimatorSet backwardHeroAnimation(DrawableView hero) {
+    private AnimatorSet forwardHeroAnimation(final View hero) {
         AnimatorSet heroAnim = new AnimatorSet();
-        ObjectAnimator anim = ObjectAnimator.ofFloat(hero, "translationX", -getWidth(), 0);
-        heroAnim.playTogether(anim);
+        ObjectAnimator anim = ObjectAnimator.ofFloat(hero, "translationX", 0, -getWidth());
+        ObjectAnimator anim2 = ObjectAnimator.ofFloat(hero, "translationZ", 0F, 15F);
+
+        heroAnim.addListener(resetTranslationZOnEndListener(hero));
+        heroAnim.playTogether(anim, anim2);
         return heroAnim;
     }
 
-    private AnimatorSet backwardContentAnimation(final View newContent, DrawableView oldContent) {
+    private AnimatorSet forwardContentAnimation(final View newContent, final View oldContent, final DrawableView hero) {
+        int heroHeight = hero.getDrawableHeight();
+        if (heroHeight > 0) {
+            oldContent.setPivotY(hero.getY() + heroHeight / 2);
+        }
+
+        AnimatorSet contentAnim = new AnimatorSet();
+        ObjectAnimator anim = ObjectAnimator.ofFloat(oldContent, "scaleX", 1F, 0.9F);
+        ObjectAnimator anim2 = ObjectAnimator.ofFloat(oldContent, "scaleY", 1F, 0.9F);
+        ObjectAnimator anim3 = ObjectAnimator.ofFloat(oldContent, "saturation", 1F, -3F);
+        ObjectAnimator anim4 = ObjectAnimator.ofFloat(oldContent, "translationX", 0F, -getWidth()/2);
+        ObjectAnimator anim5 = ObjectAnimator.ofFloat(newContent, "translationZ", 0F, 15F);
+        ObjectAnimator anim6 = ObjectAnimator.ofFloat(newContent, "translationX", getWidth(), 0F);
+        ObjectAnimator anim7 = ObjectAnimator.ofFloat(this, "backgroundDim", 0F, 0.5F);
+
+        contentAnim.addListener(resetTranslationZOnEndListener(newContent));
+        contentAnim.playTogether(
+                anim,
+                anim2,
+                anim3,
+                anim4,
+                anim5,
+                anim6,
+                anim7
+        );
+
+        return contentAnim;
+    }
+
+    private AnimatorSet backwardHeroAnimation(final View hero) {
+        AnimatorSet heroAnim = new AnimatorSet();
+        ObjectAnimator anim = ObjectAnimator.ofFloat(hero, "translationX", -getWidth(), 0);
+        ObjectAnimator anim2 = ObjectAnimator.ofFloat(hero, "translationZ", 15F, 0F);
+
+        heroAnim.playTogether(anim, anim2);
+        return heroAnim;
+    }
+
+    private AnimatorSet backwardContentAnimation(final View newContent, final View oldContent) {
         AnimatorSet contentAnim = new AnimatorSet();
         ObjectAnimator anim = ObjectAnimator.ofFloat(newContent, "scaleX", 0.9F, 1F);
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(newContent, "scaleY", 0.9F, 1F);
-        ObjectAnimator anim3 = ObjectAnimator.ofFloat(newContent, "translationZ", 0, 10);
-        ObjectAnimator anim4 = ObjectAnimator.ofFloat(oldContent, "translationX", 0, newContent.getWidth());
-        ObjectAnimator anim5 = ObjectAnimator.ofFloat(oldContent, "alpha", 1F, 0.3F);
+        ObjectAnimator anim3 = ObjectAnimator.ofFloat(newContent, "translationX", -getWidth()/2, 0F);
+        ObjectAnimator anim4 = ObjectAnimator.ofFloat(oldContent, "translationZ", 15F, 0F);
+        ObjectAnimator anim5 = ObjectAnimator.ofFloat(oldContent, "translationX", 0F, getWidth());
         ObjectAnimator anim6 = ObjectAnimator.ofFloat(this, "backgroundDim", 0.5F, 0F);
 
         contentAnim.playTogether(
@@ -207,53 +234,6 @@ public class AnimatedFileListContainer extends FrameLayout {
                 anim4,
                 anim5,
                 anim6
-        );
-
-        anim3.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {}
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                animator.removeAllListeners();
-//                newContent.setTranslationZ(0);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {}
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {}
-        });
-
-        return contentAnim;
-    }
-
-    private AnimatorSet forwardHeroAnimation(DrawableView hero) {
-        AnimatorSet heroAnim = new AnimatorSet();
-        ObjectAnimator anim = ObjectAnimator.ofFloat(hero, "translationX", 0, -getWidth());
-        heroAnim.playTogether(anim);
-        return heroAnim;
-    }
-
-    private AnimatorSet forwardContentAnimation(View newContent, final DrawableView oldContent) {
-        AnimatorSet contentAnim = new AnimatorSet();
-        ObjectAnimator anim = ObjectAnimator.ofFloat(oldContent, "scaleX", 1F, 0.9F);
-        ObjectAnimator anim2 = ObjectAnimator.ofFloat(oldContent, "scaleY", 1F, 0.9F);
-        ObjectAnimator anim3 = ObjectAnimator.ofFloat(oldContent, "saturation", 1F, -3F);
-        ObjectAnimator anim4 = ObjectAnimator.ofFloat(oldContent, "translationZ", 10, 0);
-        ObjectAnimator anim5 = ObjectAnimator.ofFloat(newContent, "translationX", newContent.getWidth(), 0);
-        ObjectAnimator anim6 = ObjectAnimator.ofFloat(newContent, "alpha", 0.3F, 1F);
-        ObjectAnimator anim7 = ObjectAnimator.ofFloat(this, "backgroundDim", 0F, 0.5F);
-
-        contentAnim.playTogether(
-                anim,
-                anim2,
-                anim3,
-                anim4,
-                anim5,
-                anim6,
-                anim7
         );
 
         return contentAnim;
@@ -311,6 +291,25 @@ public class AnimatedFileListContainer extends FrameLayout {
         Logger.log(DEBUG, TAG_ANIMATION, "Cleared animations");
     }
 
+    private Animator.AnimatorListener resetTranslationZOnEndListener(final View target) {
+        return new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {}
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                animator.removeListener(this);
+                target.setTranslationZ(0);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {}
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {}
+        };
+    }
+
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
         boolean result = super.drawChild(canvas, child, drawingTime);
@@ -362,6 +361,14 @@ public class AnimatedFileListContainer extends FrameLayout {
 
         public void setDrawable(Drawable drawable) {
             this.drawable = drawable;
+        }
+
+        public int getDrawableHeight() {
+            if(drawable != null) {
+                return drawable.getIntrinsicHeight();
+            } else {
+                return 0;
+            }
         }
 
         public void setSaturation(float sat) {

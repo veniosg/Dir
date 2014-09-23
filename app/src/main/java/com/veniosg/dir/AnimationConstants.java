@@ -1,5 +1,8 @@
 package com.veniosg.dir;
 
+import android.view.animation.Interpolator;
+import android.view.animation.PathInterpolator;
+
 /**
  * @author George Venios
  */
@@ -16,9 +19,10 @@ public class AnimationConstants {
      <!-- The duration (in milliseconds) of a long animation. -->
      <integer name="config_longAnimTime">500</integer>
      */
-    public static final int ANIM_DURATION = 200;
+    public static final int ANIM_DURATION = 250;
 
     public static final int ANIM_START_DELAY = 10;
 
-    public static final float INTERPOLATOR_EASING_FACTOR = 2F;
+    public static final Interpolator inInterpolator = new PathInterpolator(0.4F, 0, 0.2F, 1);
+    public static final Interpolator outInterpolator = new PathInterpolator(0.8F, 0, 0.6F, 1);
 }

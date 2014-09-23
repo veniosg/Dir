@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="?attr/pathBarBackground"
-        android:elevation="2px" />
+        android:elevation="5px" />
 
     <com.veniosg.dir.view.AnimatedFileListContainer
         android:id="@+id/zoomview"

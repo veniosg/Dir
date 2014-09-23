@@ -21,8 +21,6 @@ import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.text.InputType;
 import android.util.AttributeSet;
@@ -30,8 +28,6 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -43,10 +39,18 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.veniosg.dir.R;
-import com.veniosg.dir.AnimationConstants;
 import com.veniosg.dir.util.Logger;
 
 import java.io.File;
+
+import static android.animation.LayoutTransition.APPEARING;
+import static android.animation.LayoutTransition.CHANGE_APPEARING;
+import static android.animation.LayoutTransition.CHANGE_DISAPPEARING;
+import static android.animation.LayoutTransition.DISAPPEARING;
+import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
+import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
+import static com.veniosg.dir.AnimationConstants.inInterpolator;
+import static com.veniosg.dir.AnimationConstants.outInterpolator;
 
 /**
  * Provides a self contained way to represent the current path and provides a handy way of navigating. <br/><br/>
@@ -84,7 +88,7 @@ public class PathBar extends ViewFlipper {
 	/** Layout holding all path buttons. */
 	private PathButtonLayout mPathButtons = null;
 	/** Container of {@link #mPathButtons}. Allows horizontal scrolling. */
-	private ShadowedHorizontalScrollView mPathButtonsContainer = null;
+	private ShadowFadingEdgeHorizontalScrollView mPathButtonsContainer = null;
 	/** The EditText holding the path in MANUAL_INPUT. */
 	private EditText mPathEditText = null;
 	/** The ImageButton to confirm the manually entered path. */
@@ -165,7 +169,7 @@ public class PathBar extends ViewFlipper {
 		}
 
 		// Horizontal ScrollView container
-		mPathButtonsContainer = new ShadowedHorizontalScrollView(getContext());
+		mPathButtonsContainer = new ShadowFadingEdgeHorizontalScrollView(getContext());
 		{
 			android.widget.RelativeLayout.LayoutParams layoutParams = new android.widget.RelativeLayout.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
@@ -192,10 +196,13 @@ public class PathBar extends ViewFlipper {
 			mPathButtons.setNavigationBar(this);
             LayoutTransition transition = new LayoutTransition();
             // Next two values should be the same as in AnimatedFileListContainer
-            transition.setDuration(AnimationConstants.ANIM_DURATION);
-            transition.setStartDelay(LayoutTransition.APPEARING, AnimationConstants.ANIM_START_DELAY);
-            transition.setAnimator(LayoutTransition.APPEARING, createAppearingAnimator(transition));
-            transition.setAnimator(LayoutTransition.DISAPPEARING, createDisappearingAnimator(transition));
+            transition.setDuration(ANIM_DURATION);
+            transition.setStartDelay(APPEARING, ANIM_START_DELAY);
+            transition.setStartDelay(DISAPPEARING, ANIM_START_DELAY);
+            transition.setAnimator(APPEARING, createAppearingAnimator(transition));
+            transition.setAnimator(DISAPPEARING, createDisappearingAnimator(transition));
+            transition.setInterpolator(CHANGE_APPEARING, inInterpolator);
+            transition.setInterpolator(CHANGE_DISAPPEARING, outInterpolator);
             mPathButtons.setLayoutTransition(transition);
 
 			mPathButtonsContainer.addView(mPathButtons);
@@ -270,19 +277,20 @@ public class PathBar extends ViewFlipper {
 
     private Animator createAppearingAnimator(final LayoutTransition transition) {
         AnimatorSet anim = new AnimatorSet();
-        anim.setDuration(transition.getDuration(LayoutTransition.APPEARING));
-        anim.setInterpolator(new DecelerateInterpolator(AnimationConstants.INTERPOLATOR_EASING_FACTOR));
+        anim.setDuration(transition.getDuration(APPEARING));
+        anim.setInterpolator(inInterpolator);
         anim.playTogether(ObjectAnimator.ofFloat(null, "alpha", 0.3F, 1F),
                 ObjectAnimator.ofFloat(null, "translationX", NEW_ITEM_DISTANCE, 0));
         anim.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                ObjectAnimator.ofInt(mPathButtonsContainer, "scrollX",
+                Animator animator = ObjectAnimator.ofInt(mPathButtonsContainer, "scrollX",
                             mPathButtonsContainer.getScrollX(),
                             mPathButtons.getWidth())
-                        .setDuration((long) (transition.getDuration(LayoutTransition.APPEARING)
-                                + (0.5F *transition.getDuration(LayoutTransition.APPEARING))))
-                        .start();
+                        .setDuration((long) (transition.getDuration(APPEARING)
+                                + (0.5F *transition.getDuration(APPEARING))));
+                animator.setInterpolator(inInterpolator);
+                animator.start();
             }
 
             @Override
@@ -297,10 +305,10 @@ public class PathBar extends ViewFlipper {
         return anim;
     }
 
-    private Animator createDisappearingAnimator(LayoutTransition transition) {
+    private Animator createDisappearingAnimator(final LayoutTransition transition) {
         AnimatorSet anim = new AnimatorSet();
-        anim.setDuration(transition.getDuration(LayoutTransition.DISAPPEARING));
-        anim.setInterpolator(new AccelerateInterpolator(AnimationConstants.INTERPOLATOR_EASING_FACTOR));
+        anim.setDuration(transition.getDuration(DISAPPEARING));
+        anim.setInterpolator(outInterpolator);
         anim.playTogether(ObjectAnimator.ofFloat(null, "translationX", 0, NEW_ITEM_DISTANCE),
                 ObjectAnimator.ofFloat(null, "alpha", 1F, 0.3F));
         return anim;
