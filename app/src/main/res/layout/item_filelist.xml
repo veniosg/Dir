@@ -24,8 +24,8 @@
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="@dimen/icon_edge"
-        android:layout_height="@dimen/icon_edge"
+        android:layout_width="@dimen/item_icon_edge"
+        android:layout_height="@dimen/item_icon_edge"
         android:layout_alignParentLeft="true"
         android:layout_gravity="center_vertical"
         android:scaleType="centerInside"
