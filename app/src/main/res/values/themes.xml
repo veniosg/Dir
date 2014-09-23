@@ -58,7 +58,7 @@
         <!--<item name="android:fastScrollThumbDrawable">@drawable/dir_fastscroll_thumb_holo</item>-->
         <!--<item name="android:alertDialogTheme">@style/Theme.Dir.Dialog.Alert</item>-->
 
-        <item name="pathBarBackground">@drawable/dir_bg_pathbar</item>
+        <item name="pathBarBackground">@color/dir_accent</item>
         <item name="pathBarItemColor">@color/dir_light</item>
         <item name="windowContentBackground">@color/dir_window</item>
         <item name="colorSecondaryNeutral">@color/dir_secondary_neutral</item>
@@ -158,7 +158,7 @@
         <item name="android:fastScrollThumbDrawable">@drawable/dark_fastscroll_thumb_holo</item>
         <item name="android:alertDialogTheme">@style/Theme.Dir.Dark.Dialog.Alert</item>
 
-        <item name="pathBarBackground">@drawable/dark_bg_pathbar</item>
+        <item name="pathBarBackground">@color/dark_accent_sec</item>
         <item name="pathBarItemColor">@color/dark_light</item>
         <item name="windowContentBackground">@color/dark_window</item>
         <item name="colorSecondaryNeutral">@color/dark_secondary_neutral</item>
@@ -186,7 +186,7 @@
     <style name="Theme.Dir.HoloDark" parent="@android:style/Theme.Holo" >
         <item name="android:actionBarStyle">@android:style/Widget.Holo.ActionBar</item>
 
-        <item name="pathBarBackground">@drawable/holodark_bg_pathbar</item>
+        <item name="pathBarBackground">@color/holodark_pathbar_bg</item>
         <item name="pathBarItemColor">@color/holodark_light</item>
         <item name="windowContentBackground">@color/holodark_window</item> <!-- workaround for side pane weirdness -->
         <item name="colorSecondaryNeutral">@color/holodark_secondary_neutral</item>
@@ -244,7 +244,7 @@
         <item name="android:fastScrollThumbDrawable">@drawable/dir_fastscroll_thumb_holo</item>
         <item name="android:alertDialogTheme">@style/Theme.Dir.Dialog.Alert</item>
 
-        <item name="pathBarBackground">@drawable/dir_bg_pathbar</item>
+        <item name="pathBarBackground">@color/dir_accent</item>
         <item name="windowContentBackground">@color/dir_window</item>
         <item name="colorSecondaryNeutral">@color/dir_secondary_neutral</item>
         <item name="colorAccent">@color/dir_accent</item>
