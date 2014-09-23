@@ -7,7 +7,7 @@
     <com.veniosg.dir.view.PathBar
         android:id="@+id/pathbar"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/pathbar_height"
         android:background="?attr/pathBarBackground"
         android:elevation="5px" />
 

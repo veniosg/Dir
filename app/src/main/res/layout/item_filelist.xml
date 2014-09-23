@@ -17,19 +17,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="?android:attr/activatedBackgroundIndicator"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/item_height"
+    android:gravity="center_vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:padding="8dp" >
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/icon_edge"
+        android:layout_height="@dimen/icon_edge"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
         android:scaleType="centerInside"
-        android:contentDescription="@string/item_icon" />
+        android:contentDescription="@string/item_icon"
+        android:layout_marginRight="@dimen/item_icon_right_margin" />
 
     <TextView
         android:id="@+id/primary_info"
@@ -38,8 +39,7 @@
         android:ellipsize="end"
 		android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_toRightOf="@id/icon"
-        android:layout_marginLeft="16dp" />
+        android:layout_toRightOf="@id/icon"/>
 
     <TextView
         android:id="@+id/tertiary_info"
