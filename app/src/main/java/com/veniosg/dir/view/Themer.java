@@ -19,6 +19,10 @@ package com.veniosg.dir.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.Xfermode;
+import android.graphics.drawable.Drawable;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.fragment.PreferenceFragment;
@@ -57,6 +61,14 @@ public class Themer {
         }
     }
 
+    public interface Themable {
+        /**
+         * Get the theme flavor this component should have.
+         * @return One of the Flavor constants.
+         */
+        public Flavor getThemeFlavor();
+    }
+
     public static final int getThemedResourceId(Context ctx, int attributeId) {
         TypedArray a = ctx.getTheme().obtainStyledAttributes(new int[] {attributeId});
         int attributeResourceId = a.getResourceId(0, 0);
@@ -65,11 +77,8 @@ public class Themer {
         return attributeResourceId;
     }
 
-    public interface Themable {
-        /**
-         * Get the theme flavor this component should have.
-         * @return One of the Flavor constants.
-         */
-        public Flavor getThemeFlavor();
+    public static final Drawable colorDrawable(Context context, Drawable drawable, int color) {
+        drawable.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
+        return drawable;
     }
 }

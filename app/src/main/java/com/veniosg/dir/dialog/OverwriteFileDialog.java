@@ -1,5 +1,6 @@
 package com.veniosg.dir.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -8,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 
 import com.veniosg.dir.R;
 
+@SuppressLint("ValidFragment")
 class OverwriteFileDialog extends DarkTitleDialogFragment {
 	
 	@Override

@@ -195,11 +195,7 @@ public class SearchListFragment extends ListFragment implements LoaderManager.Lo
     public void onLoadFinished(Loader<List<FileHolder>> loader, List<FileHolder> data) {
         setListAdapter(new SearchListAdapter(data));
 
-        if (isResumed()) {
-            setLoading(false);
-        } else {
-            setLoading(false);
-        }
+        setLoading(false);
     }
 
     @Override

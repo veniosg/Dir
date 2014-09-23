@@ -20,7 +20,7 @@
 
     <!-- Dir colors -->
     <color name="dir_dark">#210030</color>
-    <color name="dir_light">#57007F</color>
+    <color name="dir_light">#3f005c</color>
     <!-- Also used for list item icons -->
     <color name="dir_accent_sec">#222222</color>
     <color name="dir_window">#e4e4e4</color>
@@ -32,7 +32,7 @@
 
     <!-- Dark colors -->
     <color name="dark_dark">#000</color>
-    <color name="dark_light">#1D1D1D</color>
+    <color name="dark_light">#171717</color>
     <color name="dark_accent_sec">#0F0F0F</color>
     <color name="dark_window">#0C0C0C</color>
     <color name="dark_accent">#D6D6D6</color>
@@ -44,12 +44,13 @@
 
     <!-- Grayscale colors -->
     <color name="grayscale_activated">#4000</color>
+    <color name="grayscale_light">#171717</color>
 
     <!-- HoloDark colors -->
     <color name="holodark_dark">#000</color>
-    <color name="holodark_light">#282828</color>
+    <color name="holodark_light">#131619</color>
     <color name="holodark_window">#01000000</color>
-    <color name="holodark_accent">@android:color/holo_blue_light</color>
+    <color name="holodark_accent">@android:color/holo_blue_bright</color>
     <color name="holodark_accent_sec">@color/holodark_light</color>
     <color name="holodark_secondary_neutral">#808080</color>
     <color name="holodark_side_pane_background">#3000</color>

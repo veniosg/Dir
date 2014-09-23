@@ -21,11 +21,15 @@ import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Environment;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -47,10 +51,14 @@ import static android.animation.LayoutTransition.APPEARING;
 import static android.animation.LayoutTransition.CHANGE_APPEARING;
 import static android.animation.LayoutTransition.CHANGE_DISAPPEARING;
 import static android.animation.LayoutTransition.DISAPPEARING;
+import static android.util.TypedValue.COMPLEX_UNIT_DIP;
+import static android.util.TypedValue.applyDimension;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static com.veniosg.dir.AnimationConstants.inInterpolator;
 import static com.veniosg.dir.AnimationConstants.outInterpolator;
+import static com.veniosg.dir.view.Themer.colorDrawable;
+import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
 /**
  * Provides a self contained way to represent the current path and provides a handy way of navigating. <br/><br/>
@@ -63,6 +71,8 @@ import static com.veniosg.dir.AnimationConstants.outInterpolator;
  * @author George Venios
  */
 public class PathBar extends ViewFlipper {
+    private static final float BG_ITEM_SKEW_DELTA_DP = 3F;
+    private final int BG_ITEM_SKEW_DELTA_PX;
     private static float NEW_ITEM_DISTANCE;
 
     /**
@@ -103,12 +113,16 @@ public class PathBar extends ViewFlipper {
 	public PathBar(Context context) {
 		super(context);
         NEW_ITEM_DISTANCE = getResources().getDisplayMetrics().widthPixels;
+        BG_ITEM_SKEW_DELTA_PX = (int) applyDimension(COMPLEX_UNIT_DIP, BG_ITEM_SKEW_DELTA_DP,
+                context.getResources().getDisplayMetrics());
 		init();
 	}
 
 	public PathBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
         NEW_ITEM_DISTANCE = getResources().getDisplayMetrics().widthPixels;
+        BG_ITEM_SKEW_DELTA_PX = (int) applyDimension(COMPLEX_UNIT_DIP, BG_ITEM_SKEW_DELTA_DP,
+                context.getResources().getDisplayMetrics());
         init();
 	}
 
@@ -137,8 +151,11 @@ public class PathBar extends ViewFlipper {
 
 			mSwitchToManualModeButton.setLayoutParams(layoutParams);
 			mSwitchToManualModeButton.setId(10);
-			mSwitchToManualModeButton.setBackgroundResource(Themer.getThemedResourceId(getContext(),
-                    R.attr.pathBarItemBackgroundSquare));
+			mSwitchToManualModeButton.setBackgroundDrawable(
+                    colorDrawable(
+                            getContext(),
+                            getSquareMaskDrawable(getContext()),
+                            getPathBarItemColor()));
 			mSwitchToManualModeButton.setVisibility(View.GONE);
 
 			standardModeLayout.addView(mSwitchToManualModeButton);
@@ -153,8 +170,11 @@ public class PathBar extends ViewFlipper {
 
 			cdToRootButton.setLayoutParams(layoutParams);
 			cdToRootButton.setId(11);
-			cdToRootButton.setBackgroundResource(Themer.getThemedResourceId(getContext(),
-                    R.attr.pathBarItemBackgroundSquare));
+			cdToRootButton.setBackgroundDrawable(
+                    colorDrawable(
+                            getContext(),
+                            getSquareMaskDrawable(getContext()),
+                            getPathBarItemColor()));
 			cdToRootButton.setImageResource(R.drawable.ic_navbar_home);
 			cdToRootButton.setScaleType(ScaleType.CENTER_INSIDE);
 			cdToRootButton.setOnClickListener(new View.OnClickListener() {
@@ -226,9 +246,12 @@ public class PathBar extends ViewFlipper {
 
 			mGoButton.setLayoutParams(layoutParams);
 			mGoButton.setId(20);
-			mGoButton.setBackgroundResource(Themer.getThemedResourceId(getContext(),
-                    R.attr.pathBarItemBackgroundSquare));
-			mGoButton.setImageResource(R.drawable.ic_navbar_accept);
+			mGoButton.setBackgroundDrawable(
+                    colorDrawable(
+                            getContext(),
+                            getSquareMaskDrawable(getContext()),
+                            getPathBarItemColor()));
+            mGoButton.setImageResource(R.drawable.ic_navbar_accept);
 			mGoButton.setScaleType(ScaleType.CENTER_INSIDE);
 			mGoButton.setOnClickListener(new View.OnClickListener() {
 
@@ -237,8 +260,8 @@ public class PathBar extends ViewFlipper {
 					manualInputCd(mPathEditText.getText().toString());
 				}
 			});
-            mGoButton.setMinimumWidth((int) TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics()
+            mGoButton.setMinimumWidth((int) applyDimension(
+                    COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics()
             ));
 
 			manualModeLayout.addView(mGoButton);
@@ -274,6 +297,10 @@ public class PathBar extends ViewFlipper {
 			manualModeLayout.addView(mPathEditText);
 		}
 	}
+
+    private int getPathBarItemColor() {
+        return getContext().getResources().getColor(getThemedResourceId(getContext(), R.attr.pathBarItemColor));
+    }
 
     private Animator createAppearingAnimator(final LayoutTransition transition) {
         AnimatorSet anim = new AnimatorSet();
@@ -531,11 +558,47 @@ public class PathBar extends ViewFlipper {
 		return isFileOK;
 	}
 
-    public int getItemBackground(Context c, String absolutePath) {
+    public Drawable getItemBackgroundDrawable(Context c, String absolutePath) {
         if ("/".equals(absolutePath)) {
-            return Themer.getThemedResourceId(c, R.attr.pathBarItemBackgroundFirst);
+            return colorDrawable(
+                    getContext(),
+                    getSemiStraightMaskDrawable(c),
+                    getPathBarItemColor());
         } else {
-            return Themer.getThemedResourceId(c, R.attr.pathBarItemBackground);
+            return colorDrawable(
+                    getContext(),
+                    getSkewedMaskDrawable(c),
+                    getPathBarItemColor());
         }
+    }
+
+    public Drawable getSquareMaskDrawable(Context c) {
+        return wrapForTouchFeedback(c.getResources().getDrawable(R.drawable.btn_pathbar_straight));
+    }
+
+    public Drawable getSemiStraightMaskDrawable(Context c) {
+        return wrapForTouchFeedback(c.getResources().getDrawable(R.drawable.btn_pathbar_semiskewed));
+    }
+
+    public Drawable getSkewedMaskDrawable(Context c) {
+        return wrapForTouchFeedback(c.getResources().getDrawable(R.drawable.btn_pathbar_skewed));
+    }
+
+    private void configureMaskDrawablePaint(ShapeDrawable shapeDrawable) {
+        shapeDrawable.getPaint().setAntiAlias(true);
+        shapeDrawable.getPaint().setStyle(Paint.Style.FILL);
+        shapeDrawable.getPaint().setColor(Color.WHITE);
+    }
+
+    private Drawable wrapForTouchFeedback(Drawable drawable) {
+        Drawable touchDrawable = getTouchFeedbackDrawable();
+        Drawable[] drawables = new Drawable[]{drawable, touchDrawable.mutate()};
+        LayerDrawable touchableDrawable = new LayerDrawable(drawables);
+        return new LayerDrawable(drawables);
+    }
+
+    public Drawable getTouchFeedbackDrawable() {
+        return getResources().getDrawable(getThemedResourceId(getContext(),
+                android.R.attr.listChoiceBackgroundIndicator));
     }
 }

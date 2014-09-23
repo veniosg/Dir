@@ -16,9 +16,15 @@
 
 package com.veniosg.dir.util;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.provider.MediaStore;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -86,15 +92,79 @@ public abstract class MediaScannerUtils {
     }
 	
 	public static void informFileDeleted(Context c, File f) {
-        informFileAdded(c, f);
+        DeleteTaskParams params = new DeleteTaskParams();
+        params.context = c.getApplicationContext();
+        params.file = f;
+
+        new DeleteFromMediaStoreAsyncTask().execute(params);
 	}
 
     public static void informFolderDeleted(Context c, File parentFile) {
-        informFolderAdded(c, parentFile);
+        List<String> paths = new ArrayList<String>();
+        getPathsOfFolder(paths, parentFile);
+        informPathsDeleted(c, paths);
     }
 
     public static void informPathsDeleted(Context c, List<String> paths) {
-        MediaScannerConnection.scanFile(c.getApplicationContext(), paths.toArray(new String[paths.size()]), null,
-                sLogScannerListener);
+        DeleteTaskParams params = new DeleteTaskParams();
+        params.context = c.getApplicationContext();
+        params.paths = paths;
+
+        new DeleteFromMediaStoreAsyncTask().execute(params);
+    }
+
+    private static Uri getFileContentUri(Context context, File file) {
+        String filePath = file.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Files.getContentUri("external"),
+                new String[] { MediaStore.Files.FileColumns._ID },
+                MediaStore.Files.FileColumns.DATA + "=? ",
+                new String[] { filePath }, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Files.FileColumns._ID));
+            return MediaStore.Files.getContentUri("external", id);
+        }
+
+        return null;
+    }
+
+    private static class DeleteFromMediaStoreAsyncTask extends AsyncTask<DeleteTaskParams, Void, Void> {
+        @Override
+        protected Void doInBackground(DeleteTaskParams... params) {
+            Context context = params[0].context.getApplicationContext();
+            File file = params[0].file;
+            List<String> paths = params[0].paths;
+
+            if (paths == null) {
+                safeDelete(context, file);
+            } else {
+                for (String path : paths) {
+                    safeDelete(context, new File(path));
+                }
+            }
+
+            return null;
+        }
+
+        private void safeDelete(Context context, File file) {
+            Uri uri = getFileContentUri(context, file);
+            if (uri != null) {
+                context.getContentResolver().delete(uri, null, null);
+            } else {
+                Logger.logV(Logger.TAG_MEDIASCANNER, "Error in removing file at " + file.getAbsolutePath() + " from MediaStore");
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Logger.logV(Logger.TAG_MEDIASCANNER, "Async removal of references from MediaStore complete");
+        }
+    }
+
+    private static class DeleteTaskParams {
+        Context context;
+        File file;
+        List<String> paths;
+        Boolean recursive;
     }
 }

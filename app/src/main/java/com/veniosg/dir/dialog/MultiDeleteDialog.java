@@ -3,6 +3,7 @@ package com.veniosg.dir.dialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,7 +52,7 @@ public class MultiDeleteDialog extends DarkTitleDialogFragment {
 		private int mResult = 1;
 		private ProgressDialog dialog = new ProgressDialog(getActivity());
 
-		/**
+        /**
 		 * Recursively delete a file or directory and all of its children.
 		 * 
 		 * @return 0 if successful, error value otherwise.
@@ -81,28 +82,30 @@ public class MultiDeleteDialog extends DarkTitleDialogFragment {
 			dialog.setIndeterminate(true);
 			dialog.show();
 		}
-		
-		@Override
-		protected Void doInBackground(Void... params) {
-			for(FileHolder fh : mFileHolders) {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            for (FileHolder fh : mFileHolders) {
                 List<String> paths = new ArrayList<String>();
                 boolean isDir = fh.getFile().isDirectory();
+                Context context = getBestAvailableContext();
+
                 if (isDir) {
                     MediaScannerUtils.getPathsOfFolder(paths, fh.getFile());
                 }
 
                 recursiveDelete(fh.getFile());
 
-                if (isDir) {
-                    MediaScannerUtils.informPathsDeleted(getTargetFragment()
-                            .getActivity().getApplicationContext(), paths);
-                } else {
-                    MediaScannerUtils.informFileDeleted(getTargetFragment()
-                            .getActivity().getApplicationContext(), fh.getFile());
+                if (context != null) {
+                    if (isDir) {
+                        MediaScannerUtils.informPathsDeleted(getBestAvailableContext(), paths);
+                    } else {
+                        MediaScannerUtils.informFileDeleted(getBestAvailableContext(), fh.getFile());
+                    }
                 }
             }
-			return null;
-		}
+            return null;
+        }
 
 		@Override
 		protected void onPostExecute(Void result) {
@@ -110,5 +113,15 @@ public class MultiDeleteDialog extends DarkTitleDialogFragment {
 			FileListFragment.refresh(getTargetFragment().getActivity(), mFileHolders.get(0).getFile().getParentFile());
 			dialog.dismiss();
 		}
-	}
+
+        public Context getBestAvailableContext() {
+            if (getTargetFragment() != null && getTargetFragment().getActivity() != null) {
+                return getTargetFragment().getActivity().getApplicationContext();
+            } else if (getActivity() != null) {
+                return getActivity().getApplicationContext();
+            } else {
+                return null;
+            }
+        }
+    }
 }
