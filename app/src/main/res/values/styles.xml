@@ -16,21 +16,23 @@
  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base text appearance values -->
-    <style name="TextAppearance.Dir.Large" parent="android:TextAppearance.Holo.Large">
-        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-thin</item>
+    <style name="TextAppearance.Dir.Large" parent="android:TextAppearance.Material.Title">
+        <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-thin</item>-->
     </style>
-    <style name="TextAppearance.Dir.Medium" parent="android:TextAppearance.Holo.Medium">
-        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
+    <style name="TextAppearance.Dir.Medium" parent="android:TextAppearance.Material.Subhead">
+        <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>-->
+        <!--<item name="android:textStyle">bold</item>-->
+        <!--<item name="android:textColor">?android:textColorPrimary</item>-->
     </style>
-    <style name="TextAppearance.Dir.Small" parent="android:TextAppearance.Holo.Small">
-        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>
+    <style name="TextAppearance.Dir.Small" parent="android:TextAppearance.Material.Caption">
+        <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>-->
     </style>
     <style name="TextAppearance.Dir.LargePopupMenu" parent="TextAppearance.Dir.Medium">
-        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
+        <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>-->
     </style>
     <style name="TextAppearance.Dir.Large.DialogTitle">
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
+        <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>-->
     </style>
     <style name="DialogWindowTitle" >
         <item name="android:maxLines">1</item>
@@ -39,7 +41,7 @@
     </style>
 
     <!-- Misc -->
-    <style name="ActionButton.CloseMode.Dir" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
+    <style name="ActionButton.CloseMode.Dir" parent="@android:style/Widget.Material.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_dir</item>
     </style>
     <style name="DropDownListView.Dir" parent="@android:style/Widget.Holo.ListView.DropDown">

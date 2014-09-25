@@ -77,8 +77,7 @@
         <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
     </style>
 
-    <style name="Widget.Dir.PathBar.Button" parent="@android:style/Widget.Holo.Button">
-        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>
+    <style name="Widget.Dir.PathBar.Button" parent="@android:style/Widget.Material.Button">
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
     </style>
 </resources>
