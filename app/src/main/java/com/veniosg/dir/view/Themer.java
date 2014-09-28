@@ -23,9 +23,13 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Xfermode;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.fragment.PreferenceFragment;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.L;
 
 public class Themer {
     public static enum Theme {
@@ -42,7 +46,8 @@ public class Themer {
     public static final void applyTheme(Activity act) {
         boolean trans = false;
         if (act instanceof Themable) {
-            trans = ((Themable) act).getThemeFlavor() == Flavor.TRANSLUCENT_NAV;
+            trans = ((Themable) act).getThemeFlavor() == Flavor.TRANSLUCENT_NAV
+                        && SDK_INT < L;
         }
 
         switch (Theme.values()[PreferenceFragment.getThemeIndex(act)]) {
