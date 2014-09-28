@@ -57,7 +57,6 @@ import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static com.veniosg.dir.AnimationConstants.inInterpolator;
 import static com.veniosg.dir.AnimationConstants.outInterpolator;
-import static com.veniosg.dir.view.Themer.colorDrawable;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
 /**
@@ -151,11 +150,7 @@ public class PathBar extends ViewFlipper {
 
 			mSwitchToManualModeButton.setLayoutParams(layoutParams);
 			mSwitchToManualModeButton.setId(10);
-			mSwitchToManualModeButton.setBackgroundDrawable(
-                    colorDrawable(
-                            getContext(),
-                            getSquareMaskDrawable(getContext()),
-                            getPathBarItemColor()));
+			mSwitchToManualModeButton.setBackgroundResource(R.drawable.bg_btn_pathbar_straight);
 			mSwitchToManualModeButton.setVisibility(View.GONE);
 
 			standardModeLayout.addView(mSwitchToManualModeButton);
@@ -170,12 +165,8 @@ public class PathBar extends ViewFlipper {
 
 			cdToRootButton.setLayoutParams(layoutParams);
 			cdToRootButton.setId(11);
-			cdToRootButton.setBackgroundDrawable(
-                    colorDrawable(
-                            getContext(),
-                            getSquareMaskDrawable(getContext()),
-                            getPathBarItemColor()));
-			cdToRootButton.setImageResource(R.drawable.ic_navbar_home);
+            cdToRootButton.setBackgroundResource(R.drawable.bg_btn_pathbar_straight);
+            cdToRootButton.setImageResource(R.drawable.ic_navbar_home);
 			cdToRootButton.setScaleType(ScaleType.CENTER_INSIDE);
 			cdToRootButton.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -246,11 +237,8 @@ public class PathBar extends ViewFlipper {
 
 			mGoButton.setLayoutParams(layoutParams);
 			mGoButton.setId(20);
-			mGoButton.setBackgroundDrawable(
-                    colorDrawable(
-                            getContext(),
-                            getSquareMaskDrawable(getContext()),
-                            getPathBarItemColor()));
+			mGoButton.setBackgroundResource(R.drawable.bg_btn_pathbar_straight);
+
             mGoButton.setImageResource(R.drawable.ic_navbar_accept);
 			mGoButton.setScaleType(ScaleType.CENTER_INSIDE);
 			mGoButton.setOnClickListener(new View.OnClickListener() {
@@ -560,15 +548,9 @@ public class PathBar extends ViewFlipper {
 
     public Drawable getItemBackgroundDrawable(Context c, String absolutePath) {
         if ("/".equals(absolutePath)) {
-            return colorDrawable(
-                    getContext(),
-                    getSemiStraightMaskDrawable(c),
-                    getPathBarItemColor());
+            return c.getDrawable(R.drawable.bg_btn_pathbar_semiskewed);
         } else {
-            return colorDrawable(
-                    getContext(),
-                    getSkewedMaskDrawable(c),
-                    getPathBarItemColor());
+            return c.getDrawable(R.drawable.bg_btn_pathbar_skewed);
         }
     }
 
@@ -581,7 +563,7 @@ public class PathBar extends ViewFlipper {
     }
 
     public Drawable getSkewedMaskDrawable(Context c) {
-        return wrapForTouchFeedback(c.getResources().getDrawable(R.drawable.btn_pathbar_skewed));
+        return wrapForTouchFeedback(c.getResources().getDrawable(R.drawable.bg_btn_pathbar_skewed));
     }
 
     private void configureMaskDrawablePaint(ShapeDrawable shapeDrawable) {

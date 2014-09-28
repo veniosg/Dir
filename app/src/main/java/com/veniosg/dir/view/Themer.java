@@ -82,9 +82,4 @@ public class Themer {
 
         return attributeResourceId;
     }
-
-    public static final Drawable colorDrawable(Context context, Drawable drawable, int color) {
-        drawable.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
-        return drawable;
-    }
 }
