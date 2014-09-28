@@ -20,7 +20,6 @@ import android.util.TypedValue;
 import android.widget.ImageView;
 
 import com.veniosg.dir.FileManagerApplication;
-import com.veniosg.dir.R;
 import com.veniosg.dir.fragment.PreferenceFragment;
 import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
@@ -376,11 +375,9 @@ public class ThumbnailLoader {
 			}
 		}
 
-		Drawable iconForMime = Utils.getIconForFile(
-                ((FileManagerApplication) context.getApplicationContext()).getMimeTypes(),
+		Drawable iconForMime = Utils.getIconForFile(context,
                 holder.getMimeType(),
-                holder.getFile(),
-                context);
+                holder.getFile());
 
         // If an icon was found, return it.
 		if (iconForMime != null) {

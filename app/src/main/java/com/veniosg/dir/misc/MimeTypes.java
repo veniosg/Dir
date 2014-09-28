@@ -18,14 +18,13 @@ package com.veniosg.dir.misc;
 
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.TypedArray;
 import android.content.res.XmlResourceParser;
+import android.graphics.drawable.Drawable;
 import android.webkit.MimeTypeMap;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
-import com.veniosg.dir.view.Themer;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -34,8 +33,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MimeTypes {
+
+    private static final Integer[] sIconIds = new Integer[]{
+            R.drawable.ic_item_file_tinted,
+            R.drawable.ic_item_folder_tinted,
+            R.drawable.ic_item_image_tinted,
+            R.drawable.ic_item_audio_tinted,
+            R.drawable.ic_item_video_tinted,
+            R.drawable.ic_item_archive_tinted,
+            R.drawable.ic_item_text_tinted,
+            R.drawable.ic_item_text_web_tinted,
+            R.drawable.ic_item_text_csv_tinted,
+            R.drawable.ic_item_text_xml_tinted,
+            R.drawable.ic_item_android_package_tinted,
+            R.drawable.ic_item_sdcard_tinted
+    };
+
 	private Map<String, String> mMimeTypes = new HashMap<String,String>();
-	private Map<String, Integer> mIcons = new HashMap<String,Integer>();
+	private Map<String, Integer> mIconIndices = new HashMap<String,Integer>();     // Legacy layer
     private Context mContext;
 
     MimeTypes(Context context) {
@@ -72,7 +87,7 @@ public class MimeTypes {
 	 */
 	public void put(String type, String extension, int icon){
 		put(type, extension);
-		mIcons.put(extension, icon);
+		mIconIndices.put(extension, icon);
 	}
 	
 	public void put(String type, String extension) {
@@ -106,9 +121,13 @@ public class MimeTypes {
 		return mimetype;
 	}
 	
-	public int getIconIndex(String mimetype){
-		Integer index = mIcons.get(mimetype);
+	private int getIconIndex(String mimetype){
+		Integer index = mIconIndices.get(mimetype);
 
         return index == null ? 0 : index;
 	}
+
+    public Drawable getIcon(Context c, String mimeType) {
+        return c.getDrawable(sIconIds[getIconIndex(mimeType)]);
+    }
 }

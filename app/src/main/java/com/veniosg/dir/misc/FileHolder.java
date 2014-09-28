@@ -27,7 +27,7 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 		mExtension = parseExtension();
         MimeTypes mimeTypes = ((FileManagerApplication) c.getApplicationContext()).getMimeTypes();
 		mMimeType = mimeTypes.getMimeType(f.getName());
-        mIcon = Utils.getIconForFile(mimeTypes, mMimeType, mFile, c);
+        mIcon = Utils.getIconForFile(c, mMimeType, mFile);
 	}
 
 	public FileHolder(File f, String m, Context c) {
@@ -35,7 +35,7 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 		mExtension = parseExtension();
 		mMimeType = m;
         MimeTypes mimeTypes = ((FileManagerApplication) c.getApplicationContext()).getMimeTypes();
-        mIcon = Utils.getIconForFile(mimeTypes, mMimeType, mFile, c);
+        mIcon = Utils.getIconForFile(c, mMimeType, mFile);
 	}
 	
 	/**

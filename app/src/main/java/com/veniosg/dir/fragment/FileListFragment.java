@@ -272,7 +272,6 @@ public abstract class FileListFragment extends ListFragment {
                 ((FileManagerApplication) getActivity().getApplicationContext()).getMimeTypes(),
 				filetypeFilter == null ? "" : filetypeFilter,
 				mimetypeFilter == null ? "" : mimetypeFilter,
-                Utils.getThemedMimeIconsContainer(getActivity()),
                 writeableOnly,
 				directoriesOnly);
 		return mScanner;

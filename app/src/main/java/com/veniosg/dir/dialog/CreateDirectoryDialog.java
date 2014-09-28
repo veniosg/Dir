@@ -75,7 +75,7 @@ public class CreateDirectoryDialog extends DarkTitleDialogFragment implements Ov
                         }
                 )
                 .setNegativeButton(android.R.string.cancel, null)
-                .setIcon(Utils.getFolderIcon(Utils.getThemedMimeIconsContainer(getActivity())))
+                .setIcon(R.drawable.ic_item_folder_tinted)
 				.create();
 	}
 

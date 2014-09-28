@@ -67,7 +67,7 @@ public class SearchSuggestionsProvider extends ContentProvider {
         File root = Environment.getExternalStorageDirectory();
         List<FileHolder> results = Utils.searchIn(root, query,
                 ((FileManagerApplication) getContext().getApplicationContext())
-                        .getMimeTypes(), getContext(), null);
+                        .getMimeTypes(), getContext());
 
         MatrixCursor cursor = new MatrixCursor(new String[]{
                 SearchManager.SUGGEST_COLUMN_ICON_1,

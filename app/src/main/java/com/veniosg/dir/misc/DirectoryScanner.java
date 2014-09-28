@@ -34,7 +34,6 @@ public class DirectoryScanner extends Thread {
 	private Handler handler;
 	private String mFilterFiletype;
 	private String mFilterMimetype;
-    private Drawable mIcons;
 
 	private boolean mWriteableOnly;
 	private boolean mDirectoriesOnly;
@@ -51,12 +50,11 @@ public class DirectoryScanner extends Thread {
 	private List<FileHolder> listDir, listFile, listSdCard;
 
 	public DirectoryScanner(File directory, Context context, Handler handler,
-                            MimeTypes mimeTypes, String filterFiletype,
-                            String filterMimetype, Drawable mimeIconContainer,
+                            MimeTypes mimeTypes, String filterFiletype, String filterMimetype,
                             boolean writeableOnly, boolean directoriesOnly) {
 		super("Directory Scanner");
 		currentDirectory = directory;
-		this.mContext = context.getApplicationContext();
+		this.mContext = context;
 		this.handler = handler;
 		this.mMimeTypes = mimeTypes;
 		this.mFilterFiletype = filterFiletype;
@@ -64,7 +62,6 @@ public class DirectoryScanner extends Thread {
 		this.mSdCardPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 		this.mWriteableOnly = writeableOnly;
 		this.mDirectoriesOnly = directoriesOnly;
-        this.mIcons = mimeIconContainer;
 	}
 
 	private void init(){
@@ -128,7 +125,7 @@ public class DirectoryScanner extends Thread {
 					if (currentFile.getAbsolutePath().equals(mSdCardPath)) {
 						listSdCard.add(new FileHolder(currentFile,
                                 mMimeTypes.getMimeType(currentFile.getName()),
-                                Utils.getSdCardIcon(mIcons, mContext)));
+                                Utils.getSdCardIcon(mContext)));
 					}
 					// It's a normal directory.
 					else {
@@ -136,8 +133,7 @@ public class DirectoryScanner extends Thread {
                             String mimetype = mMimeTypes.getMimeType(currentFile.getName());
                             listDir.add(new FileHolder(currentFile,
                                     mMimeTypes.getMimeType(currentFile.getName()),
-                                    Utils.getIconForFile(mIcons, mMimeTypes, mimetype,
-                                            currentFile, mContext)));
+                                    Utils.getIconForFile(mContext, mimetype, currentFile)));
 //                      }
 					}
 				// It's a file. Handle it too :P
@@ -155,9 +151,8 @@ public class DirectoryScanner extends Thread {
 					if (!mDirectoriesOnly && (ext_allow || mime_allow)) {
 						listFile.add(new FileHolder(currentFile,
                                 mimetype,
-                                // Take advantage of the already parsed mimeType to set a specific icon.
-                                Utils.getIconForFile(mIcons, mMimeTypes, mimetype,
-                                        currentFile, mContext)));
+                                // Take advantage of the already parsed mimetype to set a specific icon.
+                                Utils.getIconForFile(mContext, mimetype, currentFile)));
 					}
 				}
 			}

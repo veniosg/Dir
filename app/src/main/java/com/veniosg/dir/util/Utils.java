@@ -11,20 +11,17 @@ import android.graphics.ColorMatrix;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableContainer;
-import android.graphics.drawable.LevelListDrawable;
 import android.net.Uri;
 import android.os.Parcelable;
-import android.support.v4.app.FragmentActivity;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.R;
 import com.veniosg.dir.activity.FileManagerActivity;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.misc.MimeTypes;
 import com.veniosg.dir.provider.FileManagerProvider;
-import com.veniosg.dir.view.Themer;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -46,27 +43,23 @@ public abstract class Utils {
      * @param context A context.
      * @param recursive Whether to recursively follow the paths.
      * @param maxLevel How many levels below the current we're allowed to recurse.
-     * @param mimeIconsContainer See Utils.getThemedMimeIconsContainer(Context).
      * @return A list of fileholders found in root and matching filter.
      */
     public static List<FileHolder> searchIn(File root, FilenameFilter filter, MimeTypes mimeTypes,
-                                            Context context, boolean recursive, int maxLevel,
-                                            Drawable mimeIconsContainer) {
+                                            Context context, boolean recursive, int maxLevel) {
         ArrayList<FileHolder> result = new ArrayList<FileHolder>(10);
 
         for (File f : root.listFiles(filter)) {
             String mimeType = mimeTypes.getMimeType(f.getName());
 
-            result.add(new FileHolder(f, mimeType, mimeIconsContainer == null ?
-                    null : getIconForFile(mimeIconsContainer, mimeTypes, mimeType, f, context)));
+            result.add(new FileHolder(f, mimeType, getIconForFile(context, mimeType, f)));
         }
 
         if (recursive && (maxLevel-- != 0)) {
             for (File f : root.listFiles()) {
                 // Prevent trying to search invalid folders
                 if (f.isDirectory() && f.canRead()) {
-                    result.addAll(searchIn(f, filter, mimeTypes, context, true, maxLevel,
-                            mimeIconsContainer));
+                    result.addAll(searchIn(f, filter, mimeTypes, context, true, maxLevel));
                 }
             }
         }
@@ -75,8 +68,8 @@ public abstract class Utils {
     }
 
     public static List<FileHolder> searchIn(File root, final String query, MimeTypes mimeTypes,
-                                            Context context, Drawable mimeIconsContainer) {
-        return searchIn(root, newFilter(query), mimeTypes, context, false, 0, mimeIconsContainer);
+                                            Context context) {
+        return searchIn(root, newFilter(query), mimeTypes, context, false, 0);
     }
 
     public static FilenameFilter newFilter(final String query) {
@@ -217,40 +210,21 @@ public abstract class Utils {
         return dr;
     }
 
-    public static Drawable getIconForFile(MimeTypes mimeTypes, String mimeType,
-                                          File file, Context context) {
-        return getIconForFile(getThemedMimeIconsContainer(context), mimeTypes,
-                mimeType, file, context);
+    public static Drawable getIconForFile(Context c, String mimeType, File f) {
+        if (f.isDirectory()) {
+            return getFolderIcon(c);
+        } else {
+            MimeTypes mimeTypes = ((FileManagerApplication) c.getApplicationContext()).getMimeTypes();
+            return mimeTypes.getIcon(c, mimeType);
+        }
     }
 
-    public static Drawable getIconForFile(Drawable container, MimeTypes mimeTypes, String mimeType,
-                                          File file, Context context) {
-        int iconIndex = mimeTypes.getIconIndex(mimeType);
-        return getDrawableInContainer(container,
-                file.isDirectory() ? 1 : iconIndex);
+    public static Drawable getSdCardIcon(Context c) {
+        return c.getDrawable(R.drawable.ic_item_sdcard_tinted);
     }
 
-    private static Drawable getSdCardIcon(Context c) {
-        return getDrawableInContainer(getThemedMimeIconsContainer(c), 11);
-    }
-
-    public static Drawable getSdCardIcon(Drawable container, Context c) {
-        return getDrawableInContainer(container, 11);
-    }
-
-    public static Drawable getFolderIcon(Drawable container) {
-        return getDrawableInContainer(container, 1);
-    }
-
-    public static Drawable getThemedMimeIconsContainer(Context c) {
-        return c.getResources().getDrawable(
-                Themer.getThemedResourceId(c, R.attr.ic_mime_icons)
-        );
-    }
-
-    private static Drawable getDrawableInContainer(Drawable container, int level) {
-        container.setLevel(level);
-        return container.getCurrent();
+    private static Drawable getFolderIcon(Context c) {
+        return c.getDrawable(R.drawable.ic_item_folder_tinted);
     }
 
     /**

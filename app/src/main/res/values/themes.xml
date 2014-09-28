@@ -32,8 +32,10 @@
 
         <!-- Coloring and styling -->
         <item name="android:colorPrimary">@color/dir_dark</item>
-        <item name="android:colorPrimaryDark">@color/dir_light</item>
+        <item name="android:colorPrimaryDark">@color/dir_darker</item>
         <item name="android:colorAccent">@color/dir_light</item>
+        <item name="android:colorControlActivated">@color/dir_light</item>
+        <item name="android:colorControlHighlight">@color/control_hightlight</item>
         <item name="android:navigationBarColor">@null</item>
         <!--<item name="android:textViewStyle">@style/Widget.Dir.TextViewStyle</item>-->
         <!--<item name="android:buttonStyle">@style/Widget.Dir.ButtonStyle</item>-->
@@ -77,7 +79,6 @@
         <item name="ic_googleplus">@drawable/dir_ic_action_gplus</item>
         <item name="ic_github">@drawable/dir_ic_action_github</item>
         <item name="ic_playstore">@drawable/dir_ic_action_google_play</item>
-        <item name="ic_mime_icons">@drawable/dir_mime_icons</item>
     </style>
 
     <style name="Theme.Dir.TranslucentNav" />
@@ -177,7 +178,6 @@
         <item name="ic_googleplus">@drawable/dark_ic_action_gplus</item>
         <item name="ic_github">@drawable/dark_ic_action_github</item>
         <item name="ic_playstore">@drawable/dark_ic_action_google_play</item>
-        <item name="ic_mime_icons">@drawable/dark_mime_icons</item>
     </style>
 
     <style name="Theme.Dir.Dark.TranslucentNav" />
@@ -205,7 +205,6 @@
         <item name="ic_googleplus">@drawable/dark_ic_action_gplus</item>
         <item name="ic_github">@drawable/dark_ic_action_github</item>
         <item name="ic_playstore">@drawable/dark_ic_action_google_play</item>
-        <item name="ic_mime_icons">@drawable/dark_mime_icons</item>
     </style>
 
     <style name="Theme.Dir.HoloDark.TranslucentNav" />
@@ -262,6 +261,5 @@
         <item name="ic_googleplus">@drawable/dir_ic_action_gplus</item>
         <item name="ic_github">@drawable/dir_ic_action_github</item>
         <item name="ic_playstore">@drawable/dir_ic_action_google_play</item>
-        <item name="ic_mime_icons">@drawable/dir_mime_icons</item>
     </style>
 </resources>
