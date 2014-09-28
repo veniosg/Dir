@@ -435,7 +435,7 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(AbsListView l, View v, int position, long id) {
         FileHolder item = (FileHolder) mAdapter.getItem(position);
         openInformingPathBar(item);
     }
@@ -707,7 +707,8 @@ public class SimpleFileListFragment extends FileListFragment {
         if (!loading) {
             if (sScrollPositions.containsKey(getPath())) {
                 ScrollPosition pos = sScrollPositions.get(getPath());
-                getListView().setSelectionFromTop(pos.index, pos.top);
+                getListView().setSelection(pos.index);
+                getListView().scrollBy(0, pos.top);
             }
         }
     }

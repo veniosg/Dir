@@ -11,12 +11,12 @@
         android:id="@+id/list_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:gravity="center"
         android:orientation="vertical">
 
-        <ListView
+        <com.veniosg.dir.view.DividerGridView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2012 OpenIntents.org
+ * Copyright (C) 2014 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +28,6 @@ import android.os.FileObserver;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ListFragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +65,7 @@ import static com.veniosg.dir.IntentConstants.EXTRA_DIR_PATH;
  * 
  * @author George Venios
  */
-public abstract class FileListFragment extends ListFragment {
+public abstract class FileListFragment extends GridFragment {
 	private static final String INSTANCE_STATE_PATH = "path";
 	private static final String INSTANCE_STATE_FILES = "files";
     private static final String INSTANCE_STATE_NEEDS_LOADING = "needsLoading";

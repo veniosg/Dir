@@ -18,7 +18,6 @@ package com.veniosg.dir.fragment;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -46,7 +45,7 @@ import java.io.File;
 /**
  * @author George Venios
  */
-public class BookmarkListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class BookmarkListFragment extends GridFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private WaitingViewFlipper mFlipper;
     private SystemBarTintManager mTintManager;
 
@@ -109,7 +108,7 @@ public class BookmarkListFragment extends ListFragment implements LoaderManager.
     }
 
     @Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(AbsListView l, View v, int position, long id) {
 		Cursor c = ((Cursor) getListAdapter().getItem(position));
 		((BookmarkContract) getActivity()).onBookmarkSelected(c.getString(
                 c.getColumnIndex(BookmarkProvider.PATH)));

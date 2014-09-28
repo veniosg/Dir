@@ -27,6 +27,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -106,7 +107,7 @@ public class PickFileListFragment extends SimpleFileListFragment {
 	}
 
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(AbsListView l, View v, int position, long id) {
 		FileHolder item = (FileHolder) mAdapter.getItem(position);
 		
 		if(item.getFile().isFile())

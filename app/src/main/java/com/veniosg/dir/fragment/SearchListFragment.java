@@ -20,7 +20,6 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
@@ -47,7 +46,7 @@ import java.util.List;
 /**
  * @author George Venios
  */
-public class SearchListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<List<FileHolder>> {
+public class SearchListFragment extends GridFragment implements LoaderManager.LoaderCallbacks<List<FileHolder>> {
     private static final int LOADER_ID = 1;
     private static final String STATE_POS = "pos";
     private static final String STATE_TOP = "top";
@@ -110,8 +109,8 @@ public class SearchListFragment extends ListFragment implements LoaderManager.Lo
         });
 
         if (savedInstanceState != null) {
-            getListView().setSelectionFromTop(savedInstanceState.getInt(STATE_POS),
-                    savedInstanceState.getInt(STATE_TOP));
+            getListView().setSelection(savedInstanceState.getInt(STATE_POS));
+            getListView().scrollBy(0, savedInstanceState.getInt(STATE_TOP));
         }
     }
 
@@ -173,7 +172,7 @@ public class SearchListFragment extends ListFragment implements LoaderManager.Lo
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(AbsListView l, View v, int position, long id) {
         browse(Uri.parse(((FileHolder) getListAdapter().getItem(position))
                 .getFile().getAbsolutePath()));
     }
