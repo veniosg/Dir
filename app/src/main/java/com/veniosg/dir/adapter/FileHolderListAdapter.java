@@ -91,17 +91,18 @@ public class FileHolderListAdapter extends BaseAdapter {
 
         // Enable Gmail-like item-selection pattern
         holder.icon.setTag(position);
-        holder.icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnItemToggleListener != null) {
-                    Integer position = (Integer) v.getTag();
-                    mOnItemToggleListener.onItemToggle(position);
-                }
-            }
-        });
-        // Only override clicks if a listener exists.
-        holder.icon.setClickable(mOnItemToggleListener != null);
+// Disabled for L as it's pretty bad experience compared to the rest of the app/system.
+//        holder.icon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mOnItemToggleListener != null) {
+//                    Integer position = (Integer) v.getTag();
+//                    mOnItemToggleListener.onItemToggle(position);
+//                }
+//            }
+//        });
+//        Only override clicks if a listener exists.
+//        holder.icon.setClickable(mOnItemToggleListener != null);
 
         if(shouldLoadIcon(item)){
             ((FileManagerApplication) convertView.getContext().getApplicationContext())
