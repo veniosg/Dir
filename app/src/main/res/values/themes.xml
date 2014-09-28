@@ -56,7 +56,7 @@
         <!--<item name="android:listChoiceIndicatorSingle">@drawable/dir_btn_radio_holo_light</item>-->
         <!--<item name="android:listChoiceIndicatorMultiple">@drawable/dir_btn_check_holo_light</item>-->
         <!--<item name="android:listChoiceBackgroundIndicator">@drawable/dir_list_selector_holo_light</item>-->
-        <!--<item name="android:activatedBackgroundIndicator">@drawable/dir_activated_background_holo_light</item>-->
+        <item name="android:activatedBackgroundIndicator">@drawable/dir_activated_background_holo_light</item>
         <!--<item name="android:fastScrollThumbDrawable">@drawable/dir_fastscroll_thumb_holo</item>-->
         <!--<item name="android:alertDialogTheme">@style/Theme.Dir.Dialog.Alert</item>-->
 
