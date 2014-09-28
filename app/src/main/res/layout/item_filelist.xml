@@ -19,7 +19,7 @@
     android:layout_width="fill_parent"
     android:layout_height="@dimen/item_height"
     android:gravity="center_vertical"
-    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:minHeight="@dimen/item_height"
     android:padding="8dp" >
 
     <ImageView
