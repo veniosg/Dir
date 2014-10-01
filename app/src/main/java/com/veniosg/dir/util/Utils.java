@@ -51,19 +51,25 @@ public abstract class Utils {
                                             Drawable mimeIconsContainer) {
         ArrayList<FileHolder> result = new ArrayList<FileHolder>(10);
 
-        for (File f : root.listFiles(filter)) {
-            String mimeType = mimeTypes.getMimeType(f.getName());
+        File[] filteredFiles = root.listFiles(filter);
+        if (filteredFiles != null){
+            for (File f : filteredFiles) {
+                String mimeType = mimeTypes.getMimeType(f.getName());
 
-            result.add(new FileHolder(f, mimeType, mimeIconsContainer == null ?
-                    null : getIconForFile(mimeIconsContainer, mimeTypes, mimeType, f, context)));
+                result.add(new FileHolder(f, mimeType, mimeIconsContainer == null ?
+                        null : getIconForFile(mimeIconsContainer, mimeTypes, mimeType, f, context)));
+            }
         }
 
-        if (recursive && (maxLevel-- != 0)) {
-            for (File f : root.listFiles()) {
-                // Prevent trying to search invalid folders
-                if (f.isDirectory() && f.canRead()) {
-                    result.addAll(searchIn(f, filter, mimeTypes, context, true, maxLevel,
-                            mimeIconsContainer));
+        File[] files = root.listFiles();
+        if (files != null) {
+            if (recursive && (maxLevel-- != 0)) {
+                for (File f : files) {
+                    // Prevent trying to search invalid folders
+                    if (f.isDirectory() && f.canRead()) {
+                        result.addAll(searchIn(f, filter, mimeTypes, context, true, maxLevel,
+                                mimeIconsContainer));
+                    }
                 }
             }
         }
