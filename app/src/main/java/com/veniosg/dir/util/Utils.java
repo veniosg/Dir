@@ -13,9 +13,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.util.TypedValue;
 import android.widget.AbsListView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.veniosg.dir.R;
 import com.veniosg.dir.activity.FileManagerActivity;
 import com.veniosg.dir.misc.FileHolder;
@@ -27,6 +30,9 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.util.TypedValue.COMPLEX_UNIT_DIP;
+import static android.util.TypedValue.applyDimension;
 
 /**
  * @author George Venios
@@ -322,5 +328,14 @@ public abstract class Utils {
 
     public static boolean getItemChecked(AbsListView listView, int position) {
         return listView.getCheckedItemPositions().get(position);
+    }
+
+    public static void loadThumbnail(Context context, File file, ImageView imageView, Drawable placeholder) {
+        Picasso.with(context)
+                .load(file)
+                .placeholder(placeholder)
+                .fit()
+                .centerCrop()
+                .into(imageView);
     }
 }

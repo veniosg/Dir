@@ -4,7 +4,6 @@ import android.app.Application;
 import android.view.ViewConfiguration;
 
 import com.veniosg.dir.misc.MimeTypes;
-import com.veniosg.dir.misc.ThumbnailLoader;
 import com.veniosg.dir.util.CopyHelper;
 import com.veniosg.dir.view.Themer;
 
@@ -13,7 +12,6 @@ import java.lang.reflect.Field;
 public class FileManagerApplication extends Application{
 	private CopyHelper mCopyHelper;
     private MimeTypes mMimeTypes;
-    private ThumbnailLoader mThumbnailLoader;
 
 	@Override
 	public void onCreate() {
@@ -21,7 +19,6 @@ public class FileManagerApplication extends Application{
 		
 		mCopyHelper = new CopyHelper();
         mMimeTypes = MimeTypes.newInstance(this);
-        mThumbnailLoader = new ThumbnailLoader(this);
 
         // Force-enable the action overflow
         try {
@@ -42,9 +39,5 @@ public class FileManagerApplication extends Application{
 
     public MimeTypes getMimeTypes() {
         return mMimeTypes;
-    }
-
-    public ThumbnailLoader getThumbnailLoader() {
-        return mThumbnailLoader;
     }
 }
