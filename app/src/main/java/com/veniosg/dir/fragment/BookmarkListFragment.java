@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -65,6 +66,7 @@ public class BookmarkListFragment extends GridFragment implements LoaderManager.
         ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.bookmark_empty);
         ((ImageView) view.findViewById(R.id.empty_img)).setImageResource(R.drawable.ic_state_bookmarks);
 
+        ((GridView) getListView()).setNumColumns(1);
         setListAdapter(new BookmarkListAdapter(getActivity(), null));
         getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
