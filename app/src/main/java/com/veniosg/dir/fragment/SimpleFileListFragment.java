@@ -488,8 +488,7 @@ public class SimpleFileListFragment extends FileListFragment {
             return;
 
         if(getListAdapter().getCount() > 0) {
-            sScrollPositions.put(getPath(), new ScrollPosition(getListView().getFirstVisiblePosition(),
-                    getListView().getChildAt(0).getTop()));
+            keepFolderScroll();
         }
 
         // Save required data for animation
@@ -689,6 +688,20 @@ public class SimpleFileListFragment extends FileListFragment {
         return (int) getListView().getCheckedItemIds()[0];
     }
 
+    private void useFolderScroll(ScrollPosition pos) {
+        if (getListView() instanceof ListView) {
+            ((ListView) getListView()).setSelectionFromTop(pos.index, pos.top);
+        } else {
+            getListView().setSelection(pos.index);
+//            getListView().scrollBy(0, pos.top);
+        }
+    }
+
+    private void keepFolderScroll() {
+        sScrollPositions.put(getPath(), new ScrollPosition(getListView().getFirstVisiblePosition(),
+                getListView().getChildAt(0).getTop()));
+    }
+
     /**
      * @return A {@link FileHolder} list with the currently selected items.
      */
@@ -707,8 +720,7 @@ public class SimpleFileListFragment extends FileListFragment {
         if (!loading) {
             if (sScrollPositions.containsKey(getPath())) {
                 ScrollPosition pos = sScrollPositions.get(getPath());
-                getListView().setSelection(pos.index);
-                getListView().scrollBy(0, pos.top);
+                useFolderScroll(pos);
             }
         }
     }

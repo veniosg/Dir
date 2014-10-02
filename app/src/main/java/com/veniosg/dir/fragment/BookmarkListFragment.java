@@ -46,7 +46,7 @@ import java.io.File;
 /**
  * @author George Venios
  */
-public class BookmarkListFragment extends GridFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class BookmarkListFragment extends AbsListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private WaitingViewFlipper mFlipper;
     private SystemBarTintManager mTintManager;
 
@@ -66,7 +66,9 @@ public class BookmarkListFragment extends GridFragment implements LoaderManager.
         ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.bookmark_empty);
         ((ImageView) view.findViewById(R.id.empty_img)).setImageResource(R.drawable.ic_state_bookmarks);
 
-        ((GridView) getListView()).setNumColumns(1);
+        if (getListView() instanceof GridView) {
+            ((GridView) getListView()).setNumColumns(1);
+        }
         setListAdapter(new BookmarkListAdapter(getActivity(), null));
         getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override

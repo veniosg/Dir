@@ -16,7 +16,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.veniosg.dir.view.DividerGridView
+        <ListView
             android:id="@android:id/list"
             android:numColumns="@integer/grid_columns"
             android:layout_width="match_parent"
