@@ -18,12 +18,14 @@ package com.veniosg.dir.fragment;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
@@ -37,6 +39,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -69,6 +72,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static java.lang.Math.abs;
 
 /**
  * A file list fragment that supports CAB selection.
@@ -688,12 +693,26 @@ public class SimpleFileListFragment extends FileListFragment {
         return (int) getListView().getCheckedItemIds()[0];
     }
 
-    private void useFolderScroll(ScrollPosition pos) {
+    private void useFolderScroll(final ScrollPosition pos) {
         if (getListView() instanceof ListView) {
             ((ListView) getListView()).setSelectionFromTop(pos.index, pos.top);
         } else {
-            getListView().setSelection(pos.index);
-//            getListView().scrollBy(0, pos.top);
+            getListView().post(new Runnable() {
+                @Override
+                public void run() {
+                    // Being unable to scroll to exact pixel without ListView
+                    // (or without having a god-awful animation forced)
+                    // we just scroll to the closest item
+                    int index = pos.index;
+                    getListView().setSelection(index);
+                    View firstChild = getListView().getChildAt(0);
+
+                    if (firstChild != null
+                            && abs(pos.top) > firstChild.getHeight() / 2 ) {
+                        getListView().setSelection(index + 1);
+                    }
+                }
+            });
         }
     }
 
@@ -721,6 +740,8 @@ public class SimpleFileListFragment extends FileListFragment {
             if (sScrollPositions.containsKey(getPath())) {
                 ScrollPosition pos = sScrollPositions.get(getPath());
                 useFolderScroll(pos);
+            } else {
+                useFolderScroll(new ScrollPosition(0, 0));
             }
         }
     }
