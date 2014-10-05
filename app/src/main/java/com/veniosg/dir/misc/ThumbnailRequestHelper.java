@@ -1,5 +1,6 @@
 package com.veniosg.dir.misc;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -17,6 +18,7 @@ import com.veniosg.dir.util.Utils;
 
 import java.util.List;
 
+import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 import static android.content.Intent.ACTION_VIEW;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
@@ -65,7 +67,32 @@ public class ThumbnailRequestHelper {
             int index = (useBestMatch ? 0 : lri.size() - 1);
             final ResolveInfo ri = lri.get(index);
 
-            return Uri.parse("android.resource://" + getPackageNameFromInfo(ri) + "/" + ri.getIconResource());
+            return Uri.parse(SCHEME_ANDROID_RESOURCE + "://" + getPackageNameFromInfo(ri) + "/" + ri.getIconResource());
+        }
+
+        return null;
+    }
+
+    private static final Uri getApkIconUri(FileHolder holder, Context context) {
+        PackageManager pm = context.getPackageManager();
+        String path = holder.getFile().getPath();
+        PackageInfo pInfo = pm.getPackageArchiveInfo(path,
+                PackageManager.GET_ACTIVITIES);
+        if (pInfo != null) {
+            ApplicationInfo aInfo = pInfo.applicationInfo;
+
+            // Bug in SDK versions >= 8. See here:
+            // http://code.google.com/p/android/issues/detail?id=9151
+            if (SDK_INT >= 8) {
+                aInfo.sourceDir = path;
+                aInfo.publicSourceDir = path;
+            }
+
+            try {
+                return Uri.parse(SCHEME_ANDROID_RESOURCE + "://" + pm.getResourcesForApplication(aInfo).getResourceName(aInfo.icon).replace(':', '/'));
+            } catch (PackageManager.NameNotFoundException e) {
+                Logger.log(e);
+            }
         }
 
         return null;
@@ -85,26 +112,5 @@ public class ThumbnailRequestHelper {
         } else {
             return ri.resolvePackageName;
         }
-    }
-
-    private static final Uri getApkIconUri(FileHolder holder, Context context) {
-        PackageManager pm = context.getPackageManager();
-        String path = holder.getFile().getPath();
-        PackageInfo pInfo = pm.getPackageArchiveInfo(path,
-                PackageManager.GET_ACTIVITIES);
-        if (pInfo != null) {
-            ApplicationInfo aInfo = pInfo.applicationInfo;
-
-            // Bug in SDK versions >= 8. See here:
-            // http://code.google.com/p/android/issues/detail?id=9151
-            if (SDK_INT >= 8) {
-                aInfo.sourceDir = path;
-                aInfo.publicSourceDir = path;
-            }
-
-            return Uri.parse("android.resource://" + aInfo.packageName + "/" + aInfo.icon);
-        }
-
-        return null;
     }
 }
