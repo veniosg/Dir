@@ -22,6 +22,7 @@ import java.util.List;
 
 import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
 import static android.content.Intent.ACTION_VIEW;
+import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
 
@@ -42,29 +43,34 @@ public class ThumbnailHelper {
                 .into(imageView);
     }
 
+    /**
+     * Unfortunately getting the default is not straightforward..
+     * See https://groups.google.com/forum/#!topic/android-developers/UkfP70MtjGA
+     */
     private static Drawable getAssociatedAppIconDrawable(FileHolder holder, Context context) {
-        // Let's probe the intent exactly in the same way as the VIEW action
-        // is performed in FileUtils.openFile(..)
         PackageManager pm = context.getPackageManager();
-        Uri data = FileUtils.getUri(holder.getFile());
-        Intent intent = new Intent(ACTION_VIEW);
+        Intent intent = FileUtils.getViewIntentFor(holder, context);
+        Drawable icon = null;
 
-        intent.setDataAndType(data, holder.getMimeType());
-
-        final List<ResolveInfo> lri = pm.queryIntentActivities(intent,
-                PackageManager.MATCH_DEFAULT_ONLY);
-        if (lri != null && lri.size() > 0) {
-            // Actually first element should be "best match",
-            // but it seems that more recently installed applications
-            // could be even better match.
-            boolean useBestMatch = PreferenceFragment.getUseBestMatch(context);
-            int index = (useBestMatch ? 0 : lri.size() - 1);
-            final ResolveInfo ri = lri.get(index);
-
-            return ri.loadIcon(pm);
+        // Contrary to queryIntentActivities documentation, the first item IS NOT the same
+        // as the one returned by resolveActivity.
+        ResolveInfo resolveInfo = pm.resolveActivity(intent, MATCH_DEFAULT_ONLY);
+        if (!FileUtils.isResolverActivity(resolveInfo)) {
+            icon = resolveInfo.loadIcon(pm);
+        } else {
+            final List<ResolveInfo> lri = pm.queryIntentActivities(intent,
+                    MATCH_DEFAULT_ONLY);
+            if (lri != null && lri.size() > 0) {
+                // Actually first element should be "best match",
+                // but it seems that more recently installed applications
+                // could be even better match.
+                boolean useBestMatch = PreferenceFragment.getUseBestMatch(context);
+                int index = (useBestMatch ? 0 : lri.size() - 1);
+                icon = lri.get(index).loadIcon(pm);
+            }
         }
 
-        return null;
+        return icon;
     }
 
     private static final Drawable getApkIconDrawable(FileHolder holder, Context context) {

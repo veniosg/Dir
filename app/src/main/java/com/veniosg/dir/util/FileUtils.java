@@ -37,6 +37,8 @@ import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 
+import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
+
 /**
  * @version 2009-07-03
  * 
@@ -297,21 +299,23 @@ public class FileUtils {
 	 * @param fileholder The holder of the file to open.
 	 */
 	public static void openFile(FileHolder fileholder, Context c) {
-		Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-		Uri data = FileUtils.getUri(fileholder.getFile());
-		String type = fileholder.getMimeType();
-		
-        intent.setDataAndType(data, type);
+        Intent intent = getViewIntentFor(fileholder, c);
         launchFileIntent(intent, c);
 	}
 
+    public static Intent getViewIntentFor(FileHolder fileholder, Context c) {
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+        Uri data = FileUtils.getUri(fileholder.getFile());
+        String type = fileholder.getMimeType();
+
+        intent.setDataAndType(data, type);
+        return intent;
+    }
+
     private static void launchFileIntent(Intent intent, Context c) {
         try {
-            List<ResolveInfo> activities = c.getPackageManager().queryIntentActivities(intent, PackageManager.GET_ACTIVITIES);
-            if (activities.size() == 0
-                    || ((activities.size() == 1
-                    && c.getApplicationInfo().packageName
-                    .equals(activities.get(0).activityInfo.packageName)))) {
+            List<ResolveInfo> activities = c.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            if (activities.size() == 0 || onlyActivityIsOurs(c, activities)) {
                 Toast.makeText(c.getApplicationContext(), R.string.application_not_available, Toast.LENGTH_SHORT).show();
             } else {
                 c.startActivity(intent);
@@ -321,6 +325,19 @@ public class FileUtils {
         } catch (SecurityException e){
             Toast.makeText(c.getApplicationContext(), R.string.application_not_available, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static boolean isResolverActivity(ResolveInfo resolveInfo) {
+        // Please kill me..
+        return "android".equals(resolveInfo.activityInfo.packageName)
+                && "com.android.internal.app.ResolverActivity".equals(resolveInfo.activityInfo.name);
+    }
+
+    private static boolean onlyActivityIsOurs(Context c, List<ResolveInfo> activities) {
+        String dirPackage = c.getApplicationInfo().packageName;
+        String resolvedPackage = activities.get(0).activityInfo.packageName;
+
+        return activities.size() == 1 && dirPackage.equals(resolvedPackage);
     }
 
     public static String getNameWithoutExtension(File f) {
