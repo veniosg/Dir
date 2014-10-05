@@ -8,11 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.R;
 import com.veniosg.dir.misc.FileHolder;
-import com.veniosg.dir.util.Utils;
+import com.veniosg.dir.misc.ThumbnailRequestHelper;
 import com.veniosg.dir.view.ViewHolder;
 
 import java.util.List;
@@ -105,9 +103,7 @@ public class FileHolderListAdapter extends BaseAdapter {
         // Only override clicks if a listener exists.
         holder.icon.setClickable(mOnItemToggleListener != null);
 
-        if(shouldLoadIcon(item)){
-            Utils.loadThumbnail(convertView.getContext(), item.getFile(), holder.icon, item.getBestIcon());
-        }
+        ThumbnailRequestHelper.loadIconWithForInto(convertView.getContext(), item, holder.icon);
 
 		return convertView;
 	}

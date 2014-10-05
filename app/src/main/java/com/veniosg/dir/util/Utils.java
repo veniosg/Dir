@@ -330,12 +330,13 @@ public abstract class Utils {
         return listView.getCheckedItemPositions().get(position);
     }
 
-    public static void loadThumbnail(Context context, File file, ImageView imageView, Drawable placeholder) {
-        Picasso.with(context)
-                .load(file)
-                .placeholder(placeholder)
-                .fit()
-                .centerCrop()
-                .into(imageView);
+    public static boolean isAPK(String mimeType) {
+        return "application/vnd.android.package-archive".equals(mimeType);
+
+    }
+
+    public static boolean isImage(String mimeType) {
+        String type = mimeType.split("/")[0];
+        return "image".equals(type);
     }
 }

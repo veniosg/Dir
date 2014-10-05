@@ -9,11 +9,9 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.R;
 import com.veniosg.dir.misc.FileHolder;
-import com.veniosg.dir.util.Utils;
+import com.veniosg.dir.misc.ThumbnailRequestHelper;
 import com.veniosg.dir.view.ViewHolder;
 
 import java.io.File;
@@ -58,9 +56,7 @@ public class BookmarkListAdapter extends CursorAdapter {
         holder.tertiaryInfo.setText(item.getFile().isDirectory()? "" : item.getFormattedSize(
                 convertView.getContext(), false));
 
-        if(shouldLoadIcon(item)){
-            Utils.loadThumbnail(convertView.getContext(), item.getFile(), holder.icon, item.getBestIcon());
-        }
+        ThumbnailRequestHelper.loadIconWithForInto(convertView.getContext(), item, holder.icon);
     }
 
     /**

@@ -92,17 +92,15 @@ public class FileUtils {
 	 *         null if uri was null.
 	 */
 	public static String getExtension(String path) {
-		if (path == null) {
-			return null;
-		}
+        String ext = "";
+        String name = new File(path).getName();
 
-		int dot = path.lastIndexOf(".");
-		if (dot >= 0) {
-			return path.substring(dot);
-		} else {
-			// No extension.
-			return "";
-		}
+        int i = name.lastIndexOf('.');
+
+        if (i > 0 &&  i < name.length() - 1) {
+            ext = name.substring(i).toLowerCase();
+        }
+        return ext;
 	}
 
 	/**
@@ -261,11 +259,10 @@ public class FileUtils {
 		}
 		
 		// Split file's name and extension to fix internationalization issue #307
-		int fromIndex = fileName.lastIndexOf('.');
-		String extension = "";
-		if (fromIndex > 0) {
-			extension = fileName.substring(fromIndex);
-			fileName = fileName.substring(0, fromIndex);
+		String extension = getExtension(file.getPath());
+        int extStart = fileName.lastIndexOf(extension);
+		if (extStart > 0) {
+			fileName = fileName.substring(0, extStart);
 		}
 		
 		// Try a simple "copy of".
@@ -301,13 +298,10 @@ public class FileUtils {
 	 */
 	public static void openFile(FileHolder fileholder, Context c) {
 		Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-
 		Uri data = FileUtils.getUri(fileholder.getFile());
 		String type = fileholder.getMimeType();
 		
         intent.setDataAndType(data, type);
-
-		
         launchFileIntent(intent, c);
 	}
 

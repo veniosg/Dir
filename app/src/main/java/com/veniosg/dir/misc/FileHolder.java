@@ -30,14 +30,6 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
         mIcon = Utils.getIconForFile(mimeTypes, mMimeType, mFile, c);
 	}
 
-	public FileHolder(File f, String m, Context c) {
-		mFile = f;
-		mExtension = parseExtension();
-		mMimeType = m;
-        MimeTypes mimeTypes = ((FileManagerApplication) c.getApplicationContext()).getMimeTypes();
-        mIcon = Utils.getIconForFile(mimeTypes, mMimeType, mFile, c);
-	}
-	
 	/**
 	 * Fastest constructor as it takes everything ready.
 	 */
@@ -166,19 +158,16 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 	public int compareTo(FileHolder another) {
 		return mFile.compareTo(another.getFile());
 	}
-	
+
 	/**
 	 * Parse the extension from the filename of the mFile member.
-	 */  
+	 */
 	private String parseExtension() {
-	    String ext = "";
-	    String name = mFile.getName();
-	    
-	    int i = name.lastIndexOf('.');
-
-	    if (i > 0 &&  i < name.length() - 1) {
-	        ext = name.substring(i+1).toLowerCase();
-	    }
-	    return ext;
+        // Exclude the dot
+        String ext = FileUtils.getExtension(mFile.getPath());
+        if (ext.length() > 0) {
+            ext = ext.substring(1);
+        }
+        return ext;
 	}
 }
