@@ -61,12 +61,7 @@ public class ThumbnailHelper {
             final List<ResolveInfo> lri = pm.queryIntentActivities(intent,
                     MATCH_DEFAULT_ONLY);
             if (lri != null && lri.size() > 0) {
-                // Actually first element should be "best match",
-                // but it seems that more recently installed applications
-                // could be even better match.
-                boolean useBestMatch = PreferenceFragment.getUseBestMatch(context);
-                int index = (useBestMatch ? 0 : lri.size() - 1);
-                icon = lri.get(index).loadIcon(pm);
+                icon = lri.get(0).loadIcon(pm);
             }
         }
 

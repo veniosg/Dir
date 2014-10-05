@@ -45,7 +45,6 @@ public class ThumbnailLoader {
 	
 	// Maximum number of threads in the executor pool.
 	private static final int POOL_SIZE = 5;
-    private final boolean mUseBestMatch;
 
     private boolean cancel;
 
@@ -103,8 +102,6 @@ public class ThumbnailLoader {
 				}
 			}
 		};
-
-        mUseBestMatch = PreferenceFragment.getUseBestMatch(context);
 	}
 
 	/**
@@ -399,7 +396,7 @@ public class ThumbnailLoader {
                 // Actually first element should be "best match",
                 // but it seems that more recently installed applications
                 // could be even better match.
-                int index = (mUseBestMatch ? 0 : lri.size() - 1);
+                int index = (true ? 0 : lri.size() - 1);
 
                 final ResolveInfo ri = lri.get(index);
                 return ri.loadIcon(pm);

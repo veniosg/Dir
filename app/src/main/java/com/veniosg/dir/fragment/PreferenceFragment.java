@@ -24,7 +24,6 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
     private static final String PREFS_DEFAULTPICKFILEPATH = "defaultpickfilepath";
     private static final String PREFS_SORTBY = "sortby";
     private static final String PREFS_ASCENDING = "ascending";
-    private static final String PREFS_USEBESTMATCH = "usebestmatch";
     public static final String PREFS_THEME = "themeindex";
 
     @Override
@@ -105,10 +104,6 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
                                 ? Environment.getExternalStorageDirectory().getAbsolutePath()
                                 : "/"
                 );
-    }
-
-    public static boolean getUseBestMatch(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PREFS_USEBESTMATCH, true);
     }
 
     /**
