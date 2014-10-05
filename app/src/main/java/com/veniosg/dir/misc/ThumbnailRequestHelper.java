@@ -1,5 +1,6 @@
 package com.veniosg.dir.misc;
 
+import android.app.ActivityManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.widget.ImageView;
 
@@ -25,30 +27,22 @@ import static android.os.Build.VERSION_CODES.KITKAT;
 
 public class ThumbnailRequestHelper {
     public static void loadIconWithForInto(Context context, FileHolder holder, ImageView imageView) {
-        Uri uri;
-        String mime = holder.getMimeType();
-
         if (holder.getFile().isDirectory()) {
             return;
         }
 
-        if (Utils.isAPK(mime)) {
-            uri = getApkIconUri(holder, context);
-        } else if (Utils.isImage(mime)) {
-            uri = Uri.fromFile(holder.getFile());
-        } else {
-            uri = getAssociatedAppIconUri(holder, context);
-        }
+        Uri uri;
+        String mime = holder.getMimeType();
 
         Picasso.with(context)
-                .load(uri)
+                .load(holder.getFile())
                 .placeholder(holder.getBestIcon())
                 .fit()
                 .centerCrop()
                 .into(imageView);
     }
 
-    private static Uri getAssociatedAppIconUri(FileHolder holder, Context context) {
+    private static Drawable getAssociatedAppIconDrawable(FileHolder holder, Context context) {
         // Let's probe the intent exactly in the same way as the VIEW action
         // is performed in FileUtils.openFile(..)
         PackageManager pm = context.getPackageManager();
@@ -67,13 +61,13 @@ public class ThumbnailRequestHelper {
             int index = (useBestMatch ? 0 : lri.size() - 1);
             final ResolveInfo ri = lri.get(index);
 
-            return Uri.parse(SCHEME_ANDROID_RESOURCE + "://" + getPackageNameFromInfo(ri) + "/" + ri.getIconResource());
+            return ri.loadIcon(pm);
         }
 
         return null;
     }
 
-    private static final Uri getApkIconUri(FileHolder holder, Context context) {
+    private static final Drawable getApkIconDrawable(FileHolder holder, Context context) {
         PackageManager pm = context.getPackageManager();
         String path = holder.getFile().getPath();
         PackageInfo pInfo = pm.getPackageArchiveInfo(path,
@@ -88,11 +82,7 @@ public class ThumbnailRequestHelper {
                 aInfo.publicSourceDir = path;
             }
 
-            try {
-                return Uri.parse(SCHEME_ANDROID_RESOURCE + "://" + pm.getResourcesForApplication(aInfo).getResourceName(aInfo.icon).replace(':', '/'));
-            } catch (PackageManager.NameNotFoundException e) {
-                Logger.log(e);
-            }
+            return aInfo.loadIcon(pm);
         }
 
         return null;
@@ -111,6 +101,18 @@ public class ThumbnailRequestHelper {
             }
         } else {
             return ri.resolvePackageName;
+        }
+    }
+
+    public static Drawable getBestPreviewForNonImage(FileHolder fHolder, Context context) {
+        if (!Utils.isImage(fHolder.getMimeType())) {
+            if (Utils.isAPK(fHolder.getMimeType())) {
+                return getApkIconDrawable(fHolder, context);
+            } else {
+                return getAssociatedAppIconDrawable(fHolder, context);
+            }
+        } else {
+            return null;
         }
     }
 }

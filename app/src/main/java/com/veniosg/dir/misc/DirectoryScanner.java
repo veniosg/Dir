@@ -153,11 +153,15 @@ public class DirectoryScanner extends Thread {
 							(mimetype.contentEquals(mFilterMimetype) || mFilterMimetype.contentEquals("*/*") ||
 									mFilterFiletype == null);
 					if (!mDirectoriesOnly && (ext_allow || mime_allow)) {
-						listFile.add(new FileHolder(currentFile,
+                        FileHolder fHolder = new FileHolder(currentFile,
                                 mimetype,
                                 // Take advantage of the already parsed mimeType to set a specific icon.
                                 Utils.getIconForFile(mIcons, mMimeTypes, mimetype,
-                                        currentFile, mContext)));
+                                        currentFile, mContext));
+                        if (!Utils.isImage(mimetype)) {
+                            fHolder.setPreview(ThumbnailRequestHelper.getBestPreviewForNonImage(fHolder, mContext));
+                        }
+						listFile.add(fHolder);
 					}
 				}
 			}
