@@ -159,7 +159,7 @@ public class DirectoryScanner extends Thread {
                                 Utils.getIconForFile(mIcons, mMimeTypes, mimetype,
                                         currentFile, mContext));
                         if (!Utils.isImage(mimetype)) {
-                            fHolder.setPreview(ThumbnailRequestHelper.getBestPreviewForNonImage(fHolder, mContext));
+                            fHolder.setPreview(ThumbnailHelper.getBestPreviewForNonImage(fHolder, mContext));
                         }
 						listFile.add(fHolder);
 					}

@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.misc.FileHolder;
-import com.veniosg.dir.misc.ThumbnailRequestHelper;
+import com.veniosg.dir.misc.ThumbnailHelper;
 import com.veniosg.dir.view.ViewHolder;
 
 import java.io.File;
@@ -56,7 +56,7 @@ public class BookmarkListAdapter extends CursorAdapter {
         holder.tertiaryInfo.setText(item.getFile().isDirectory()? "" : item.getFormattedSize(
                 convertView.getContext(), false));
 
-        ThumbnailRequestHelper.loadIconWithForInto(convertView.getContext(), item, holder.icon);
+        ThumbnailHelper.loadIconWithForInto(convertView.getContext(), item, holder.icon);
     }
 
     /**

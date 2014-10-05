@@ -25,7 +25,7 @@ import static android.content.Intent.ACTION_VIEW;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
 
-public class ThumbnailRequestHelper {
+public class ThumbnailHelper {
     public static void loadIconWithForInto(Context context, FileHolder holder, ImageView imageView) {
         if (holder.getFile().isDirectory()) {
             return;
