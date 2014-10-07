@@ -22,8 +22,10 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Outline;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -348,6 +350,7 @@ public class AnimatedFileListContainer extends FrameLayout {
             super(context);
 
             setWillNotDraw(false);
+            setClipToOutline(true);
             setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
             saturationMatrix.setSaturation(1F);
         }
@@ -361,10 +364,26 @@ public class AnimatedFileListContainer extends FrameLayout {
 
         public void setDrawable(Drawable drawable) {
             this.drawable = drawable;
+
+            if (drawable != null) {
+                Outline outline = new Outline();
+                outline.setRect(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                setOutline(outline);
+            }
+        }
+
+        @Override
+        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            if (drawable == null) {
+                setMeasuredDimension(0, 0);
+            } else {
+                // We know the view will never need to be less than its drawable's intrinsic size in this context.
+                setMeasuredDimension(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            }
         }
 
         public int getDrawableHeight() {
-            if(drawable != null) {
+            if (drawable != null) {
                 return drawable.getIntrinsicHeight();
             } else {
                 return 0;
@@ -372,7 +391,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         }
 
         public void setSaturation(float sat) {
-            if(sat < 0)
+            if (sat < 0)
                 sat = 0;
 
             saturationMatrix.setSaturation(sat);
