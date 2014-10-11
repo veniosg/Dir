@@ -18,6 +18,7 @@
 
         <com.veniosg.dir.view.DividerGridView
             android:id="@android:id/list"
+            android:numColumns="@integer/grid_columns"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"

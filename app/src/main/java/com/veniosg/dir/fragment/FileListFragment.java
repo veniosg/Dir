@@ -65,7 +65,7 @@ import static com.veniosg.dir.IntentConstants.EXTRA_DIR_PATH;
  * 
  * @author George Venios
  */
-public abstract class FileListFragment extends GridFragment {
+public abstract class FileListFragment extends AbsListFragment {
 	private static final String INSTANCE_STATE_PATH = "path";
 	private static final String INSTANCE_STATE_FILES = "files";
     private static final String INSTANCE_STATE_NEEDS_LOADING = "needsLoading";

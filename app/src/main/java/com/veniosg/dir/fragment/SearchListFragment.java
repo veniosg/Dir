@@ -26,7 +26,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -46,7 +45,7 @@ import java.util.List;
 /**
  * @author George Venios
  */
-public class SearchListFragment extends GridFragment implements LoaderManager.LoaderCallbacks<List<FileHolder>> {
+public class SearchListFragment extends AbsListFragment implements LoaderManager.LoaderCallbacks<List<FileHolder>> {
     private static final int LOADER_ID = 1;
     private static final String STATE_POS = "pos";
     private static final String STATE_TOP = "top";
@@ -103,8 +102,13 @@ public class SearchListFragment extends GridFragment implements LoaderManager.Lo
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        int top = 0;
+        if (getListView().getChildCount() != 0) {
+            top = getListView().getChildAt(0).getTop();
+        }
+
         outState.putInt(STATE_POS, getListView().getFirstVisiblePosition());
-        outState.putInt(STATE_TOP, getListView().getChildAt(0).getTop());
+        outState.putInt(STATE_TOP, top);
     }
 
     private void initDecorStyling(View view) {
