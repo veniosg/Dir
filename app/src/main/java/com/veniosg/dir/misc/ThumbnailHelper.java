@@ -60,11 +60,12 @@ public class ThumbnailHelper {
         ResolveInfo resolveInfo = pm.resolveActivity(intent, MATCH_DEFAULT_ONLY);
         if (!FileUtils.isResolverActivity(resolveInfo)) {
             icon = resolveInfo.loadIcon(pm);
-        } else {
+        } else if (!holder.getMimeType().equals("*/*")) {
             final List<ResolveInfo> lri = pm.queryIntentActivities(intent,
                     MATCH_DEFAULT_ONLY);
             if (lri != null && lri.size() > 0) {
-                icon = lri.get(0).loadIcon(pm);
+                // Again, contrary to documentation, best match is actually the last item.
+                icon = lri.get(lri.size()-1).loadIcon(pm);
             }
         }
 
@@ -100,11 +101,9 @@ public class ThumbnailHelper {
                 @Override
                 public Bitmap decode(ImageDecodingInfo imageDecodingInfo) throws IOException {
                     FileHolder holder = (FileHolder) imageDecodingInfo.getExtraForDownloader();
-                    Bitmap bitmap;
+                    Bitmap bitmap = null;
 
-                    if (holder.getFile().isDirectory()) {
-                        return null;
-                    } else {
+                    if (!holder.getFile().isDirectory()) {
                         if (Utils.isImage(holder.getMimeType())) {
                             try {
                                 bitmap = internal.decode(imageDecodingInfo);
@@ -114,9 +113,15 @@ public class ThumbnailHelper {
                                 // Fail silently.
                             }
                         } else if (Utils.isAPK(holder.getMimeType())) {
-                            bitmap = ((BitmapDrawable) getApkIconDrawable(holder, context)).getBitmap();
+                            Drawable drawable = getApkIconDrawable(holder, context);
+                            if (drawable != null) {
+                                bitmap = ((BitmapDrawable) drawable).getBitmap();
+                            }
                         } else {
-                            bitmap = ((BitmapDrawable) getAssociatedAppIconDrawable(holder, context)).getBitmap();
+                            Drawable drawable = getAssociatedAppIconDrawable(holder, context);
+                            if (drawable != null) {
+                                bitmap = ((BitmapDrawable) drawable).getBitmap();
+                            }
                         }
                     }
 
