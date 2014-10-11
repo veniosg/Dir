@@ -15,6 +15,8 @@ import com.veniosg.dir.view.ViewHolder;
 
 import java.util.List;
 
+import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
+
 public class FileHolderListAdapter extends BaseAdapter {
     private List<FileHolder> mItems;
 	private int mItemLayoutId = R.layout.item_filelist;
@@ -82,6 +84,7 @@ public class FileHolderListAdapter extends BaseAdapter {
 			convertView = newView(parent.getContext());
 		ViewHolder holder = (ViewHolder) convertView.getTag();
 
+        getInstance().cancelDisplayTask(holder.icon);
 		holder.icon.setImageDrawable(item.getBestIcon());
 		holder.primaryInfo.setText(item.getName());
 		holder.secondaryInfo.setText(item.getFormattedModificationDate(convertView.getContext()));
@@ -106,16 +109,6 @@ public class FileHolderListAdapter extends BaseAdapter {
         ThumbnailHelper.loadIconWithForInto(convertView.getContext(), item, holder.icon);
 
 		return convertView;
-	}
-
-	/**
-	 * Inform this adapter about scrolling state of list so that lists don't lag due to cache ops.
-	 * @param isScrolling True if the ListView is still scrolling.
-	 */
-	public void setScrolling(boolean isScrolling){
-		scrolling = isScrolling;
-		if(!isScrolling)
-			notifyDataSetChanged();
 	}
 
     public OnItemToggleListener getOnItemToggleListener() {

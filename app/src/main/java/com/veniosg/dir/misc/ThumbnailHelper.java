@@ -8,11 +8,15 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.veniosg.dir.fragment.PreferenceFragment;
 import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
@@ -25,22 +29,30 @@ import static android.content.Intent.ACTION_VIEW;
 import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
+import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
 
 public class ThumbnailHelper {
+    private static final int FADE_IN_DURATION = 400;
+
     public static void loadIconWithForInto(Context context, FileHolder holder, ImageView imageView) {
         if (holder.getFile().isDirectory()) {
             return;
+        } else if (Utils.isImage(holder.getMimeType())) {
+            Uri uri = Uri.fromFile(holder.getFile());
+            loadIconWithForInto(context, uri, imageView);
         }
+    }
 
-        Uri uri;
-        String mime = holder.getMimeType();
+    public static void loadIconWithForInto(Context context, Uri uri, ImageView imageView) {
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .displayer(new FadeInBitmapDisplayer(FADE_IN_DURATION))
+                .cacheInMemory(true)
+                .cacheOnDisk(false)
+                .delayBeforeLoading(25)
+                .imageScaleType(ImageScaleType.EXACTLY)
+                .build();
 
-        Picasso.with(context)
-                .load(holder.getFile())
-                .placeholder(holder.getBestIcon())
-                .fit()
-                .centerCrop()
-                .into(imageView);
+        getInstance().displayImage(uri.toString(), imageView, options);
     }
 
     /**

@@ -66,20 +66,6 @@ public class BookmarkListFragment extends GridFragment implements LoaderManager.
         ((ImageView) view.findViewById(R.id.empty_img)).setImageResource(R.drawable.ic_state_bookmarks);
 
         setListAdapter(new BookmarkListAdapter(getActivity(), null));
-        getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == OnScrollListener.SCROLL_STATE_IDLE)
-                    ((BookmarkListAdapter) getListAdapter()).setScrolling(false);
-                else
-                    ((BookmarkListAdapter) getListAdapter()).setScrolling(true);
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-            }
-        });
         setListChoiceListener();
         view.setBackgroundResource(Themer.getThemedResourceId(getActivity(),
                 R.attr.colorSidePaneBackground));

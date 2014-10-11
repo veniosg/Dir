@@ -3,6 +3,9 @@ package com.veniosg.dir;
 import android.app.Application;
 import android.view.ViewConfiguration;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.veniosg.dir.misc.MimeTypes;
 import com.veniosg.dir.util.CopyHelper;
 import com.veniosg.dir.view.Themer;
@@ -31,6 +34,12 @@ public class FileManagerApplication extends Application{
         } catch (Exception ex) {
             // Ignore
         }
+
+        // UIL
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .diskCacheSize(10240000) // 10MB
+                .build();
+        ImageLoader.getInstance().init(config);
     }
 	
 	public CopyHelper getCopyHelper(){

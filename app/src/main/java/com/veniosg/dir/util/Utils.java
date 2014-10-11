@@ -18,7 +18,6 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
 import com.veniosg.dir.R;
 import com.veniosg.dir.activity.FileManagerActivity;
 import com.veniosg.dir.misc.FileHolder;

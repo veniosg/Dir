@@ -92,21 +92,6 @@ public class SearchListFragment extends GridFragment implements LoaderManager.Lo
         mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
         ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.search_empty);
         setLoading(true);
-        getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState != AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
-                    ((FileHolderListAdapter) getListAdapter()).setScrolling(false);
-                } else {
-                    ((FileHolderListAdapter) getListAdapter()).setScrolling(true);
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-            }
-        });
 
         if (savedInstanceState != null) {
             getListView().setSelection(savedInstanceState.getInt(STATE_POS));

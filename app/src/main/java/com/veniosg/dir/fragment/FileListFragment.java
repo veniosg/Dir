@@ -158,20 +158,6 @@ public abstract class FileListFragment extends GridFragment {
 				.registerOnSharedPreferenceChangeListener(preferenceListener);
 
 		// Set list properties
-		getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == OnScrollListener.SCROLL_STATE_IDLE)
-                    mAdapter.setScrolling(false);
-                else
-                    mAdapter.setScrolling(true);
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-            }
-        });
 		getListView().requestFocus();
 		getListView().requestFocusFromTouch();
 

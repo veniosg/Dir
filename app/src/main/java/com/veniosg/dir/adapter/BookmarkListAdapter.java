@@ -59,16 +59,6 @@ public class BookmarkListAdapter extends CursorAdapter {
         ThumbnailHelper.loadIconWithForInto(convertView.getContext(), item, holder.icon);
     }
 
-    /**
-	 * Inform this adapter about scrolling state of list so that lists don't lag due to cache ops.
-	 * @param isScrolling True if the ListView is still scrolling.
-	 */
-	public void setScrolling(boolean isScrolling){
-		scrolling = isScrolling;
-		if(!isScrolling)
-			notifyDataSetChanged();
-	}
-
 	private boolean shouldLoadIcon(FileHolder item){
 		return !scrolling && item.getFile().isFile() && !item.getMimeType().equals("video/mpeg");
 	}
