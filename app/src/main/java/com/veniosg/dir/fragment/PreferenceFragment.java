@@ -74,7 +74,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 
     public static boolean getDisplayHiddenFiles(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREFS_DISPLAYHIDDENFILES, true);
+                .getBoolean(PREFS_DISPLAYHIDDENFILES, false);
     }
 
 
