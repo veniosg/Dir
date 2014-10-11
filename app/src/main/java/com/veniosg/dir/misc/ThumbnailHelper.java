@@ -134,7 +134,7 @@ public class ThumbnailHelper {
                     .displayer(new FadeInBitmapDisplayer(FADE_IN_DURATION))
                     .cacheInMemory(true)
                     .cacheOnDisk(false)
-                    .delayBeforeLoading(25)
+                    .delayBeforeLoading(75)
                     .imageScaleType(ImageScaleType.EXACTLY);
         }
 
