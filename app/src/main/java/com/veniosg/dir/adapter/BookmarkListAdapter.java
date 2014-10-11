@@ -56,7 +56,7 @@ public class BookmarkListAdapter extends CursorAdapter {
         holder.tertiaryInfo.setText(item.getFile().isDirectory()? "" : item.getFormattedSize(
                 convertView.getContext(), false));
 
-        ThumbnailHelper.loadIconWithForInto(convertView.getContext(), item, holder.icon);
+        ThumbnailHelper.requestIcon(item, holder.icon);
     }
 
 	private boolean shouldLoadIcon(FileHolder item){

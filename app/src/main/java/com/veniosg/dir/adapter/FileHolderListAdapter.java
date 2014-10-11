@@ -106,7 +106,7 @@ public class FileHolderListAdapter extends BaseAdapter {
         // Only override clicks if a listener exists.
         holder.icon.setClickable(mOnItemToggleListener != null);
 
-        ThumbnailHelper.loadIconWithForInto(convertView.getContext(), item, holder.icon);
+        ThumbnailHelper.requestIcon(item, holder.icon);
 
 		return convertView;
 	}

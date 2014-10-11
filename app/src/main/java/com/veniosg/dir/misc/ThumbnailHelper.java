@@ -1,31 +1,31 @@
 package com.veniosg.dir.misc;
 
-import android.app.ActivityManager;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
+import com.nostra13.universalimageloader.core.decode.ImageDecoder;
+import com.nostra13.universalimageloader.core.decode.ImageDecodingInfo;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.veniosg.dir.fragment.PreferenceFragment;
 import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.util.Utils;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
-import static android.content.ContentResolver.SCHEME_ANDROID_RESOURCE;
-import static android.content.Intent.ACTION_VIEW;
 import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
@@ -34,22 +34,13 @@ import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
 public class ThumbnailHelper {
     private static final int FADE_IN_DURATION = 400;
 
-    public static void loadIconWithForInto(Context context, FileHolder holder, ImageView imageView) {
-        if (holder.getFile().isDirectory()) {
-            return;
-        } else if (Utils.isImage(holder.getMimeType())) {
-            Uri uri = Uri.fromFile(holder.getFile());
-            loadIconWithForInto(context, uri, imageView);
-        }
-    }
+    private static ImageDecoder sDecoder = null;
+    private static DisplayImageOptions.Builder sDefaultImageOptionsBuilder;
 
-    public static void loadIconWithForInto(Context context, Uri uri, ImageView imageView) {
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .displayer(new FadeInBitmapDisplayer(FADE_IN_DURATION))
-                .cacheInMemory(true)
-                .cacheOnDisk(false)
-                .delayBeforeLoading(25)
-                .imageScaleType(ImageScaleType.EXACTLY)
+    public static void requestIcon(FileHolder holder, ImageView imageView) {
+        Uri uri = Uri.fromFile(holder.getFile());
+        DisplayImageOptions options = defaultOptionsBuilder()
+                .extraForDownloader(holder)
                 .build();
 
         getInstance().displayImage(uri.toString(), imageView, options);
@@ -101,6 +92,55 @@ public class ThumbnailHelper {
         return null;
     }
 
+    public static ImageDecoder imageDecoder(final Context context) {
+        if (sDecoder == null) {
+            sDecoder = new ImageDecoder() {
+                private BaseImageDecoder internal = new BaseImageDecoder(false);
+
+                @Override
+                public Bitmap decode(ImageDecodingInfo imageDecodingInfo) throws IOException {
+                    FileHolder holder = (FileHolder) imageDecodingInfo.getExtraForDownloader();
+                    Bitmap bitmap;
+
+                    if (holder.getFile().isDirectory()) {
+                        return null;
+                    } else {
+                        if (Utils.isImage(holder.getMimeType())) {
+                            try {
+                                bitmap = internal.decode(imageDecodingInfo);
+                            } catch (FileNotFoundException ex) {
+                                Logger.log(ex);
+                                return null;
+                                // Fail silently.
+                            }
+                        } else if (Utils.isAPK(holder.getMimeType())) {
+                            bitmap = ((BitmapDrawable) getApkIconDrawable(holder, context)).getBitmap();
+                        } else {
+                            bitmap = ((BitmapDrawable) getAssociatedAppIconDrawable(holder, context)).getBitmap();
+                        }
+                    }
+
+                    return bitmap;
+                }
+            };
+        }
+
+        return sDecoder;
+    }
+
+    private static DisplayImageOptions.Builder defaultOptionsBuilder() {
+        if (sDefaultImageOptionsBuilder == null) {
+            sDefaultImageOptionsBuilder = new DisplayImageOptions.Builder()
+                    .displayer(new FadeInBitmapDisplayer(FADE_IN_DURATION))
+                    .cacheInMemory(true)
+                    .cacheOnDisk(false)
+                    .delayBeforeLoading(25)
+                    .imageScaleType(ImageScaleType.EXACTLY);
+        }
+
+        return sDefaultImageOptionsBuilder;
+    }
+
     private static String getPackageNameFromInfo(ResolveInfo ri) {
         if (ri.resolvePackageName == null) {
             if (ri.activityInfo != null) {
@@ -114,18 +154,6 @@ public class ThumbnailHelper {
             }
         } else {
             return ri.resolvePackageName;
-        }
-    }
-
-    public static Drawable getBestPreviewForNonImage(FileHolder fHolder, Context context) {
-        if (!Utils.isImage(fHolder.getMimeType())) {
-            if (Utils.isAPK(fHolder.getMimeType())) {
-                return getApkIconDrawable(fHolder, context);
-            } else {
-                return getAssociatedAppIconDrawable(fHolder, context);
-            }
-        } else {
-            return null;
         }
     }
 }
