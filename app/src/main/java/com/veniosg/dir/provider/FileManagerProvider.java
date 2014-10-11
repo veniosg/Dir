@@ -30,7 +30,6 @@ public class FileManagerProvider extends ContentProvider {
 
 	@Override
 	public String getType(Uri uri) {
-		// return file extension (uri.lastIndexOf("."))
 		return ((FileManagerApplication) getContext().getApplicationContext()).getMimeTypes()
                 .getMimeType(uri.toString());
 	}

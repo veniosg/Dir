@@ -18,12 +18,14 @@ package com.veniosg.dir.fragment;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
@@ -36,6 +38,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -72,6 +75,8 @@ import java.util.HashMap;
 import static android.R.integer.config_mediumAnimTime;
 import static android.R.integer.config_shortAnimTime;
 import static com.veniosg.dir.AnimationConstants.inInterpolator;
+
+import static java.lang.Math.abs;
 
 /**
  * A file list fragment that supports CAB selection.
@@ -438,7 +443,7 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(AbsListView l, View v, int position, long id) {
         FileHolder item = (FileHolder) mAdapter.getItem(position);
         heroView = v;
         openInformingPathBar(item);
@@ -493,8 +498,7 @@ public class SimpleFileListFragment extends FileListFragment {
             return;
 
         if(getListAdapter().getCount() > 0) {
-            sScrollPositions.put(getPath(), new ScrollPosition(getListView().getFirstVisiblePosition(),
-                    getListView().getChildAt(0).getTop()));
+            keepFolderScroll();
         }
 
         // Save required data for animation
@@ -695,6 +699,34 @@ public class SimpleFileListFragment extends FileListFragment {
         return (int) getListView().getCheckedItemIds()[0];
     }
 
+    private void useFolderScroll(final ScrollPosition pos) {
+        if (getListView() instanceof ListView) {
+            ((ListView) getListView()).setSelectionFromTop(pos.index, pos.top);
+        } else {
+            getListView().post(new Runnable() {
+                @Override
+                public void run() {
+                    // Being unable to scroll to exact pixel without ListView
+                    // (or without having a god-awful animation forced)
+                    // we just scroll to the closest item
+                    int index = pos.index;
+                    getListView().setSelection(index);
+                    View firstChild = getListView().getChildAt(0);
+
+                    if (firstChild != null
+                            && abs(pos.top) > firstChild.getHeight() / 2 ) {
+                        getListView().setSelection(index + 1);
+                    }
+                }
+            });
+        }
+    }
+
+    private void keepFolderScroll() {
+        sScrollPositions.put(getPath(), new ScrollPosition(getListView().getFirstVisiblePosition(),
+                getListView().getChildAt(0).getTop()));
+    }
+
     /**
      * @return A {@link FileHolder} list with the currently selected items.
      */
@@ -713,7 +745,9 @@ public class SimpleFileListFragment extends FileListFragment {
         if (!loading) {
             if (sScrollPositions.containsKey(getPath())) {
                 ScrollPosition pos = sScrollPositions.get(getPath());
-                getListView().setSelectionFromTop(pos.index, pos.top);
+                useFolderScroll(pos);
+            } else {
+                useFolderScroll(new ScrollPosition(0, 0));
             }
         }
     }

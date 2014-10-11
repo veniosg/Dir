@@ -23,7 +23,6 @@ public class SearchListAdapter extends FileHolderListAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = super.getView(position, convertView, parent);
 
-        ((ViewHolder) view.getTag()).secondaryInfo.setMaxLines(3);
         ((ViewHolder) view.getTag()).secondaryInfo.setText(
                 ((FileHolder) getItem(position)).getFile().getAbsolutePath());
 

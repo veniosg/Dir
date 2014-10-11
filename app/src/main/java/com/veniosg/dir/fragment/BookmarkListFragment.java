@@ -18,7 +18,6 @@ package com.veniosg.dir.fragment;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -30,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,7 +46,7 @@ import java.io.File;
 /**
  * @author George Venios
  */
-public class BookmarkListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class BookmarkListFragment extends AbsListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private WaitingViewFlipper mFlipper;
     private SystemBarTintManager mTintManager;
 
@@ -66,21 +66,10 @@ public class BookmarkListFragment extends ListFragment implements LoaderManager.
         ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.bookmark_empty);
         ((ImageView) view.findViewById(R.id.empty_img)).setImageResource(R.drawable.ic_state_bookmarks);
 
+        if (getListView() instanceof GridView) {
+            ((GridView) getListView()).setNumColumns(1);
+        }
         setListAdapter(new BookmarkListAdapter(getActivity(), null));
-        getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == OnScrollListener.SCROLL_STATE_IDLE)
-                    ((BookmarkListAdapter) getListAdapter()).setScrolling(false);
-                else
-                    ((BookmarkListAdapter) getListAdapter()).setScrolling(true);
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-            }
-        });
         setListChoiceListener();
         view.setBackgroundResource(Themer.getThemedResourceId(getActivity(),
                 R.attr.colorSidePaneBackground));
@@ -109,7 +98,7 @@ public class BookmarkListFragment extends ListFragment implements LoaderManager.
     }
 
     @Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(AbsListView l, View v, int position, long id) {
 		Cursor c = ((Cursor) getListAdapter().getItem(position));
 		((BookmarkContract) getActivity()).onBookmarkSelected(c.getString(
                 c.getColumnIndex(BookmarkProvider.PATH)));

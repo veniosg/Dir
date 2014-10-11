@@ -9,9 +9,9 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.R;
 import com.veniosg.dir.misc.FileHolder;
+import com.veniosg.dir.misc.ThumbnailHelper;
 import com.veniosg.dir.view.ViewHolder;
 
 import java.io.File;
@@ -56,22 +56,8 @@ public class BookmarkListAdapter extends CursorAdapter {
         holder.tertiaryInfo.setText(item.getFile().isDirectory()? "" : item.getFormattedSize(
                 convertView.getContext(), false));
 
-        if(shouldLoadIcon(item)){
-            ((FileManagerApplication) convertView.getContext().getApplicationContext())
-                    .getThumbnailLoader()
-                    .loadImage(item, holder.icon);
-        }
+        ThumbnailHelper.requestIcon(item, holder.icon);
     }
-
-    /**
-	 * Inform this adapter about scrolling state of list so that lists don't lag due to cache ops.
-	 * @param isScrolling True if the ListView is still scrolling.
-	 */
-	public void setScrolling(boolean isScrolling){
-		scrolling = isScrolling;
-		if(!isScrolling)
-			notifyDataSetChanged();
-	}
 
 	private boolean shouldLoadIcon(FileHolder item){
 		return !scrolling && item.getFile().isFile() && !item.getMimeType().equals("video/mpeg");

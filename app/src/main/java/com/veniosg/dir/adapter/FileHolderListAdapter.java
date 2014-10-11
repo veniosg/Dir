@@ -8,12 +8,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.R;
 import com.veniosg.dir.misc.FileHolder;
+import com.veniosg.dir.misc.ThumbnailHelper;
 import com.veniosg.dir.view.ViewHolder;
 
 import java.util.List;
+
+import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
 
 public class FileHolderListAdapter extends BaseAdapter {
     private List<FileHolder> mItems;
@@ -82,6 +84,7 @@ public class FileHolderListAdapter extends BaseAdapter {
 			convertView = newView(parent.getContext());
 		ViewHolder holder = (ViewHolder) convertView.getTag();
 
+        getInstance().cancelDisplayTask(holder.icon);
 		holder.icon.setImageDrawable(item.getBestIcon());
 		holder.primaryInfo.setText(item.getName());
 		holder.secondaryInfo.setText(item.getFormattedModificationDate(convertView.getContext()));
@@ -104,22 +107,9 @@ public class FileHolderListAdapter extends BaseAdapter {
 //        Only override clicks if a listener exists.
 //        holder.icon.setClickable(mOnItemToggleListener != null);
 
-        if(shouldLoadIcon(item)){
-            ((FileManagerApplication) convertView.getContext().getApplicationContext())
-                    .getThumbnailLoader().loadImage(item, holder.icon);
-        }
+        ThumbnailHelper.requestIcon(item, holder.icon);
 
 		return convertView;
-	}
-
-	/**
-	 * Inform this adapter about scrolling state of list so that lists don't lag due to cache ops.
-	 * @param isScrolling True if the ListView is still scrolling.
-	 */
-	public void setScrolling(boolean isScrolling){
-		scrolling = isScrolling;
-		if(!isScrolling)
-			notifyDataSetChanged();
 	}
 
     public OnItemToggleListener getOnItemToggleListener() {

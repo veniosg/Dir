@@ -1,19 +1,28 @@
 package com.veniosg.dir;
 
 import android.app.Application;
+import android.graphics.Bitmap;
 import android.view.ViewConfiguration;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.decode.ImageDecoder;
+import com.nostra13.universalimageloader.core.decode.ImageDecodingInfo;
+import com.nostra13.universalimageloader.core.download.ImageDownloader;
 import com.veniosg.dir.misc.MimeTypes;
-import com.veniosg.dir.misc.ThumbnailLoader;
 import com.veniosg.dir.util.CopyHelper;
 import com.veniosg.dir.view.Themer;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
+
+import static com.veniosg.dir.misc.ThumbnailHelper.imageDecoder;
 
 public class FileManagerApplication extends Application{
 	private CopyHelper mCopyHelper;
     private MimeTypes mMimeTypes;
-    private ThumbnailLoader mThumbnailLoader;
 
 	@Override
 	public void onCreate() {
@@ -21,7 +30,6 @@ public class FileManagerApplication extends Application{
 		
 		mCopyHelper = new CopyHelper();
         mMimeTypes = MimeTypes.newInstance(this);
-        mThumbnailLoader = new ThumbnailLoader(this);
 
         // Force-enable the action overflow
         try {
@@ -34,17 +42,20 @@ public class FileManagerApplication extends Application{
         } catch (Exception ex) {
             // Ignore
         }
+
+        // UIL
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .diskCacheSize(10240000) // 10MB
+                .imageDecoder(imageDecoder(getApplicationContext()))
+                .build();
+        ImageLoader.getInstance().init(config);
     }
-	
-	public CopyHelper getCopyHelper(){
+
+    public CopyHelper getCopyHelper(){
 		return mCopyHelper;
 	}
 
     public MimeTypes getMimeTypes() {
         return mMimeTypes;
-    }
-
-    public ThumbnailLoader getThumbnailLoader() {
-        return mThumbnailLoader;
     }
 }

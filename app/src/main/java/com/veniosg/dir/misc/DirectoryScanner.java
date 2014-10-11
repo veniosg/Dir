@@ -149,7 +149,7 @@ public class DirectoryScanner extends Thread {
 							(mimetype.contentEquals(mFilterMimetype) || mFilterMimetype.contentEquals("*/*") ||
 									mFilterFiletype == null);
 					if (!mDirectoriesOnly && (ext_allow || mime_allow)) {
-						listFile.add(new FileHolder(currentFile,
+                        listFile.add(new FileHolder(currentFile,
                                 mimetype,
                                 // Take advantage of the already parsed mimetype to set a specific icon.
                                 Utils.getIconForFile(mContext, mimetype, currentFile)));

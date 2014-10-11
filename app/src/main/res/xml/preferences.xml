@@ -56,15 +56,9 @@
         <CheckBoxPreference 
                 android:key="displayhiddenfiles"
                 android:title="@string/preference_displayhiddenfiles_title"
-                android:defaultValue="true"
+                android:defaultValue="false"
                 android:summaryOff="@string/preference_displayhiddenfiles_summary_off"
                 android:summaryOn="@string/preference_displayhiddenfiles_summary_on" />
-        <CheckBoxPreference
-                android:key="usebestmatch"
-                android:title="@string/preference_usebestmatch_title"
-                android:defaultValue="true"
-                android:summaryOff="@string/preference_usebestmatch_summary_off"
-                android:summaryOn="@string/preference_usebestmatch_summary_on" />
         </PreferenceCategory>
 </PreferenceScreen>
     

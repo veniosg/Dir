@@ -13,7 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcelable;
-import android.widget.ListView;
+import android.widget.AbsListView;
 import android.widget.Toast;
 
 import com.veniosg.dir.FileManagerApplication;
@@ -49,17 +49,23 @@ public abstract class Utils {
                                             Context context, boolean recursive, int maxLevel) {
         ArrayList<FileHolder> result = new ArrayList<FileHolder>(10);
 
-        for (File f : root.listFiles(filter)) {
-            String mimeType = mimeTypes.getMimeType(f.getName());
+        File[] filteredFiles = root.listFiles(filter);
+        if (filteredFiles != null){
+            for (File f : filteredFiles) {
+                String mimeType = mimeTypes.getMimeType(f.getName());
 
-            result.add(new FileHolder(f, mimeType, getIconForFile(context, mimeType, f)));
+                result.add(new FileHolder(f, mimeType, getIconForFile(context, mimeType, f)));
+            }
         }
 
-        if (recursive && (maxLevel-- != 0)) {
-            for (File f : root.listFiles()) {
-                // Prevent trying to search invalid folders
-                if (f.isDirectory() && f.canRead()) {
-                    result.addAll(searchIn(f, filter, mimeTypes, context, true, maxLevel));
+        File[] files = root.listFiles();
+        if (files != null) {
+            if (recursive && (maxLevel-- != 0)) {
+                for (File f : files) {
+                    // Prevent trying to search invalid folders
+                    if (f.isDirectory() && f.canRead()) {
+                        result.addAll(searchIn(f, filter, mimeTypes, context, true, maxLevel));
+                    }
                 }
             }
         }
@@ -297,7 +303,17 @@ public abstract class Utils {
                 0, 0, 0, 1, 0});
     }
 
-    public static boolean getItemChecked(ListView listView, int position) {
+    public static boolean getItemChecked(AbsListView listView, int position) {
         return listView.getCheckedItemPositions().get(position);
+    }
+
+    public static boolean isAPK(String mimeType) {
+        return "application/vnd.android.package-archive".equals(mimeType);
+
+    }
+
+    public static boolean isImage(String mimeType) {
+        String type = mimeType.split("/")[0];
+        return "image".equals(type);
     }
 }

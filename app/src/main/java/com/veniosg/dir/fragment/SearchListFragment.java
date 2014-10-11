@@ -20,14 +20,12 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -47,7 +45,7 @@ import java.util.List;
 /**
  * @author George Venios
  */
-public class SearchListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<List<FileHolder>> {
+public class SearchListFragment extends AbsListFragment implements LoaderManager.LoaderCallbacks<List<FileHolder>> {
     private static final int LOADER_ID = 1;
     private static final String STATE_POS = "pos";
     private static final String STATE_TOP = "top";
@@ -93,25 +91,10 @@ public class SearchListFragment extends ListFragment implements LoaderManager.Lo
         mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
         ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.search_empty);
         setLoading(true);
-        getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState != AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
-                    ((FileHolderListAdapter) getListAdapter()).setScrolling(false);
-                } else {
-                    ((FileHolderListAdapter) getListAdapter()).setScrolling(true);
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-            }
-        });
 
         if (savedInstanceState != null) {
-            getListView().setSelectionFromTop(savedInstanceState.getInt(STATE_POS),
-                    savedInstanceState.getInt(STATE_TOP));
+            getListView().setSelection(savedInstanceState.getInt(STATE_POS));
+            getListView().scrollBy(0, savedInstanceState.getInt(STATE_TOP));
         }
     }
 
@@ -119,8 +102,13 @@ public class SearchListFragment extends ListFragment implements LoaderManager.Lo
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        int top = 0;
+        if (getListView().getChildCount() != 0) {
+            top = getListView().getChildAt(0).getTop();
+        }
+
         outState.putInt(STATE_POS, getListView().getFirstVisiblePosition());
-        outState.putInt(STATE_TOP, getListView().getChildAt(0).getTop());
+        outState.putInt(STATE_TOP, top);
     }
 
     private void initDecorStyling(View view) {
@@ -173,7 +161,7 @@ public class SearchListFragment extends ListFragment implements LoaderManager.Lo
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(AbsListView l, View v, int position, long id) {
         browse(Uri.parse(((FileHolder) getListAdapter().getItem(position))
                 .getFile().getAbsolutePath()));
     }
