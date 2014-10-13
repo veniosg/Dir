@@ -48,7 +48,7 @@ public class Themer {
         boolean trans = false;
         if (act instanceof Themable) {
             trans = ((Themable) act).getThemeFlavor() == TRANSLUCENT_NAV
-                        && SDK_INT < L;
+                        && SDK_INT < 20;    // TODO use the correct one.
         }
 
         switch (Theme.values()[PreferenceFragment.getThemeIndex(act)]) {
