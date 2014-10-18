@@ -31,6 +31,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
@@ -365,11 +366,18 @@ public class AnimatedFileListContainer extends FrameLayout {
         public void setDrawable(Drawable drawable) {
             this.drawable = drawable;
 
-            if (drawable != null) {
-                Outline outline = new Outline();
-                outline.setRect(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-                setOutline(outline);
-            }
+            setOutlineProvider(new ViewOutlineProvider() {
+                @Override
+                public void getOutline(View view, Outline outline) {
+                    if (view instanceof DrawableView) {
+                        if (outline == null) {
+                            outline = new Outline();
+                        }
+
+                        outline.setRect(0, 0, ((DrawableView) view).getDrawableWidth(), ((DrawableView) view).getDrawableHeight());
+                    }
+                }
+            });
         }
 
         @Override
@@ -379,6 +387,14 @@ public class AnimatedFileListContainer extends FrameLayout {
             } else {
                 // We know the view will never need to be less than its drawable's intrinsic size in this context.
                 setMeasuredDimension(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            }
+        }
+
+        public int getDrawableWidth() {
+            if (drawable != null) {
+                return drawable.getIntrinsicWidth();
+            } else {
+                return 0;
             }
         }
 

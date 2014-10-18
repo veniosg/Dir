@@ -27,9 +27,5 @@
     </style>
 
     <style name="Theme.Dir.Grayscale.Dialog.Alert" parent="@style/Theme.Dir.Dialog.Alert">
-        <item name="android:listChoiceIndicatorSingle">@drawable/grayscale_btn_radio_holo_light</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/grayscale_btn_check_holo_light</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/grayscale_list_selector_holo_light</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/grayscale_activated_background_holo_light</item>
     </style>
 </resources>

@@ -34,7 +34,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.veniosg.dir.R;
 import com.veniosg.dir.adapter.BookmarkListAdapter;
 import com.veniosg.dir.provider.BookmarkProvider;
@@ -48,7 +47,6 @@ import java.io.File;
  */
 public class BookmarkListFragment extends AbsListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private WaitingViewFlipper mFlipper;
-    private SystemBarTintManager mTintManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,7 +57,6 @@ public class BookmarkListFragment extends AbsListFragment implements LoaderManag
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-        initDecorStyling(view);
         mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
 
         setLoading(true);
@@ -76,26 +73,6 @@ public class BookmarkListFragment extends AbsListFragment implements LoaderManag
 
         getLoaderManager().initLoader(0, null, this);
 	}
-
-    private void initDecorStyling(View view) {
-        mTintManager = new SystemBarTintManager(getActivity());
-        mTintManager.setStatusBarTintEnabled(true);
-        view.setPadding(view.getPaddingLeft(), view.getPaddingTop() +
-                        (mTintManager.getConfig().getPixelInsetTop(false) != 0
-                                ? mTintManager.getConfig().getPixelInsetTop(true)
-                                : 0),
-                view.getPaddingRight(),
-                view.getPaddingBottom()
-        );
-
-        initBottomViewPaddings(view);
-    }
-
-    protected void initBottomViewPaddings(View view) {
-        getListView().setPadding(getListView().getPaddingLeft(), getListView().getPaddingTop(),
-                getListView().getPaddingRight(),
-                getListView().getPaddingBottom() + mTintManager.getConfig().getPixelInsetBottom());
-    }
 
     @Override
 	public void onListItemClick(AbsListView l, View v, int position, long id) {

@@ -30,49 +30,27 @@ import com.veniosg.dir.fragment.PreferenceFragment;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.L;
-import static com.veniosg.dir.view.Themer.Flavor.TRANSLUCENT_NAV;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
 
 public class Themer {
     public static enum Theme {
         DIR,
         GRAYSCALE,
-        DARK,
-        HOLO_DARK
-    }
-    public static enum Flavor {
-        TRANSLUCENT_NAV,
-        OPAQUE
+        DARK
     }
 
     public static final void applyTheme(Activity act) {
-        boolean trans = false;
-        if (act instanceof Themable) {
-            trans = ((Themable) act).getThemeFlavor() == TRANSLUCENT_NAV
-                        && SDK_INT < 20;    // TODO use the correct one.
-        }
-
         switch (Theme.values()[PreferenceFragment.getThemeIndex(act)]) {
             case DIR:
-                act.setTheme(trans ? R.style.Theme_Dir_TranslucentNav : R.style.Theme_Dir);
+                act.setTheme(R.style.Theme_Dir);
                 break;
             case GRAYSCALE:
-                act.setTheme(trans ? R.style.Theme_Dir_Grayscale_TranslucentNav : R.style.Theme_Dir_Grayscale);
+                act.setTheme(R.style.Theme_Dir_Grayscale);
                 break;
             case DARK:
-                act.setTheme(trans ? R.style.Theme_Dir_Dark_TranslucentNav : R.style.Theme_Dir_Dark);
-                break;
-            case HOLO_DARK:
-                act.setTheme(trans ? R.style.Theme_Dir_HoloDark_TranslucentNav : R.style.Theme_Dir_HoloDark);
+                act.setTheme(R.style.Theme_Dir_Dark);
                 break;
         }
-    }
-
-    public interface Themable {
-        /**
-         * Get the theme flavor this component should have.
-         * @return One of the Flavor constants.
-         */
-        public Flavor getThemeFlavor();
     }
 
     public static final int getThemedResourceId(Context ctx, int attributeId) {

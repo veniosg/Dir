@@ -40,14 +40,6 @@
         <item name="android:textAppearance">@style/TextAppearance.Dir.Large.DialogTitle</item>
     </style>
 
-    <!-- Misc -->
-    <style name="ActionButton.CloseMode.Dir" parent="@android:style/Widget.Material.ActionButton.CloseMode">
-        <item name="android:background">@drawable/btn_cab_done_dir</item>
-    </style>
-    <style name="DropDownListView.Dir" parent="@android:style/Widget.Holo.ListView.DropDown">
-        <item name="android:listSelector">@drawable/selectable_background_dir</item>
-    </style>
-
     <!-- Helper styles -->
     <style name="dialogDetailsPrimaryText">
         <item name="android:layout_width">wrap_content</item>

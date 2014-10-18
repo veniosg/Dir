@@ -28,7 +28,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.activity.FileManagerActivity;
@@ -51,7 +50,6 @@ public class SearchListFragment extends AbsListFragment implements LoaderManager
     private static final String STATE_TOP = "top";
 
     private WaitingViewFlipper mFlipper;
-    private SystemBarTintManager mTintManager;
 
     private File mRoot;
     private String mQuery;
@@ -86,8 +84,6 @@ public class SearchListFragment extends AbsListFragment implements LoaderManager
         view.setBackgroundResource(
                 Themer.getThemedResourceId(getActivity(), R.attr.windowContentBackground));
 
-        initDecorStyling(view);
-
         mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
         ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.search_empty);
         setLoading(true);
@@ -109,26 +105,6 @@ public class SearchListFragment extends AbsListFragment implements LoaderManager
 
         outState.putInt(STATE_POS, getListView().getFirstVisiblePosition());
         outState.putInt(STATE_TOP, top);
-    }
-
-    private void initDecorStyling(View view) {
-        mTintManager = new SystemBarTintManager(getActivity());
-        mTintManager.setTintResource(android.R.color.black);
-        mTintManager.setStatusBarTintEnabled(true);
-        view.setPadding(view.getPaddingLeft(), view.getPaddingTop() +
-                        (mTintManager.getConfig().getPixelInsetTop(false) != 0
-                                ? mTintManager.getConfig().getPixelInsetTop(true)
-                                : 0),
-                view.getPaddingRight() + mTintManager.getConfig().getPixelInsetRight()
-                , view.getPaddingBottom());
-
-        initBottomViewPaddings(view);
-    }
-
-    void initBottomViewPaddings(View view) {
-        getListView().setPadding(getListView().getPaddingLeft(), getListView().getPaddingTop(),
-                getListView().getPaddingRight(),
-                mTintManager.getConfig().getPixelInsetBottom());
     }
 
     private void handleIntent() {

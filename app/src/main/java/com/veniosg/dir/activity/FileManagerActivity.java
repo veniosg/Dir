@@ -25,8 +25,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toolbar;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.fragment.BookmarkListFragment;
@@ -74,9 +74,9 @@ public class FileManagerActivity extends BaseActivity
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
         setContentView(R.layout.activity_filemanager);
-        getActionBar().setHomeButtonEnabled(true);
-		
-		// Search when the user types.
+        getActionBar().setHomeAsUpIndicator(R.drawable.ic_launcher_simple);
+
+        // Search when the user types.
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 		
 		// If not called by name, open on the requested location.
@@ -103,14 +103,12 @@ public class FileManagerActivity extends BaseActivity
 		}
 
         // Side pane
-        SystemBarTintManager tintManager = new SystemBarTintManager(this);
         mSpl = (SlidingPaneLayout) findViewById(R.id.drawer);
         mSpl.setShadowResource(Themer.getThemedResourceId(this, R.attr.drawerShadow));
         mSpl.setCoveredFadeColor(getResources().getColor(
                 Themer.getThemedResourceId(this, R.attr.colorFadeCovered)));
         mSpl.setSliderFadeColor(getResources().getColor(
                 Themer.getThemedResourceId(this, R.attr.colorFadeSlider)));
-        mSpl.setPadding(0, 0, tintManager.getConfig().getPixelInsetRight(), 0);
         int sidePaneWidth = (int) (getResources().getDisplayMetrics().widthPixels * 0.8F);
         View bookmarks = findViewById(R.id.bookmarks);
         SlidingPaneLayout.LayoutParams params = new SlidingPaneLayout.LayoutParams(
@@ -183,10 +181,5 @@ public class FileManagerActivity extends BaseActivity
     @Override
     public void showBookmarks() {
         mSpl.openPane();
-    }
-
-    @Override
-    public Themer.Flavor getThemeFlavor() {
-        return Themer.Flavor.TRANSLUCENT_NAV;
     }
 }

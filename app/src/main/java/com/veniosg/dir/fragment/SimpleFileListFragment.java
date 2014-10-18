@@ -143,7 +143,6 @@ public class SimpleFileListFragment extends FileListFragment {
         @Override
         public void onDestroyActionMode(android.view.ActionMode mode) {
             mPathBar.setEnabled(true);
-            getTintManager().setTintResource(android.R.color.black);
             mActionMode = null;
         }
 
@@ -152,7 +151,6 @@ public class SimpleFileListFragment extends FileListFragment {
                                           Menu menu) {
             mActionMode = mode;
             mPathBar.setEnabled(false);
-            getTintManager().setTintResource(android.R.color.black);
             return true;
         }
 

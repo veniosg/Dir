@@ -29,7 +29,7 @@ import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.view.Themer;
 
 @SuppressLint("Registered")
-abstract class BaseActivity extends FragmentActivity implements Themer.Themable {
+abstract class BaseActivity extends FragmentActivity {
     protected static final String FRAGMENT_TAG = "content_fragment";
 
     private BroadcastReceiver mThemeReceiver = new BroadcastReceiver() {
@@ -44,6 +44,7 @@ abstract class BaseActivity extends FragmentActivity implements Themer.Themable 
         super.onCreate(savedInstanceState);
 
         Themer.applyTheme(this);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mThemeReceiver,
                 new IntentFilter(IntentConstants.ACTION_REFRESH_THEME));

@@ -35,7 +35,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
@@ -103,7 +102,6 @@ public abstract class FileListFragment extends AbsListFragment {
     private FileObserver mFileObserver;
 
     private WaitingViewFlipper mFlipper;
-    private SystemBarTintManager mTintManager;
     private BroadcastReceiver mRefreshReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -151,7 +149,6 @@ public abstract class FileListFragment extends AbsListFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initDecorStyling(view);
 
 		// Set auto refresh on preference change.
 		PreferenceManager.getDefaultSharedPreferences(getActivity())
@@ -186,26 +183,6 @@ public abstract class FileListFragment extends AbsListFragment {
         mAdapter = new FileHolderListAdapter(mFiles);
         setListAdapter(mAdapter);
 	}
-
-    private void initDecorStyling(View view) {
-        mTintManager = new SystemBarTintManager(getActivity());
-        mTintManager.setTintResource(android.R.color.black);
-        mTintManager.setStatusBarTintEnabled(true);
-        view.setPadding(view.getPaddingLeft(), view.getPaddingTop() +
-                        (mTintManager.getConfig().getPixelInsetTop(false) != 0
-                                ? mTintManager.getConfig().getPixelInsetTop(true)
-                                : 0),
-                view.getPaddingRight() + mTintManager.getConfig().getPixelInsetRight(),
-                view.getPaddingBottom());
-
-        initBottomViewPaddings(view);
-    }
-
-    void initBottomViewPaddings(View view) {
-        getListView().setPadding(getListView().getPaddingLeft(), getListView().getPaddingTop(),
-                getListView().getPaddingRight(),
-                mTintManager.getConfig().getPixelInsetBottom());
-    }
 
 	/**
 	 * Reloads {@link #mPath}'s contents.
@@ -368,10 +345,6 @@ public abstract class FileListFragment extends AbsListFragment {
 	public String getFilename() {
 		return mFilename;
 	}
-
-    SystemBarTintManager getTintManager() {
-        return mTintManager;
-    }
 
     /**
      * Will request a refresh for all active FileListFragment instances currently displaying "directory".

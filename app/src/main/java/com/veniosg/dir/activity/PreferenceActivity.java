@@ -43,8 +43,6 @@ public class PreferenceActivity extends BaseActivity {
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
         mFragment = (PreferenceFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         if(mFragment == null){
             mFragment = new PreferenceFragment();
@@ -65,11 +63,4 @@ public class PreferenceActivity extends BaseActivity {
             return super.onOptionsItemSelected(item);
 		}
 	}
-
-
-
-    @Override
-    public Themer.Flavor getThemeFlavor() {
-        return Themer.Flavor.OPAQUE;
-    }
 }

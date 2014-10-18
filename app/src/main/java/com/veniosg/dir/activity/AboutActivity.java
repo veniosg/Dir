@@ -27,7 +27,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.view.CheatSheet;
@@ -49,15 +48,6 @@ public class AboutActivity extends BaseActivity {
         } catch (PackageManager.NameNotFoundException e) {
             Logger.log(e);
         }
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
-
-        // Fix paddings
-        SystemBarTintManager tint = new SystemBarTintManager(this);
-        tint.setTintResource(android.R.color.black);
-        tint.setStatusBarTintEnabled(true);
-        findViewById(R.id.about_root).setPadding(0, tint.getConfig().getPixelInsetTop(true),
-                tint.getConfig().getPixelInsetRight(), tint.getConfig().getPixelInsetBottom());
 
         ((TextView) findViewById(R.id.dirTitle)).setText(label + " " + versionName);
 
@@ -162,10 +152,5 @@ public class AboutActivity extends BaseActivity {
         } else {
             return super.onMenuItemSelected(featureId, item);
         }
-    }
-
-    @Override
-    public Themer.Flavor getThemeFlavor() {
-        return Themer.Flavor.OPAQUE;
     }
 }
