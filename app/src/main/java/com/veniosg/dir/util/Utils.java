@@ -14,12 +14,15 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.activity.FileManagerActivity;
+import com.veniosg.dir.fragment.SimpleFileListFragment;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.misc.MimeTypes;
 import com.veniosg.dir.provider.FileManagerProvider;
@@ -32,6 +35,8 @@ import java.util.List;
 
 import static android.util.TypedValue.COMPLEX_UNIT_DIP;
 import static android.util.TypedValue.applyDimension;
+import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
+import static java.lang.Math.abs;
 
 /**
  * @author George Venios
@@ -337,11 +342,33 @@ public abstract class Utils {
 
     public static boolean isAPK(String mimeType) {
         return "application/vnd.android.package-archive".equals(mimeType);
-
     }
 
     public static boolean isImage(String mimeType) {
         String type = mimeType.split("/")[0];
         return "image".equals(type);
+    }
+
+    public static void scrollToPosition(final AbsListView listView, final SimpleFileListFragment.ScrollPosition pos, boolean immediate) {
+        if (listView instanceof ListView) {
+            ((ListView) listView).setSelectionFromTop(pos.index, pos.top);
+        } else {
+            listView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Being unable to scroll to exact pixel without ListView
+                    // (or without having a god-awful animation forced)
+                    // we just scroll to the closest item
+                    int index = pos.index;
+                    listView.setSelection(index);
+                    View firstChild = listView.getChildAt(0);
+
+                    if (firstChild != null
+                            && abs(pos.top) > firstChild.getHeight() / 2) {
+                        listView.setSelection(index + 1);
+                    }
+                }
+            }, immediate ? 0 : ANIM_START_DELAY);
+        }
     }
 }

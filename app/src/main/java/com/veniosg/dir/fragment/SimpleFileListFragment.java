@@ -44,6 +44,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.veniosg.dir.AnimationConstants;
 import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
@@ -73,6 +74,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static java.lang.Math.abs;
 
 /**
@@ -694,26 +696,7 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     private void useFolderScroll(final ScrollPosition pos) {
-        if (getListView() instanceof ListView) {
-            ((ListView) getListView()).setSelectionFromTop(pos.index, pos.top);
-        } else {
-            getListView().post(new Runnable() {
-                @Override
-                public void run() {
-                    // Being unable to scroll to exact pixel without ListView
-                    // (or without having a god-awful animation forced)
-                    // we just scroll to the closest item
-                    int index = pos.index;
-                    getListView().setSelection(index);
-                    View firstChild = getListView().getChildAt(0);
-
-                    if (firstChild != null
-                            && abs(pos.top) > firstChild.getHeight() / 2 ) {
-                        getListView().setSelection(index + 1);
-                    }
-                }
-            });
-        }
+        Utils.scrollToPosition(getListView(), pos, false);
     }
 
     private void keepFolderScroll() {
