@@ -35,11 +35,14 @@ import com.veniosg.dir.adapter.FileHolderListAdapter;
 import com.veniosg.dir.adapter.SearchListAdapter;
 import com.veniosg.dir.loader.SearchLoader;
 import com.veniosg.dir.misc.FileHolder;
+import com.veniosg.dir.util.Utils;
 import com.veniosg.dir.view.Themer;
 import com.veniosg.dir.view.WaitingViewFlipper;
 
 import java.io.File;
 import java.util.List;
+
+import static com.veniosg.dir.fragment.SimpleFileListFragment.ScrollPosition;
 
 /**
  * @author George Venios
@@ -89,8 +92,10 @@ public class SearchListFragment extends AbsListFragment implements LoaderManager
         setLoading(true);
 
         if (savedInstanceState != null) {
-            getListView().setSelection(savedInstanceState.getInt(STATE_POS));
-            getListView().scrollBy(0, savedInstanceState.getInt(STATE_TOP));
+            int index = savedInstanceState.getInt(STATE_POS);
+            int top = savedInstanceState.getInt(STATE_TOP);
+            ScrollPosition scrollPosition = new ScrollPosition(index, top);
+            Utils.scrollToPosition(getListView(), scrollPosition, true);
         }
     }
 
