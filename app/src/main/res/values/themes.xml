@@ -33,19 +33,16 @@
         <item name="android:colorPrimaryDark">@color/dir_darker</item>
         <item name="android:colorPrimary">@color/dir_dark</item>
         <item name="android:colorAccent">@color/dir_light</item>
-        <item name="android:colorControlActivated">@color/dir_light_activated</item>
-        <item name="android:colorControlHighlight">@color/control_hightlight</item>
+        <item name="android:colorControlActivated">@color/dir_control_activated</item>
+        <item name="android:colorControlHighlight">@color/control_highlight</item>
+        <item name="android:colorEdgeEffect">@color/dir_secondary_neutral</item>
 
         <!-- Misc -->
+        <!--<item name="android:actionModeBackground">@drawable/bg_actionmode</item>-->
         <item name="android:listDivider">@color/dir_accent</item>
         <item name="android:textViewStyle">@style/Widget.Dir.TextViewStyle</item>
         <item name="android:buttonStyle">@style/Widget.Dir.ButtonStyle</item>
         <item name="android:editTextStyle">@style/Widget.Dir.EditTextStyle</item>
-        <!--<item name="android:actionBarStyle">@style/Widget.Dir.ActionBar</item>-->
-        <!--<item name="android:actionBarWidgetTheme">@style/Theme.Dir.Widget</item>-->
-        <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
-        <!--<item name="android:popupMenuStyle">@style/PopupMenu.Dir</item>-->
-        <!--<item name="android:alertDialogTheme">@style/Theme.Dir.Dialog.Alert</item>-->
 
         <item name="pathBarBackground">@color/dir_accent</item>
         <item name="pathBarItemColor">@color/dir_light</item>
@@ -77,18 +74,9 @@
         <item name="android:textAppearanceSmall">@style/TextAppearance.Dir.Small</item>
 
         <!-- Coloring and styling -->
-        <!-- same as parent -->
-        <!-- same as parent -->
-        <!-- same as parent -->
-        <!-- same as parent -->
-        <item name="android:actionBarStyle">@style/Widget.Dir.Grayscale.ActionBar</item>
-        <item name="android:actionBarWidgetTheme">@style/Theme.Dir.Grayscale.Widget</item>
         <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
-        <!-- same as parent -->
-        <item name="android:popupMenuStyle">@style/PopupMenu.Dir.Dark</item>
 
         <item name="android:textColorHighlight">#99000000</item>
-        <item name="android:alertDialogTheme">@style/Theme.Dir.Grayscale.Dialog.Alert</item>
 
         <item name="pathBarItemColor">@color/grayscale_light</item>
         <item name="colorLight">@color/dark_light</item>
@@ -109,13 +97,9 @@
         <item name="android:buttonStyle">@style/Widget.Dir.Dark.ButtonStyle</item>
         <item name="android:editTextStyle">@style/Widget.Dir.Dark.EditTextStyle</item>
         <item name="android:actionModeStyle">@style/Widget.Dir.Dark.ActionMode</item>
-        <item name="android:actionBarStyle">@style/Widget.Dir.Dark.ActionBar</item>
-        <item name="android:textAppearanceLargePopupMenu">@style/TextAppearance.Dir.LargePopupMenu</item>
         <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
-        <item name="android:popupMenuStyle">@style/PopupMenu.Dir.Dark</item>
 
         <item name="android:textColorHighlight">#99d6d6d6</item>
-        <item name="android:alertDialogTheme">@style/Theme.Dir.Dark.Dialog.Alert</item>
 
         <item name="pathBarBackground">@color/dark_accent_sec</item>
         <item name="pathBarItemColor">@color/dark_light</item>
@@ -130,31 +114,6 @@
         <item name="drawerShadow">@drawable/dark_bg_drawer_shadow</item>
         <item name="colorSecondaryBarBackground">@color/dark_accent_sec</item>
         <item name="pathbarItemStyle">@style/Widget.Dir.Dark.PathBar.Button</item>
-
-        <!-- Themed icons -->
-        <item name="ic_contact">@drawable/dark_ic_action_mail</item>
-        <item name="ic_googleplus">@drawable/dark_ic_action_gplus</item>
-        <item name="ic_github">@drawable/dark_ic_action_github</item>
-        <item name="ic_playstore">@drawable/dark_ic_action_google_play</item>
-    </style>
-
-    <!-- Holo dark theme -->
-    <style name="Theme.Dir.HoloDark" parent="@android:style/Theme.Holo" >
-        <item name="android:actionBarStyle">@android:style/Widget.Holo.ActionBar</item>
-
-        <item name="pathBarBackground">@color/holodark_pathbar_bg</item>
-        <item name="pathBarItemColor">@color/holodark_light</item>
-        <item name="windowContentBackground">@color/holodark_window</item> <!-- workaround for side pane weirdness -->
-        <item name="colorSecondaryNeutral">@color/holodark_secondary_neutral</item>
-        <item name="colorAccent">@color/holodark_accent</item>
-        <item name="colorFadeCovered">@color/holodark_fade_covered</item>
-        <item name="colorFadeSlider">@color/holodark_fade_slider</item>
-        <item name="colorSidePaneBackground">@color/holodark_side_pane_background</item>
-        <item name="colorLight">@color/holodark_light</item>
-        <item name="colorDark">@color/holodark_dark</item>
-        <item name="drawerShadow">@drawable/dark_bg_drawer_shadow</item>
-        <item name="colorSecondaryBarBackground">@color/holodark_pathbar_bg</item>
-        <item name="pathbarItemStyle">@style/Widget.Dir.HoloDark.PathBar.Button</item>
 
         <!-- Themed icons -->
         <item name="ic_contact">@drawable/dark_ic_action_mail</item>

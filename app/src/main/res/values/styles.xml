@@ -27,18 +27,6 @@
     <style name="TextAppearance.Dir.Small" parent="android:TextAppearance.Material.Caption">
         <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>-->
     </style>
-    <style name="TextAppearance.Dir.LargePopupMenu" parent="TextAppearance.Dir.Medium">
-        <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>-->
-    </style>
-    <style name="TextAppearance.Dir.Large.DialogTitle">
-        <item name="android:textStyle">bold</item>
-        <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>-->
-    </style>
-    <style name="DialogWindowTitle" >
-        <item name="android:maxLines">1</item>
-        <item name="android:scrollHorizontally">true</item>
-        <item name="android:textAppearance">@style/TextAppearance.Dir.Large.DialogTitle</item>
-    </style>
 
     <!-- Helper styles -->
     <style name="dialogDetailsPrimaryText">
