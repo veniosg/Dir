@@ -48,38 +48,38 @@ public class DarkTitleDialogFragment extends DialogFragment {
     public void onStart() {
         // DialogFragment's onStart is the only place that calls the internal Dialog's .show() method
         super.onStart();
-
-        try {
-            // If the internal dialog is shown, style its title
-            if (getShowsDialog()
-                    && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-                // Init everything as a field to catch exceptions before any styling occurs.
-                // Exceptions here indicate that the layout structure has changed.
-                ImageView icon = (ImageView) getDialog().findViewById(android.R.id.icon);
-                LinearLayout titleTemplate = (LinearLayout) icon.getParent();
-                LinearLayout topPanel = (LinearLayout) titleTemplate.getParent();
-                LinearLayout.LayoutParams ttlp = (LinearLayout.LayoutParams) titleTemplate.getLayoutParams();
-                View topDivider = topPanel.getChildAt(0);
-                View bottomDivider = topPanel.getChildAt(2);
-                TextView titleView = (TextView) titleTemplate.getChildAt(1);
-
-                icon.setImageDrawable(lightenDrawable(icon.getDrawable()));
-                topDivider.setBackgroundColor(getResources().getColor(
-                        Themer.getThemedResourceId(getActivity(), R.attr.colorAccent)));
-                topDivider.setVisibility(View.GONE);
-                bottomDivider.setBackgroundColor(getResources().getColor(
-                        Themer.getThemedResourceId(getActivity(), R.attr.colorAccent)));
-                bottomDivider.setVisibility(View.VISIBLE);
-                titleView.setTextColor(getActivity().getResources().getColor(R.color.navbar_details));
-                titleTemplate.setBackgroundResource(
-                        Themer.getThemedResourceId(getActivity(), R.attr.colorLight));
-                titleTemplate.setPadding(ttlp.leftMargin, ttlp.topMargin, ttlp.rightMargin, ttlp.bottomMargin);
-                ttlp.setMargins(0, 0, 0, 0);
-                titleTemplate.requestLayout();
-            }
-        } catch (Throwable t) {
-            Logger.log(t);
-        }
+//
+//        try {
+//            // If the internal dialog is shown, style its title
+//            if (getShowsDialog()
+//                    && Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+//                // Init everything as a field to catch exceptions before any styling occurs.
+//                // Exceptions here indicate that the layout structure has changed.
+//                ImageView icon = (ImageView) getDialog().findViewById(android.R.id.icon);
+//                LinearLayout titleTemplate = (LinearLayout) icon.getParent();
+//                LinearLayout topPanel = (LinearLayout) titleTemplate.getParent();
+//                LinearLayout.LayoutParams ttlp = (LinearLayout.LayoutParams) titleTemplate.getLayoutParams();
+//                View topDivider = topPanel.getChildAt(0);
+//                View bottomDivider = topPanel.getChildAt(2);
+//                TextView titleView = (TextView) titleTemplate.getChildAt(1);
+//
+//                icon.setImageDrawable(lightenDrawable(icon.getDrawable()));
+//                topDivider.setBackgroundColor(getResources().getColor(
+//                        Themer.getThemedResourceId(getActivity(), android.R.attr.colorAccent)));
+//                topDivider.setVisibility(View.GONE);
+//                bottomDivider.setBackgroundColor(getResources().getColor(
+//                        Themer.getThemedResourceId(getActivity(), android.R.attr.colorAccent)));
+//                bottomDivider.setVisibility(View.VISIBLE);
+//                titleView.setTextColor(getActivity().getResources().getColor(R.color.navbar_details));
+//                titleTemplate.setBackgroundResource(
+//                        Themer.getThemedResourceId(getActivity(), android.R.attr.color));
+//                titleTemplate.setPadding(ttlp.leftMargin, ttlp.topMargin, ttlp.rightMargin, ttlp.bottomMargin);
+//                ttlp.setMargins(0, 0, 0, 0);
+//                titleTemplate.requestLayout();
+//            }
+//        } catch (Throwable t) {
+//            Logger.log(t);
+//        }
     }
 
     private Drawable lightenDrawable(Drawable drawable) {

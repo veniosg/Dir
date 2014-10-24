@@ -15,20 +15,14 @@
  * limitations under the License.
  -->
 <resources>
-    <attr name="pathBarBackground" format="reference" />
-    <attr name="topBarBackground" format="reference" />
-    <attr name="windowContentBackground" format="reference" />
-    <attr name="colorSecondaryNeutral" format="reference" />
-    <attr name="colorAccent" format="reference" />
+    <attr name="colorCabBackground" format="reference" />
+    <attr name="colorBackgroundSecondary" format="reference" />
+
     <attr name="colorFadeCovered" format="reference" />
     <attr name="colorFadeSlider" format="reference" />
     <attr name="colorSidePaneBackground" format="reference" />
-    <attr name="colorLight" format="reference" />
-    <attr name="colorDark" format="reference" />
     <attr name="drawerShadow" format="reference" />
-    <attr name="colorSecondaryBarBackground" format="reference" />
     <attr name="pathbarItemStyle" format="reference" />
-    <attr name="pathBarItemColor" format="reference" />
 
     <attr name="ic_contact" format="reference" />
     <attr name="ic_googleplus" format="reference" />

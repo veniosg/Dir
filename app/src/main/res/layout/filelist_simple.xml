@@ -8,14 +8,14 @@
         android:id="@+id/pathbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pathbar_height"
-        android:background="?attr/pathBarBackground"
+        android:background="?attr/colorBackgroundSecondary"
         android:elevation="5px" />
 
     <com.veniosg.dir.view.AnimatedFileListContainer
         android:id="@+id/zoomview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/windowContentBackground">
+        android:background="?android:attr/colorBackground">
 
         <include layout="@layout/filelist" />
     </com.veniosg.dir.view.AnimatedFileListContainer>

@@ -27,35 +27,39 @@
         <item name="android:textAppearanceLarge">@style/TextAppearance.Dir.Large</item>
         <item name="android:textAppearanceMedium">@style/TextAppearance.Dir.Medium</item>
         <item name="android:textAppearanceSmall">@style/TextAppearance.Dir.Small</item>
-        <item name="android:textColorHighlight">?android:colorControlHighlight</item>
 
-        <!-- Material -->
-        <item name="android:colorPrimaryDark">@color/dir_darker</item>
-        <item name="android:colorPrimary">@color/dir_dark</item>
-        <item name="android:colorAccent">@color/dir_light</item>
-        <item name="android:colorControlActivated">@color/dir_control_activated</item>
-        <item name="android:colorControlHighlight">@color/control_highlight</item>
-        <item name="android:colorEdgeEffect">@color/dir_secondary_neutral</item>
+        <!-- Base colours -->
+        <item name="android:colorPrimary">@color/dir_primary</item>
+        <item name="android:colorPrimaryDark">@color/dir_primaryDark</item>
+
+        <!-- Control colour -->
+        <item name="android:colorAccent">@color/dir_accent</item>
+
+        <!-- Background colours -->
+        <item name="android:colorBackground">@color/dir_background</item>
+        <item name="colorCabBackground">@color/dir_cabBackground</item>
+        <item name="colorBackgroundSecondary">@color/dir_backgroundSecondary</item>
+        <item name="android:colorMultiSelectHighlight">@color/dir_multiSelectHighlight</item>
+
+        <!-- Text colours -->
+        <item name="android:textColorHighlight">@color/textColorHighlight</item>
+
+        <!-- Misc colours -->
+        <item name="android:listDivider">@color/dir_divider</item>
+        <item name="android:colorEdgeEffect">@color/dir_edgeEffect</item>
+
+        <!-- SlidingPaneLayout colours -->
+        <item name="colorFadeCovered">@color/dir_fadeCovered</item>
+        <item name="colorFadeSlider">@color/dir_fadeSlider</item>
+        <item name="colorSidePaneBackground">@color/dir_sidePaneBackground</item>
 
         <!-- Misc -->
-        <!--<item name="android:actionModeBackground">@drawable/bg_actionmode</item>-->
-        <item name="android:listDivider">@color/dir_accent</item>
+        <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
         <item name="android:textViewStyle">@style/Widget.Dir.TextViewStyle</item>
         <item name="android:buttonStyle">@style/Widget.Dir.ButtonStyle</item>
         <item name="android:editTextStyle">@style/Widget.Dir.EditTextStyle</item>
 
-        <item name="pathBarBackground">@color/dir_accent</item>
-        <item name="pathBarItemColor">@color/dir_light</item>
-        <item name="windowContentBackground">@color/dir_window</item>
-        <item name="colorSecondaryNeutral">@color/dir_secondary_neutral</item>
-        <item name="colorAccent">@color/dir_accent</item>
-        <item name="colorFadeCovered">@color/dir_fade_covered</item>
-        <item name="colorFadeSlider">@color/dir_fade_slider</item>
-        <item name="colorSidePaneBackground">@color/dir_side_pane_background</item>
-        <item name="colorLight">@color/dir_light</item>
-        <item name="colorDark">@color/dir_dark</item>
         <item name="drawerShadow">@drawable/dir_bg_drawer_shadow</item>
-        <item name="colorSecondaryBarBackground">@color/dir_accent</item>
         <item name="pathbarItemStyle">@style/Widget.Dir.PathBar.Button</item>
 
         <!-- Themed icons -->
@@ -67,20 +71,11 @@
 
     <!-- Light grayscale theme -->
     <style name="Theme.Dir.Grayscale" >
-        <!-- Common attributes -->
-        <item name="android:windowBackground">@null</item>
-        <item name="android:textAppearanceLarge">@style/TextAppearance.Dir.Large</item>
-        <item name="android:textAppearanceMedium">@style/TextAppearance.Dir.Medium</item>
-        <item name="android:textAppearanceSmall">@style/TextAppearance.Dir.Small</item>
-
         <!-- Coloring and styling -->
         <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
 
         <item name="android:textColorHighlight">#99000000</item>
 
-        <item name="pathBarItemColor">@color/grayscale_light</item>
-        <item name="colorLight">@color/dark_light</item>
-        <item name="colorDark">@color/dark_dark</item>
         <item name="pathbarItemStyle">@style/Widget.Dir.Dark.PathBar.Button</item>
     </style>
 
@@ -101,18 +96,10 @@
 
         <item name="android:textColorHighlight">#99d6d6d6</item>
 
-        <item name="pathBarBackground">@color/dark_accent_sec</item>
-        <item name="pathBarItemColor">@color/dark_light</item>
-        <item name="windowContentBackground">@color/dark_window</item>
-        <item name="colorSecondaryNeutral">@color/dark_secondary_neutral</item>
-        <item name="colorAccent">@color/dark_accent</item>
         <item name="colorFadeCovered">@color/dark_fade_covered</item>
         <item name="colorFadeSlider">@color/dark_fade_slider</item>
         <item name="colorSidePaneBackground">@color/dark_side_pane_background</item>
-        <item name="colorLight">@color/dark_light</item>
-        <item name="colorDark">@color/dark_dark</item>
         <item name="drawerShadow">@drawable/dark_bg_drawer_shadow</item>
-        <item name="colorSecondaryBarBackground">@color/dark_accent_sec</item>
         <item name="pathbarItemStyle">@style/Widget.Dir.Dark.PathBar.Button</item>
 
         <!-- Themed icons -->

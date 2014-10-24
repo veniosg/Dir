@@ -41,6 +41,7 @@ import static android.util.TypedValue.applyDimension;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.widget.ImageView.ScaleType.CENTER_INSIDE;
+import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
 /**
  * This class handles the displaying of children in {@link Mode#STANDARD_INPUT}, including choosing
@@ -178,7 +179,7 @@ class PathButtonLayout extends LinearLayout implements OnLongClickListener {
 
 				((Button) btn).setText(file.getName());
 				((Button) btn).setMaxLines(1);
-				((Button) btn).setTextColor(navbar.getResources().getColor(R.color.navbar_details));
+				((Button) btn).setTextColor(navbar.getResources().getColor(getThemedResourceId(navbar.getContext(), android.R.attr.textColorPrimaryInverse)));
 			}
 
             android.widget.LinearLayout.LayoutParams params = new android.widget.LinearLayout.LayoutParams(

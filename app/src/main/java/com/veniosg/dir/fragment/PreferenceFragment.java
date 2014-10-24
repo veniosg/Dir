@@ -43,7 +43,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.setBackgroundResource(Themer.getThemedResourceId(getActivity(), R.attr.windowContentBackground));
+        view.setBackgroundResource(Themer.getThemedResourceId(getActivity(), android.R.attr.colorBackground));
     }
 
     @Override

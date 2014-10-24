@@ -4,7 +4,7 @@
 
     <!-- Used for showing the divider -->
     <LinearLayout
-        android:background="?attr/colorSecondaryBarBackground"
+        android:background="?attr/colorBackgroundSecondary"
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

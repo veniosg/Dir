@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
  * Copyright (C) 2007-2008 OpenIntents.org
+ * Copyright (C) 2014 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +16,7 @@
  * limitations under the License.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="?android:attr/activatedBackgroundIndicator"
+    android:background="@drawable/bg_activated"
     android:layout_width="fill_parent"
     android:layout_height="@dimen/item_height"
     android:gravity="center_vertical"

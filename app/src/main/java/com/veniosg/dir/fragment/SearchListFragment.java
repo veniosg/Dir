@@ -85,7 +85,7 @@ public class SearchListFragment extends AbsListFragment implements LoaderManager
         super.onViewCreated(view, savedInstanceState);
 
         view.setBackgroundResource(
-                Themer.getThemedResourceId(getActivity(), R.attr.windowContentBackground));
+                Themer.getThemedResourceId(getActivity(), android.R.attr.colorBackground));
 
         mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
         ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.search_empty);

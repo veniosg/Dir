@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/this_folder_is_empty"
-                android:textColor="?attr/colorSecondaryNeutral"/>
+                android:textColor="?android:attr/textColorTertiary"/>
         </LinearLayout>
 
     </FrameLayout>
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/scanning"
-            android:textColor="?attr/colorSecondaryNeutral" />
+            android:textColor="?android:attr/textColorTertiary" />
     </LinearLayout>
 
 

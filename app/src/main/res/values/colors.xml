@@ -16,21 +16,22 @@
  -->
 <resources>
     <!-- Common colors -->
-    <color name="navbar_details">#CCFFFFFF</color>
-    <color name="control_highlight">#8888</color>
+    <color name="textColorHighlight">#8888</color>
 
     <!-- Dir colors -->
-    <color name="dir_dark">#210030</color>
-    <color name="dir_darker">#100017</color>
-    <color name="dir_light">#3f005c</color>
-    <color name="dir_control_activated">#BCBCBC</color>
-    <color name="dir_accent_sec">#222222</color>
-    <color name="dir_window">#e4e4e4</color>
-    <color name="dir_side_pane_background">#CCC</color>
-    <color name="dir_accent">#D6D6D6</color>
-    <color name="dir_secondary_neutral">#808080</color>
-    <color name="dir_fade_covered">#BB222222</color>
-    <color name="dir_fade_slider">#CCD6D6D6</color>
+    <color name="dir_primary">#210030</color>
+    <color name="dir_primaryDark">#100017</color>
+    <color name="dir_accent">#3F005C</color>
+    <color name="dir_background">#E4E4E4</color>
+    <color name="dir_cabBackground">#424242</color>
+    <color name="dir_backgroundSecondary">#D6D6D6</color>
+    <color name="dir_divider">#13000000</color>
+    <color name="dir_multiSelectHighlight">#9E9E9E</color>
+    <color name="dir_edgeEffect">#757575</color>
+
+    <color name="dir_sidePaneBackground">#CCC</color>
+    <color name="dir_fadeCovered">#BB222222</color>
+    <color name="dir_fadeSlider">#CCD6D6D6</color>
 
     <!-- Dark colors -->
     <color name="dark_dark">#000</color>
