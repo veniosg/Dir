@@ -32,6 +32,7 @@
         <item name="android:editTextStyle">@style/Widget.Dir.EditTextStyle</item>
         <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
         <item name="android:textColorHighlight">@color/textColorHighlight</item>
+        <item name="colorItemIcon">?android:attr/textColorPrimaryInverse</item>
 
         <!-- Base colours -->
         <item name="android:colorPrimary">@color/dir_primary</item>
@@ -40,7 +41,6 @@
 
         <!-- Control colour -->
         <item name="android:colorAccent">@color/dir_accent</item>
-        <item name="colorItemIcon">?android:attr/textColorPrimary</item>
         <item name="textColorPathBar">?android:attr/textColorPrimaryInverse</item>
 
         <!-- Background colours -->
@@ -50,7 +50,7 @@
         <item name="android:colorMultiSelectHighlight">@color/dir_multiSelectHighlight</item>
 
         <!-- Misc colours -->
-        <item name="android:listDivider">@color/dir_divider</item>
+        <item name="android:listDivider">@android:color/transparent</item>
         <item name="android:colorEdgeEffect">@color/dir_edgeEffect</item>
 
         <!-- SlidingPaneLayout colours -->
@@ -60,14 +60,6 @@
 
         <item name="drawerShadow">@drawable/dir_bg_drawer_shadow</item>
         <item name="pathbarItemStyle">@style/Widget.Dir.PathBar.Button</item>
-    </style>
-
-    <!-- Light grayscale theme -->
-    <style name="Theme.Dir.Grayscale" >
-        <!-- Coloring and styling -->
-        <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
-
-        <item name="android:textColorHighlight">#99000000</item>
     </style>
 
     <!-- Dark theme -->
@@ -82,6 +74,7 @@
         <item name="android:editTextStyle">@style/Widget.Dir.EditTextStyle</item>
         <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
         <item name="android:textColorHighlight">@color/textColorHighlight</item>
+        <item name="colorItemIcon">?android:attr/textColorPrimary</item>
 
         <!-- Base colours -->
         <item name="android:colorPrimary">@color/dark_primary</item>
@@ -90,7 +83,6 @@
 
         <!-- Control colour -->
         <item name="android:colorAccent">@color/dark_accent</item>
-        <item name="colorItemIcon">?android:attr/textColorPrimary</item>
         <item name="textColorPathBar">?android:attr/textColorPrimary</item>
 
         <!-- Background colours -->
@@ -110,6 +102,17 @@
 
         <item name="drawerShadow">@drawable/dark_bg_drawer_shadow</item>
         <item name="pathbarItemStyle">@style/Widget.Dir.PathBar.Button</item>
+    </style>
+
+    <!-- Light grayscale theme -->
+    <style name="Theme.Dir.Grayscale" >
+        <!-- Base colours -->
+        <item name="android:colorPrimary">@color/dark_primary</item>
+        <item name="android:colorPrimaryDark">@color/dark_primaryDark</item>
+        <item name="colorPrimaryLight">@color/dark_primaryLight</item>
+
+        <!-- Control colour -->
+        <item name="android:colorAccent">@color/dark_primaryDark</item>
     </style>
 
 </resources>

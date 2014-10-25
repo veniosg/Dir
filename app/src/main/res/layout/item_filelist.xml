@@ -28,9 +28,11 @@
         android:layout_width="@dimen/item_icon_edge"
         android:layout_height="@dimen/item_icon_edge"
         android:layout_alignParentLeft="true"
+        android:padding="8dp"
         android:layout_gravity="center_vertical"
         android:scaleType="centerInside"
         android:contentDescription="@string/item_icon"
+        android:background="@drawable/bg_item_icon"
         android:layout_marginRight="@dimen/item_icon_right_margin" />
 
     <TextView
@@ -48,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?android:attr/textColorTertiary"
+        android:textColor="?android:textColorHint"
         android:layout_alignBottom="@+id/secondary_info"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="4dp"/>
@@ -61,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?android:attr/textColorTertiary"
+        android:textColor="?android:textColorHint"
         android:layout_below="@+id/primary_info"
         android:layout_alignLeft="@+id/primary_info"
         android:layout_toLeftOf="@id/tertiary_info"/>
