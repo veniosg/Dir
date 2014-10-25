@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  * Copyright (C) 2007-2008 OpenIntents.org
  * Copyright (C) 2014 George Venios
  *
@@ -16,56 +15,56 @@
  * limitations under the License.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/bg_activated"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/item_height"
+    android:background="@drawable/bg_activated"
     android:gravity="center_vertical"
-    android:minHeight="@dimen/item_height"
-    android:padding="8dp" >
+    android:minHeight="@dimen/item_height">
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="@dimen/item_icon_edge"
-        android:layout_height="@dimen/item_icon_edge"
-        android:layout_alignParentLeft="true"
-        android:padding="8dp"
-        android:layout_gravity="center_vertical"
-        android:scaleType="centerInside"
-        android:contentDescription="@string/item_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/item_icon_margin_left"
         android:background="@drawable/bg_item_icon"
-        android:layout_marginRight="@dimen/item_icon_right_margin" />
+        android:contentDescription="@string/item_icon"
+        android:padding="8dp"
+        android:scaleType="centerInside" />
 
     <TextView
         android:id="@+id/primary_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/item_text_margin_left"
         android:ellipsize="end"
-		android:maxLines="1"
+        android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_toRightOf="@id/icon"/>
+        android:textColor="?android:attr/textColorPrimary" />
 
     <TextView
         android:id="@+id/tertiary_info"
-        android:maxLines="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?android:textColorHint"
         android:layout_alignBottom="@+id/secondary_info"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="4dp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/item_icon_margin_left"
+        android:layout_marginStart="4dp"
+        android:maxLines="1"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="?android:attr/textColorSecondary" />
 
     <TextView
         android:id="@+id/secondary_info"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:ellipsize="start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?android:textColorHint"
+        android:layout_alignStart="@+id/primary_info"
         android:layout_below="@+id/primary_info"
-        android:layout_alignLeft="@+id/primary_info"
-        android:layout_toLeftOf="@id/tertiary_info"/>
+        android:layout_toStartOf="@id/tertiary_info"
+        android:ellipsize="start"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="?android:attr/textColorSecondary" />
 
 </RelativeLayout>

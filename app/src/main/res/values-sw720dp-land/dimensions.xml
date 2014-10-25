@@ -1,4 +1,0 @@
-<resources>
-    <!-- Side margins for file list -->
-    <dimen name="list_margin">@dimen/list_margin_huge</dimen>
-</resources>

@@ -113,8 +113,7 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 	}
 	
 	public CharSequence getFormattedModificationDate(Context c){
-        return c.getString(R.string.modified) + " " +
-                DateUtils.getRelativeDateTimeString(c, mFile.lastModified(),
+        return DateUtils.getRelativeDateTimeString(c, mFile.lastModified(),
                         DateUtils.MINUTE_IN_MILLIS, DateUtils.YEAR_IN_MILLIS * 10, 0);
 	}
 	

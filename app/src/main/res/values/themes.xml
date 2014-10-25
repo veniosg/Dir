@@ -31,8 +31,13 @@
         <item name="android:buttonStyle">@style/Widget.Dir.ButtonStyle</item>
         <item name="android:editTextStyle">@style/Widget.Dir.EditTextStyle</item>
         <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
+        <item name="colorIcon">?android:attr/textColorPrimaryInverse</item>
         <item name="android:textColorHighlight">@color/textColorHighlight</item>
-        <item name="colorItemIcon">?android:attr/textColorPrimaryInverse</item>
+        <item name="android:listDivider">@android:color/transparent</item>
+
+        <!-- Text colours -->
+        <item name="android:textColorPrimary">#b7000000</item>
+        <item name="android:textColorSecondary">#64000000</item>
 
         <!-- Base colours -->
         <item name="android:colorPrimary">@color/dir_primary</item>
@@ -50,7 +55,6 @@
         <item name="android:colorMultiSelectHighlight">@color/dir_multiSelectHighlight</item>
 
         <!-- Misc colours -->
-        <item name="android:listDivider">@android:color/transparent</item>
         <item name="android:colorEdgeEffect">@color/dir_edgeEffect</item>
 
         <!-- SlidingPaneLayout colours -->
@@ -73,8 +77,12 @@
         <item name="android:buttonStyle">@style/Widget.Dir.ButtonStyle</item>
         <item name="android:editTextStyle">@style/Widget.Dir.EditTextStyle</item>
         <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
+        <item name="colorIcon">?android:attr/textColorPrimaryInverse</item>
         <item name="android:textColorHighlight">@color/textColorHighlight</item>
-        <item name="colorItemIcon">?android:attr/textColorPrimary</item>
+        <item name="android:listDivider">@android:color/transparent</item>
+
+        <!-- Text colours -->
+        <item name="android:textColorSecondary">#64FFFFFF</item>
 
         <!-- Base colours -->
         <item name="android:colorPrimary">@color/dark_primary</item>
@@ -92,7 +100,6 @@
         <item name="android:colorMultiSelectHighlight">@color/dark_multiSelectHighlight</item>
 
         <!-- Misc colours -->
-        <item name="android:listDivider">@color/dark_divider</item>
         <item name="android:colorEdgeEffect">@color/dark_edgeEffect</item>
 
         <!-- SlidingPaneLayout colours -->

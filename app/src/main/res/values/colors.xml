@@ -31,7 +31,7 @@
     <color name="dir_cabBackground">#424242</color>
     <color name="dir_backgroundSecondary">#E0E0E0</color>
     <color name="dir_divider">#13000000</color>
-    <color name="dir_multiSelectHighlight">#A8A8A8</color>
+    <color name="dir_multiSelectHighlight">#bdbdbd</color>
     <color name="dir_edgeEffect">#757575</color>
 
     <color name="dir_sidePaneBackground">#CCC</color>

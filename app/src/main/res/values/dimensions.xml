@@ -1,12 +1,16 @@
 <resources>
-    <!-- Side margins for file list -->
-    <dimen name="list_margin">8dp</dimen>
-    <dimen name="list_margin_big">32dp</dimen>
-    <dimen name="list_margin_huge">56dp</dimen>
-
     <dimen name="pathbar_height">48dp</dimen>
+    <dimen name="pathbar_height_tablet">56dp</dimen>
 
-    <dimen name="item_icon_edge">40dp</dimen>
-    <dimen name="item_icon_right_margin">16dp</dimen>
     <dimen name="item_height">72dp</dimen>
+    <dimen name="item_height_tablet">88dp</dimen>
+
+    <dimen name="item_icon_margin_left">16dp</dimen>
+    <dimen name="item_text_margin_left">72dp</dimen>
+
+    <dimen name="item_icon_margin_left_tablet">32dp</dimen>
+    <dimen name="item_text_margin_left_tablet">104dp</dimen>
+
+    <dimen name="dialog_content_padding">16dp</dimen>
+    <dimen name="dialog_content_padding_tablet">24dp</dimen>
 </resources>

@@ -7,8 +7,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginLeft="@dimen/list_margin"
-        android:layout_marginRight="@dimen/list_margin">
+        android:layout_marginLeft="@dimen/dialog_content_padding"
+        android:layout_marginRight="@dimen/dialog_content_padding">
 
         <!-- Size -->
         <TextView

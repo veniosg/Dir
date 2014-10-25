@@ -34,7 +34,7 @@
         android:gravity="center"
         android:orientation="vertical"
         android:divider="?android:attr/dividerHorizontal"
-        android:dividerPadding="@dimen/list_margin_huge"
+        android:dividerPadding="56dp"
         android:showDividers="middle" >
 
         <LinearLayout
