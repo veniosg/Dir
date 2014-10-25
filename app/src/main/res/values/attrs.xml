@@ -24,9 +24,4 @@
     <attr name="colorSidePaneBackground" format="reference" />
     <attr name="drawerShadow" format="reference" />
     <attr name="pathbarItemStyle" format="reference" />
-
-    <attr name="ic_contact" format="reference" />
-    <attr name="ic_googleplus" format="reference" />
-    <attr name="ic_github" format="reference" />
-    <attr name="ic_playstore" format="reference" />
 </resources>

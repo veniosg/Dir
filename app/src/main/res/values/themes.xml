@@ -62,12 +62,6 @@
 
         <item name="drawerShadow">@drawable/dir_bg_drawer_shadow</item>
         <item name="pathbarItemStyle">@style/Widget.Dir.PathBar.Button</item>
-
-        <!-- Themed icons -->
-        <item name="ic_contact">@drawable/dir_ic_action_mail</item>
-        <item name="ic_googleplus">@drawable/dir_ic_action_gplus</item>
-        <item name="ic_github">@drawable/dir_ic_action_github</item>
-        <item name="ic_playstore">@drawable/dir_ic_action_google_play</item>
     </style>
 
     <!-- Light grayscale theme -->
@@ -100,12 +94,6 @@
         <item name="colorSidePaneBackground">@color/dark_side_pane_background</item>
         <item name="drawerShadow">@drawable/dark_bg_drawer_shadow</item>
         <item name="pathbarItemStyle">@style/Widget.Dir.PathBar.Button</item>
-
-        <!-- Themed icons -->
-        <item name="ic_contact">@drawable/dark_ic_action_mail</item>
-        <item name="ic_googleplus">@drawable/dark_ic_action_gplus</item>
-        <item name="ic_github">@drawable/dark_ic_action_github</item>
-        <item name="ic_playstore">@drawable/dark_ic_action_google_play</item>
     </style>
 
 </resources>
