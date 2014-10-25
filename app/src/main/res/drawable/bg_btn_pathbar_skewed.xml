@@ -6,6 +6,6 @@
         <nine-patch
             android:id="@android:id/mask"
             android:src="@drawable/btn_pathbar_skewed"
-            android:tint="?android:colorAccent" />
+            android:tint="?attr/colorPrimaryLight" />
     </item>
 </ripple>

@@ -31,6 +31,7 @@
         <!-- Base colours -->
         <item name="android:colorPrimary">@color/dir_primary</item>
         <item name="android:colorPrimaryDark">@color/dir_primaryDark</item>
+        <item name="colorPrimaryLight">@color/dir_primaryLight</item>
 
         <!-- Control colour -->
         <item name="android:colorAccent">@color/dir_accent</item>
@@ -75,8 +76,6 @@
         <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
 
         <item name="android:textColorHighlight">#99000000</item>
-
-        <item name="pathbarItemStyle">@style/Widget.Dir.Dark.PathBar.Button</item>
     </style>
 
     <!-- Dark theme -->
@@ -100,7 +99,7 @@
         <item name="colorFadeSlider">@color/dark_fade_slider</item>
         <item name="colorSidePaneBackground">@color/dark_side_pane_background</item>
         <item name="drawerShadow">@drawable/dark_bg_drawer_shadow</item>
-        <item name="pathbarItemStyle">@style/Widget.Dir.Dark.PathBar.Button</item>
+        <item name="pathbarItemStyle">@style/Widget.Dir.PathBar.Button</item>
 
         <!-- Themed icons -->
         <item name="ic_contact">@drawable/dark_ic_action_mail</item>

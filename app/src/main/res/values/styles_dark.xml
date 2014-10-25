@@ -36,9 +36,4 @@
         <item name="android:titleTextStyle">@style/TextAppearance.Dir.Dark.Title</item>
         <item name="android:subtitleTextStyle">@style/TextAppearance.Dir.Dark.Subtitle</item>
     </style>
-
-    <style name="Widget.Dir.Dark.PathBar.Button" parent="@android:style/Widget.Holo.Button">
-        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>
-        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
-    </style>
 </resources>

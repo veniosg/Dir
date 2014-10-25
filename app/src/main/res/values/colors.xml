@@ -19,12 +19,13 @@
     <color name="textColorHighlight">#8888</color>
 
     <!-- Dir colors -->
-    <color name="dir_primary">#210030</color>
-    <color name="dir_primaryDark">#100017</color>
-    <color name="dir_accent">#3F005C</color>
+    <color name="dir_primary">#512da8</color>
+    <color name="dir_primaryDark">#311b92</color>
+    <color name="dir_primaryLight">#7e57c2</color>
+    <color name="dir_accent">#d500f9</color>
     <color name="dir_background">#E4E4E4</color>
     <color name="dir_cabBackground">#424242</color>
-    <color name="dir_backgroundSecondary">#D6D6D6</color>
+    <color name="dir_backgroundSecondary">#E0E0E0</color>
     <color name="dir_divider">#13000000</color>
     <color name="dir_multiSelectHighlight">#9E9E9E</color>
     <color name="dir_edgeEffect">#757575</color>

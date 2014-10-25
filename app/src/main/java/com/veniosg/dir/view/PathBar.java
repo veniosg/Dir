@@ -286,10 +286,6 @@ public class PathBar extends ViewFlipper {
 		}
 	}
 
-    private int getPathBarItemColor() {
-        return getContext().getResources().getColor(getThemedResourceId(getContext(), android.R.attr.colorAccent));
-    }
-
     private Animator createAppearingAnimator(final LayoutTransition transition) {
         AnimatorSet anim = new AnimatorSet();
         anim.setDuration(transition.getDuration(APPEARING));
