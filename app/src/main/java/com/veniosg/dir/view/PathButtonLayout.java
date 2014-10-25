@@ -179,7 +179,7 @@ class PathButtonLayout extends LinearLayout implements OnLongClickListener {
 
 				((Button) btn).setText(file.getName());
 				((Button) btn).setMaxLines(1);
-				((Button) btn).setTextColor(navbar.getResources().getColor(getThemedResourceId(navbar.getContext(), android.R.attr.textColorPrimaryInverse)));
+				((Button) btn).setTextColor(navbar.getResources().getColor(getThemedResourceId(navbar.getContext(), R.attr.textColorPathBar)));
 			}
 
             android.widget.LinearLayout.LayoutParams params = new android.widget.LinearLayout.LayoutParams(

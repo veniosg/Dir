@@ -16,14 +16,18 @@
  -->
 <resources>
     <!-- Common colors -->
+    <eat-comment />
+
     <color name="textColorHighlight">#8888</color>
 
     <!-- Dir colors -->
+    <eat-comment />
+
     <color name="dir_primary">#512da8</color>
     <color name="dir_primaryDark">#311b92</color>
     <color name="dir_primaryLight">#7e57c2</color>
     <color name="dir_accent">#aa00ff</color>
-    <color name="dir_background">#E4E4E4</color>
+    <color name="dir_background">#EEEEEE</color> <!-- default material light background -->
     <color name="dir_cabBackground">#424242</color>
     <color name="dir_backgroundSecondary">#E0E0E0</color>
     <color name="dir_divider">#13000000</color>
@@ -35,16 +39,20 @@
     <color name="dir_fadeSlider">#CCD6D6D6</color>
 
     <!-- Dark colors -->
-    <color name="dark_dark">#000</color>
-    <color name="dark_light">#171717</color>
-    <color name="dark_accent_sec">#0F0F0F</color>
-    <color name="dark_window">#0C0C0C</color>
-    <color name="dark_accent">#D6D6D6</color>
-    <color name="dark_secondary_neutral">#808080</color>
-    <color name="dark_side_pane_background">@color/dark_window</color>
-    <color name="dark_fade_covered">#B000</color>
-    <color name="dark_fade_slider">#EE131313</color>
+    <eat-comment />
 
-    <!-- Grayscale colors -->
-    <color name="grayscale_light">#171717</color>
+    <color name="dark_primary">#212121</color>
+    <color name="dark_primaryDark">#000</color>
+    <color name="dark_primaryLight">#616161</color>
+    <color name="dark_accent">#cfd8dc</color>
+    <color name="dark_background">#303030</color> <!-- default material dark background -->
+    <color name="dark_cabBackground">#424242</color>
+    <color name="dark_backgroundSecondary">#2B2B2B</color>
+    <color name="dark_divider">#13FFFFFF</color>
+    <color name="dark_multiSelectHighlight">#505050</color>
+    <color name="dark_edgeEffect">#9E9E9E</color>
+
+    <color name="dark_sidePaneBackground">@color/dark_background</color>
+    <color name="dark_fadeCovered">#B000</color>
+    <color name="dark_fadeSlider">#EE131313</color>
 </resources>

@@ -21,8 +21,6 @@
     </style>
     <style name="TextAppearance.Dir.Medium" parent="android:TextAppearance.Material.Subhead">
         <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>-->
-        <!--<item name="android:textStyle">bold</item>-->
-        <!--<item name="android:textColor">?android:textColorPrimary</item>-->
     </style>
     <style name="TextAppearance.Dir.Small" parent="android:TextAppearance.Material.Caption">
         <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>-->

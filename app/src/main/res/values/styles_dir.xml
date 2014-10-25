@@ -17,13 +17,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Text styles -->
-    <style name="Widget.Dir.TextViewStyle" parent="android:Widget.Material.Light.TextView">
+    <style name="Widget.Dir.TextViewStyle" parent="android:Widget.Material.TextView">
         <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
     </style>
-    <style name="Widget.Dir.ButtonStyle" parent="android:Widget.Material.Light.Button">
+    <style name="Widget.Dir.ButtonStyle" parent="android:Widget.Material.Button">
         <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
     </style>
-    <style name="Widget.Dir.EditTextStyle" parent="android:Widget.Material.Light.EditText">
+    <style name="Widget.Dir.EditTextStyle" parent="android:Widget.Material.EditText">
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>
     </style>
 
