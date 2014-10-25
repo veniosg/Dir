@@ -18,6 +18,7 @@
     <attr name="colorCabBackground" format="reference" />
     <attr name="colorBackgroundSecondary" format="reference" />
     <attr name="colorPrimaryLight" format="reference" />
+    <attr name="colorItemIcon" format="reference" />
 
     <attr name="colorFadeCovered" format="reference" />
     <attr name="colorFadeSlider" format="reference" />

@@ -35,6 +35,7 @@
 
         <!-- Control colour -->
         <item name="android:colorAccent">@color/dir_accent</item>
+        <item name="colorItemIcon">?android:attr/textColorPrimary</item>
 
         <!-- Background colours -->
         <item name="android:colorBackground">@color/dir_background</item>
