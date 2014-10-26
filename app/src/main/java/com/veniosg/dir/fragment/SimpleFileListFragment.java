@@ -29,6 +29,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
+import android.util.TypedValue;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -75,6 +76,8 @@ import java.util.HashMap;
 
 import static android.R.integer.config_mediumAnimTime;
 import static android.R.integer.config_shortAnimTime;
+import static android.util.TypedValue.COMPLEX_UNIT_DIP;
+import static android.util.TypedValue.applyDimension;
 import static com.veniosg.dir.AnimationConstants.inInterpolator;
 
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
@@ -410,7 +413,8 @@ public class SimpleFileListFragment extends FileListFragment {
             public boolean onPreDraw() {
                 getView().getViewTreeObserver().removeOnPreDrawListener(this);
 
-                mPathBar.setTranslationZ(10F);
+                mPathBar.setTranslationZ(applyDimension(COMPLEX_UNIT_DIP, 10,
+                        getResources().getDisplayMetrics()));
                 mPathBar.setScaleX(1.1F);
                 mPathBar.setScaleY(1.1F);
 

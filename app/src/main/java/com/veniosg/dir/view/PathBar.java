@@ -265,8 +265,8 @@ public class PathBar extends ViewFlipper {
 			layoutParams.addRule(RelativeLayout.LEFT_OF, mGoButton.getId());
 
 			mPathEditText.setLayoutParams(layoutParams);
-            mPathEditText.setPadding(mPathEditText.getPaddingLeft(), 0,
-                    mPathEditText.getPaddingRight(), 0);
+            float margin = getResources().getDimension(R.dimen.item_icon_margin_left);
+            mPathEditText.setPadding((int) margin, 0, (int) margin, 0);
 			mPathEditText.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
 			mPathEditText.setImeOptions(EditorInfo.IME_ACTION_GO);
 			mPathEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
