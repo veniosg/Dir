@@ -74,7 +74,7 @@ public class FileManagerActivity extends BaseActivity
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
         setContentView(R.layout.activity_filemanager);
-        getActionBar().setHomeAsUpIndicator(R.drawable.ic_launcher_simple);
+        getActionBar().setHomeAsUpIndicator(R.drawable.ic_logo);
 
         // Search when the user types.
 		setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
