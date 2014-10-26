@@ -25,7 +25,6 @@
             android:paddingBottom="8dp"
             android:clipToPadding="false"
             android:fastScrollEnabled="true"
-            android:layoutAnimation="@anim/layout_list"
             android:scrollbarStyle="outsideOverlay" />
 
         <LinearLayout

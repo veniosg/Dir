@@ -20,4 +20,4 @@
     android:duration="@android:integer/config_longAnimTime"
     android:delay="0.3"
     android:animationOrder="reverse"
-    android:interpolator="@android:anim/decelerate_interpolator" />
+    android:interpolator="@android:interpolator/linear_out_slow_in" />
