@@ -31,7 +31,7 @@
         <item name="android:buttonStyle">@style/Widget.Dir.ButtonStyle</item>
         <item name="android:editTextStyle">@style/Widget.Dir.EditTextStyle</item>
         <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
-        <item name="colorIcon">?android:attr/textColorPrimaryInverse</item>
+        <item name="colorIcon">?android:colorBackground</item>
         <item name="android:textColorHighlight">@color/textColorHighlight</item>
         <item name="android:listDivider">@android:color/transparent</item>
 
@@ -77,7 +77,7 @@
         <item name="android:buttonStyle">@style/Widget.Dir.ButtonStyle</item>
         <item name="android:editTextStyle">@style/Widget.Dir.EditTextStyle</item>
         <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
-        <item name="colorIcon">?android:attr/textColorPrimaryInverse</item>
+        <item name="colorIcon">?android:colorBackground</item>
         <item name="android:textColorHighlight">@color/textColorHighlight</item>
         <item name="android:listDivider">@android:color/transparent</item>
 

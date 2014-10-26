@@ -28,7 +28,7 @@
         android:layout_marginStart="@dimen/item_icon_margin_left"
         android:background="@drawable/bg_circle"
         android:contentDescription="@string/item_icon"
-        android:padding="8dp"
+        android:padding="6dp"
         android:scaleType="centerInside" />
 
     <TextView

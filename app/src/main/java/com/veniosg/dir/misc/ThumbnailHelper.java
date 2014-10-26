@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.LoadedFrom;
+import com.nostra13.universalimageloader.core.assist.ViewScaleType;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.decode.ImageDecoder;
 import com.nostra13.universalimageloader.core.decode.ImageDecodingInfo;
@@ -36,10 +38,14 @@ import java.util.List;
 
 import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
 import static android.graphics.Bitmap.Config.ARGB_8888;
+import static android.graphics.Matrix.ScaleToFit.CENTER;
 import static android.graphics.Shader.TileMode.CLAMP;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
+import static com.nostra13.universalimageloader.core.assist.ImageScaleType.EXACTLY;
+import static com.nostra13.universalimageloader.core.assist.ImageScaleType.IN_SAMPLE_POWER_OF_2;
+import static java.lang.Math.min;
 
 public class ThumbnailHelper {
     private static final int FADE_IN_DURATION = 400;
@@ -109,23 +115,32 @@ public class ThumbnailHelper {
                 private BaseImageDecoder internal = new BaseImageDecoder(false);
 
                 @Override
-                public Bitmap decode(ImageDecodingInfo imageDecodingInfo) throws IOException {
-                    FileHolder holder = (FileHolder) imageDecodingInfo.getExtraForDownloader();
+                public Bitmap decode(ImageDecodingInfo idi) throws IOException {
+                    FileHolder holder = (FileHolder) idi.getExtraForDownloader();
                     Bitmap bitmap = null;
 
                     if (!holder.getFile().isDirectory()) {
                         if (Utils.isImage(holder.getMimeType())) {
                             try {
-                                Bitmap bmp = internal.decode(imageDecodingInfo);
+                                ImageDecodingInfo info = new ImageDecodingInfo(
+                                        idi.getImageKey(), idi.getImageUri(),
+                                        idi.getOriginalImageUri(), idi.getTargetSize(),
+                                        ViewScaleType.CROP,
+                                        idi.getDownloader(), defaultOptionsBuilder().build()
+                                );
+                                Bitmap bmp = internal.decode(info);
+//
                                 // Make bmp round
-                                bitmap = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), ARGB_8888);
-                                int radius = bmp.getWidth()/2;
+                                int targetHeight = idi.getTargetSize().getHeight();
+                                int targetWidth = idi.getTargetSize().getWidth();
+                                int radius = targetWidth/2;
+                                bitmap = Bitmap.createBitmap(targetWidth, targetHeight, ARGB_8888);
                                 BitmapShader shader = new BitmapShader(bmp, CLAMP, CLAMP);
                                 Canvas canvas = new Canvas(bitmap);
                                 Paint paint = new Paint();
                                 paint.setAntiAlias(true);
                                 paint.setShader(shader);
-                                canvas.drawCircle(radius, bmp.getHeight() / 2, radius, paint);
+                                canvas.drawCircle(radius, radius, radius, paint);
 
                                 bmp.recycle();
                             } catch (FileNotFoundException ex) {
@@ -161,7 +176,7 @@ public class ThumbnailHelper {
                     .cacheInMemory(true)
                     .cacheOnDisk(false)
                     .delayBeforeLoading(75)
-                    .imageScaleType(ImageScaleType.EXACTLY);
+                    .imageScaleType(EXACTLY);
         }
 
         return sDefaultImageOptionsBuilder;
