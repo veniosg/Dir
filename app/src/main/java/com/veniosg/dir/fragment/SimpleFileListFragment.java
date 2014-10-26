@@ -18,18 +18,15 @@ package com.veniosg.dir.fragment;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.DialogFragment;
-import android.util.TypedValue;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -39,12 +36,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.veniosg.dir.AnimationConstants;
 import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
@@ -75,13 +70,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.R.integer.config_mediumAnimTime;
-import static android.R.integer.config_shortAnimTime;
-import static android.util.TypedValue.COMPLEX_UNIT_DIP;
-import static android.util.TypedValue.applyDimension;
 import static com.veniosg.dir.AnimationConstants.inInterpolator;
-
-import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
-import static java.lang.Math.abs;
+import static com.veniosg.dir.util.Utils.dp;
 
 /**
  * A file list fragment that supports CAB selection.
@@ -413,8 +403,7 @@ public class SimpleFileListFragment extends FileListFragment {
             public boolean onPreDraw() {
                 getView().getViewTreeObserver().removeOnPreDrawListener(this);
 
-                mPathBar.setTranslationZ(applyDimension(COMPLEX_UNIT_DIP, 10,
-                        getResources().getDisplayMetrics()));
+                mPathBar.setTranslationZ(dp(10, getActivity()));
                 mPathBar.setScaleX(1.1F);
                 mPathBar.setScaleY(1.1F);
 

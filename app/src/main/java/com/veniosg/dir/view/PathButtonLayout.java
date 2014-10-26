@@ -20,11 +20,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Environment;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnLongClickListener;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -36,11 +34,8 @@ import com.veniosg.dir.view.PathBar.Mode;
 import java.io.File;
 import java.util.HashMap;
 
-import static android.util.TypedValue.COMPLEX_UNIT_DIP;
-import static android.util.TypedValue.applyDimension;
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.widget.ImageView.ScaleType.CENTER_INSIDE;
+import static com.veniosg.dir.util.Utils.dp;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
 /**
@@ -171,9 +166,7 @@ class PathButtonLayout extends LinearLayout implements OnLongClickListener {
 				btn = new ImageButton(navbar.getContext());
 				((ImageButton) btn).setImageResource(mPathDrawables.get(file.getAbsolutePath()));
                 ((ImageButton) btn).setScaleType(CENTER_INSIDE);
-                btn.setMinimumWidth((int) applyDimension(
-                        COMPLEX_UNIT_DIP,
-                        48, getDisplayMetrics(navbar)));
+                btn.setMinimumWidth((int) dp(48, navbar.getContext()));
 			} else {
 				btn = LayoutInflater.from(navbar.getContext()).inflate(R.layout.widget_button_pathbar, null);
 
@@ -184,8 +177,7 @@ class PathButtonLayout extends LinearLayout implements OnLongClickListener {
 
             android.widget.LinearLayout.LayoutParams params = new android.widget.LinearLayout.LayoutParams(
                     LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-            params.rightMargin = (int) applyDimension(COMPLEX_UNIT_DIP, -4,
-                    navbar.getResources().getDisplayMetrics());
+            params.rightMargin = (int) dp(-4, navbar.getContext());
 
             btn.setLayoutParams(params);
 			btn.setTag(file);
@@ -201,7 +193,7 @@ class PathButtonLayout extends LinearLayout implements OnLongClickListener {
 
             // We have to set this after adding the background as it'll cancel the padding out.
             if(btn instanceof Button) {
-                int sidePadding = (int) applyDimension(COMPLEX_UNIT_DIP, 8, getDisplayMetrics(navbar));
+                int sidePadding = (int) dp(8, navbar.getContext());
                 btn.setPadding(sidePadding, btn.getPaddingTop(), sidePadding, btn.getPaddingBottom());
             }
 
@@ -215,9 +207,5 @@ class PathButtonLayout extends LinearLayout implements OnLongClickListener {
 		private static View newButton(String path, PathBar navbar) {
 			return newButton(new File(path), navbar);
 		}
-
-        private static DisplayMetrics getDisplayMetrics(PathBar navbar) {
-            return navbar.getResources().getDisplayMetrics();
-        }
 	}
 }

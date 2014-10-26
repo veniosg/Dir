@@ -354,4 +354,9 @@ public abstract class Utils {
             }, immediate ? 0 : ANIM_START_DELAY);
         }
     }
+
+    public static float dp(int value, Context context) {
+        return applyDimension(COMPLEX_UNIT_DIP, value,
+                context.getResources().getDisplayMetrics());
+    }
 }

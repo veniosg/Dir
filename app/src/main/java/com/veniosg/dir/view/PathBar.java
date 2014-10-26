@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView.ScaleType;
 import android.widget.ListView;
@@ -51,12 +52,29 @@ import static android.animation.LayoutTransition.APPEARING;
 import static android.animation.LayoutTransition.CHANGE_APPEARING;
 import static android.animation.LayoutTransition.CHANGE_DISAPPEARING;
 import static android.animation.LayoutTransition.DISAPPEARING;
-import static android.util.TypedValue.COMPLEX_UNIT_DIP;
-import static android.util.TypedValue.applyDimension;
+import static android.content.Context.INPUT_METHOD_SERVICE;
+import static android.graphics.Color.WHITE;
+import static android.graphics.Paint.Style.FILL;
+import static android.text.InputType.TYPE_TEXT_VARIATION_URI;
+import static android.view.KeyEvent.ACTION_DOWN;
+import static android.view.KeyEvent.KEYCODE_DPAD_CENTER;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static android.view.inputmethod.EditorInfo.IME_ACTION_GO;
+import static android.widget.ImageView.ScaleType.CENTER_INSIDE;
+import static android.widget.RelativeLayout.ALIGN_PARENT_LEFT;
+import static android.widget.RelativeLayout.ALIGN_PARENT_RIGHT;
+import static android.widget.RelativeLayout.LEFT_OF;
+import static android.widget.RelativeLayout.RIGHT_OF;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static com.veniosg.dir.AnimationConstants.inInterpolator;
 import static com.veniosg.dir.AnimationConstants.outInterpolator;
+import static com.veniosg.dir.util.Utils.dp;
+import static com.veniosg.dir.view.PathBar.Mode.MANUAL_INPUT;
+import static com.veniosg.dir.view.PathBar.Mode.STANDARD_INPUT;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
 /**
@@ -89,7 +107,7 @@ public class PathBar extends ViewFlipper {
 	}
 
 	private File mCurrentDirectory = null;
-	private Mode mCurrentMode = Mode.STANDARD_INPUT;
+	private Mode mCurrentMode = STANDARD_INPUT;
 	private File mInitialDirectory = null;
 
 	/** ImageButton used to switch to MANUAL_INPUT. */
@@ -97,7 +115,7 @@ public class PathBar extends ViewFlipper {
 	/** Layout holding all path buttons. */
 	private PathButtonLayout mPathButtons = null;
 	/** Container of {@link #mPathButtons}. Allows horizontal scrolling. */
-	private ShadowFadingEdgeHorizontalScrollView mPathButtonsContainer = null;
+	private HorizontalScrollView mPathButtonsContainer = null;
 	/** The EditText holding the path in MANUAL_INPUT. */
 	private EditText mPathEditText = null;
 	/** The ImageButton to confirm the manually entered path. */
@@ -112,16 +130,14 @@ public class PathBar extends ViewFlipper {
 	public PathBar(Context context) {
 		super(context);
         NEW_ITEM_DISTANCE = getResources().getDisplayMetrics().widthPixels;
-        BG_ITEM_SKEW_DELTA_PX = (int) applyDimension(COMPLEX_UNIT_DIP, BG_ITEM_SKEW_DELTA_DP,
-                context.getResources().getDisplayMetrics());
+        BG_ITEM_SKEW_DELTA_PX = (int) dp((int) BG_ITEM_SKEW_DELTA_DP, context);
 		init();
 	}
 
 	public PathBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
         NEW_ITEM_DISTANCE = getResources().getDisplayMetrics().widthPixels;
-        BG_ITEM_SKEW_DELTA_PX = (int) applyDimension(COMPLEX_UNIT_DIP, BG_ITEM_SKEW_DELTA_DP,
-                context.getResources().getDisplayMetrics());
+        BG_ITEM_SKEW_DELTA_PX = (int) dp((int) BG_ITEM_SKEW_DELTA_DP, context);
         init();
 	}
 
@@ -136,7 +152,7 @@ public class PathBar extends ViewFlipper {
 		RelativeLayout standardModeLayout = new RelativeLayout(getContext());
 		{ // I use a block here so that layoutParams can be used as a variable name further down.
 			android.widget.ViewFlipper.LayoutParams layoutParams = new android.widget.ViewFlipper.LayoutParams(
-					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+					MATCH_PARENT, MATCH_PARENT);
 			standardModeLayout.setLayoutParams(layoutParams);
 
 			this.addView(standardModeLayout);
@@ -145,49 +161,48 @@ public class PathBar extends ViewFlipper {
 		// ImageButton -- GONE. Kept this code in case we need to use an right-aligned button in the future.
 		mSwitchToManualModeButton = new ImageButton(getContext());
 		{
-			android.widget.RelativeLayout.LayoutParams layoutParams = new android.widget.RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-			layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+			android.widget.RelativeLayout.LayoutParams layoutParams = new android.widget.RelativeLayout.LayoutParams(
+                    WRAP_CONTENT, MATCH_PARENT);
+			layoutParams.addRule(ALIGN_PARENT_RIGHT);
 
 			mSwitchToManualModeButton.setLayoutParams(layoutParams);
 			mSwitchToManualModeButton.setId(10);
 			mSwitchToManualModeButton.setBackgroundResource(R.drawable.bg_btn_pathbar_straight);
-			mSwitchToManualModeButton.setVisibility(View.GONE);
+			mSwitchToManualModeButton.setVisibility(GONE);
 
 			standardModeLayout.addView(mSwitchToManualModeButton);
 		}
 
-		// ImageButton -- GONE. Kept this code in case we need to use an left-aligned button in the future.
+		// ImageButton -- GONE. Kept this code in case we need to use a left-aligned button in the future.
 		ImageButton cdToRootButton = new ImageButton(getContext());
 		{
 			android.widget.RelativeLayout.LayoutParams layoutParams = new android.widget.RelativeLayout.LayoutParams(
-					LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-			layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+					WRAP_CONTENT, MATCH_PARENT);
+			layoutParams.addRule(ALIGN_PARENT_LEFT);
 
 			cdToRootButton.setLayoutParams(layoutParams);
 			cdToRootButton.setId(11);
             cdToRootButton.setBackgroundResource(R.drawable.bg_btn_pathbar_straight);
             cdToRootButton.setImageResource(R.drawable.ic_navbar_home);
-			cdToRootButton.setScaleType(ScaleType.CENTER_INSIDE);
+			cdToRootButton.setScaleType(CENTER_INSIDE);
 			cdToRootButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					cd("/");
 				}
 			});
-			cdToRootButton.setVisibility(View.GONE);
+			cdToRootButton.setVisibility(GONE);
 
 			standardModeLayout.addView(cdToRootButton);
 		}
 
 		// Horizontal ScrollView container
-		mPathButtonsContainer = new ShadowFadingEdgeHorizontalScrollView(getContext());
+		mPathButtonsContainer = new HorizontalScrollView(getContext());
 		{
 			android.widget.RelativeLayout.LayoutParams layoutParams = new android.widget.RelativeLayout.LayoutParams(
-					LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-			layoutParams.addRule(RelativeLayout.LEFT_OF,
-					mSwitchToManualModeButton.getId());
-			layoutParams.addRule(RelativeLayout.RIGHT_OF,
-					cdToRootButton.getId());
+					WRAP_CONTENT, MATCH_PARENT);
+			layoutParams.addRule(LEFT_OF, mSwitchToManualModeButton.getId());
+			layoutParams.addRule(RIGHT_OF, cdToRootButton.getId());
 			layoutParams.alignWithParent = true;
 
 			mPathButtonsContainer.setLayoutParams(layoutParams);
@@ -201,7 +216,7 @@ public class PathBar extends ViewFlipper {
 		mPathButtons = new PathButtonLayout(getContext());
 		{
 			android.widget.LinearLayout.LayoutParams layoutParams = new android.widget.LinearLayout.LayoutParams(
-					LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+					WRAP_CONTENT, MATCH_PARENT);
 
 			mPathButtons.setLayoutParams(layoutParams);
 			mPathButtons.setNavigationBar(this);
@@ -223,7 +238,7 @@ public class PathBar extends ViewFlipper {
 		RelativeLayout manualModeLayout = new RelativeLayout(getContext());
 		{
 			android.widget.ViewFlipper.LayoutParams layoutParams = new android.widget.ViewFlipper.LayoutParams(
-					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+					MATCH_PARENT, MATCH_PARENT);
 			manualModeLayout.setLayoutParams(layoutParams);
 
 			this.addView(manualModeLayout);
@@ -232,15 +247,15 @@ public class PathBar extends ViewFlipper {
 		// ImageButton
 		mGoButton = new ImageButton(getContext());
 		{
-			android.widget.RelativeLayout.LayoutParams layoutParams = new android.widget.RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-			layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+			android.widget.RelativeLayout.LayoutParams layoutParams = new android.widget.RelativeLayout.LayoutParams(WRAP_CONTENT, MATCH_PARENT);
+			layoutParams.addRule(ALIGN_PARENT_RIGHT);
 
 			mGoButton.setLayoutParams(layoutParams);
 			mGoButton.setId(20);
 			mGoButton.setBackgroundResource(R.drawable.bg_btn_pathbar_straight);
-
+            mGoButton.setTranslationZ(dp(4, getContext()));
             mGoButton.setImageResource(R.drawable.ic_navbar_accept);
-			mGoButton.setScaleType(ScaleType.CENTER_INSIDE);
+			mGoButton.setScaleType(CENTER_INSIDE);
 			mGoButton.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -248,9 +263,7 @@ public class PathBar extends ViewFlipper {
 					manualInputCd(mPathEditText.getText().toString());
 				}
 			});
-            mGoButton.setMinimumWidth((int) applyDimension(
-                    COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics()
-            ));
+            mGoButton.setMinimumWidth((int) dp(48, getContext()));
 
 			manualModeLayout.addView(mGoButton);
 		}
@@ -259,22 +272,23 @@ public class PathBar extends ViewFlipper {
 		mPathEditText = new EditText(getContext());
 		{
 			android.widget.RelativeLayout.LayoutParams layoutParams = new android.widget.RelativeLayout.LayoutParams(
-					LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-			layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+					WRAP_CONTENT, MATCH_PARENT);
+			layoutParams.addRule(ALIGN_PARENT_LEFT);
 			layoutParams.alignWithParent = true;
-			layoutParams.addRule(RelativeLayout.LEFT_OF, mGoButton.getId());
+			layoutParams.addRule(LEFT_OF, mGoButton.getId());
+            float iconPadding = getResources().getDimension(R.dimen.item_icon_margin_left);
 
 			mPathEditText.setLayoutParams(layoutParams);
-            float margin = getResources().getDimension(R.dimen.item_icon_margin_left);
-            mPathEditText.setPadding((int) margin, 0, (int) margin, 0);
-			mPathEditText.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
-			mPathEditText.setImeOptions(EditorInfo.IME_ACTION_GO);
+            mPathEditText.setPadding((int) iconPadding, 0,
+                    mPathEditText.getPaddingRight(), 0);
+			mPathEditText.setInputType(TYPE_TEXT_VARIATION_URI);
+			mPathEditText.setImeOptions(IME_ACTION_GO);
 			mPathEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 						@Override
 						public boolean onEditorAction(TextView v, int actionId,
 								KeyEvent event) {
-							if (actionId == EditorInfo.IME_ACTION_GO
-									|| (event.getAction() == KeyEvent.ACTION_DOWN && (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_CENTER || event.getKeyCode() == KeyEvent.KEYCODE_ENTER))) {
+							if ((actionId == IME_ACTION_GO)
+                                    || ((event.getAction() == ACTION_DOWN) && ((event.getKeyCode() == KEYCODE_DPAD_CENTER) || (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)))) {
 								if (manualInputCd(v.getText().toString()))
 									// Since we have successfully navigated.
 									return true;
@@ -287,6 +301,7 @@ public class PathBar extends ViewFlipper {
 			manualModeLayout.addView(mPathEditText);
 		}
 	}
+
 
     private Animator createAppearingAnimator(final LayoutTransition transition) {
         AnimatorSet anim = new AnimatorSet();
@@ -371,7 +386,7 @@ public class PathBar extends ViewFlipper {
 		if (cd(path)) {
 			// if cd() successful, hide the keyboard
 			InputMethodManager imm = (InputMethodManager) getContext()
-					.getSystemService(Context.INPUT_METHOD_SERVICE);
+					.getSystemService(INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(getWindowToken(), 0);
 			switchToStandardInput();
 			return true;
@@ -449,7 +464,7 @@ public class PathBar extends ViewFlipper {
 	 */
 	public void switchToManualInput() {
 		setDisplayedChild(1);
-		mCurrentMode = Mode.MANUAL_INPUT;
+		mCurrentMode = MANUAL_INPUT;
 	}
 
 	/**
@@ -457,7 +472,7 @@ public class PathBar extends ViewFlipper {
 	 */
 	public void switchToStandardInput() {
 		setDisplayedChild(0);
-		mCurrentMode = Mode.STANDARD_INPUT;
+		mCurrentMode = STANDARD_INPUT;
 	}
 
 	/**
@@ -467,11 +482,11 @@ public class PathBar extends ViewFlipper {
 	 */
 	public boolean pressBack() {
 		// Switch mode.
-		if (mCurrentMode == Mode.MANUAL_INPUT) {
+		if (mCurrentMode == MANUAL_INPUT) {
 			switchToStandardInput();
 		}
 		// Go back.
-		else if (mCurrentMode == Mode.STANDARD_INPUT) {
+		else if (mCurrentMode == STANDARD_INPUT) {
 			if (!backWillExit(mCurrentDirectory.getAbsolutePath())) {
 				cd(mCurrentDirectory.getParent());
 				return true;
@@ -518,7 +533,7 @@ public class PathBar extends ViewFlipper {
 		else
 			switchToManualInput();
 		mPathEditText.setEnabled(enabled);
-		mGoButton.setVisibility(enabled ? View.VISIBLE : View.GONE);
+		mGoButton.setVisibility(enabled ? VISIBLE : GONE);
 
 		super.setEnabled(enabled);
 	}
@@ -566,8 +581,8 @@ public class PathBar extends ViewFlipper {
 
     private void configureMaskDrawablePaint(ShapeDrawable shapeDrawable) {
         shapeDrawable.getPaint().setAntiAlias(true);
-        shapeDrawable.getPaint().setStyle(Paint.Style.FILL);
-        shapeDrawable.getPaint().setColor(Color.WHITE);
+        shapeDrawable.getPaint().setStyle(FILL);
+        shapeDrawable.getPaint().setColor(WHITE);
     }
 
     private Drawable wrapForTouchFeedback(Drawable drawable) {
