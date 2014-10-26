@@ -7,6 +7,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -14,10 +20,12 @@ import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.assist.LoadedFrom;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.decode.ImageDecoder;
 import com.nostra13.universalimageloader.core.decode.ImageDecodingInfo;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.util.Utils;
@@ -27,6 +35,8 @@ import java.io.IOException;
 import java.util.List;
 
 import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
+import static android.graphics.Bitmap.Config.ARGB_8888;
+import static android.graphics.Shader.TileMode.CLAMP;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
@@ -106,7 +116,18 @@ public class ThumbnailHelper {
                     if (!holder.getFile().isDirectory()) {
                         if (Utils.isImage(holder.getMimeType())) {
                             try {
-                                bitmap = internal.decode(imageDecodingInfo);
+                                Bitmap bmp = internal.decode(imageDecodingInfo);
+                                // Make bmp round
+                                bitmap = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), ARGB_8888);
+                                int radius = bmp.getWidth()/2;
+                                BitmapShader shader = new BitmapShader(bmp, CLAMP, CLAMP);
+                                Canvas canvas = new Canvas(bitmap);
+                                Paint paint = new Paint();
+                                paint.setAntiAlias(true);
+                                paint.setShader(shader);
+                                canvas.drawCircle(radius, bmp.getHeight() / 2, radius, paint);
+
+                                bmp.recycle();
                             } catch (FileNotFoundException ex) {
                                 Logger.log(ex);
                                 return null;
