@@ -8,8 +8,8 @@
     <dimen name="item_icon_margin_left">16dp</dimen>
     <dimen name="item_text_margin_left">72dp</dimen>
 
-    <dimen name="item_icon_margin_left_tablet">32dp</dimen>
-    <dimen name="item_text_margin_left_tablet">104dp</dimen>
+    <dimen name="item_icon_margin_left_tablet">24dp</dimen>
+    <dimen name="item_text_margin_left_tablet">80dp</dimen>
 
     <dimen name="dialog_content_padding">16dp</dimen>
     <dimen name="dialog_content_padding_tablet">24dp</dimen>
