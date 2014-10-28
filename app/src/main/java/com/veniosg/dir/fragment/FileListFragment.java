@@ -51,6 +51,8 @@ import java.util.ArrayList;
 
 import static com.veniosg.dir.IntentConstants.ACTION_REFRESH_LIST;
 import static com.veniosg.dir.IntentConstants.EXTRA_DIR_PATH;
+import static com.veniosg.dir.view.WaitingViewFlipper.PAGE_INDEX_CONTENT;
+import static com.veniosg.dir.view.WaitingViewFlipper.PAGE_INDEX_LOADING;
 
 /**
  * A {@link ListFragment} that displays the contents of a directory.
@@ -111,6 +113,12 @@ public abstract class FileListFragment extends AbsListFragment {
             }
         }
     };
+    private View.OnClickListener mEmptyViewClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onEmptyViewClicked();
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -159,6 +167,7 @@ public abstract class FileListFragment extends AbsListFragment {
 		getListView().requestFocusFromTouch();
 
 		mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
+        view.findViewById(R.id.empty_img).setOnClickListener(mEmptyViewClickListener);
 
 		// Get arguments
         boolean needsLoading = true;
@@ -184,7 +193,7 @@ public abstract class FileListFragment extends AbsListFragment {
         setListAdapter(mAdapter);
 	}
 
-	/**
+    /**
 	 * Reloads {@link #mPath}'s contents.
 	 */
 	protected void refresh() {
@@ -206,9 +215,9 @@ public abstract class FileListFragment extends AbsListFragment {
 	private void showLoading(boolean loading) {
         onLoadingChanging(loading);
         if (loading) {
-            mFlipper.setDisplayedChildDelayed(WaitingViewFlipper.PAGE_INDEX_LOADING);
+            mFlipper.setDisplayedChildDelayed(PAGE_INDEX_LOADING);
         } else {
-            mFlipper.setDisplayedChild(WaitingViewFlipper.PAGE_INDEX_CONTENT);
+            mFlipper.setDisplayedChild(PAGE_INDEX_CONTENT);
         }
         onLoadingChanged(loading);
 	}
@@ -384,4 +393,6 @@ public abstract class FileListFragment extends AbsListFragment {
      * @param loading If the list started or stopped loading.
      */
     protected void onLoadingChanged(boolean loading) {}
+
+    protected void onEmptyViewClicked(){}
 }

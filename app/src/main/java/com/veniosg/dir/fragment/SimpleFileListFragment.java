@@ -693,7 +693,9 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     private void useFolderScroll(final ScrollPosition pos) {
-        Utils.scrollToPosition(getListView(), pos, false);
+        if(getView() != null) {
+            Utils.scrollToPosition(getListView(), pos, false);
+        }
     }
 
     private void keepFolderScroll() {
@@ -738,6 +740,11 @@ public class SimpleFileListFragment extends FileListFragment {
                 mZoomView.clearAnimations();
             }
         }
+    }
+
+    @Override
+    protected void onEmptyViewClicked() {
+        pressBack();
     }
 
     public void closeActionMode() {

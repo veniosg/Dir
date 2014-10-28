@@ -33,17 +33,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:paddingBottom="16dp"
+            android:paddingBottom="24dp"
             tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:id="@+id/empty_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_state_empty"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp"
-                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/empty_text"
@@ -51,7 +42,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/this_folder_is_empty"
-                android:textColor="?android:attr/textColorPrimary"/>
+                style="@style/TextAppearance.Dir.Empty" />
+
+            <ImageView
+                android:id="@+id/empty_img"
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_empty_state_circle"
+                android:scaleType="centerInside"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/ic_back"
+                android:tint="?android:textColorSecondary"
+                android:stateListAnimator="@anim/state_list_anim_material"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
     </FrameLayout>
@@ -71,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/scanning"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:textColor="?android:attr/textColorTertiary" />
     </LinearLayout>
 
 

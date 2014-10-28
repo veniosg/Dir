@@ -42,6 +42,9 @@ import com.veniosg.dir.view.WaitingViewFlipper;
 
 import java.io.File;
 
+import static android.view.View.GONE;
+import static com.veniosg.dir.view.Themer.getThemedResourceId;
+
 /**
  * @author George Venios
  */
@@ -60,16 +63,18 @@ public class BookmarkListFragment extends AbsListFragment implements LoaderManag
         mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
 
         setLoading(true);
-        ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.bookmark_empty);
-        ((ImageView) view.findViewById(R.id.empty_img)).setImageResource(R.drawable.ic_state_bookmarks);
+        ImageView emptyImage = (ImageView) view.findViewById(R.id.empty_img);
+        emptyImage.setBackground(null);
+        emptyImage.setPadding(0, 0, 0, 0);
+        emptyImage.setImageResource(R.drawable.ic_state_bookmarks);
+        ((TextView) view.findViewById(R.id.empty_text)).setVisibility(GONE);
 
         if (getListView() instanceof GridView) {
             ((GridView) getListView()).setNumColumns(1);
         }
         setListAdapter(new BookmarkListAdapter(getActivity(), null));
         setListChoiceListener();
-        view.setBackgroundResource(Themer.getThemedResourceId(getActivity(),
-                R.attr.colorSidePaneBackground));
+        view.setBackgroundResource(getThemedResourceId(getActivity(), R.attr.colorSidePaneBackground));
 
         getLoaderManager().initLoader(0, null, this);
 	}

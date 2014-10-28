@@ -4,7 +4,7 @@
     <string name="menu_bookmark">Bookmark</string>
     <string name="create_new_folder">Create new folder</string>
     <string name="folder_name">Folder name</string>
-    <string name="this_folder_is_empty">This folder is empty.</string>
+    <string name="this_folder_is_empty">Folder empty</string>
     <string name="really_delete">Do you really want to delete %s?</string>
     <string name="really_delete_multiselect">Do you really want to delete %d files?</string>
     <string name="pick_title">File picker</string>

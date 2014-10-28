@@ -26,7 +26,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="@dimen/item_icon_margin_left"
-        android:background="@drawable/bg_circle"
+        android:background="@drawable/bg_item_circle"
         android:contentDescription="@string/item_icon"
         android:padding="6dp"
         android:scaleType="centerInside" />

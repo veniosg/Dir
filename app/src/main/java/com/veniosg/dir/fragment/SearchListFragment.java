@@ -42,6 +42,7 @@ import com.veniosg.dir.view.WaitingViewFlipper;
 import java.io.File;
 import java.util.List;
 
+import static android.view.View.GONE;
 import static com.veniosg.dir.fragment.SimpleFileListFragment.ScrollPosition;
 
 /**
@@ -89,6 +90,7 @@ public class SearchListFragment extends AbsListFragment implements LoaderManager
 
         mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
         ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.search_empty);
+        view.findViewById(R.id.empty_img).setVisibility(GONE);
         setLoading(true);
 
         if (savedInstanceState != null) {

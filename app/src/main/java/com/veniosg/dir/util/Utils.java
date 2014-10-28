@@ -329,12 +329,7 @@ public abstract class Utils {
 
     public static void scrollToPosition(final AbsListView listView, final SimpleFileListFragment.ScrollPosition pos, boolean immediate) {
         if (listView instanceof ListView) {
-            listView.post(new Runnable() {
-                @Override
-                public void run() {
-                    ((ListView) listView).setSelectionFromTop(pos.index, pos.top);
-                }
-            });
+            ((ListView) listView).setSelectionFromTop(pos.index, pos.top);
         } else {
             listView.postDelayed(new Runnable() {
                 @Override
