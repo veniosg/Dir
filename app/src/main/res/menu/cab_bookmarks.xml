@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item android:id="@+id/menu_open_parent"
-        android:icon="@drawable/ic_action_folder_open"
+        android:icon="@drawable/ic_action_folder"
         android:showAsAction="ifRoom"
         android:title="@string/menu_open_parent" />
 
