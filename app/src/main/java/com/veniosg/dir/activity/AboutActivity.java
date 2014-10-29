@@ -70,12 +70,6 @@ public class AboutActivity extends BaseActivity {
                 openWebLink("https://google.com/+GeorgeVenios");
             }
         });
-        findViewById(R.id.thanksOifm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openWebLink("http://www.openintents.org/");
-            }
-        });
         findViewById(R.id.gplay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
