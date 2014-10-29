@@ -43,7 +43,7 @@
 
     <color name="dark_primary">#212121</color>
     <color name="dark_primaryDark">#000</color>
-    <color name="dark_primaryLight">#616161</color>
+    <color name="dark_primaryLight">#424242</color>
     <color name="dark_accent">#f5f5f5</color>
     <color name="dark_background">#303030</color> <!-- default material dark background -->
     <color name="dark_cabBackground">#424242</color>
