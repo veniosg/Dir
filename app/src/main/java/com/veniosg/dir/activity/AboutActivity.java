@@ -30,7 +30,6 @@ import android.widget.Toast;
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.view.CheatSheet;
-import com.veniosg.dir.view.Themer;
 
 public class AboutActivity extends BaseActivity {
     private String label;
@@ -40,6 +39,7 @@ public class AboutActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        setupToolbar();
 
         try {
             ApplicationInfo info = getPackageManager().getApplicationInfo(getPackageName(), 0);

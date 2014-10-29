@@ -16,24 +16,12 @@
 
 package com.veniosg.dir.activity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.os.Environment;
-import android.preference.ListPreference;
-import android.preference.PreferenceManager;
-import android.support.v4.content.LocalBroadcastManager;
 import android.view.MenuItem;
 
-import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.fragment.PreferenceFragment;
-import com.veniosg.dir.fragment.SearchListFragment;
-import com.veniosg.dir.fragment.SimpleFileListFragment;
 import com.veniosg.dir.util.Utils;
-import com.veniosg.dir.view.Themer;
 
 public class PreferenceActivity extends BaseActivity {
     private PreferenceFragment mFragment;
@@ -43,12 +31,15 @@ public class PreferenceActivity extends BaseActivity {
 	protected void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+        setContentView(R.layout.activity_generic);
+        setupToolbar();
+
         mFragment = (PreferenceFragment) getFragmentManager().findFragmentByTag(FRAGMENT_TAG);
         if(mFragment == null){
             mFragment = new PreferenceFragment();
             getFragmentManager()
                     .beginTransaction()
-                    .add(android.R.id.content, mFragment, FRAGMENT_TAG)
+                    .add(R.id.fragment, mFragment, FRAGMENT_TAG)
                     .commit();
         }
     }

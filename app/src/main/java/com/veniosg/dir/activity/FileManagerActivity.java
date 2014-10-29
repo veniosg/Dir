@@ -16,7 +16,6 @@
 
 package com.veniosg.dir.activity;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,7 +24,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toolbar;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
@@ -73,7 +71,10 @@ public class FileManagerActivity extends BaseActivity
 	/** Called when the activity is first created. */
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+
         setContentView(R.layout.activity_filemanager);
+        setupToolbar();
+
         getActionBar().setHomeAsUpIndicator(R.drawable.ic_logo);
 
         // Search when the user types.

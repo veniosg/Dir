@@ -26,7 +26,6 @@ import com.veniosg.dir.fragment.FileListFragment;
 import com.veniosg.dir.fragment.PickFileListFragment;
 import com.veniosg.dir.fragment.PreferenceFragment;
 import com.veniosg.dir.util.FileUtils;
-import com.veniosg.dir.view.Themer;
 
 import java.io.File;
 
@@ -35,7 +34,10 @@ public class IntentFilterActivity extends BaseActivity {
 
 	protected void onCreate(Bundle savedInstance) {
 		super.onCreate(savedInstance);
-		
+
+        setContentView(R.layout.activity_generic);
+        setupToolbar();
+
 		Intent intent = getIntent();
 
 		// Initialize arguments
@@ -112,7 +114,7 @@ public class IntentFilterActivity extends BaseActivity {
 				mFragment.setArguments(extras);
 				getSupportFragmentManager()
 						.beginTransaction()
-						.add(android.R.id.content, mFragment,
+						.add(R.id.fragment, mFragment,
 								PickFileListFragment.class.getName()).commit();
 			}
 		}

@@ -14,129 +14,142 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/about_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
-    android:fillViewport="true"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    android:scrollbarStyle="outsideOverlay"
-    tools:context=".activity.AboutActivity">
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layoutAnimation="@anim/layout_about"
+    <include layout="@layout/widget_toolbar" />
+
+    <ScrollView
+        android:id="@+id/about_root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
         android:orientation="vertical"
-        android:divider="?android:attr/dividerHorizontal"
-        android:dividerPadding="56dp"
-        android:showDividers="middle" >
+        android:scrollbarStyle="outsideOverlay"
+        tools:context=".activity.AboutActivity">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/dirTitle"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textSize="32sp"
-                android:textStyle="italic" />
-
-            <TextView
-                android:id="@+id/createdBy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/about_created_by"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="?android:textColorTertiary" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.7"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/forkedFrom"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/about_forked_from"
-                android:textAppearance="?android:textAppearanceSmall"
-                android:textColor="?android:textColorTertiary" />
-
-            <TextView
-                android:id="@+id/thanksOifm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/about_thanks_oifm"
-                android:textAppearance="?android:textAppearanceSmall"
-                android:textColor="?android:textColorTertiary" />
-        </LinearLayout>
-        
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:divider="?android:attr/dividerHorizontal"
+            android:dividerPadding="56dp"
             android:gravity="center"
-            android:layout_weight="0.2" >
-            <ImageButton
-                android:id="@+id/contact"
-                style="?android:attr/buttonBarButtonStyle"
+            android:layoutAnimation="@anim/layout_about"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_about_mail"
-                android:tint="?android:attr/textColorTertiary"
-                android:contentDescription="@string/about_contact"
-                android:layout_weight="1.0" />
-            <ImageButton
-                android:id="@+id/beta"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_about_gplus"
-                android:tint="?android:attr/textColorTertiary"
-                android:contentDescription="@string/about_beta"
-                android:layout_weight="1.0" />
-            <ImageButton
-                android:id="@+id/contribute"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_about_github"
-                android:tint="?android:attr/textColorTertiary"
-                android:contentDescription="@string/about_contribute"
-                android:layout_weight="1.0" />
-            <ImageButton
-                android:id="@+id/gplay"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_about_google_play"
-                android:tint="?android:attr/textColorTertiary"
+                android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                android:contentDescription="@string/about_gplay" />
-            <ImageButton
-                android:visibility="gone"
-                android:id="@+id/share"
-                style="?android:attr/buttonBarButtonStyle"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dirTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textSize="32sp"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/createdBy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_created_by"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="?android:textColorTertiary" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:tint="?android:attr/textColorTertiary"
-                android:contentDescription="@string/about_share"
-                android:layout_weight="1.0" />
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/forkedFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/about_forked_from"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textColor="?android:textColorTertiary" />
+
+                <TextView
+                    android:id="@+id/thanksOifm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_thanks_oifm"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textColor="?android:textColorTertiary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_weight="0.2"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/contact"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:contentDescription="@string/about_contact"
+                    android:src="@drawable/ic_about_mail"
+                    android:tint="?android:attr/textColorTertiary" />
+
+                <ImageButton
+                    android:id="@+id/beta"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:contentDescription="@string/about_beta"
+                    android:src="@drawable/ic_about_gplus"
+                    android:tint="?android:attr/textColorTertiary" />
+
+                <ImageButton
+                    android:id="@+id/contribute"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:contentDescription="@string/about_contribute"
+                    android:src="@drawable/ic_about_github"
+                    android:tint="?android:attr/textColorTertiary" />
+
+                <ImageButton
+                    android:id="@+id/gplay"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:contentDescription="@string/about_gplay"
+                    android:src="@drawable/ic_about_google_play"
+                    android:tint="?android:attr/textColorTertiary" />
+
+                <ImageButton
+                    android:id="@+id/share"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:contentDescription="@string/about_share"
+                    android:tint="?android:attr/textColorTertiary"
+                    android:visibility="gone" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

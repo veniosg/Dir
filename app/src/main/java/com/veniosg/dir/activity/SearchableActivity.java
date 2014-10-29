@@ -20,9 +20,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.veniosg.dir.R;
 import com.veniosg.dir.fragment.SearchListFragment;
 import com.veniosg.dir.util.Utils;
-import com.veniosg.dir.view.Themer;
 
 /**
  * The activity that handles queries and shows search results.
@@ -44,6 +44,9 @@ public class SearchableActivity extends BaseActivity {
 		// Presentation settings
 		super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_generic);
+        setupToolbar();
+
         // Handle the search request.
         handleRequest();
 	}
@@ -54,7 +57,7 @@ public class SearchableActivity extends BaseActivity {
         if(mFragment == null){
             mFragment = new SearchListFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(android.R.id.content, mFragment, FRAGMENT_TAG).commit();
+                    .add(R.id.fragment, mFragment, FRAGMENT_TAG).commit();
         }
     }
 
