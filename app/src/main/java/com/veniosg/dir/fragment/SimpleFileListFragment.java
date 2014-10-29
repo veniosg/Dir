@@ -399,31 +399,33 @@ public class SimpleFileListFragment extends FileListFragment {
 
     @SuppressWarnings("ConstantConditions")
     private void firstTimeAnimation(final View root) {
-        root.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                getView().getViewTreeObserver().removeOnPreDrawListener(this);
-                AbsListView listView = getListView();
-
-                mPathBar.setTranslationZ(dp(10, getActivity()));
-                listView.setTranslationY(dp(10, listView.getContext()));
-                listView.setScaleX(0.95F);
-                listView.setScaleY(0.95F);
-
-                AnimatorSet set = new AnimatorSet();
-                ObjectAnimator anim  = ObjectAnimator.ofFloat(mPathBar, "translationZ", 0F);
-                ObjectAnimator anim2 = ObjectAnimator.ofFloat(mPathBar, "scaleX", 1F);
-                ObjectAnimator anim3 = ObjectAnimator.ofFloat(listView, "translationY", 0F);
-                ObjectAnimator anim4 = ObjectAnimator.ofFloat(listView, "scaleX", 1F);
-                ObjectAnimator anim5 = ObjectAnimator.ofFloat(listView, "scaleY", 1F);
-
-                set.setDuration(getResources().getInteger(config_shortAnimTime));
-                set.setInterpolator(inInterpolator);
-                set.playTogether(anim, anim2, anim3, anim4, anim5);
-                set.start();
-                return true;
-            }
-        });
+        // NO-OP for now. Need to fine tune it on a real device.
+        // Everyone hates lag on launch.
+//        root.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//            @Override
+//            public boolean onPreDraw() {
+//                getView().getViewTreeObserver().removeOnPreDrawListener(this);
+//                AbsListView listView = getListView();
+//
+//                mPathBar.setTranslationZ(dp(10, getActivity()));
+//                listView.setTranslationY(dp(10, listView.getContext()));
+//                listView.setScaleX(0.95F);
+//                listView.setScaleY(0.95F);
+//
+//                AnimatorSet set = new AnimatorSet();
+//                ObjectAnimator anim  = ObjectAnimator.ofFloat(mPathBar, "translationZ", 0F);
+//                ObjectAnimator anim2 = ObjectAnimator.ofFloat(mPathBar, "scaleX", 1F);
+//                ObjectAnimator anim3 = ObjectAnimator.ofFloat(listView, "translationY", 0F);
+//                ObjectAnimator anim4 = ObjectAnimator.ofFloat(listView, "scaleX", 1F);
+//                ObjectAnimator anim5 = ObjectAnimator.ofFloat(listView, "scaleY", 1F);
+//
+//                set.setDuration(getResources().getInteger(config_shortAnimTime));
+//                set.setInterpolator(inInterpolator);
+//                set.playTogether(anim, anim2, anim3, anim4, anim5);
+//                set.start();
+//                return true;
+//            }
+//        });
     }
 
     /**
