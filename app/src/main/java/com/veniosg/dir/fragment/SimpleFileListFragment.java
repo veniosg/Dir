@@ -419,7 +419,6 @@ public class SimpleFileListFragment extends FileListFragment {
 
                 set.setDuration(getResources().getInteger(config_shortAnimTime));
                 set.setInterpolator(inInterpolator);
-                set.setStartDelay(25);
                 set.playTogether(anim, anim2, anim3, anim4, anim5);
                 set.start();
                 return true;
