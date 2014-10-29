@@ -40,6 +40,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:fontFamily="sans-serif-medium"
         android:textColor="?android:attr/textColorPrimary" />
 
     <TextView

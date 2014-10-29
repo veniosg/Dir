@@ -18,7 +18,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:colorPrimary"
-    android:elevation="4dp"
-    android:popupTheme="@android:style/ThemeOverlay.Material.Light"
     android:contentInsetStart="@dimen/item_text_margin_left"
+    android:elevation="4dp"
+    android:minHeight="?android:actionBarSize"
+    android:popupTheme="@android:style/ThemeOverlay.Material.Light"
     android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar" />
