@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/about_created_by"
                 android:textAppearance="?android:textAppearanceMedium"
-                android:textColor="?android:textColorSecondary" />
+                android:textColor="?android:textColorTertiary" />
         </LinearLayout>
 
         <LinearLayout
