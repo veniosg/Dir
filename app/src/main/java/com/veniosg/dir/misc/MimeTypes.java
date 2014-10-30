@@ -43,7 +43,7 @@ public class MimeTypes {
             R.drawable.ic_item_archive_tinted,
             R.drawable.ic_item_text_tinted,
             R.drawable.ic_item_text_web_tinted,
-            R.drawable.ic_item_text_csv_tinted,
+            R.drawable.ic_item_text_tinted,
             R.drawable.ic_item_text_xml_tinted,
             R.drawable.ic_item_android_package_tinted,
             R.drawable.ic_item_sdcard_tinted
