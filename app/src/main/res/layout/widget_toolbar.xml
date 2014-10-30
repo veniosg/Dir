@@ -21,5 +21,5 @@
     android:contentInsetStart="@dimen/item_text_margin_left"
     android:elevation="4dp"
     android:minHeight="?android:actionBarSize"
-    android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+    android:popupTheme="?android:actionBarPopupTheme"
     android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar" />

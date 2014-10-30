@@ -37,6 +37,7 @@
         <item name="colorIcon">?android:colorBackground</item>
         <item name="android:textColorHighlight">@color/textColorHighlight</item>
         <item name="android:listDivider">@android:color/transparent</item>
+        <item name="android:actionBarPopupTheme">@android:style/ThemeOverlay.Material.Light</item>
 
         <!-- Text colours -->
         <item name="android:textColorPrimary">#b7000000</item>
@@ -87,6 +88,7 @@
         <item name="colorIcon">?android:colorBackground</item>
         <item name="android:textColorHighlight">@color/textColorHighlight</item>
         <item name="android:listDivider">@android:color/transparent</item>
+        <item name="android:actionBarPopupTheme">@android:style/ThemeOverlay.Material</item>
 
         <!-- Text colours -->
         <item name="android:textColorSecondary">#64FFFFFF</item>
