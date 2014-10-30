@@ -23,19 +23,19 @@
             <group android:checkableBehavior="none">
                 <item
                     android:id="@+id/menu_move"
-                    android:icon="@drawable/ic_action_cut"
+                    android:icon="@drawable/ic_action_cut_tinted"
                     android:title="@string/menu_move" />
                 <item
                     android:id="@+id/menu_copy"
-                    android:icon="@drawable/ic_action_copy"
+                    android:icon="@drawable/ic_action_copy_tinted"
                     android:title="@string/menu_copy" />
                 <item
                     android:id="@+id/menu_compress"
-                    android:icon="@drawable/ic_action_box"
+                    android:icon="@drawable/ic_action_box_tinted"
                     android:title="@string/menu_compress" />
                 <item
                     android:id="@+id/menu_delete"
-                    android:icon="@drawable/ic_action_delete"
+                    android:icon="@drawable/ic_action_delete_tinted"
                     android:title="@string/menu_delete" />
             </group>
         </menu>
