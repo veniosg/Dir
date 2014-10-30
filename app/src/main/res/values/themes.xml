@@ -49,7 +49,7 @@
 
         <!-- Control colour -->
         <item name="android:colorAccent">@color/dir_accent</item>
-        <item name="textColorPathBar">?android:attr/textColorPrimaryInverse</item>
+        <item name="textColorPathBar">@color/dir_textColorPathBar</item>
 
         <!-- Background colours -->
         <item name="android:colorBackground">@color/dir_background</item>
@@ -97,7 +97,7 @@
 
         <!-- Control colour -->
         <item name="android:colorAccent">@color/dark_accent</item>
-        <item name="textColorPathBar">?android:attr/textColorPrimary</item>
+        <item name="textColorPathBar">@color/dark_textColorPathBar</item>
 
         <!-- Background colours -->
         <item name="android:colorBackground">@color/dark_background</item>

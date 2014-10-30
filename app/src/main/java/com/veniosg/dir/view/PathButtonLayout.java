@@ -18,6 +18,7 @@ package com.veniosg.dir.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ import com.veniosg.dir.view.PathBar.Mode;
 import java.io.File;
 import java.util.HashMap;
 
+import static android.os.Environment.getExternalStorageDirectory;
 import static android.widget.ImageView.ScaleType.CENTER_INSIDE;
 import static com.veniosg.dir.util.Utils.dp;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
@@ -64,7 +66,7 @@ class PathButtonLayout extends LinearLayout implements OnLongClickListener {
 		this.setOrientation(LinearLayout.HORIZONTAL);
 		this.setOnLongClickListener(this);
 
-		mPathDrawables.put(Environment.getExternalStorageDirectory().getAbsolutePath(), R.drawable.ic_navbar_sdcard);
+		mPathDrawables.put(getExternalStorageDirectory().getAbsolutePath(), R.drawable.ic_navbar_sdcard);
 		mPathDrawables.put("/sdcard", R.drawable.ic_navbar_sdcard);
 		mPathDrawables.put("/mnt/sdcard", R.drawable.ic_navbar_sdcard);
 		mPathDrawables.put("/mnt/sdcard-ext", R.drawable.ic_navbar_sdcard);
@@ -166,13 +168,13 @@ class PathButtonLayout extends LinearLayout implements OnLongClickListener {
 				btn = new ImageButton(navbar.getContext());
 				((ImageButton) btn).setImageResource(mPathDrawables.get(file.getAbsolutePath()));
                 ((ImageButton) btn).setScaleType(CENTER_INSIDE);
-                btn.setMinimumWidth((int) dp(48, navbar.getContext()));
 			} else {
-				btn = LayoutInflater.from(navbar.getContext()).inflate(R.layout.widget_button_pathbar, null);
+                btn = new Button(navbar.getContext(), null, R.attr.pathbarItemStyle);
 
 				((Button) btn).setText(file.getName());
 				((Button) btn).setMaxLines(1);
-				((Button) btn).setTextColor(navbar.getResources().getColor(getThemedResourceId(navbar.getContext(), R.attr.textColorPathBar)));
+				((Button) btn).setTextColor(navbar.getResources().getColor(
+                        getThemedResourceId(navbar.getContext(), R.attr.textColorPathBar)));
 			}
 
             android.widget.LinearLayout.LayoutParams params = new android.widget.LinearLayout.LayoutParams(

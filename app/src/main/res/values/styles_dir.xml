@@ -29,5 +29,6 @@
 
     <style name="Widget.Dir.PathBar.Button" parent="@android:style/Widget.Material.Button">
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textColor">?attr/textColorPathBar</item>
     </style>
 </resources>

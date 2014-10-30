@@ -19,7 +19,7 @@
     </item>
     <item
         android:id="@+id/menu_about"
-        android:icon="@drawable/ic_action_about"
+        android:icon="@drawable/ic_action_info"
         android:showAsAction="never"
         android:menuCategory="container"
         android:orderInCategory="50"
