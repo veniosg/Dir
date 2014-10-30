@@ -15,5 +15,5 @@
  * limitations under the License.
  -->
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:src="@drawable/ic_action_cut"
-    android:tint="?attr/colorIconExpandedCabAction" />
+    android:src="@drawable/ic_state_bookmarks_alpha"
+    android:tint="?android:textColorSecondary" />

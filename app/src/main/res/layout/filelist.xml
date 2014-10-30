@@ -53,8 +53,7 @@
                 android:background="@drawable/bg_empty_state_circle"
                 android:scaleType="centerInside"
                 android:layout_marginBottom="4dp"
-                android:src="@drawable/ic_back"
-                android:tint="?android:textColorSecondary"
+                android:src="@drawable/ic_state_back"
                 android:stateListAnimator="@anim/state_list_anim_material"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
