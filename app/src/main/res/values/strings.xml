@@ -19,7 +19,7 @@
     <string name="copied_file_name">Copy of %s</string>
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="copied_file_name_2">Copy %1$d of %2$s</string>
-    <string name="error_generic">An error occurred: </string>
+    <string name="error_generic">An error occurred:</string>
     <string name="error_media_scan">Could not change media scan settings.</string>
     <string name="send_not_available">No application available for sending.</string>
     <string name="application_not_available">No matching application installed.</string>

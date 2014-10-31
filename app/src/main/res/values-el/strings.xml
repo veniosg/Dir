@@ -19,7 +19,7 @@
     <string name="copied_file_name">Αντίγραφο του %s</string>
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="copied_file_name_2">Αντίγραφο %1$d από %2$s</string>
-    <string name="error_generic">Προέκυψε ένα σφάλμα: </string>
+    <string name="error_generic">Προέκυψε ένα σφάλμα:</string>
     <string name="error_media_scan">Αδυναμία αλλαγής ρυθμίσεων σάρωσης πολυμέσων.</string>
     <string name="send_not_available">Καμία διαθέσιμη εφαρμογή για αποστολή.</string>
     <string name="application_not_available">Δεν υπάρχει κατάλληλη εφαρμογή εγκατεστημένη.</string>
@@ -123,9 +123,6 @@
     <string name="moved">Επιτυχής μετακίνηση</string>
     <string name="move_error">Κάποια αρχεία δεν μπόρεσαν να μετακινηθούν!</string>
     <string name="nothing_to_paste">Δεν υπάρχουν αρχεία για επικόλληση. Αντιγράψτε ή αποκόψτε αρχεία πρώτα.</string>
-    <string name="preference_usebestmatch_title">Εικονίδια αρχείων</string>
-    <string name="preference_usebestmatch_summary_off">Χρήση της πιο προσφάτως εγκατεστημένης εφαρμογής</string>
-    <string name="preference_usebestmatch_summary_on">Χρήση της καταλληλότερης εφαρμογής</string>
     <string name="modified">Τροποποιημένο</string>
     <string name="about_forked_from">Fork του OI File Manager</string>
     <string name="about_created_by">Αναπτύχθηκε από τον Γιώργο Βενιό</string>

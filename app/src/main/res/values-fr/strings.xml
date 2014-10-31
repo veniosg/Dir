@@ -120,9 +120,6 @@
     <string name="moving">D\u00e9placement&#8230;</string>
     <string name="moved">Déplacement réussi</string>
     <string name="nothing_to_paste">Rien à copier. Coupez ou copiez des fichiers.</string>
-    <string name="preference_usebestmatch_title">Icônes de fichiers</string>
-    <string name="preference_usebestmatch_summary_off">Utiliser le plus récemment installé</string>
-    <string name="preference_usebestmatch_summary_on">Utiliser l\'application la mieux adaptée</string>
     <string name="modified">Modifié</string>
     <string name="about_forked_from">Adapté de OI File Manager</string>
     <string name="about_created_by">Créée par George Venios</string>

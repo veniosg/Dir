@@ -100,7 +100,7 @@
     <string name="search_hint">Procurar arquivos</string>
     <string name="query_error">Erro de query</string>
     <string name="search_empty">Nenhum arquivo encontrado!</string>
-    <string name="item_icon">Ícone </string>
+    <string name="item_icon">"Ícone "</string>
     <string name="scanning">Escaneando&#8230;</string>
     <string name="delete_success">Deletado com sucesso</string>
     <string name="delete_failure">Alguns arquivos não foram excluidos</string>
@@ -124,9 +124,6 @@
     <string name="moved">Movido com sucesso</string>
     <string name="move_error">Some or all items couldn\'t be moved!</string>
     <string name="nothing_to_paste">Nada para colar. Copie ou recorte arquivos antes.</string>
-    <string name="preference_usebestmatch_title">Ícones de arquivos</string>
-    <string name="preference_usebestmatch_summary_off">Usar aplicativo instalado mais recentemente</string>
-    <string name="preference_usebestmatch_summary_on">Usar aplicativo mais apropriado</string>
     <string name="modified">Modifcado</string>
     <string name="about_forked_from">Fork de OI File Manager</string>
     <string name="about_created_by">Criado por George Venios</string>
