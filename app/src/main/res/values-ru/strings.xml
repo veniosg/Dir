@@ -79,8 +79,8 @@
     <plurals name="menu_move_items_to">
         <item quantity="one">Переместить %1$d элемент сюда</item>
         <item quantity="other">Переместить %1$d элементов сюда</item>
-        <item quantity="many">Переместить %1$d элементов сюда</item>
         <item quantity="few">Переместить %1$d элементов сюда</item>
+        <item quantity="many">Переместить %1$d элементов сюда</item>
     </plurals>
     <string name="menu_clear_clipboard">Очистить буфер</string>
     <string name="menu_remove_bookmark">Удалить закладку</string>
@@ -128,9 +128,6 @@
     <string name="moved">Успешно перемещено</string>
     <string name="move_error">Некоторые или все элементы не могут быть перемещены!</string>
     <string name="nothing_to_paste">Нечего вставить. Скопируйте или переместите файлы.</string>
-    <string name="preference_usebestmatch_title">Иконки файлов</string>
-    <string name="preference_usebestmatch_summary_off">Использовать последнее установленное приложение</string>
-    <string name="preference_usebestmatch_summary_on">Использовать самое подходящее приложение</string>
     <string name="modified">Изменён</string>
     <string name="about_forked_from">Форк с OI File Manager</string>
     <string name="about_created_by">Создано George Venios</string>

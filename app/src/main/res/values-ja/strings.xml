@@ -122,9 +122,6 @@
     <string name="moved">移動が完了しました</string>
     <string name="move_error">Some or all items couldn\'t be moved!</string>
     <string name="nothing_to_paste">貼り付けるファイルはありません。まずファイルの切り取り、またはコピーをしてください。</string>
-    <string name="preference_usebestmatch_title">ファイルのアイコン</string>
-    <string name="preference_usebestmatch_summary_off">一番最近インストールされたアプリを使用する</string>
-    <string name="preference_usebestmatch_summary_on">一番適切なアプリを使用する</string>
     <string name="modified">変更日時：</string>
     <string name="about_forked_from">OI File Managerからフォークされたファイルマネージャアプリです。</string>
     <string name="about_created_by">作者: George Venios</string>

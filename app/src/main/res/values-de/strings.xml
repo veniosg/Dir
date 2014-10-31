@@ -124,9 +124,6 @@
     <string name="moved">Erfolgreich verschoben</string>
     <string name="move_error">Einige oder alle Objekte konnte nicht verschoben werden!</string>
     <string name="nothing_to_paste">Zwischenablage ist leer. Zuerst Dateien kopieren oder auswählen.</string>
-    <string name="preference_usebestmatch_title">Dateisymbole</string>
-    <string name="preference_usebestmatch_summary_off">Verwende zuletzt installierte Anwendung</string>
-    <string name="preference_usebestmatch_summary_on">Verwende geeignetste Andwendung</string>
     <string name="modified">Geändert</string>
     <string name="about_forked_from">Abgeleitet von OI File Manager</string>
     <string name="about_created_by">Erstellt von George Venios</string>

@@ -19,7 +19,7 @@
     <string name="copied_file_name">Kopija %s</string>
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="copied_file_name_2">Kopija %1$d od %2$s</string>
-    <string name="error_generic">Dogodila se greška: </string>
+    <string name="error_generic">Dogodila se greška:</string>
     <string name="error_media_scan">Ne mogu promijeniti postavke skeniranja medija.</string>
     <string name="send_not_available">Nema dostupne aplikacije slanja.</string>
     <string name="application_not_available">Nema instalirane podudarajuće aplikacije.</string>
@@ -125,9 +125,6 @@
     <string name="moved">Uspješno premješteno</string>
     <string name="move_error">Neke ili sve stavke ne mogu biti premještene!</string>
     <string name="nothing_to_paste">Nema ništa za zalijepiti. Prvo kopirajte ili izrežite datoteku.</string>
-    <string name="preference_usebestmatch_title">Ikone datoteka</string>
-    <string name="preference_usebestmatch_summary_off">Koristi nedavno instalirane aplikacije</string>
-    <string name="preference_usebestmatch_summary_on">Koristi najprikladniju aplikaciju</string>
     <string name="modified">Izmjenjeno</string>
     <string name="about_forked_from">Izdvojeno od OI File Manager-a</string>
     <string name="about_created_by">Kreirao George Venios</string>
