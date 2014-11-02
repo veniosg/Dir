@@ -6,7 +6,6 @@
         <item>Dir</item>
         <item>Greyscale</item>
         <item>Dark</item>
-        <item>Holo</item>
     </string-array>
     <string name="menu_settings">Settings</string>
 </resources>
