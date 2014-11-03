@@ -31,11 +31,8 @@
     <string name="preference_sortby_ascending">În ordine ascendentă</string>
     <string name="preference_sortby_ascending_summary_on">Sortează în ordine ascendentă</string>
     <string name="preference_sortby_ascending_summary_off">Sotează în ordine descendentă</string>
-    <string-array name="preference_sortby_names">
-        <item>Nume</item>
-        <item>Dimensiune</item>
-        <item>Modificat ultima dată</item>
-    </string-array>
+    <string name="preference_sortby_name">Nume</string>
+    <string name="preference_sortby_last_modified">Modificat ultima dată</string>
     <string name="saveas_no_file_picked">Nu ați ales niciun fișier.</string>
     <string name="saveas_error">A apărut o eroare.</string>
     <string name="saveas_file_saved">Fișierul a fost salvat cu succes!</string>

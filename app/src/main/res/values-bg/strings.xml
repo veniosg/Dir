@@ -31,11 +31,9 @@
     <string name="preference_sortby_ascending">Във възходящ ред</string>
     <string name="preference_sortby_ascending_summary_on">Сортирай във възходящ ред</string>
     <string name="preference_sortby_ascending_summary_off">Сортирай във низходящ ред</string>
-    <string-array name="preference_sortby_names">
-        <item>Име</item>
-        <item>Размер</item>
-        <item>Последна промяна</item>
-    </string-array>
+    <string name="preference_sortby_name">Име</string>
+    <string name="preference_sortby_size">Размер</string>
+    <string name="preference_sortby_last_modified">Последна промяна</string>
     <string name="saveas_no_file_picked">Не сте избрали файл.</string>
     <string name="saveas_error">Появи се грешка.</string>
     <string name="saveas_file_saved">Файлът е запазен успешно.</string>

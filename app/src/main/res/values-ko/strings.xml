@@ -33,11 +33,8 @@
     <string name="preference_sortby_ascending">오름차순</string>
     <string name="preference_sortby_ascending_summary_on">오름차순으로 정렬하기</string>
     <string name="preference_sortby_ascending_summary_off">내림차순으로 정렬하기</string>
-    <string-array name="preference_sortby_names">
-        <item>이름</item>
-        <item>용량</item>
-        <item>마지막으로 수정됨</item>
-    </string-array>
+    <string name="preference_sortby_size">용량</string>
+    <string name="preference_sortby_last_modified">최종 수정됨</string>
     <string name="saveas_no_file_picked">파일을 선택하지 않았습니다.</string>
     <string name="saveas_error">오류가 발생하였습니다.</string>
     <string name="saveas_file_saved">파일을 성공적으로 저장하였습니다!</string>

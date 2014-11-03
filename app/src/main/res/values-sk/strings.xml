@@ -31,11 +31,9 @@
     <string name="preference_sortby_ascending">Vo vzostupnom poradí</string>
     <string name="preference_sortby_ascending_summary_on">Triediť vo vzostupnom poradí</string>
     <string name="preference_sortby_ascending_summary_off">Triediť v zostupnom poradí</string>
-    <string-array name="preference_sortby_names">
-        <item>Meno</item>
-        <item>Veľkosť</item>
-        <item>Naposledy zmenené</item>
-    </string-array>
+    <string name="preference_sortby_name">Meno</string>
+    <string name="preference_sortby_size">Veľkosť</string>
+    <string name="preference_sortby_last_modified">Naposledy zmenené</string>
     <string name="saveas_no_file_picked">Nevybrali ste žiadny súbor.</string>
     <string name="saveas_error">Nastala chyba.</string>
     <string name="saveas_file_saved">Súbor bol úspešne uložený!</string>

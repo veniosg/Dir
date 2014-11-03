@@ -31,11 +31,8 @@
     <string name="preference_sortby_ascending">Nousevassa järjestyksessä</string>
     <string name="preference_sortby_ascending_summary_on">Järjestä nousevassa järjestyksessä</string>
     <string name="preference_sortby_ascending_summary_off">Järjestä laskevassa järjestyksessä</string>
-    <string-array name="preference_sortby_names">
-        <item>Nimi</item>
-        <item>Koko</item>
-        <item>Muokattu viimeksi</item>
-    </string-array>
+    <string name="preference_sortby_name">Nimi</string>
+    <string name="preference_sortby_last_modified">Muokattu viimeksi</string>
     <string name="saveas_no_file_picked">Et ole valinnut yhtään tiedostoa.</string>
     <string name="saveas_error">Virhe ilmentyi.</string>
     <string name="saveas_file_saved">Tiedosto tallennettiin onnistuneesti!</string>

@@ -30,11 +30,9 @@
     <string name="preference_sortby_ascending">आरोही  क्रम में</string>
     <string name="preference_sortby_ascending_summary_on">आरोही क्रम सां अलग कयो</string>
     <string name="preference_sortby_ascending_summary_off">अवरोही  क्रम सां अलग कयो</string>
-    <string-array name="preference_sortby_names">
-        <item>नाम</item>
-        <item>आकार</item>
-        <item>अंतिम बार संशोधित</item>
-    </string-array>
+    <string name="preference_sortby_name">नाम</string>
+    <string name="preference_sortby_size">आकार</string>
+    <string name="preference_sortby_last_modified">अंतिम बार संशोधित</string>
     <string name="saveas_no_file_picked">तहां कोई भी फाईल न खईं तव</string>
     <string name="saveas_error">कोई त्रुटि अच्ची वई</string>
     <string name="saveas_file_saved">!फाईल सफलतापूवक सुरक्षित थी वई</string>

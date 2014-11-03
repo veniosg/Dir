@@ -31,11 +31,9 @@
     <string name="preference_sortby_ascending">ترتيب تصاعدي</string>
     <string name="preference_sortby_ascending_summary_on">ترتيب تصاعدي</string>
     <string name="preference_sortby_ascending_summary_off">فرز  في ترتيب تصاعدي</string>
-    <string-array name="preference_sortby_names">
-        <item>الإسم</item>
-        <item>الحجم</item>
-        <item>آخر تعديل</item>
-    </string-array>
+    <string name="preference_sortby_name">الإسم</string>
+    <string name="preference_sortby_size">الحجم</string>
+    <string name="preference_sortby_last_modified">آخر تعديل</string>
     <string name="saveas_no_file_picked">لم تختر أي ملف.</string>
     <string name="saveas_error">حدث خطأ.</string>
     <string name="saveas_file_saved">تم حفظ الملف بنجاح.</string>

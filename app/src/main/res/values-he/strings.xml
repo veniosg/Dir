@@ -31,11 +31,9 @@
     <string name="preference_sortby_ascending">בסדר עולה</string>
     <string name="preference_sortby_ascending_summary_on">מיין בספדר עולה</string>
     <string name="preference_sortby_ascending_summary_off">סדר בסדר יורד</string>
-    <string-array name="preference_sortby_names">
-        <item>שם</item>
-        <item>גודל</item>
-        <item>עודכן לאחרונה</item>
-    </string-array>
+    <string name="preference_sortby_name">שם</string>
+    <string name="preference_sortby_size">גודל</string>
+    <string name="preference_sortby_last_modified">עודכן לאחרונה</string>
     <string name="saveas_no_file_picked">לא בחרת אף קובץ.</string>
     <string name="saveas_error">ארעה שגיאה.</string>
     <string name="saveas_file_saved">קובץ נשמר בהצלחה!</string>

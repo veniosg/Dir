@@ -31,11 +31,9 @@
     <string name="preference_sortby_ascending">ئۆسكۈچى تەرتىپتە</string>
     <string name="preference_sortby_ascending_summary_on">ئۆسكۈچى تەرتىپتە تەرتىپلەيدۇ</string>
     <string name="preference_sortby_ascending_summary_off">كېمەيگۈچى تەرتىپتە تەرتىپلەيدۇ</string>
-    <string-array name="preference_sortby_names">
-        <item>ئاتى</item>
-        <item>چوڭلۇقى</item>
-        <item>ئاخىرقى ئۆزگەرتىلگىنى</item>
-    </string-array>
+    <string name="preference_sortby_name">ئاتى</string>
+    <string name="preference_sortby_size">چوڭلۇقى</string>
+    <string name="preference_sortby_last_modified">ئاخىرقى ئۆزگەرتىلگىنى</string>
     <string name="saveas_no_file_picked">ھېچقانداق ھۆججەتنى تاللىمىدىڭىز.</string>
     <string name="saveas_error">خاتالىق كۆرۈلدى.</string>
     <string name="saveas_file_saved">ھۆججەت مۇۋەپپەقىيەتلىك ساقلاندى!</string>

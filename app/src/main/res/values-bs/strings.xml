@@ -23,10 +23,8 @@
     <string name="preference_sort_settings">Sortiraj postavke.</string>
     <string name="preference_sortby">Poredaj po</string>
     <string name="preference_sortby_ascending">Poredaj Uzlazno</string>
-    <string-array name="preference_sortby_names">
-        <item>Velicina</item>
-        <item>Posljednja izmjena</item>
-    </string-array>
+    <string name="preference_sortby_size">Velicina</string>
+    <string name="preference_sortby_last_modified">Posljednja izmjena</string>
     <string name="saveas_no_file_picked">Niste nijedan fajl izabrali</string>
     <string name="saveas_error">Došlo je do greške.</string>
     <string name="saveas_file_saved">Fajl uspješno spašen!</string>

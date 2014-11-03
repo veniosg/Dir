@@ -39,17 +39,11 @@
     <string name="preference_medialib_title">Medienbibliotheksaktion</string>
     <string name="preference_medialib_summary_on">Zeige Medienbibliotheksaktion für Ordner</string>
     <string name="preference_medialib_summary_off">Verstecke Medienbibliotheksaktion für Ordner</string>
-    <string-array name="preference_sortby_names">
-        <item>Name</item>
-        <item>Größe</item>
-        <item>Zuletzt geändert</item>
-    </string-array>
-    <string-array name="preference_theme_names">
-        <item>Dir</item>
-        <item>Graustufe</item>
-        <item>Dunkel</item>
-        <item>Holo</item>
-    </string-array>
+    <string name="preference_sortby_name">Name</string>
+    <string name="preference_sortby_size">Größe</string>
+    <string name="preference_sortby_last_modified">Zuletzt geändert</string>
+    <string name="preference_theme_grayscale">Graustufe</string>
+    <string name="preference_theme_dark">Dunkel</string>
     <string name="saveas_no_file_picked">Sie haben keine Datei ausgewählt.</string>
     <string name="saveas_error">Es ist ein Fehler aufgetreten.</string>
     <string name="saveas_file_saved">Datei erfolgreich gespeichert!</string>

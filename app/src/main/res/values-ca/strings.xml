@@ -31,11 +31,8 @@
     <string name="preference_sortby_ascending">En ordre ascendent</string>
     <string name="preference_sortby_ascending_summary_on">Ordena en ordre ascendent</string>
     <string name="preference_sortby_ascending_summary_off">Ordena en ordre descendent</string>
-    <string-array name="preference_sortby_names">
-        <item>Nom</item>
-        <item>Mida</item>
-        <item>Modificat per darrer cop</item>
-    </string-array>
+    <string name="preference_sortby_name">Nom</string>
+    <string name="preference_sortby_last_modified">Modificat per darrer cop</string>
     <string name="saveas_no_file_picked">No heu escollit cap fitxer.</string>
     <string name="saveas_error">S\'ha produït un error</string>
     <string name="saveas_file_saved">S\'ha desat reeixidament el fitxer!</string>

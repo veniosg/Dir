@@ -39,17 +39,10 @@
     <string name="preference_medialib_title">Mediabibliotheek-actie</string>
     <string name="preference_medialib_summary_on">Toon mediabibliotheek-actie voor mappen</string>
     <string name="preference_medialib_summary_off">Verberg mediabibliotheek-actie voor mappen</string>
-    <string-array name="preference_sortby_names">
-        <item>Naam</item>
-        <item>Grootte</item>
-        <item>Laatst gewijzigd</item>
-    </string-array>
-    <string-array name="preference_theme_names">
-        <item>Dir</item>
-        <item>Grijswaarde</item>
-        <item>Donker</item>
-        <item>Holo</item>
-    </string-array>
+    <string name="preference_sortby_name">Naam</string>
+    <string name="preference_sortby_last_modified">Laatst gewijzigd</string>
+    <string name="preference_theme_grayscale">Grijswaarde</string>
+    <string name="preference_theme_dark">Donker</string>
     <string name="saveas_no_file_picked">U heeft geen bestand gekozen.</string>
     <string name="saveas_error">Er is een fout opgetreden.</string>
     <string name="saveas_file_saved">Bestand is succesvol opgeslagen!</string>

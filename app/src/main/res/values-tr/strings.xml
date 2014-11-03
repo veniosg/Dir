@@ -39,17 +39,10 @@
     <string name="preference_medialib_title">Medya kütüphane durumu</string>
     <string name="preference_medialib_summary_on">Medya kütüphane durumunu klasörler için göster</string>
     <string name="preference_medialib_summary_off">Medya kütüphane durumunu klasörler için gizle</string>
-    <string-array name="preference_sortby_names">
-        <item>İsim</item>
-        <item>Boyut</item>
-        <item>Son değişiklikler</item>
-    </string-array>
-    <string-array name="preference_theme_names">
-        <item>Dir</item>
-        <item>Gri ton</item>
-        <item>Koyu</item>
-        <item>Holo</item>
-    </string-array>
+    <string name="preference_sortby_name">İsim</string>
+    <string name="preference_sortby_last_modified">Son değişiklikler</string>
+    <string name="preference_theme_grayscale">Gri ton</string>
+    <string name="preference_theme_dark">Koyu</string>
     <string name="saveas_no_file_picked">Hiç bir dosya seçilmedi.</string>
     <string name="saveas_error">Hata oluştu.</string>
     <string name="saveas_file_saved">Dosya başarılı bir şekilde kaydedildi!</string>

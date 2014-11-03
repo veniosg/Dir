@@ -31,11 +31,8 @@
     <string name="preference_sortby_ascending">Vzestupně</string>
     <string name="preference_sortby_ascending_summary_on">Seřadit vzestupně</string>
     <string name="preference_sortby_ascending_summary_off">Seřadit sestupně</string>
-    <string-array name="preference_sortby_names">
-        <item>Název</item>
-        <item>Velikost</item>
-        <item>Poslední změna</item>
-    </string-array>
+    <string name="preference_sortby_name">Název</string>
+    <string name="preference_sortby_last_modified">Naposledy upraveno</string>
     <string name="saveas_no_file_picked">Nevybral/a jste žádný soubor</string>
     <string name="saveas_error">Vyskytla se chyba.</string>
     <string name="saveas_file_saved">Soubor úspěšně uložen!</string>

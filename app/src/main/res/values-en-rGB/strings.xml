@@ -2,10 +2,6 @@
 <resources>
     <!-- Bookmark action. This is a verb. -->
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
-    <string-array name="preference_theme_names">
-        <item>Dir</item>
-        <item>Greyscale</item>
-        <item>Dark</item>
-    </string-array>
+    <string name="preference_theme_grayscale">Greyscale</string>
     <string name="menu_settings">Settings</string>
 </resources>

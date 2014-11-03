@@ -27,4 +27,14 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+    <string-array name="preference_sortby_names">
+        <item>@string/preference_sortby_name</item>
+        <item>@string/preference_sortby_size</item>
+        <item>@string/preference_sortby_last_modified</item>
+    </string-array>
+    <string-array name="preference_theme_names">
+        <item>@string/app_name</item>
+        <item>@string/grayscale</item>
+        <item>@string/dark</item>
+    </string-array>
 </resources> 

@@ -39,17 +39,10 @@
     <string name="preference_medialib_title">Akcija medijske biblioteke</string>
     <string name="preference_medialib_summary_on">Prikaži akcije medijske biblioteke za mape</string>
     <string name="preference_medialib_summary_off">Sakrij akciju medijske biblioteke za mapu</string>
-    <string-array name="preference_sortby_names">
-        <item>Naziv</item>
-        <item>Veličina</item>
-        <item>Posljednje izmjenjeno</item>
-    </string-array>
-    <string-array name="preference_theme_names">
-        <item>Dir</item>
-        <item>Siva skala</item>
-        <item>Tamna</item>
-        <item>Holo</item>
-    </string-array>
+    <string name="preference_sortby_name">Naziv</string>
+    <string name="preference_sortby_last_modified">Posljednje izmjenjeno</string>
+    <string name="preference_theme_grayscale">Siva skala</string>
+    <string name="preference_theme_dark">Tamna</string>
     <string name="saveas_no_file_picked">Niste još odabrali ni jednu datoteku</string>
     <string name="saveas_error">Dogodila se greška.</string>
     <string name="saveas_file_saved">Datoteka je uspješno spremljena!</string>

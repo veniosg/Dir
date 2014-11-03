@@ -31,11 +31,9 @@
     <string name="preference_sortby_ascending">در ترتيب‌ صعودى</string>
     <string name="preference_sortby_ascending_summary_on">در فرازى تحت نوع</string>
     <string name="preference_sortby_ascending_summary_off">نوعی در ترتيب‌ نزولي‌</string>
-    <string-array name="preference_sortby_names">
-        <item>نام</item>
-        <item>اندازه‌</item>
-        <item>تعديل گذشته</item>
-    </string-array>
+    <string name="preference_sortby_name">نام</string>
+    <string name="preference_sortby_size">اندازه‌</string>
+    <string name="preference_sortby_last_modified">تعديل گذشته</string>
     <string name="saveas_no_file_picked">شما هر برداشت پرونده‌....</string>
     <string name="saveas_error">بهدخت رشديه خطا.</string>
     <string name="saveas_file_saved">پرونده‌ نجات داد با موفقيت!</string>

@@ -39,17 +39,11 @@
     <string name="preference_medialib_title">Acción de biblioteca multimedia</string>
     <string name="preference_medialib_summary_on">Mostrar acción de biblioteca multimedia en los directorios</string>
     <string name="preference_medialib_summary_off">Ocultar acción de biblioteca multimedia en los directorios</string>
-    <string-array name="preference_sortby_names">
-        <item>Nombre</item>
-        <item>Tamaño</item>
-        <item>Última modificación</item>
-    </string-array>
-    <string-array name="preference_theme_names">
-        <item>Dir</item>
-        <item>Escala de grises</item>
-        <item>Oscuro</item>
-        <item>Holo</item>
-    </string-array>
+    <string name="preference_sortby_name">Nombre</string>
+    <string name="preference_sortby_size">Tamaño</string>
+    <string name="preference_sortby_last_modified">Última modificación</string>
+    <string name="preference_theme_grayscale">Escala de grises</string>
+    <string name="preference_theme_dark">Oscuro</string>
     <string name="saveas_no_file_picked">No se ha elegido ningún archivo.</string>
     <string name="saveas_error">Ocurrió un error.</string>
     <string name="saveas_file_saved">El archivo se guardó con éxito!</string>

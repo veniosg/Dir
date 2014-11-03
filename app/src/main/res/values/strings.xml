@@ -39,16 +39,11 @@
     <string name="preference_medialib_title">Media library action</string>
     <string name="preference_medialib_summary_on">Show media library action for folders</string>
     <string name="preference_medialib_summary_off">Hide media library action for folders</string>
-    <string-array name="preference_sortby_names">
-        <item>Name</item>
-        <item>Size</item>
-        <item>Last modified</item>
-    </string-array>
-    <string-array name="preference_theme_names">
-        <item>Dir</item>
-        <item>Grayscale</item>
-        <item>Dark</item>
-    </string-array>
+    <string name="preference_sortby_name">Name</string>
+    <string name="preference_sortby_size">Size</string>
+    <string name="preference_sortby_last_modified">Last modified</string>
+    <string name="preference_theme_grayscale">Grayscale</string>
+    <string name="preference_theme_dark">Dark</string>
     <string name="saveas_no_file_picked">You haven\'t picked any file.</string>
     <string name="saveas_error">An error occured.</string>
     <string name="saveas_file_saved">File successfully saved!</string>

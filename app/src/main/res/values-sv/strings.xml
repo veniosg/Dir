@@ -31,11 +31,8 @@
     <string name="preference_sortby_ascending">Stigande ordning</string>
     <string name="preference_sortby_ascending_summary_on">Sortera i stigande följd</string>
     <string name="preference_sortby_ascending_summary_off">Sortera i nedstigande följd</string>
-    <string-array name="preference_sortby_names">
-        <item>Namn</item>
-        <item>Storlek</item>
-        <item>Senast modifierad</item>
-    </string-array>
+    <string name="preference_sortby_name">Namn</string>
+    <string name="preference_sortby_last_modified">Senast modifierad</string>
     <string name="saveas_no_file_picked">Du har inte valt någon fil.</string>
     <string name="saveas_error">Ett fel uppstod.</string>
     <string name="saveas_file_saved">Fil sparad!</string>

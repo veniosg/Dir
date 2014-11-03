@@ -30,11 +30,9 @@
     <string name="preference_sortby_ascending">In ordine crescente</string>
     <string name="preference_sortby_ascending_summary_on">Ordina in modo crescente</string>
     <string name="preference_sortby_ascending_summary_off">Ordina in modo decrescente</string>
-    <string-array name="preference_sortby_names">
-        <item>Nome</item>
-        <item>Dimensione</item>
-        <item>Ultima modifica</item>
-    </string-array>
+    <string name="preference_sortby_name">Nome</string>
+    <string name="preference_sortby_size">Dimensione</string>
+    <string name="preference_sortby_last_modified">Ultima modifica</string>
     <string name="saveas_no_file_picked">Nessun file è stato selezionato.</string>
     <string name="saveas_error">Si è verificato un errore.</string>
     <string name="saveas_file_saved">File salvato con successo!</string>

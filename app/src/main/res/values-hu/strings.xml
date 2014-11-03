@@ -39,17 +39,10 @@
     <string name="preference_medialib_title">Média könyvtár műveletek</string>
     <string name="preference_medialib_summary_on">Mutasd a média könyvtár műveleteket a mappáknál</string>
     <string name="preference_medialib_summary_off">Ne mutasd a média könyvtár műveleteket a mappáknál</string>
-    <string-array name="preference_sortby_names">
-        <item>Név</item>
-        <item>Méret</item>
-        <item>Legutóbb módosítva</item>
-    </string-array>
-    <string-array name="preference_theme_names">
-        <item>Dir</item>
-        <item>Szürkeárnyalatos</item>
-        <item>Sötét</item>
-        <item>Holo</item>
-    </string-array>
+    <string name="preference_sortby_name">Név</string>
+    <string name="preference_sortby_last_modified">Legutóbb módosítva</string>
+    <string name="preference_theme_grayscale">Szürkeárnyalatos</string>
+    <string name="preference_theme_dark">Sötét</string>
     <string name="saveas_no_file_picked">Nincs fájl kiválasztva.</string>
     <string name="saveas_error">Hiba történt.</string>
     <string name="saveas_file_saved">Fájl sikeresen mentve!</string>

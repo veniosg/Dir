@@ -31,11 +31,9 @@
     <string name="preference_sortby_ascending">आरोही क्रम में</string>
     <string name="preference_sortby_ascending_summary_on">आरोही क्रम में क्रमबद्ध करें</string>
     <string name="preference_sortby_ascending_summary_off">अवरोही क्रम में क्रमबद्ध करें</string>
-    <string-array name="preference_sortby_names">
-        <item>नाम</item>
-        <item>आकार</item>
-        <item>अंतिम बार संशोधित</item>
-    </string-array>
+    <string name="preference_sortby_name">नाम</string>
+    <string name="preference_sortby_size">आकार</string>
+    <string name="preference_sortby_last_modified">अंतिम बार संशोधित</string>
     <string name="saveas_no_file_picked">आपने कोई  भी फाईल नहीं उठाई|</string>
     <string name="saveas_error">कोई त्रुटि उत्पन्न हुई|</string>
     <string name="saveas_file_saved">फाईल सफलतापूवक सुरक्षित की गयी!</string>

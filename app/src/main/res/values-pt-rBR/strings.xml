@@ -39,17 +39,11 @@
     <string name="preference_medialib_title">Ações de biblioteca multimídia</string>
     <string name="preference_medialib_summary_on">Mostrar ações de biblioteca multimídia para pastas</string>
     <string name="preference_medialib_summary_off">Esconder ações de biblioteca multimídia para pastas</string>
-    <string-array name="preference_sortby_names">
-        <item>Nome</item>
-        <item>Tamanho</item>
-        <item>Ultima motificação</item>
-    </string-array>
-    <string-array name="preference_theme_names">
-        <item>Dir</item>
-        <item>Escala de cinza</item>
-        <item>Escuro</item>
-        <item>Holo</item>
-    </string-array>
+    <string name="preference_sortby_name">Nome</string>
+    <string name="preference_sortby_size">Tamanho</string>
+    <string name="preference_sortby_last_modified">Ultima motificação</string>
+    <string name="preference_theme_grayscale">Escala de cinza</string>
+    <string name="preference_theme_dark">Escuro</string>
     <string name="saveas_no_file_picked">You haven\'t picked any file.</string>
     <string name="saveas_error">Um erro ocorreu.</string>
     <string name="saveas_file_saved">Arquivo salvo com sucesso!</string>

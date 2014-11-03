@@ -31,11 +31,9 @@
     <string name="preference_sortby_ascending">Па ўзрастанні</string>
     <string name="preference_sortby_ascending_summary_on">Сартаваць па ўзрастанні</string>
     <string name="preference_sortby_ascending_summary_off">Сартаваць па змяншэнні</string>
-    <string-array name="preference_sortby_names">
-        <item>Назва</item>
-        <item>Памер</item>
-        <item>Апошняе змяненне</item>
-    </string-array>
+    <string name="preference_sortby_name">Назва</string>
+    <string name="preference_sortby_size">Памер</string>
+    <string name="preference_sortby_last_modified">Апошняе змяненне</string>
     <string name="saveas_no_file_picked">Вы не абралі файл.</string>
     <string name="saveas_error">Адбылася памылка.</string>
     <string name="saveas_file_saved">Файл паспяхова захаваны!</string>

@@ -31,11 +31,6 @@
     <string name="preference_sortby_ascending">W porządku rosnącym</string>
     <string name="preference_sortby_ascending_summary_on">Posortuj w porządku rosnącym</string>
     <string name="preference_sortby_ascending_summary_off">Posortuj w porządku malejącym</string>
-    <string-array name="preference_sortby_names">
-        <item>Imię</item>
-        <item>Rozmiar</item>
-        <item>Ostatnio zmodyfikowano</item>
-    </string-array>
     <string name="saveas_no_file_picked">Nie zaznaczono żadnych plików</string>
     <string name="saveas_error">Wystąpił błąd.</string>
     <string name="saveas_file_saved">Plik zapisany pomyślnie!</string>

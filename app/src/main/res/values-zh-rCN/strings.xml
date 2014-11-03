@@ -39,17 +39,11 @@
     <string name="preference_medialib_title">菜单中媒体库操作</string>
     <string name="preference_medialib_summary_on">显示文件夹媒体库动作</string>
     <string name="preference_medialib_summary_off">隐藏文件夹媒体库动作</string>
-    <string-array name="preference_sortby_names">
-        <item>名称</item>
-        <item>大小</item>
-        <item>上次修改</item>
-    </string-array>
-    <string-array name="preference_theme_names">
-        <item>Dir</item>
-        <item>浅灰</item>
-        <item>黑色</item>
-        <item>Holo</item>
-    </string-array>
+    <string name="preference_sortby_name">名称</string>
+    <string name="preference_sortby_size">大小</string>
+    <string name="preference_sortby_last_modified">最近修改</string>
+    <string name="preference_theme_grayscale">浅灰</string>
+    <string name="preference_theme_dark">黑色</string>
     <string name="saveas_no_file_picked">你没有选择任何文件。</string>
     <string name="saveas_error">发生错误。</string>
     <string name="saveas_file_saved">文件保存成功！</string>

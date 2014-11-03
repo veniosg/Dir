@@ -31,11 +31,8 @@
     <string name="preference_sortby_ascending">Augošā secībā</string>
     <string name="preference_sortby_ascending_summary_on">Šķirot augošā secībā</string>
     <string name="preference_sortby_ascending_summary_off">Šķirot dilstošā secībā</string>
-    <string-array name="preference_sortby_names">
-        <item>Nosaukums</item>
-        <item>Izmērs</item>
-        <item>Pēdējo reizi mainīts</item>
-    </string-array>
+    <string name="preference_sortby_size">Izmērs</string>
+    <string name="preference_sortby_last_modified">Pēdējo reizi mainīts</string>
     <string name="saveas_no_file_picked">Jūs neesat izvēlējies nevienu failu.</string>
     <string name="saveas_error">Notika kļūda</string>
     <string name="saveas_file_saved">Fails veiksmīgi saglabāts!</string>

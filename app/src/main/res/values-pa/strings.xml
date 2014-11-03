@@ -29,11 +29,9 @@
     <string name="preference_sortby_ascending">ਉਪਰ ਸੇ ਨੀਚੇ</string>
     <string name="preference_sortby_ascending_summary_on">ਉਪਰ ਸੇ ਨੀਚੇ ਛਾਟੋ</string>
     <string name="preference_sortby_ascending_summary_off">ਨੀਚੇ ਸੇ  ਉਪਰ ਛਾਟੋ</string>
-    <string-array name="preference_sortby_names">
-        <item>ਨਾਮ</item>
-        <item>ਸਾਈਜ਼</item>
-        <item>ਆਖਰੀ ਸੋਧ</item>
-    </string-array>
+    <string name="preference_sortby_name">ਨਾਮ</string>
+    <string name="preference_sortby_size">ਸਾਈਜ਼</string>
+    <string name="preference_sortby_last_modified">ਆਖਰੀ ਸੋਧ</string>
     <string name="saveas_no_file_picked">ਕੋਇ ਫਾਇਲ ਨਹੀ ਉਠਾਇ</string>
     <string name="saveas_error">ਏਰਰ ਆ ਗਯਾ</string>
     <string name="saveas_file_saved">ਫਾਇਲ ਰਖ ਲੀ ਗਯੀ</string>

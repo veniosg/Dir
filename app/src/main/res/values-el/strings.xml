@@ -39,17 +39,10 @@
     <string name="preference_medialib_title">Ενέργεια βιβλιοθήκης πολυμέσων.</string>
     <string name="preference_medialib_summary_on">Εμφάνιση ενέργειας βιβλιοθήκης πολυμέσων για φακέλους</string>
     <string name="preference_medialib_summary_off">Απόκρυψη ενέργειας βιβλιοθήκης πολυμέσων για φακέλους.</string>
-    <string-array name="preference_sortby_names">
-        <item>Όνομα</item>
-        <item>Μέγεθος</item>
-        <item>Τελευταία τροποποίηση</item>
-    </string-array>
-    <string-array name="preference_theme_names">
-        <item>Dir</item>
-        <item>Ασπρόμαυρο</item>
-        <item>Σκούρο</item>
-        <item>Holo</item>
-    </string-array>
+    <string name="preference_sortby_name">Όνομα</string>
+    <string name="preference_sortby_last_modified">Τελευταία τροποποίηση</string>
+    <string name="preference_theme_grayscale">Ασπρόμαυρο</string>
+    <string name="preference_theme_dark">Σκούρο</string>
     <string name="saveas_no_file_picked">Δεν έχετε επιλεξει κάποιο αρχείο.</string>
     <string name="saveas_error">Προέκυψε ένα σφάλμα.</string>
     <string name="saveas_file_saved">Το αρχείο αποθηκεύτηκε επιτυχώς!</string>

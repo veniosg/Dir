@@ -39,17 +39,11 @@
     <string name="preference_medialib_title">Options de bibliothèque</string>
     <string name="preference_medialib_summary_on">Afficher les options de bibliothèque pour les dossiers</string>
     <string name="preference_medialib_summary_off">Masquer les options de bibliothèque pour les dossiers</string>
-    <string-array name="preference_sortby_names">
-        <item>Nom</item>
-        <item>Taille</item>
-        <item>Dernière modification</item>
-    </string-array>
-    <string-array name="preference_theme_names">
-        <item>Dir</item>
-        <item>Noir et blanc</item>
-        <item>Foncé</item>
-        <item>Holo</item>
-    </string-array>
+    <string name="preference_sortby_name">Nom</string>
+    <string name="preference_sortby_size">Taille</string>
+    <string name="preference_sortby_last_modified">Dernière mise à jour</string>
+    <string name="preference_theme_grayscale">Noir et blanc</string>
+    <string name="preference_theme_dark">Foncé</string>
     <string name="saveas_no_file_picked">Vous n\'avez pas choisi n\'importe quel fichier.</string>
     <string name="saveas_error">Une erreur s\'est produite</string>
     <string name="saveas_file_saved">Fichier sauvegardé avec succès</string>
