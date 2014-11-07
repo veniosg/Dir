@@ -18,7 +18,9 @@ package com.veniosg.dir.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Xfermode;
@@ -28,6 +30,7 @@ import android.os.Build;
 import com.veniosg.dir.R;
 import com.veniosg.dir.fragment.PreferenceFragment;
 
+import static android.graphics.Color.LTGRAY;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.L;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
@@ -54,10 +57,27 @@ public class Themer {
     }
 
     public static final int getThemedResourceId(Context ctx, int attributeId) {
-        TypedArray a = ctx.getTheme().obtainStyledAttributes(new int[] {attributeId});
-        int attributeResourceId = a.getResourceId(0, 0);
-        a.recycle();
-
-        return attributeResourceId;
+        return getThemedResourceId(ctx.getTheme(), attributeId);
     }
+
+
+    public static final int getThemedResourceId(Resources.Theme theme, int attributeId) {
+        TypedArray a = theme.obtainStyledAttributes(new int[]{attributeId});
+        int result = a.getResourceId(0, -1);
+        a.recycle();
+        return result;
+    }
+
+    public static final int getThemedColor(Context ctx, int attributeId) {
+        return getThemedColor(ctx.getTheme(), attributeId);
+    }
+
+    public static final int getThemedColor(Resources.Theme theme, int attributeId) {
+        TypedArray a = theme.obtainStyledAttributes(new int[] {attributeId});
+        int result = a.getColor(0, -1);
+        a.recycle();
+        return result;
+    }
+
+
 }

@@ -28,7 +28,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,7 +36,6 @@ import android.widget.TextView;
 import com.veniosg.dir.R;
 import com.veniosg.dir.adapter.BookmarkListAdapter;
 import com.veniosg.dir.provider.BookmarkProvider;
-import com.veniosg.dir.view.Themer;
 import com.veniosg.dir.view.WaitingViewFlipper;
 
 import java.io.File;

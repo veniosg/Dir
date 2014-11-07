@@ -31,7 +31,6 @@ import android.widget.TextView;
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.activity.FileManagerActivity;
-import com.veniosg.dir.adapter.FileHolderListAdapter;
 import com.veniosg.dir.adapter.SearchListAdapter;
 import com.veniosg.dir.loader.SearchLoader;
 import com.veniosg.dir.misc.FileHolder;
@@ -90,6 +89,7 @@ public class SearchListFragment extends AbsListFragment implements LoaderManager
 
         mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
         ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.search_empty);
+        ((TextView) view.findViewById(R.id.loading_text)).setText(R.string.searching);
         view.findViewById(R.id.empty_img).setVisibility(GONE);
         setLoading(true);
 
