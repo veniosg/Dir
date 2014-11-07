@@ -19,18 +19,24 @@ package com.veniosg.dir.misc;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.XmlResourceParser;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.view.ContextThemeWrapper;
 import android.webkit.MimeTypeMap;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.view.Themer;
 
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.veniosg.dir.view.Themer.getThemedColor;
+import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
 public class MimeTypes {
 
@@ -128,6 +134,10 @@ public class MimeTypes {
 	}
 
     public Drawable getIcon(Context c, String mimeType) {
-        return c.getDrawable(sIconIds[getIconIndex(mimeType)]);
+        if (!(c instanceof ContextThemeWrapper))
+            throw new IllegalArgumentException("Context must be themed to get the proper icons!");
+
+        int iconResId = sIconIds[getIconIndex(mimeType)];
+        return c.getDrawable(iconResId);
     }
 }

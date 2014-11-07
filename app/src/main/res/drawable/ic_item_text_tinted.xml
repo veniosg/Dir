@@ -15,7 +15,8 @@
  * limitations under the License.
  -->
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
-    android:inset="2dp"
-    android:drawable="@drawable/ic_item_text"
-    android:tint="?attr/colorIcon" >
+    android:inset="2dp">
+    <bitmap
+        android:src="@drawable/ic_item_text"
+        android:tint="?attr/colorIcon" />
 </inset>
