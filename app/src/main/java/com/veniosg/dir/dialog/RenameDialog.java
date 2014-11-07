@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
-import com.veniosg.dir.fragment.FileListFragment;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.util.MediaScannerUtils;
 
@@ -26,7 +24,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RenameDialog extends DarkTitleDialogFragment {
+public class RenameDialog extends BaseDialogFragment {
 	private FileHolder mFileHolder;
 	
 	@Override
@@ -60,22 +58,23 @@ public class RenameDialog extends DarkTitleDialogFragment {
 				return true;
 			}
 		});
-		
-		return new AlertDialog.Builder(getActivity())
-				.setTitle(R.string.menu_rename)
-				.setIcon(mFileHolder.getIcon())
-				.setView(view)
-				.setNegativeButton(android.R.string.cancel, null)
-				.setPositiveButton(android.R.string.ok,
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								renameTo(v.getText().toString());
 
-							}
-						})
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.menu_rename)
+                .setView(view)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                renameTo(v.getText().toString());
+
+                            }
+                        })
                 .create();
+        dialog.setIcon(tintIcon(mFileHolder.getIcon()));
+        return dialog;
 	}
 
 	private void renameTo(String to){

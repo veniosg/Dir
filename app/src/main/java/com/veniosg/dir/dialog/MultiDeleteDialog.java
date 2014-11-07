@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
 import com.veniosg.dir.IntentConstants;
@@ -20,7 +19,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MultiDeleteDialog extends DarkTitleDialogFragment {
+public class MultiDeleteDialog extends BaseDialogFragment {
 	private List<FileHolder> mFileHolders;
 	
 	@Override
@@ -32,17 +31,18 @@ public class MultiDeleteDialog extends DarkTitleDialogFragment {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		return new AlertDialog.Builder(getActivity())
-				.setTitle(getString(R.string.really_delete_multiselect, mFileHolders.size()))
-				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-							new RecursiveDeleteTask().execute();
-					}
-				})
-				.setNegativeButton(R.string.no, null)
-                .setIcon(getResources().getDrawable(R.drawable.ic_action_delete))
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.really_delete_multiselect, mFileHolders.size()))
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new RecursiveDeleteTask().execute();
+                    }
+                })
+                .setNegativeButton(R.string.no, null)
                 .create();
+        dialog.setIcon(tintIcon(R.drawable.ic_action_delete));
+        return dialog;
 	}
 	
 	private class RecursiveDeleteTask extends AsyncTask<Void, Void, Void> {

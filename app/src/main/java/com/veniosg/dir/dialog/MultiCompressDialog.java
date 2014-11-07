@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,7 @@ import com.veniosg.dir.service.ZipService;
 import java.io.File;
 import java.util.List;
 
-public class MultiCompressDialog extends DarkTitleDialogFragment implements Overwritable {
+public class MultiCompressDialog extends BaseDialogFragment implements Overwritable {
 	private List<FileHolder> mFileHolders;
 
 	@Override
@@ -57,18 +56,19 @@ public class MultiCompressDialog extends DarkTitleDialogFragment implements Over
 				   return true;
 				}
 		});
-		
-		return new AlertDialog.Builder(getActivity())
-				.setTitle(R.string.menu_compress)
-				.setView(view)
-				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						compress(v.getText().toString());
-					}
-				})
-                .setIcon(getResources().getDrawable(R.drawable.ic_action_box))
+
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.menu_compress)
+                .setView(view)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        compress(v.getText().toString());
+                    }
+                })
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
+        dialog.setIcon(tintIcon(R.drawable.ic_action_box));
+        return dialog;
 	}
 	
 	private void compress(final String zipname){

@@ -3,24 +3,21 @@ package com.veniosg.dir.dialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.util.FileUtils;
-import com.veniosg.dir.util.Utils;
 
 import java.io.File;
 
-public class DetailsDialog extends DarkTitleDialogFragment {
+public class DetailsDialog extends BaseDialogFragment {
 	private FileHolder mFileHolder;
 	private TextView mSizeView;
 
@@ -54,9 +51,8 @@ public class DetailsDialog extends DarkTitleDialogFragment {
                 mFileHolder.getFormattedModificationDate(getActivity()));
 		
 		// Finally create the dialog
-        return new AlertDialog.Builder(getActivity())
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(mFileHolder.getName())
-                .setIcon(mFileHolder.getIcon())
                 .setView(v)
                 .setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
@@ -68,9 +64,10 @@ public class DetailsDialog extends DarkTitleDialogFragment {
                         }
                 )
                 .create();
+        dialog.setIcon(tintIcon(mFileHolder.getIcon()));
+        return dialog;
 	}
-
-	/**
+    /**
 	 * This task doesn't update the text viewed to the user until it's finished, 
 	 * so that the user knows the size he sees is indeed the final one.
 	 * 

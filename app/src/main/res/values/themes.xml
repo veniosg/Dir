@@ -69,6 +69,7 @@
 
         <item name="drawerShadow">@drawable/dir_bg_drawer_shadow</item>
         <item name="pathbarItemStyle">@style/Widget.Dir.PathBar.Button</item>
+        <item name="android:alertDialogTheme">@style/Theme.Dir.Dialog.Alert</item>
     </style>
 
     <!-- Dark theme -->
@@ -119,6 +120,7 @@
 
         <item name="drawerShadow">@drawable/dark_bg_drawer_shadow</item>
         <item name="pathbarItemStyle">@style/Widget.Dir.PathBar.Button</item>
+        <item name="android:alertDialogTheme">@style/Theme.Dark.Dialog.Alert</item>
     </style>
 
     <!-- Light grayscale theme -->
@@ -129,6 +131,21 @@
         <item name="colorPrimaryLight">@color/dark_primaryLight</item>
 
         <!-- Control colour -->
+        <item name="android:colorAccent">@color/dark_primaryDark</item>
+        <item name="android:alertDialogTheme">@style/Theme.Grayscale.Dialog.Alert</item>
+    </style>
+
+
+    <!-- Dialog themes -->
+    <style name="Theme.Dir.Dialog.Alert" parent="@android:style/Theme.Material.Light.Dialog.Alert" >
+        <item name="android:colorAccent">@color/dir_accent</item>
+        <item name="android:textColorHighlight">@color/textColorHighlight</item>
+    </style>
+    <style name="Theme.Dark.Dialog.Alert" parent="@android:style/Theme.Material.Dialog.Alert" >
+        <item name="android:colorAccent">@color/dark_accent</item>
+        <item name="android:textColorHighlight">@color/textColorHighlight</item>
+    </style>
+    <style name="Theme.Grayscale.Dialog.Alert" parent="@style/Theme.Dir.Dialog.Alert" >
         <item name="android:colorAccent">@color/dark_primaryDark</item>
     </style>
 

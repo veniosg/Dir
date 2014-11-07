@@ -4,9 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +20,10 @@ import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.dialog.OverwriteFileDialog.Overwritable;
 import com.veniosg.dir.fragment.FileListFragment;
-import com.veniosg.dir.util.Utils;
 
 import java.io.File;
 
-public class CreateDirectoryDialog extends DarkTitleDialogFragment implements Overwritable {
+public class CreateDirectoryDialog extends BaseDialogFragment implements Overwritable {
 	private File mIn;
 
 	@Override
@@ -61,10 +58,10 @@ public class CreateDirectoryDialog extends DarkTitleDialogFragment implements Ov
             }
         });
 
-		return new AlertDialog.Builder(getActivity())
-				.setTitle(R.string.create_new_folder)
-				.setView(view)
-				.setPositiveButton(android.R.string.ok,
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.create_new_folder)
+                .setView(view)
+                .setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
 
                             @Override
@@ -75,8 +72,9 @@ public class CreateDirectoryDialog extends DarkTitleDialogFragment implements Ov
                         }
                 )
                 .setNegativeButton(android.R.string.cancel, null)
-                .setIcon(R.drawable.ic_item_folder_tinted)
-				.create();
+                .create();
+        dialog.setIcon(tintIcon(R.drawable.ic_item_folder));
+        return dialog;
 	}
 
 	private void createFolder(final CharSequence text, Context c) {
