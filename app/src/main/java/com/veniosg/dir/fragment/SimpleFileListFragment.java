@@ -57,8 +57,10 @@ import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.util.MediaScannerUtils;
 import com.veniosg.dir.util.Utils;
 import com.veniosg.dir.view.AnimatedFileListContainer;
+import com.veniosg.dir.view.MaterialPathView;
 import com.veniosg.dir.view.PathBar;
 import com.veniosg.dir.view.PathController;
+import com.veniosg.dir.view.PathViewCompatibleToolbar;
 
 import java.io.File;
 import java.io.IOException;
@@ -355,6 +357,12 @@ public class SimpleFileListFragment extends FileListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             firstTimeAnimation(container);
+        }
+
+        PathViewCompatibleToolbar toolbar = (PathViewCompatibleToolbar)
+                getActivity().findViewById(R.id.toolbar);
+        if (!toolbar.hasPathView()) {
+            toolbar.addView(new MaterialPathView(toolbar.getContext()));
         }
 
         return inflater.inflate(R.layout.filelist_simple, null);

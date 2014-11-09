@@ -31,8 +31,7 @@
         android:hardwareAccelerated="true" >
 
         <activity
-            android:name=".activity.FileManagerActivity"
-            android:label="@string/app_name">
+            android:name=".activity.FileManagerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

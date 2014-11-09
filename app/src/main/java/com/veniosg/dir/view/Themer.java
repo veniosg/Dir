@@ -79,5 +79,10 @@ public class Themer {
         return result;
     }
 
-
+    public static final float getThemedDimension(Context ctx, int attributeId) {
+        TypedArray a = ctx.getTheme().obtainStyledAttributes(new int[] {attributeId});
+        float result = a.getDimension(0, 0);
+        a.recycle();
+        return result;
+    }
 }

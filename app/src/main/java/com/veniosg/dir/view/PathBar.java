@@ -391,8 +391,7 @@ public class PathBar extends ViewFlipper implements PathController {
 		return mCurrentDirectory.listFiles();
 	}
 
-	public void setOnDirectoryChangedListener(
-			OnDirectoryChangedListener listener) {
+	public void setOnDirectoryChangedListener(OnDirectoryChangedListener listener) {
 		if (listener != null)
 			mDirectoryChangedListener = listener;
 		else
