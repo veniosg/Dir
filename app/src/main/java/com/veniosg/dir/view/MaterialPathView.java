@@ -27,6 +27,7 @@ import com.veniosg.dir.R;
 
 import java.io.File;
 
+import static android.os.Environment.getExternalStorageDirectory;
 import static android.view.View.MeasureSpec.EXACTLY;
 import static android.view.View.MeasureSpec.makeMeasureSpec;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -38,9 +39,9 @@ import static com.veniosg.dir.view.Themer.getThemedDimension;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
 public class MaterialPathView extends ViewFlipper implements PathController {
-    private File mCurrentDirectory = null;
     private Mode mCurrentMode = STANDARD_INPUT;
-    private File mInitialDirectory = null;
+    private File mCurrentDirectory = getExternalStorageDirectory();
+    private File mInitialDirectory = getExternalStorageDirectory();
     private OnDirectoryChangedListener mDirectoryChangedListener = noOpOnDirectoryChangedListener();
 
     public MaterialPathView(Context context) {

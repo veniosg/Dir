@@ -2,6 +2,7 @@ package com.veniosg.dir.view;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import java.io.File;
 
@@ -79,6 +80,8 @@ public interface PathController {
     boolean onBackPressed();
 
     void setOnDirectoryChangedListener(OnDirectoryChangedListener listener);
+
+    void setEnabled(boolean enabled);
 
     /**
      * Interface notifying users of this class when the user has chosen to navigate elsewhere.

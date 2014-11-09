@@ -81,7 +81,7 @@ public class SimpleFileListFragment extends FileListFragment {
 
     private static HashMap<String, ScrollPosition> sScrollPositions = new HashMap<String, ScrollPosition>();
 
-    private PathBar mPathBar;
+    private PathController mPathBar;
     private AnimatedFileListContainer mZoomView;
     private ActionMode mActionMode;
     private boolean mActionsEnabled = true;
@@ -372,7 +372,7 @@ public class SimpleFileListFragment extends FileListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mPathBar = (PathBar) view.findViewById(R.id.pathbar);
+        mPathBar = (PathController) getActivity().findViewById(R.id.pathview);
         mZoomView = (AnimatedFileListContainer) view.findViewById(R.id.zoomview);
 
         // Handle mPath differently if we restore state or just initially create the view.

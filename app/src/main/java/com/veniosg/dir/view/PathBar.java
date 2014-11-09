@@ -78,6 +78,7 @@ import static com.veniosg.dir.view.Themer.getThemedResourceId;
  *
  * @author George Venios
  */
+@Deprecated
 public class PathBar extends ViewFlipper implements PathController {
     private static final float BG_ITEM_SKEW_DELTA_DP = 3F;
     private final int BG_ITEM_SKEW_DELTA_PX;

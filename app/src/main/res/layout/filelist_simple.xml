@@ -4,13 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.veniosg.dir.view.PathBar
-        android:id="@+id/pathbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/pathbar_height"
-        android:background="?attr/colorBackgroundSecondary"
-        android:elevation="2dp" />
-
     <com.veniosg.dir.view.AnimatedFileListContainer
         android:id="@+id/zoomview"
         android:layout_width="match_parent"

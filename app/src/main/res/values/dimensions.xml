@@ -1,7 +1,4 @@
 <resources>
-    <dimen name="pathbar_height">48dp</dimen>
-    <dimen name="pathbar_height_tablet">56dp</dimen>
-
     <dimen name="item_height">72dp</dimen>
     <dimen name="item_height_tablet">88dp</dimen>
 
