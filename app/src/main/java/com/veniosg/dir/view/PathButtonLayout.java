@@ -27,7 +27,6 @@ import android.widget.LinearLayout;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Utils;
-import com.veniosg.dir.view.PathBar.Mode;
 
 import java.io.File;
 import java.util.HashMap;

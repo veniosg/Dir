@@ -312,6 +312,16 @@ public class FileUtils {
         return intent;
     }
 
+    public static boolean isOk(File file) {
+        // Check file state.
+        boolean isFileOK = true;
+        isFileOK &= file.exists();
+        isFileOK &= file.isDirectory();
+        // add more filters here..
+
+        return isFileOK;
+    }
+
     private static void launchFileIntent(Intent intent, Context c) {
         try {
             List<ResolveInfo> activities = c.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);

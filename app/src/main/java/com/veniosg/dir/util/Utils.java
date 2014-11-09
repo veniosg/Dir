@@ -354,4 +354,25 @@ public abstract class Utils {
         return applyDimension(COMPLEX_UNIT_DIP, value,
                 context.getResources().getDisplayMetrics());
     }
+
+    /**
+     *
+     * @param dirPath The current directory's absolute path.
+     * @return Whether the back button should exit the app.
+     */
+    public static boolean backWillExit(String initialDirPath, String currentDirPath) {
+        // Count tree depths
+        String[] dir = currentDirPath.split("/");
+        int dirTreeDepth = dir.length;
+
+        String[] init = initialDirPath.split("/");
+        int initTreeDepth = init.length;
+
+        // analyze and return
+        if (dirTreeDepth > initTreeDepth) {
+            return false;
+        } else {
+            return currentDirPath.equals(initialDirPath) || currentDirPath.equals("/");
+        }
+    }
 }

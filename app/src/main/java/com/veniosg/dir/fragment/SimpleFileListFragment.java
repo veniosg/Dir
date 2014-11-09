@@ -16,8 +16,6 @@
 
 package com.veniosg.dir.fragment;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
@@ -34,7 +32,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -61,18 +58,14 @@ import com.veniosg.dir.util.MediaScannerUtils;
 import com.veniosg.dir.util.Utils;
 import com.veniosg.dir.view.AnimatedFileListContainer;
 import com.veniosg.dir.view.PathBar;
-import com.veniosg.dir.view.PathBar.Mode;
-import com.veniosg.dir.view.PathBar.OnDirectoryChangedListener;
+import com.veniosg.dir.view.PathController;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static android.R.integer.config_mediumAnimTime;
-import static android.R.integer.config_shortAnimTime;
-import static com.veniosg.dir.AnimationConstants.inInterpolator;
-import static com.veniosg.dir.util.Utils.dp;
+import static com.veniosg.dir.view.PathController.OnDirectoryChangedListener;
 
 /**
  * A file list fragment that supports CAB selection.
@@ -650,7 +643,7 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     public boolean pressBack() {
-        return mPathBar.pressBack();
+        return mPathBar.onBackPressed();
     }
 
     /**
@@ -666,7 +659,7 @@ public class SimpleFileListFragment extends FileListFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putBoolean(INSTANCE_STATE_PATHBAR_MODE, mPathBar.getMode() == Mode.MANUAL_INPUT);
+        outState.putBoolean(INSTANCE_STATE_PATHBAR_MODE, mPathBar.getMode() == PathController.Mode.MANUAL_INPUT);
     }
 
     /**

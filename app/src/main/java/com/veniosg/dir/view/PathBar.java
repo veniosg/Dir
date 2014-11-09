@@ -22,8 +22,6 @@ import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -48,8 +46,6 @@ import static android.animation.LayoutTransition.CHANGE_APPEARING;
 import static android.animation.LayoutTransition.CHANGE_DISAPPEARING;
 import static android.animation.LayoutTransition.DISAPPEARING;
 import static android.content.Context.INPUT_METHOD_SERVICE;
-import static android.graphics.Color.WHITE;
-import static android.graphics.Paint.Style.FILL;
 import static android.text.InputType.TYPE_TEXT_VARIATION_URI;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.KEYCODE_DPAD_CENTER;
@@ -65,9 +61,11 @@ import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static com.veniosg.dir.AnimationConstants.inInterpolator;
 import static com.veniosg.dir.AnimationConstants.outInterpolator;
+import static com.veniosg.dir.util.FileUtils.isOk;
+import static com.veniosg.dir.util.Utils.backWillExit;
 import static com.veniosg.dir.util.Utils.dp;
-import static com.veniosg.dir.view.PathBar.Mode.MANUAL_INPUT;
-import static com.veniosg.dir.view.PathBar.Mode.STANDARD_INPUT;
+import static com.veniosg.dir.view.PathController.Mode.MANUAL_INPUT;
+import static com.veniosg.dir.view.PathController.Mode.STANDARD_INPUT;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
 /**
@@ -80,24 +78,10 @@ import static com.veniosg.dir.view.Themer.getThemedResourceId;
  *
  * @author George Venios
  */
-public class PathBar extends ViewFlipper {
+public class PathBar extends ViewFlipper implements PathController {
     private static final float BG_ITEM_SKEW_DELTA_DP = 3F;
     private final int BG_ITEM_SKEW_DELTA_PX;
     private static float NEW_ITEM_DISTANCE;
-
-    /**
-	 * The available Modes of this PathBar. </br> See {@link PathBar#switchToManualInput() switchToManualInput()} and {@link PathBar#switchToStandardInput() switchToStandardInput()}.
-	 */
-	public enum Mode {
-		/**
-		 * The button path selection mode.
-		 */
-		STANDARD_INPUT,
-		/**
-		 * The text path input mode.
-		 */
-		MANUAL_INPUT
-	}
 
 	private File mCurrentDirectory = null;
 	private Mode mCurrentMode = STANDARD_INPUT;
@@ -335,36 +319,19 @@ public class PathBar extends ViewFlipper {
         return anim;
     }
 
-    /**
-	 * Sets the directory the parent activity showed first so that back behavior is fixed.
-	 *
-	 * @param initDir The directory.
-	 */
 	public void setInitialDirectory(File initDir) {
 		mInitialDirectory = initDir;
 		cd(initDir);
 	}
 
-	/**
-	 * See {@link #setInitialDirectory(File)}.
-	 */
 	public void setInitialDirectory(String initPath) {
 		setInitialDirectory(new File(initPath));
 	}
 
-	/**
-	 * @see #setInitialDirectory(File)
-	 * @return The initial directory.
-	 */
 	public File getInitialDirectory() {
 		return mInitialDirectory;
 	}
 
-	/**
-	 * Get the currently active directory.
-	 *
-	 * @return A {@link File} representing the currently active directory.
-	 */
 	public File getCurrentDirectory() {
 		return mCurrentDirectory;
 	}
@@ -389,12 +356,6 @@ public class PathBar extends ViewFlipper {
 		}
 	}
 
-	/**
-	 * {@code cd} to the passed file. If the file is legal input, sets it as the currently active Directory. Otherwise calls the listener to handle it, if any.
-	 *
-	 * @param file The file to {@code cd} to.
-	 * @return Whether the path entered exists and can be navigated to.
-	 */
     public boolean cd(File file) {
         return cd(file, false);
     }
@@ -402,7 +363,7 @@ public class PathBar extends ViewFlipper {
 	public boolean cd(File file, boolean forceNoAnim) {
 		boolean res = false;
 
-		if (isFileOk(file)) {
+		if (isOk(file)) {
             File oldDir = new File(mCurrentDirectory.getAbsolutePath());
 
 			// Set proper current directory.
@@ -422,20 +383,10 @@ public class PathBar extends ViewFlipper {
 
 		return res;
 	}
-
-	/**
-	 * @see {@link com.veniosg.dir.view.PathBar#cd(File) cd(File)}
-	 * @param path
-	 *            The path of the Directory to {@code cd} to.
-	 * @return Whether the path entered exists and can be navigated to.
-	 */
 	public boolean cd(String path) {
 		return cd(new File(path));
 	}
 
-	/**
-	 * The same as running {@code File.listFiles()} on the currently active Directory.
-	 */
 	public File[] ls() {
 		return mCurrentDirectory.listFiles();
 	}
@@ -468,19 +419,15 @@ public class PathBar extends ViewFlipper {
 		mCurrentMode = STANDARD_INPUT;
 	}
 
-	/**
-	 * Activities containing this bar, will have to call this method when the back button is pressed to provide correct backstack redirection and mode switching.
-	 *
-	 * @return Whether this view consumed the event.
-	 */
-	public boolean pressBack() {
+	public boolean onBackPressed() {
 		// Switch mode.
 		if (mCurrentMode == MANUAL_INPUT) {
 			switchToStandardInput();
 		}
 		// Go back.
 		else if (mCurrentMode == STANDARD_INPUT) {
-			if (!backWillExit(mCurrentDirectory.getAbsolutePath())) {
+			if (!backWillExit(mInitialDirectory.getAbsolutePath(),
+                    mCurrentDirectory.getAbsolutePath())) {
 				cd(mCurrentDirectory.getParent());
 				return true;
 			} else
@@ -498,27 +445,6 @@ public class PathBar extends ViewFlipper {
 		return mCurrentMode;
 	}
 
-	/**
-	 *
-	 * @param dirPath The current directory's absolute path.
-	 * @return Whether the back button should exit the app.
-	 */
-	private boolean backWillExit(String dirPath) {
-		// Count tree depths
-		String[] dir = dirPath.split("/");
-		int dirTreeDepth = dir.length;
-
-		String[] init = mInitialDirectory.getAbsolutePath().split("/");
-		int initTreeDepth = init.length;
-
-		// analyze and return
-		if (dirTreeDepth > initTreeDepth) {
-			return false;
-		} else {
-            return dirPath.equals(mInitialDirectory.getAbsolutePath()) || dirPath.equals("/");
-		}
-	}
-
 	@Override
 	public void setEnabled(boolean enabled) {
 		if(enabled)
@@ -531,25 +457,8 @@ public class PathBar extends ViewFlipper {
 		super.setEnabled(enabled);
 	}
 
-	/**
-	 * Interface notifying users of this class when the user has chosen to navigate elsewhere.
-	 */
-	public interface OnDirectoryChangedListener {
-		public void directoryChanged(File newCurrentDir);
-	}
-
-	public PathButtonLayout getPathButtonLayout() {
+	PathButtonLayout getPathButtonLayout() {
 		return mPathButtons;
-	}
-
-	boolean isFileOk(File file) {
-		// Check file state.
-		boolean isFileOK = true;
-		isFileOK &= file.exists();
-		isFileOK &= file.isDirectory();
-		// add more filters here..
-
-		return isFileOK;
 	}
 
     public Drawable getItemBackgroundDrawable(Context c, String absolutePath) {
@@ -558,35 +467,5 @@ public class PathBar extends ViewFlipper {
         } else {
             return c.getDrawable(R.drawable.bg_btn_pathbar_skewed);
         }
-    }
-
-    public Drawable getSquareMaskDrawable(Context c) {
-        return wrapForTouchFeedback(c.getResources().getDrawable(R.drawable.btn_pathbar_straight));
-    }
-
-    public Drawable getSemiStraightMaskDrawable(Context c) {
-        return wrapForTouchFeedback(c.getResources().getDrawable(R.drawable.btn_pathbar_semiskewed));
-    }
-
-    public Drawable getSkewedMaskDrawable(Context c) {
-        return wrapForTouchFeedback(c.getResources().getDrawable(R.drawable.bg_btn_pathbar_skewed));
-    }
-
-    private void configureMaskDrawablePaint(ShapeDrawable shapeDrawable) {
-        shapeDrawable.getPaint().setAntiAlias(true);
-        shapeDrawable.getPaint().setStyle(FILL);
-        shapeDrawable.getPaint().setColor(WHITE);
-    }
-
-    private Drawable wrapForTouchFeedback(Drawable drawable) {
-        Drawable touchDrawable = getTouchFeedbackDrawable();
-        Drawable[] drawables = new Drawable[]{drawable, touchDrawable.mutate()};
-        LayerDrawable touchableDrawable = new LayerDrawable(drawables);
-        return new LayerDrawable(drawables);
-    }
-
-    public Drawable getTouchFeedbackDrawable() {
-        return getResources().getDrawable(getThemedResourceId(getContext(),
-                android.R.attr.listChoiceBackgroundIndicator));
     }
 }
