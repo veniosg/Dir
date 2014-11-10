@@ -38,18 +38,18 @@ import static com.veniosg.dir.view.PathController.Mode.STANDARD_INPUT;
 import static com.veniosg.dir.view.Themer.getThemedDimension;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
-public class MaterialPathView extends ViewFlipper implements PathController {
+public class PathView extends ViewFlipper implements PathController {
     private Mode mCurrentMode = STANDARD_INPUT;
     private File mCurrentDirectory = getExternalStorageDirectory();
     private File mInitialDirectory = getExternalStorageDirectory();
     private OnDirectoryChangedListener mDirectoryChangedListener = noOpOnDirectoryChangedListener();
 
-    public MaterialPathView(Context context) {
+    public PathView(Context context) {
         super(context);
         init();
     }
 
-    public MaterialPathView(Context context, AttributeSet attrs) {
+    public PathView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
