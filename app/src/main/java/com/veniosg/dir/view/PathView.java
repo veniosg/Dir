@@ -19,7 +19,6 @@ package com.veniosg.dir.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.widget.Toolbar;
 import android.widget.ViewFlipper;
 
@@ -28,8 +27,6 @@ import com.veniosg.dir.R;
 import java.io.File;
 
 import static android.os.Environment.getExternalStorageDirectory;
-import static android.view.View.MeasureSpec.EXACTLY;
-import static android.view.View.MeasureSpec.makeMeasureSpec;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.veniosg.dir.util.FileUtils.isOk;
 import static com.veniosg.dir.util.Utils.backWillExit;
@@ -95,11 +92,7 @@ public class PathView extends ViewFlipper implements PathController {
             File oldDir = new File(mCurrentDirectory.getAbsolutePath());
             mCurrentDirectory = file;
 
-//            mPathButtons.refresh(forceNoAnim ? null : oldDir, mCurrentDirectory);
-//            mPathEditText.setText(file.getAbsolutePath());
-
-            // TODO refresh buttons
-            // TODO update manual entry field.
+            updateViews(forceNoAnim ? null : oldDir, mCurrentDirectory);
 
             res = true;
         } else
@@ -108,6 +101,15 @@ public class PathView extends ViewFlipper implements PathController {
         mDirectoryChangedListener.directoryChanged(file);
 
         return res;
+    }
+
+    private void updateViews(File previousDir, File newDir) {
+        if (previousDir == null) {
+            // TODO no anim
+        }
+
+//            mPathButtons.refresh(forceNoAnim ? null : oldDir, mCurrentDirectory);
+//            mPathEditText.setText(file.getAbsolutePath());
     }
 
     @Override
