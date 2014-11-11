@@ -1,6 +1,7 @@
 package com.veniosg.dir.view;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
@@ -82,6 +83,10 @@ public interface PathController {
     void setOnDirectoryChangedListener(OnDirectoryChangedListener listener);
 
     void setEnabled(boolean enabled);
+
+    Context getContext();
+
+    Resources getResources();
 
     /**
      * Interface notifying users of this class when the user has chosen to navigate elsewhere.

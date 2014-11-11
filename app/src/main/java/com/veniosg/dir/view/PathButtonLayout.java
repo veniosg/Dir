@@ -152,7 +152,7 @@ class PathButtonLayout extends LinearLayout implements OnLongClickListener {
 	private static class PathButtonFactory {
 		/**
 		 * Creates a Button or ImageButton according to the path. e.g. {@code if(file.getAbsolutePath() == '/')}, it should return an ImageButton with the home drawable on it.
-		 * 
+		 *
 		 * @param file The directory this button will represent.
 		 * @param navbar The {@link PathBar} which will contain the created buttons.
 		 * @return An {@link ImageButton} or a {@link Button}.
