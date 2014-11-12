@@ -19,7 +19,6 @@
     android:layout_height="wrap_content"
     android:background="?android:colorPrimary"
     android:elevation="4dp"
-    android:gravity="bottom"
     android:minHeight="?android:actionBarSize"
     android:popupTheme="?android:actionBarPopupTheme"
     android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar" >
