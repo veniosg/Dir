@@ -361,4 +361,12 @@ public class FileUtils {
 
         fileOrDirectory.delete();
     }
+
+    public static String getFileName(File file) {
+        if (file.getAbsolutePath().equals("/")) {
+            return "/";
+        } else {
+            return file.getName();
+        }
+    }
 }
