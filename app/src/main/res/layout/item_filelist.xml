@@ -37,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginStart="@dimen/item_text_margin_left"
+        android:layout_marginEnd="@dimen/item_icon_margin_left"
         android:ellipsize="end"
         android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceMedium"
