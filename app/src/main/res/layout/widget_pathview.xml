@@ -9,7 +9,8 @@
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:id="@+id/pathview_path_container"
@@ -29,23 +30,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/pathview_manual_button_left"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:id="@+id/pathview_manual_button_right"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true" />
-
         <EditText
-            android:id="@+id/pathview_manual_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/pathview_manual_text"
+            android:maxLines="1"
+            android:paddingEnd="@dimen/item_text_margin_left"
             android:paddingStart="@dimen/item_text_margin_left"
-            android:paddingEnd="@dimen/item_text_margin_left"/>
+            android:imeOptions="actionGo"
+            android:paddingBottom="8dp"/>
+
+        <ImageButton
+            android:id="@+id/pathview_manual_button_left"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="?android:actionBarSize"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:paddingEnd="@dimen/item_icon_margin_left"
+            android:paddingStart="@dimen/item_icon_margin_left"
+            android:src="@android:drawable/arrow_down_float"
+            android:rotation="180"
+            android:tint="?android:textColorPrimary" />
+
+        <ImageButton
+            android:id="@+id/pathview_manual_button_right"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_width="?android:actionBarSize"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:paddingEnd="@dimen/item_icon_margin_left"
+            android:paddingStart="@dimen/item_icon_margin_left"
+            android:src="@android:drawable/arrow_down_float"
+            android:tint="?android:textColorPrimary" />
     </RelativeLayout>
 </merge>
