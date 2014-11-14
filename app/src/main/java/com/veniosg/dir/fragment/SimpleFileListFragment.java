@@ -750,7 +750,7 @@ public class SimpleFileListFragment extends FileListFragment {
 
     @Override
     protected void onEmptyViewClicked() {
-        pressBack();
+        mPathBar.cd(mPathBar.getCurrentDirectory().getParentFile());
     }
 
     public void closeActionMode() {
