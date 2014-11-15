@@ -81,6 +81,21 @@ public class PathView extends ViewFlipper implements PathController {
             manualInputCd(mManualText.getText().toString());
         }
     };
+    private final TextView.OnEditorActionListener mOnEditorActionListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if ((actionId == IME_ACTION_GO)
+                    || ((event.getAction() == ACTION_DOWN) && ((event.getKeyCode() == KEYCODE_DPAD_CENTER) || (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)))) {
+                if (manualInputCd(v.getText().toString()))
+                    // Since we have successfully navigated.
+                    return true;
+            }
+
+            // We can't focus the text again so just hide the damned thing.
+            hideKeyboard();
+            return false;
+        }
+    };
 
     public PathView(Context context) {
         super(context);
@@ -106,21 +121,7 @@ public class PathView extends ViewFlipper implements PathController {
         mButtonRight.setOnClickListener(mSwitchToManualOnClickListener);
         mManualButtonLeft.setOnClickListener(mResetManualInputClickListener);
         mManualButtonRight.setOnClickListener(mApplyManualInputClickListener);
-        mManualText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((actionId == IME_ACTION_GO)
-                        || ((event.getAction() == ACTION_DOWN) && ((event.getKeyCode() == KEYCODE_DPAD_CENTER) || (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)))) {
-                    if (manualInputCd(v.getText().toString()))
-                        // Since we have successfully navigated.
-                        return true;
-                }
-
-                // We can't focus the text again so just hide the damned thing.
-                hideKeyboard();
-                return false;
-            }
-        });
+        mManualText.setOnEditorActionListener(mOnEditorActionListener);
 
         // XML doesn't always work
         mManualText.setInputType(TYPE_TEXT_VARIATION_URI | TYPE_TEXT_FLAG_NO_SUGGESTIONS);
