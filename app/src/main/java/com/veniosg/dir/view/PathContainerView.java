@@ -67,12 +67,18 @@ public class PathContainerView extends HorizontalScrollView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         View lastChild = mPathContainer.getChildAt(mPathContainer.getChildCount() - 1);
+        int marginStart = ((LinearLayout.LayoutParams) lastChild.getLayoutParams()).getMarginStart();
         int paddingWidth = getMeasuredWidth()
                 - lastChild.getMeasuredWidth()
-                - ((LinearLayout.LayoutParams) lastChild.getLayoutParams()).getMarginStart();
+                - marginStart;
 
-        // TODO if last child WANTS TO be wider than screen - left margin, apply padding to the
-        // right equal to the width of the right button.
+        // On really long names that take up the whole screen width
+        if (lastChild.getMeasuredWidth() >= getMeasuredWidth() - marginStart) {
+            paddingWidth -= getMeasuredHeight();
+            setPaddingRelative(0, 0, getMeasuredHeight(), 0);
+        } else {
+            setPaddingRelative(0, 0, 0, 0);
+        }
 
         mPathContainer.measure(measureExactly(paddingWidth + mPathContainer.getMeasuredWidth()),
                 measureExactly(getMeasuredHeight()));
