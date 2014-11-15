@@ -36,6 +36,8 @@ import java.util.List;
 
 import static android.util.TypedValue.COMPLEX_UNIT_DIP;
 import static android.util.TypedValue.applyDimension;
+import static android.view.View.MeasureSpec.EXACTLY;
+import static android.view.View.MeasureSpec.makeMeasureSpec;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static java.lang.Math.abs;
 
@@ -374,5 +376,9 @@ public abstract class Utils {
         } else {
             return currentDirPath.equals(initialDirPath) || currentDirPath.equals("/");
         }
+    }
+
+    public static int measureExactly(int pixels) {
+        return makeMeasureSpec(pixels, EXACTLY);
     }
 }

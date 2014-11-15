@@ -17,13 +17,11 @@
 package com.veniosg.dir.view;
 
 import android.content.Context;
-import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -45,7 +43,6 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_GO;
 import static com.veniosg.dir.util.FileUtils.isOk;
 import static com.veniosg.dir.util.Utils.backWillExit;
-import static com.veniosg.dir.util.Utils.lastCommonDirectoryIndex;
 import static com.veniosg.dir.view.PathButtonFactory.newButton;
 import static com.veniosg.dir.view.PathController.Mode.MANUAL_INPUT;
 import static com.veniosg.dir.view.PathController.Mode.STANDARD_INPUT;
@@ -57,7 +54,7 @@ public class PathView extends ViewFlipper implements PathController {
     private File mCurrentDirectory = getExternalStorageDirectory();
     private File mInitialDirectory = getExternalStorageDirectory();
 
-    private ViewGroup mPathContainer;
+    private PathContainerView mPathContainer;
     private View mButtonRight;
     private View mManualButtonLeft;
     private View mManualButtonRight;
@@ -100,7 +97,7 @@ public class PathView extends ViewFlipper implements PathController {
         setLayoutParams(toolbarLayoutParams());
         LayoutInflater.from(getContext()).inflate(R.layout.widget_pathview, this);
 
-        mPathContainer = (ViewGroup) findViewById(R.id.pathview_path_container);
+        mPathContainer = (PathContainerView) findViewById(R.id.pathview_path_container);
         mButtonRight = findViewById(R.id.pathview_button_right);
         mManualButtonLeft = findViewById(R.id.pathview_manual_button_left);
         mManualButtonRight = findViewById(R.id.pathview_manual_button_right);
@@ -178,54 +175,7 @@ public class PathView extends ViewFlipper implements PathController {
 
     private void updateViews(File previousDir, File newDir) {
         setManualInputPath(newDir.getAbsolutePath());
-        updatePathContainer(previousDir, newDir);
-    }
-
-    /**
-     * @param p Pass null to refresh the whole view.
-     * @param n The new current directory.
-     */
-    private void updatePathContainer(File p, File n) {
-        // Remove only the non-matching buttons.
-        int lastCommonDirectory;
-        if(p != null && mPathContainer.getChildCount() > 0) {
-            lastCommonDirectory = lastCommonDirectoryIndex(p, n);
-        } else {
-            // First layout, init by hand.
-            lastCommonDirectory = -1;
-        }
-        for (int i = mPathContainer.getChildCount()-1; i > lastCommonDirectory; i--) {
-            mPathContainer.removeViewAt(i);
-        }
-
-        // Reload buttons.
-        fillPathContainer(lastCommonDirectory + 1, n);
-    }
-
-    /**
-     * Adds new buttons according to the fPath parameter.
-     * @param firstDirToAdd The index of the first directory of fPath to add.
-     */
-    private void fillPathContainer(int firstDirToAdd, File fPath) {
-        StringBuilder cPath = new StringBuilder();
-        char cChar;
-        int cDir = 0;
-        String path = fPath.getAbsolutePath();
-
-        for (int i = 0; i < path.length(); i++) {
-            cChar = path.charAt(i);
-            cPath.append(cChar);
-
-            if ((cChar == '/' || i == path.length() - 1)) { // if folder name ended, or path string ended but not if we 're on root
-                if (cDir++ >= firstDirToAdd) {
-                    // Add a button
-                    mPathContainer.addView(newButton(cPath.toString(), this));
-                    // TODO uncomment
-//                    if(firstDirToAdd != 0) // if not on first draw
-//                        mPathContainer.getChildAt(mPathContainer.getChildCount() - 1).setAlpha(0); // So that it doesn't flash due to the animation's delay
-                }
-            }
-        }
+        mPathContainer.updateWithPaths(previousDir, newDir, this);
     }
 
     @Override

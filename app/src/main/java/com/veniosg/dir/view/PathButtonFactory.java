@@ -1,5 +1,6 @@
 package com.veniosg.dir.view;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
@@ -7,6 +8,7 @@ import com.veniosg.dir.R;
 
 import java.io.File;
 
+import static android.text.TextUtils.TruncateAt.MIDDLE;
 import static android.view.Gravity.CENTER_VERTICAL;
 import static android.view.View.TEXT_ALIGNMENT_GRAVITY;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
@@ -47,6 +49,7 @@ public class PathButtonFactory {
         btn.setPadding(eightDp, btn.getPaddingTop(), eightDp * 2, btn.getPaddingBottom());
         btn.setLayoutParams(params);
         btn.setTag(file);
+        btn.setEllipsize(MIDDLE);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
