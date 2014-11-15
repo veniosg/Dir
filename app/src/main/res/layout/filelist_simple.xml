@@ -2,7 +2,8 @@
     android:id="@+id/browseRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clickable="true">
 
     <com.veniosg.dir.view.AnimatedFileListContainer
         android:id="@+id/zoomview"

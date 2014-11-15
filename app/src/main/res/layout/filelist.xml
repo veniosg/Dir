@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:inAnimation="@android:anim/fade_in"
     android:outAnimation="@android:anim/fade_out"
+    android:clickable="true"
     android:animateFirstView="false">
 
     <FrameLayout
