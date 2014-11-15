@@ -93,6 +93,7 @@
 
         <!-- Text colours -->
         <item name="android:textColorSecondary">#64FFFFFF</item>
+        <item name="android:textColorPrimaryInverse">?android:colorPrimary</item>
 
         <!-- Base colours -->
         <item name="android:colorPrimary">@color/dark_primary</item>
