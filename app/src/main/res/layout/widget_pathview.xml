@@ -19,11 +19,16 @@
                 android:orientation="horizontal" />
         </HorizontalScrollView>
 
-        <Button
+        <ImageButton
             android:id="@+id/pathview_button_right"
-            android:layout_width="wrap_content"
+            style="@android:style/Widget.Material.Button.Borderless"
+            android:layout_width="?android:actionBarSize"
             android:layout_height="match_parent"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:paddingEnd="@dimen/item_icon_margin_left"
+            android:paddingStart="@dimen/item_icon_margin_left"
+            android:src="@drawable/ic_action_edit"
+            android:tint="?android:textColorPrimary" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -31,14 +36,14 @@
         android:layout_height="match_parent">
 
         <EditText
+            android:id="@+id/pathview_manual_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/pathview_manual_text"
-            android:maxLines="1"
-            android:paddingEnd="@dimen/item_text_margin_left"
-            android:paddingStart="@dimen/item_text_margin_left"
             android:imeOptions="actionGo"
-            android:paddingBottom="8dp"/>
+            android:maxLines="1"
+            android:paddingBottom="8dp"
+            android:paddingEnd="@dimen/item_text_margin_left"
+            android:paddingStart="@dimen/item_text_margin_left" />
 
         <ImageButton
             android:id="@+id/pathview_manual_button_left"
@@ -48,8 +53,8 @@
             android:layout_alignParentStart="true"
             android:paddingEnd="@dimen/item_icon_margin_left"
             android:paddingStart="@dimen/item_icon_margin_left"
-            android:src="@android:drawable/arrow_down_float"
             android:rotation="180"
+            android:src="@android:drawable/arrow_down_float"
             android:tint="?android:textColorPrimary" />
 
         <ImageButton

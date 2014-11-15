@@ -1,20 +1,16 @@
 package com.veniosg.dir.view;
 
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import com.veniosg.dir.R;
-import com.veniosg.dir.util.FileUtils;
 
 import java.io.File;
 
-import static android.view.Gravity.CENTER;
+import static android.view.Gravity.CENTER_VERTICAL;
+import static android.view.View.TEXT_ALIGNMENT_GRAVITY;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static android.widget.ImageView.ScaleType.CENTER_INSIDE;
 import static android.widget.LinearLayout.LayoutParams;
 import static com.veniosg.dir.util.FileUtils.getFileName;
 import static com.veniosg.dir.util.Utils.dp;
@@ -42,11 +38,13 @@ public class PathButtonFactory {
         LayoutParams params = new LayoutParams(WRAP_CONTENT, MATCH_PARENT);
 
         btn.setText(getFileName(file));
+        btn.setMinimumWidth(0);
         btn.setMaxLines(1);
-        btn.setGravity(CENTER);
+        btn.setGravity(CENTER_VERTICAL);
+        btn.setTextAlignment(TEXT_ALIGNMENT_GRAVITY);
         btn.setTextColor(pathController.getResources().getColor(
                 getThemedResourceId(pathController.getContext(), R.attr.textColorPathBar)));
-        btn.setPadding(eightDp, btn.getPaddingTop(), eightDp, btn.getPaddingBottom());
+        btn.setPadding(eightDp, btn.getPaddingTop(), eightDp * 2, btn.getPaddingBottom());
         btn.setLayoutParams(params);
         btn.setTag(file);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +58,7 @@ public class PathButtonFactory {
             btn.setCompoundDrawablePadding(compoundPadding);
             ((LayoutParams) btn.getLayoutParams()).setMarginStart(marginLeft);
         } else {
+            // TODO fix me
             ((LayoutParams) btn.getLayoutParams()).setMarginStart(marginLeft + eightDp + caretSize);
         }
 
