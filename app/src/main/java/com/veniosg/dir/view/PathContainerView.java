@@ -2,15 +2,12 @@ package com.veniosg.dir.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import java.io.File;
 
-import static android.view.MotionEvent.ACTION_CANCEL;
-import static android.view.MotionEvent.ACTION_UP;
 import static com.veniosg.dir.util.Utils.lastCommonDirectoryIndex;
 import static com.veniosg.dir.util.Utils.measureExactly;
 import static com.veniosg.dir.view.PathButtonFactory.newButton;
@@ -46,6 +43,15 @@ public class PathContainerView extends HorizontalScrollView {
     protected void onFinishInflate() {
         try {
             mPathContainer = (LinearLayout) getChildAt(0);
+
+            // TODO remove once animations are in place
+            mPathContainer.addOnLayoutChangeListener(new OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View v, int left, int top, int right, int bottom,
+                                           int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    smoothScrollTo(mPathContainer.getWidth(), 0);
+                }
+            });
         } catch (ClassCastException ex) {
             throw new RuntimeException("First and only child of PathContainerView must be a LinearLayout");
         }
@@ -99,7 +105,7 @@ public class PathContainerView extends HorizontalScrollView {
         int lastCommonDirectory;
         if(previousDir != null && count > 0) {
             lastCommonDirectory = lastCommonDirectoryIndex(previousDir, newDir);
-            mPathContainer.removeViews(lastCommonDirectory+1, count-lastCommonDirectory-1);
+            mPathContainer.removeViews(lastCommonDirectory + 1, count - lastCommonDirectory - 1);
         } else {
             // First layout, init by hand.
             lastCommonDirectory = -1;
@@ -109,6 +115,7 @@ public class PathContainerView extends HorizontalScrollView {
         // Reload buttons.
         fillPathContainer(lastCommonDirectory + 1, newDir, controller);
     }
+
 
     /**
      * Adds new buttons according to the fPath parameter.
