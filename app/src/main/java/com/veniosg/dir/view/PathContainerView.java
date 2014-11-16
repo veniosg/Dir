@@ -2,12 +2,15 @@ package com.veniosg.dir.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import java.io.File;
 
+import static android.view.MotionEvent.ACTION_CANCEL;
+import static android.view.MotionEvent.ACTION_UP;
 import static com.veniosg.dir.util.Utils.lastCommonDirectoryIndex;
 import static com.veniosg.dir.util.Utils.measureExactly;
 import static com.veniosg.dir.view.PathButtonFactory.newButton;
@@ -59,7 +62,7 @@ public class PathContainerView extends HorizontalScrollView {
                 - marginStart;
 
         // On really long names that take up the whole screen width
-        if (lastChild.getMeasuredWidth() >= getMeasuredWidth() - marginStart) {
+        if (lastChild.getMeasuredWidth() >= getMeasuredWidth() - marginStart - mRightEdgeRange) {
             mPathContainerRightPadding -= getMeasuredHeight();
             setPaddingRelative(0, 0, getMeasuredHeight(), 0);
         } else {
@@ -74,10 +77,7 @@ public class PathContainerView extends HorizontalScrollView {
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
 
-        // Scroll pixels for the last item's right edge to reach the parent's right edge
-        int scrollToEnd = mPathContainer.getWidth() - getWidth() - max(mPathContainerRightPadding, 0);
-        int pixelsScrolledWithinRange = scrollToEnd - l + mRightEdgeRange;
-        mRightEdgeRangeListener.rangeOffsetChanged(pixelsScrolledWithinRange);
+        invokeRightEdgeRangeListener(l);
     }
 
     public void setEdgeListener(RightEdgeRangeListener listener) {
@@ -134,6 +134,13 @@ public class PathContainerView extends HorizontalScrollView {
                 }
             }
         }
+    }
+
+    private void invokeRightEdgeRangeListener(int l) {
+        // Scroll pixels for the last item's right edge to reach the parent's right edge
+        int scrollToEnd = mPathContainer.getWidth() - getWidth() - max(mPathContainerRightPadding, 0);
+        int pixelsScrolledWithinRange = scrollToEnd - l + mRightEdgeRange;
+        mRightEdgeRangeListener.rangeOffsetChanged(pixelsScrolledWithinRange);
     }
 
     private RightEdgeRangeListener noOpRangeListener() {
