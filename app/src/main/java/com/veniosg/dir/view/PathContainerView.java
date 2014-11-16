@@ -11,6 +11,7 @@ import java.io.File;
 import static com.veniosg.dir.util.Utils.lastCommonDirectoryIndex;
 import static com.veniosg.dir.util.Utils.measureExactly;
 import static com.veniosg.dir.view.PathButtonFactory.newButton;
+import static java.lang.Math.max;
 
 public class PathContainerView extends HorizontalScrollView {
     /**
@@ -38,15 +39,6 @@ public class PathContainerView extends HorizontalScrollView {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public void setEdgeListener(RightEdgeRangeListener listener) {
-        if (listener != null) {
-            mRightEdgeRangeListener = listener;
-        } else {
-            mRightEdgeRangeListener = noOpRangeListener();
-        }
-        mRightEdgeRange = mRightEdgeRangeListener.getRange();
-    }
-
     @Override
     protected void onFinishInflate() {
         try {
@@ -54,27 +46,6 @@ public class PathContainerView extends HorizontalScrollView {
         } catch (ClassCastException ex) {
             throw new RuntimeException("First and only child of PathContainerView must be a LinearLayout");
         }
-    }
-
-    /**
-     * @param previousDir Pass null to refresh the whole view.
-     * @param newDir The new current directory.
-     */
-    public void updateWithPaths(File previousDir, File newDir, final PathController controller) {
-        // Remove only the non-matching buttons.
-        int count = mPathContainer.getChildCount();
-        int lastCommonDirectory;
-        if(previousDir != null && count > 0) {
-            lastCommonDirectory = lastCommonDirectoryIndex(previousDir, newDir);
-            mPathContainer.removeViews(lastCommonDirectory+1, count-lastCommonDirectory-1);
-        } else {
-            // First layout, init by hand.
-            lastCommonDirectory = -1;
-            mPathContainer.removeAllViews();
-        }
-
-        // Reload buttons.
-        fillPathContainer(lastCommonDirectory + 1, newDir, controller);
     }
 
     @Override
@@ -97,6 +68,46 @@ public class PathContainerView extends HorizontalScrollView {
 
         mPathContainer.measure(measureExactly(mPathContainerRightPadding + mPathContainer.getMeasuredWidth()),
                 measureExactly(getMeasuredHeight()));
+    }
+
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+
+        // Scroll pixels for the last item's right edge to reach the parent's right edge
+        int scrollToEnd = mPathContainer.getWidth() - getWidth() - max(mPathContainerRightPadding, 0);
+        int pixelsScrolledWithinRange = scrollToEnd - l + mRightEdgeRange;
+        mRightEdgeRangeListener.rangeOffsetChanged(pixelsScrolledWithinRange);
+    }
+
+    public void setEdgeListener(RightEdgeRangeListener listener) {
+        if (listener != null) {
+            mRightEdgeRangeListener = listener;
+        } else {
+            mRightEdgeRangeListener = noOpRangeListener();
+        }
+        mRightEdgeRange = mRightEdgeRangeListener.getRange();
+    }
+
+    /**
+     * @param previousDir Pass null to refresh the whole view.
+     * @param newDir The new current directory.
+     */
+    public void updateWithPaths(File previousDir, File newDir, final PathController controller) {
+        // Remove only the non-matching buttons.
+        int count = mPathContainer.getChildCount();
+        int lastCommonDirectory;
+        if(previousDir != null && count > 0) {
+            lastCommonDirectory = lastCommonDirectoryIndex(previousDir, newDir);
+            mPathContainer.removeViews(lastCommonDirectory+1, count-lastCommonDirectory-1);
+        } else {
+            // First layout, init by hand.
+            lastCommonDirectory = -1;
+            mPathContainer.removeAllViews();
+        }
+
+        // Reload buttons.
+        fillPathContainer(lastCommonDirectory + 1, newDir, controller);
     }
 
     /**
@@ -123,16 +134,6 @@ public class PathContainerView extends HorizontalScrollView {
                 }
             }
         }
-    }
-
-    @Override
-    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        super.onScrollChanged(l, t, oldl, oldt);
-
-        // Scroll pixels for the last item's right edge to reach the parent's right edge
-        int scrollToEnd = mPathContainer.getWidth() - getWidth() - mPathContainerRightPadding - getPaddingEnd();
-        int pixelsScrolledWithinRange = scrollToEnd - l + mRightEdgeRange;
-        mRightEdgeRangeListener.rangeOffsetChanged(pixelsScrolledWithinRange);
     }
 
     private RightEdgeRangeListener noOpRangeListener() {
