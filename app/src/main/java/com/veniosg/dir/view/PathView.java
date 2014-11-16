@@ -39,6 +39,7 @@ import static android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
 import static android.text.InputType.TYPE_TEXT_VARIATION_URI;
 import static android.view.KeyEvent.ACTION_DOWN;
 import static android.view.KeyEvent.KEYCODE_DPAD_CENTER;
+import static android.view.LayoutInflater.from;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_GO;
 import static com.veniosg.dir.util.FileUtils.isOk;
@@ -111,7 +112,7 @@ public class PathView extends ViewFlipper implements PathController {
     private void init() {
         setId(R.id.pathview);
         setLayoutParams(toolbarLayoutParams());
-        LayoutInflater.from(getContext()).inflate(R.layout.widget_pathview, this);
+        from(getContext()).inflate(R.layout.widget_pathview, this, true);
 
         mPathContainer = (PathContainerView) findViewById(R.id.pathview_path_container);
         mButtonRight = findViewById(R.id.pathview_button_right);

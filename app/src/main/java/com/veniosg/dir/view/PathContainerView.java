@@ -66,12 +66,11 @@ public class PathContainerView extends HorizontalScrollView {
         int lastCommonDirectory;
         if(previousDir != null && count > 0) {
             lastCommonDirectory = lastCommonDirectoryIndex(previousDir, newDir);
+            mPathContainer.removeViews(lastCommonDirectory+1, count-lastCommonDirectory-1);
         } else {
             // First layout, init by hand.
             lastCommonDirectory = -1;
-        }
-        for (int i = count-1; i > lastCommonDirectory; i--) {
-            mPathContainer.removeViewAt(i);
+            mPathContainer.removeAllViews();
         }
 
         // Reload buttons.
@@ -133,9 +132,7 @@ public class PathContainerView extends HorizontalScrollView {
         // Scroll pixels for the last item's right edge to reach the parent's right edge
         int scrollToEnd = mPathContainer.getWidth() - getWidth() - mPathContainerRightPadding - getPaddingEnd();
         int pixelsScrolledWithinRange = scrollToEnd - l + mRightEdgeRange;
-//        if (pixelsScrolledWithinRange >= 0) {
-            mRightEdgeRangeListener.rangeOffsetChanged(pixelsScrolledWithinRange);
-//        }
+        mRightEdgeRangeListener.rangeOffsetChanged(pixelsScrolledWithinRange);
     }
 
     private RightEdgeRangeListener noOpRangeListener() {
