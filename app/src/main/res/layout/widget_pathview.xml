@@ -28,7 +28,7 @@
             android:paddingEnd="@dimen/item_icon_margin_left"
             android:paddingStart="@dimen/item_icon_margin_left"
             android:src="@drawable/ic_action_edit"
-            android:tint="?android:textColorPrimary" />
+            android:tint="?android:textColorSecondary" />
     </RelativeLayout>
 
     <RelativeLayout

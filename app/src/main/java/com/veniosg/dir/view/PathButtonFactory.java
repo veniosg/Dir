@@ -1,6 +1,6 @@
 package com.veniosg.dir.view;
 
-import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 
@@ -10,6 +10,7 @@ import java.io.File;
 
 import static android.text.TextUtils.TruncateAt.MIDDLE;
 import static android.view.Gravity.CENTER_VERTICAL;
+import static android.view.Gravity.RIGHT;
 import static android.view.View.TEXT_ALIGNMENT_GRAVITY;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -42,12 +43,11 @@ public class PathButtonFactory {
         btn.setText(getFileName(file));
         btn.setMinimumWidth(0);
         btn.setMaxLines(1);
-        btn.setGravity(CENTER_VERTICAL);
+        btn.setGravity(Gravity.CENTER);
         btn.setTextAlignment(TEXT_ALIGNMENT_GRAVITY);
         btn.setTextColor(pathController.getResources().getColor(
                 getThemedResourceId(pathController.getContext(), R.attr.textColorPathBar)));
         btn.setPadding(eightDp, btn.getPaddingTop(), eightDp * 2, btn.getPaddingBottom());
-        btn.setLayoutParams(params);
         btn.setTag(file);
         btn.setEllipsize(MIDDLE);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -56,14 +56,15 @@ public class PathButtonFactory {
                 pathController.cd((File) v.getTag());
             }
         });
-        if (!file.getAbsolutePath().equals("/")) {
+        if (file.getAbsolutePath().equals("/")) {
+            params.setMarginStart(marginLeft*2);
+            btn.setPaddingRelative(eightDp, btn.getPaddingTop(), eightDp, btn.getPaddingBottom());
+        } else {
             btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_item_caret, 0, 0, 0);
             btn.setCompoundDrawablePadding(compoundPadding);
-            ((LayoutParams) btn.getLayoutParams()).setMarginStart(marginLeft);
-        } else {
-            // TODO fix me
-            ((LayoutParams) btn.getLayoutParams()).setMarginStart(marginLeft + eightDp + caretSize);
+            params.setMarginStart(marginLeft);
         }
+        btn.setLayoutParams(params);
 
         return btn;
     }

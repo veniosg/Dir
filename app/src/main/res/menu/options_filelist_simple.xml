@@ -6,7 +6,7 @@
         android:menuCategory="container"
         android:orderInCategory="1"
         android:title="@string/menu_paste"
-        android:icon="@drawable/ic_action_paste"/>
+        android:icon="@drawable/ic_action_paste_container"/>
     <item
         android:id="@+id/menu_clear_clipboard"
         android:showAsAction="ifRoom"
@@ -35,7 +35,6 @@
     <item
         android:id="@+id/menu_media_scan_include"
         android:alphabeticShortcut="i"
-        android:icon="@android:drawable/ic_menu_gallery"
         android:showAsAction="never"
         android:title="@string/menu_add_to_media"
         android:visible="false">
@@ -43,7 +42,6 @@
     <item
         android:id="@+id/menu_media_scan_exclude"
         android:alphabeticShortcut="e"
-        android:icon="@android:drawable/ic_menu_gallery"
         android:showAsAction="never"
         android:title="@string/menu_remove_from_media"
         android:visible="false">
