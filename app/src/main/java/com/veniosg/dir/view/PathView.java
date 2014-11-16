@@ -44,6 +44,7 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_GO;
 import static com.veniosg.dir.util.FileUtils.isOk;
 import static com.veniosg.dir.util.Utils.backWillExit;
 import static com.veniosg.dir.view.PathButtonFactory.newButton;
+import static com.veniosg.dir.view.PathContainerView.RightEdgeRangeListener;
 import static com.veniosg.dir.view.PathController.Mode.MANUAL_INPUT;
 import static com.veniosg.dir.view.PathController.Mode.STANDARD_INPUT;
 import static com.veniosg.dir.view.Themer.getThemedDimension;
@@ -125,6 +126,29 @@ public class PathView extends ViewFlipper implements PathController {
 
         // XML doesn't always work
         mManualText.setInputType(TYPE_TEXT_VARIATION_URI | TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        scheduleSetRightEdgeRangeListener();
+    }
+
+    private void scheduleSetRightEdgeRangeListener() {
+        addOnLayoutChangeListener(new OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom,
+                                       int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                removeOnLayoutChangeListener(this);
+
+                mPathContainer.setEdgeListener(new RightEdgeRangeListener() {
+                    @Override
+                    public int getRange() {
+                        return mButtonRight.getWidth();
+                    }
+
+                    @Override
+                    public void rangeOffsetChanged(int offsetInRange) {
+                        mButtonRight.setTranslationX(Math.max(0, offsetInRange));
+                    }
+                });
+            }
+        });
     }
 
     @Override

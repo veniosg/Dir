@@ -13,7 +13,14 @@ import static com.veniosg.dir.util.Utils.measureExactly;
 import static com.veniosg.dir.view.PathButtonFactory.newButton;
 
 public class PathContainerView extends HorizontalScrollView {
+    /**
+     * Additional padding to the end of mPathContainer
+     * so that the last item is left aligned to the grid.
+     */
+    private int mPathContainerRightPadding;
     private LinearLayout mPathContainer;
+    private RightEdgeRangeListener mRightEdgeRangeListener = noOpRangeListener();
+    private int mRightEdgeRange;
 
     public PathContainerView(Context context) {
         super(context);
@@ -29,6 +36,15 @@ public class PathContainerView extends HorizontalScrollView {
 
     public PathContainerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    public void setEdgeListener(RightEdgeRangeListener listener) {
+        if (listener != null) {
+            mRightEdgeRangeListener = listener;
+        } else {
+            mRightEdgeRangeListener = noOpRangeListener();
+        }
+        mRightEdgeRange = mRightEdgeRangeListener.getRange();
     }
 
     @Override
@@ -68,19 +84,19 @@ public class PathContainerView extends HorizontalScrollView {
 
         View lastChild = mPathContainer.getChildAt(mPathContainer.getChildCount() - 1);
         int marginStart = ((LinearLayout.LayoutParams) lastChild.getLayoutParams()).getMarginStart();
-        int paddingWidth = getMeasuredWidth()
+        mPathContainerRightPadding = getMeasuredWidth()
                 - lastChild.getMeasuredWidth()
                 - marginStart;
 
         // On really long names that take up the whole screen width
         if (lastChild.getMeasuredWidth() >= getMeasuredWidth() - marginStart) {
-            paddingWidth -= getMeasuredHeight();
+            mPathContainerRightPadding -= getMeasuredHeight();
             setPaddingRelative(0, 0, getMeasuredHeight(), 0);
         } else {
             setPaddingRelative(0, 0, 0, 0);
         }
 
-        mPathContainer.measure(measureExactly(paddingWidth + mPathContainer.getMeasuredWidth()),
+        mPathContainer.measure(measureExactly(mPathContainerRightPadding + mPathContainer.getMeasuredWidth()),
                 measureExactly(getMeasuredHeight()));
     }
 
@@ -108,5 +124,47 @@ public class PathContainerView extends HorizontalScrollView {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+        super.onScrollChanged(l, t, oldl, oldt);
+
+        // Scroll pixels for the last item's right edge to reach the parent's right edge
+        int scrollToEnd = mPathContainer.getWidth() - getWidth() - mPathContainerRightPadding - getPaddingEnd();
+        int pixelsScrolledWithinRange = scrollToEnd - l + mRightEdgeRange;
+//        if (pixelsScrolledWithinRange >= 0) {
+            mRightEdgeRangeListener.rangeOffsetChanged(pixelsScrolledWithinRange);
+//        }
+    }
+
+    private RightEdgeRangeListener noOpRangeListener() {
+        return new RightEdgeRangeListener() {
+            @Override
+            public int getRange() {
+                return 0;
+            }
+
+            @Override
+            public void rangeOffsetChanged(int offsetInRange) {}
+        };
+    }
+
+    /**
+     * Listener for when the last child is within the supplied mRangeRight of the right edge of this view.
+     */
+    public interface RightEdgeRangeListener {
+        /**
+         * @return The range in which to get the callback.
+         */
+        public int getRange();
+
+        /**
+         * Called when the distance of the last child in regards to the right edge of this view
+         * has changed.
+         * @param offsetInRange The current number of pixels within the range. If <0 means that the
+         *                      child is not yet within the specified range.
+         */
+        public void rangeOffsetChanged(int offsetInRange);
     }
 }
