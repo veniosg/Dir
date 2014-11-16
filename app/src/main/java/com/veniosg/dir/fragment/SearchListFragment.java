@@ -43,6 +43,7 @@ import java.util.List;
 
 import static android.view.View.GONE;
 import static com.veniosg.dir.fragment.SimpleFileListFragment.ScrollPosition;
+import static com.veniosg.dir.util.FileUtils.openFile;
 
 /**
  * @author George Venios
@@ -145,8 +146,24 @@ public class SearchListFragment extends AbsListFragment implements LoaderManager
 
     @Override
     public void onListItemClick(AbsListView l, View v, int position, long id) {
-        browse(Uri.parse(((FileHolder) getListAdapter().getItem(position))
-                .getFile().getAbsolutePath()));
+        FileHolder file = (FileHolder) getListAdapter().getItem(position);
+        if (file.getFile().isDirectory()) {
+            browse(Uri.parse(file.getFile().getAbsolutePath()));
+        } else {
+            openFile(file, getActivity());
+        }
+    }
+
+    private void browse(FileHolder file) {
+        if (file.getFile().isDirectory()) {
+            Intent intent = new Intent(getActivity(), FileManagerActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.setData(Uri.parse(file.getFile().getAbsolutePath()));
+
+            startActivity(intent);
+        } else {
+            openFile(file, getActivity());
+        }
     }
 
     private void browse(Uri path) {

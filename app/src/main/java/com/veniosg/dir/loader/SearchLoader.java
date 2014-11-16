@@ -34,12 +34,14 @@ public class SearchLoader extends AsyncTaskLoader<List<FileHolder>> {
     private List<FileHolder> mData;
     private File mRoot;
     private String mQuery;
+    private Context mContext;
 
     public SearchLoader(Context context, File root, String query) {
         super(context);
 
         mRoot = root;
         mQuery = query;
+        mContext = context;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class SearchLoader extends AsyncTaskLoader<List<FileHolder>> {
         return Utils.searchIn(mRoot, Utils.newFilter(mQuery),
                 ((FileManagerApplication) getContext().getApplicationContext())
                         .getMimeTypes(),
-                getContext(), true, 100);
+                mContext, true, 100);
     }
 
     @Override

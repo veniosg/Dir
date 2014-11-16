@@ -134,8 +134,9 @@ public class MimeTypes {
 	}
 
     public Drawable getIcon(Context c, String mimeType) {
-        if (!(c instanceof ContextThemeWrapper))
-            throw new IllegalArgumentException("Context must be themed to get the proper icons!");
+        // This was crashing things all over
+//        if (!(c instanceof ContextThemeWrapper))
+//            throw new IllegalArgumentException("Context must be themed to get the proper icons!");
 
         int iconResId = sIconIds[getIconIndex(mimeType)];
         return c.getDrawable(iconResId);
