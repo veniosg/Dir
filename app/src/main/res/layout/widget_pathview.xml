@@ -27,8 +27,7 @@
             android:layout_alignParentEnd="true"
             android:paddingEnd="@dimen/item_icon_margin_left"
             android:paddingStart="@dimen/item_icon_margin_left"
-            android:src="@drawable/ic_action_edit"
-            android:tint="?android:textColorSecondary" />
+            android:src="@drawable/ic_action_edit" />
     </RelativeLayout>
 
     <RelativeLayout
