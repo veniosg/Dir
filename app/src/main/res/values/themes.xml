@@ -51,6 +51,7 @@
         <!-- Control colour -->
         <item name="android:colorAccent">@color/dir_accent</item>
         <item name="textColorPathBar">@color/dir_textColorPathBar</item>
+        <item name="textColorSecondaryPathBar">@color/dir_textColorSecondaryPathBar</item>
 
         <!-- Background colours -->
         <item name="android:colorBackground">@color/dir_background</item>
@@ -68,7 +69,6 @@
         <item name="colorSidePaneBackground">@color/dir_sidePaneBackground</item>
 
         <item name="drawerShadow">@drawable/dir_bg_drawer_shadow</item>
-        <item name="pathbarItemStyle">@style/Widget.Dir.PathBar.Button</item>
         <item name="android:alertDialogTheme">@style/Theme.Dir.Dialog.Alert</item>
     </style>
 
@@ -103,6 +103,7 @@
         <!-- Control colour -->
         <item name="android:colorAccent">@color/dark_accent</item>
         <item name="textColorPathBar">@color/dark_textColorPathBar</item>
+        <item name="textColorSecondaryPathBar">@color/dark_textColorSecondaryPathBar</item>
 
         <!-- Background colours -->
         <item name="android:colorBackground">@color/dark_background</item>
@@ -120,7 +121,6 @@
         <item name="colorSidePaneBackground">@color/dark_sidePaneBackground</item>
 
         <item name="drawerShadow">@drawable/dark_bg_drawer_shadow</item>
-        <item name="pathbarItemStyle">@style/Widget.Dir.PathBar.Button</item>
         <item name="android:alertDialogTheme">@style/Theme.Dark.Dialog.Alert</item>
     </style>
 

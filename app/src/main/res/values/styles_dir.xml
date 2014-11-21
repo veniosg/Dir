@@ -26,8 +26,4 @@
     <style name="Widget.Dir.EditTextStyle" parent="android:Widget.Material.EditText">
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>
     </style>
-
-    <style name="Widget.Dir.PathBar.Button" parent="@android:style/Widget.Material.Button.Borderless">
-        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
-    </style>
 </resources>

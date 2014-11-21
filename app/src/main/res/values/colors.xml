@@ -38,6 +38,7 @@
     <color name="dir_fadeCovered">#BB222222</color>
     <color name="dir_fadeSlider">#CCD6D6D6</color>
     <color name="dir_textColorPathBar">#DFFF</color>
+    <color name="dir_textColorSecondaryPathBar">#6FFF</color>
 
     <!-- Dark colors -->
     <eat-comment />
@@ -57,4 +58,5 @@
     <color name="dark_fadeCovered">#B000</color>
     <color name="dark_fadeSlider">#EE131313</color>
     <color name="dark_textColorPathBar">#DFFF</color>
+    <color name="dark_textColorSecondaryPathBar">#6FFF</color>
 </resources>

@@ -1,6 +1,7 @@
 package com.veniosg.dir.view;
 
-import android.view.Gravity;
+import android.content.Context;
+import android.graphics.Typeface;
 import android.view.View;
 import android.widget.Button;
 
@@ -8,18 +9,19 @@ import com.veniosg.dir.R;
 
 import java.io.File;
 
-import static android.text.TextUtils.TruncateAt.MIDDLE;
-import static android.view.Gravity.CENTER_VERTICAL;
-import static android.view.Gravity.RIGHT;
+import static android.graphics.Typeface.NORMAL;
+import static android.graphics.Typeface.create;
+import static android.view.Gravity.CENTER;
 import static android.view.View.TEXT_ALIGNMENT_GRAVITY;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.widget.LinearLayout.LayoutParams;
 import static com.veniosg.dir.util.FileUtils.getFileName;
 import static com.veniosg.dir.util.Utils.dp;
-import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
-public class PathButtonFactory {
+public abstract class PathButtonFactory {
+    private static final Typeface TYPEFACE = create("sans-serif-regular", NORMAL);
+
     private PathButtonFactory() {
     }
 
@@ -30,12 +32,12 @@ public class PathButtonFactory {
      * @param pathController The {@link PathBar} which will contain the created buttons.
      * @return An {@link android.widget.ImageButton} or a {@link android.widget.Button}.
      */
-    public static Button newButton(final File file, final PathController pathController) {
-        Button btn = new Button(pathController.getContext(), null, R.attr.pathbarItemStyle);
-        int eightDp = (int) dp(8, pathController.getContext());
-        int iconMargin = pathController.getResources().getDimensionPixelOffset(R.dimen.item_icon_margin_left);
-        int textMargin = pathController.getResources().getDimensionPixelOffset(R.dimen.item_text_margin_left);
-        int caretSize = (int) dp(24, pathController.getContext());
+    public static Button newButton(final File file, Context context) {
+        Button btn = new Button(context, null, -1, android.R.style.Widget_Material_Button_Borderless);
+        int eightDp = (int) dp(8, context);
+        int iconMargin = context.getResources().getDimensionPixelOffset(R.dimen.item_icon_margin_left);
+        int textMargin = context.getResources().getDimensionPixelOffset(R.dimen.item_text_margin_left);
+        int caretSize = (int) dp(24, context);
         int marginLeft = iconMargin;
         int compoundPadding = textMargin - marginLeft - caretSize - eightDp;
         LayoutParams params = new LayoutParams(WRAP_CONTENT, MATCH_PARENT);
@@ -43,19 +45,12 @@ public class PathButtonFactory {
         btn.setText(getFileName(file));
         btn.setMinimumWidth(0);
         btn.setMaxLines(1);
-        btn.setGravity(Gravity.CENTER);
+        btn.setGravity(CENTER);
+        btn.setAllCaps(false);
+        btn.setTypeface(TYPEFACE);
         btn.setTextAlignment(TEXT_ALIGNMENT_GRAVITY);
-        btn.setTextColor(pathController.getResources().getColor(
-                getThemedResourceId(pathController.getContext(), R.attr.textColorPathBar)));
         btn.setPadding(eightDp, btn.getPaddingTop(), eightDp * 2, btn.getPaddingBottom());
         btn.setTag(file);
-        btn.setEllipsize(MIDDLE);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pathController.cd((File) v.getTag());
-            }
-        });
         if (file.getAbsolutePath().equals("/")) {
             params.setMarginStart(marginLeft*2);
             btn.setPaddingRelative(eightDp, btn.getPaddingTop(), eightDp, btn.getPaddingBottom());
@@ -72,7 +67,7 @@ public class PathButtonFactory {
     /**
      * @see {@link #newButton(File, PathBar)}
      */
-    public static View newButton(String path, PathController pathController) {
-        return newButton(new File(path), pathController);
+    public static View newButton(String path, Context context) {
+        return newButton(new File(path), context);
     }
 }
