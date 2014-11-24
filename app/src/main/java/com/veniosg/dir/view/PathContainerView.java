@@ -3,6 +3,8 @@ package com.veniosg.dir.view;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import com.veniosg.dir.R;
+import com.veniosg.dir.util.Utils;
 
 import java.io.File;
 
@@ -20,6 +23,7 @@ import static android.graphics.Typeface.NORMAL;
 import static android.graphics.Typeface.create;
 import static android.text.TextUtils.TruncateAt.MIDDLE;
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
+import static android.view.Gravity.CENTER;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.inInterpolator;
 import static com.veniosg.dir.util.Utils.dp;
@@ -186,7 +190,7 @@ public class PathContainerView extends HorizontalScrollView {
             cChar = path.charAt(i);
             cPath.append(cChar);
 
-            if ((cChar == '/' || i == path.length() - 1)) { // if folder name ended, or path string ended but not if we 're on root
+            if ((cChar == '/' || i == path.length() - 1)) { // if folder name ended, or path string ended but not if we're on root
                 if (cDir++ >= firstDirToAdd) {
                     item = newButton(cPath.toString(), context);
                     mPathContainer.addView(item);
@@ -215,6 +219,7 @@ public class PathContainerView extends HorizontalScrollView {
         item.setTextSize(COMPLEX_UNIT_SP, 24);  // Title style as per spec
         item.setPadding(eightDp, item.getPaddingTop(), eightDp * 2, item.getPaddingBottom());
         item.setOnClickListener(mPrimaryButtonListener);
+        setCaretToButton(item, 1f);
     }
 
     private void configureSecondaryButton(Button item) {
@@ -222,15 +227,26 @@ public class PathContainerView extends HorizontalScrollView {
         item.setTextColor(getResources().getColor(
                 getThemedResourceId(getContext(), R.attr.textColorSecondaryPathBar)));
         item.setEllipsize(null);
-        item.setTextSize(COMPLEX_UNIT_SP, 16);  // Title style as per spec
+        item.setTextSize(COMPLEX_UNIT_SP, 16);
         item.setPadding(eightDp, item.getPaddingTop(), eightDp * 2, item.getPaddingBottom());
         item.setOnClickListener(mSecondaryButtonListener);
+
+        if (!((File) item.getTag()).getAbsolutePath().equals("/")) {
+            setCaretToButton(item, 16f / 24f);
+        }
+    }
+
+    private void setCaretToButton(Button btn, float scale) {
+        Drawable caret = btn.getContext().getDrawable(R.drawable.ic_item_caret);
+        caret.setBounds(0, 0, (int) (caret.getIntrinsicWidth()*scale), (int) (caret.getIntrinsicHeight()*scale));
+        caret.setTint(Themer.getThemedColor(btn.getContext(), R.attr.textColorSecondaryPathBar));
+        btn.setCompoundDrawablesRelative(caret, null, null, null);
     }
 
     private void revealScroll() {
         ObjectAnimator scrollXAnim = ofInt(this, "scrollX", max(0, mRevealScrollPixels));
         scrollXAnim.setInterpolator(inInterpolator);
-        scrollXAnim.setDuration(ANIM_DURATION / 2 );
+        scrollXAnim.setDuration(ANIM_DURATION / 2);
         scrollXAnim.start();
     }
 

@@ -2,6 +2,8 @@ package com.veniosg.dir.view;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.view.View;
 import android.widget.Button;
 
@@ -39,7 +41,7 @@ public abstract class PathButtonFactory {
         int textMargin = context.getResources().getDimensionPixelOffset(R.dimen.item_text_margin_left);
         int caretSize = (int) dp(24, context);
         int marginLeft = iconMargin;
-        int compoundPadding = textMargin - marginLeft - caretSize - eightDp;
+        int compoundPadding = textMargin - marginLeft - caretSize;
         LayoutParams params = new LayoutParams(WRAP_CONTENT, MATCH_PARENT);
 
         btn.setText(getFileName(file));
@@ -55,9 +57,8 @@ public abstract class PathButtonFactory {
             params.setMarginStart(marginLeft*2);
             btn.setPaddingRelative(eightDp, btn.getPaddingTop(), eightDp, btn.getPaddingBottom());
         } else {
-            btn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_item_caret, 0, 0, 0);
             btn.setCompoundDrawablePadding(compoundPadding);
-            params.setMarginStart(marginLeft);
+            params.setMarginStart(marginLeft - eightDp);
         }
         btn.setLayoutParams(params);
 
