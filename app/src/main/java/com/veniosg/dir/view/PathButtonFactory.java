@@ -47,10 +47,8 @@ public abstract class PathButtonFactory {
         btn.setText(getFileName(file));
         btn.setMinimumWidth(0);
         btn.setMaxLines(1);
-        btn.setGravity(CENTER);
         btn.setAllCaps(false);
         btn.setTypeface(TYPEFACE);
-        btn.setTextAlignment(TEXT_ALIGNMENT_GRAVITY);
         btn.setPadding(eightDp, btn.getPaddingTop(), eightDp * 2, btn.getPaddingBottom());
         btn.setTag(file);
         if (file.getAbsolutePath().equals("/")) {

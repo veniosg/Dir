@@ -41,8 +41,8 @@ import static android.graphics.PorterDuff.Mode.SRC_OVER;
 import static android.util.Log.DEBUG;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
-import static com.veniosg.dir.AnimationConstants.inInterpolator;
-import static com.veniosg.dir.AnimationConstants.outInterpolator;
+import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
+import static com.veniosg.dir.AnimationConstants.OUT_INTERPOLATOR;
 import static com.veniosg.dir.util.Logger.TAG_ANIMATION;
 
 /**
@@ -137,7 +137,7 @@ public class AnimatedFileListContainer extends FrameLayout {
 
         // Play animations
         AnimatorSet scene = new AnimatorSet();
-        setupSceneAnimation(oldContent, hero, contentAnim, heroAnim, inInterpolator, scene);
+        setupSceneAnimation(oldContent, hero, contentAnim, heroAnim, IN_INTERPOLATOR, scene);
         Logger.log(DEBUG, TAG_ANIMATION, "Starting animation");
         scene.start();
     }
@@ -167,7 +167,7 @@ public class AnimatedFileListContainer extends FrameLayout {
 
         // Play animations
         AnimatorSet scene = new AnimatorSet();
-        setupSceneAnimation(oldContent, hero, contentAnim, heroAnim, outInterpolator, scene);
+        setupSceneAnimation(oldContent, hero, contentAnim, heroAnim, OUT_INTERPOLATOR, scene);
         Logger.log(DEBUG, TAG_ANIMATION, "Starting animation");
         scene.start();
     }

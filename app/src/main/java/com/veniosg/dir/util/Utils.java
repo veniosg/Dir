@@ -13,11 +13,13 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -380,5 +382,14 @@ public abstract class Utils {
 
     public static int measureExactly(int pixels) {
         return makeMeasureSpec(pixels, EXACTLY);
+    }
+
+    public static View getLastChild(ViewGroup group) {
+        int childCount = group.getChildCount();
+        if (childCount == 0) {
+            return null;
+        }
+
+        return group.getChildAt(childCount - 1);
     }
 }

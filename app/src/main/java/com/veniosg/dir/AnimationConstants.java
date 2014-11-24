@@ -2,6 +2,7 @@ package com.veniosg.dir;
 
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.PathInterpolator;
 
 /**
@@ -24,6 +25,6 @@ public class AnimationConstants {
 
     public static final int ANIM_START_DELAY = 10;
 
-    public static final Interpolator inInterpolator = new PathInterpolator(0.8F, 0, 0.2F, 1);  // slow_in_slow_out
-    public static final Interpolator outInterpolator = new PathInterpolator(0.8F, 0, 0.2F, 1);
+    public static final Interpolator IN_INTERPOLATOR = new LinearInterpolator();//new PathInterpolator(0.8F, 0, 0.2F, 1);  // slow_in_slow_out
+    public static final Interpolator OUT_INTERPOLATOR = new LinearInterpolator();// new PathInterpolator(0.8F, 0, 0.2F, 1);
 }

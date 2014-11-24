@@ -59,8 +59,8 @@ import static android.widget.RelativeLayout.LEFT_OF;
 import static android.widget.RelativeLayout.RIGHT_OF;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
-import static com.veniosg.dir.AnimationConstants.inInterpolator;
-import static com.veniosg.dir.AnimationConstants.outInterpolator;
+import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
+import static com.veniosg.dir.AnimationConstants.OUT_INTERPOLATOR;
 import static com.veniosg.dir.util.FileUtils.isOk;
 import static com.veniosg.dir.util.Utils.backWillExit;
 import static com.veniosg.dir.util.Utils.dp;
@@ -205,8 +205,8 @@ public class PathBar extends ViewFlipper implements PathController {
             transition.setStartDelay(DISAPPEARING, ANIM_START_DELAY);
             transition.setAnimator(APPEARING, createAppearingAnimator(transition));
             transition.setAnimator(DISAPPEARING, createDisappearingAnimator(transition));
-            transition.setInterpolator(CHANGE_APPEARING, inInterpolator);
-            transition.setInterpolator(CHANGE_DISAPPEARING, outInterpolator);
+            transition.setInterpolator(CHANGE_APPEARING, IN_INTERPOLATOR);
+            transition.setInterpolator(CHANGE_DISAPPEARING, OUT_INTERPOLATOR);
             mPathButtons.setLayoutTransition(transition);
 
 			mPathButtonsContainer.addView(mPathButtons);
@@ -284,18 +284,18 @@ public class PathBar extends ViewFlipper implements PathController {
     private Animator createAppearingAnimator(final LayoutTransition transition) {
         AnimatorSet anim = new AnimatorSet();
         anim.setDuration(transition.getDuration(APPEARING));
-        anim.setInterpolator(inInterpolator);
+        anim.setInterpolator(IN_INTERPOLATOR);
         anim.playTogether(ObjectAnimator.ofFloat(null, "alpha", 0.3F, 1F),
                 ObjectAnimator.ofFloat(null, "translationX", NEW_ITEM_DISTANCE, 0));
         anim.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 Animator animator = ObjectAnimator.ofInt(mPathButtonsContainer, "scrollX",
-                            mPathButtonsContainer.getScrollX(),
-                            mPathButtons.getWidth())
+                        mPathButtonsContainer.getScrollX(),
+                        mPathButtons.getWidth())
                         .setDuration((long) (transition.getDuration(APPEARING)
                                 + (0.5F *transition.getDuration(APPEARING))));
-                animator.setInterpolator(inInterpolator);
+                animator.setInterpolator(IN_INTERPOLATOR);
                 animator.start();
             }
 
@@ -314,7 +314,7 @@ public class PathBar extends ViewFlipper implements PathController {
     private Animator createDisappearingAnimator(final LayoutTransition transition) {
         AnimatorSet anim = new AnimatorSet();
         anim.setDuration(transition.getDuration(DISAPPEARING));
-        anim.setInterpolator(outInterpolator);
+        anim.setInterpolator(OUT_INTERPOLATOR);
         anim.playTogether(ObjectAnimator.ofFloat(null, "translationX", 0, NEW_ITEM_DISTANCE),
                 ObjectAnimator.ofFloat(null, "alpha", 1F, 0.3F));
         return anim;

@@ -1,13 +1,14 @@
 package com.veniosg.dir.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ScaleDrawable;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -17,16 +18,22 @@ import com.veniosg.dir.util.Utils;
 
 import java.io.File;
 
+import static android.animation.LayoutTransition.APPEARING;
+import static android.animation.LayoutTransition.CHANGE_APPEARING;
+import static android.animation.LayoutTransition.CHANGE_DISAPPEARING;
+import static android.animation.LayoutTransition.CHANGING;
+import static android.animation.LayoutTransition.DISAPPEARING;
 import static android.animation.ObjectAnimator.ofFloat;
 import static android.animation.ObjectAnimator.ofInt;
-import static android.graphics.Typeface.NORMAL;
 import static android.graphics.Typeface.create;
 import static android.text.TextUtils.TruncateAt.MIDDLE;
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
-import static android.view.Gravity.CENTER;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
-import static com.veniosg.dir.AnimationConstants.inInterpolator;
+import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
+import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
+import static com.veniosg.dir.AnimationConstants.OUT_INTERPOLATOR;
 import static com.veniosg.dir.util.Utils.dp;
+import static com.veniosg.dir.util.Utils.getLastChild;
 import static com.veniosg.dir.util.Utils.lastCommonDirectoryIndex;
 import static com.veniosg.dir.util.Utils.measureExactly;
 import static com.veniosg.dir.view.PathButtonFactory.newButton;
@@ -58,7 +65,32 @@ public class PathContainerView extends HorizontalScrollView {
     private final OnClickListener mPrimaryButtonListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            revealScroll();
+            smoothRevealButtons();
+        }
+    };
+    private LayoutTransition.TransitionListener mTransitionListener = new LayoutTransition.TransitionListener() {
+        @Override
+        public void startTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+            if (transitionType == APPEARING) {
+                Animator animator2 = ObjectAnimator.ofInt(PathContainerView.this, "scrollX", mPathContainer.getWidth());
+                animator2.setDuration(ANIM_DURATION);
+                animator2.setInterpolator(IN_INTERPOLATOR);
+                animator2.setStartDelay(ANIM_START_DELAY);
+                animator2.start();
+            } else if (transitionType == DISAPPEARING) {
+                View futureLastChild = mPathContainer.getChildAt(mPathContainer.getChildCount()-2);
+                mPathContainer.setTranslationX(-futureLastChild.getMeasuredWidth());
+                Animator animator = ObjectAnimator.ofFloat(mPathContainer, "translationX", 0);
+                animator.setDuration(ANIM_DURATION);
+                animator.setStartDelay(ANIM_START_DELAY);
+                animator.setInterpolator(OUT_INTERPOLATOR);
+                animator.start();
+            }
+        }
+
+        @Override
+        public void endTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+//            configureButtons();
         }
     };
 
@@ -102,6 +134,20 @@ public class PathContainerView extends HorizontalScrollView {
                 scrollTo(mPathContainer.getWidth(), 0);
             }
         });
+        LayoutTransition transition = new LayoutTransition();
+        // Next two values should be the same as in AnimatedFileListContainer
+        transition.setDuration(ANIM_DURATION);
+        transition.setInterpolator(APPEARING, IN_INTERPOLATOR);
+        transition.setInterpolator(DISAPPEARING, OUT_INTERPOLATOR);
+        transition.setAnimator(APPEARING, createAppearingAnimator(transition));
+        transition.setAnimator(DISAPPEARING, createDisappearingAnimator(transition));
+        transition.setStartDelay(APPEARING, ANIM_START_DELAY);
+        transition.setStartDelay(DISAPPEARING, ANIM_START_DELAY);
+        transition.disableTransitionType(CHANGE_APPEARING);
+        transition.disableTransitionType(CHANGE_DISAPPEARING);
+        transition.disableTransitionType(CHANGING);
+        transition.addTransitionListener(mTransitionListener);
+        mPathContainer.setLayoutTransition(transition);
     }
 
     @Override
@@ -172,7 +218,6 @@ public class PathContainerView extends HorizontalScrollView {
 
         // Reload buttons.
         fillPathContainer(lastCommonDirectory + 1, newDir, getContext());
-        configureButtons();
     }
 
     /**
@@ -208,7 +253,7 @@ public class PathContainerView extends HorizontalScrollView {
             configureSecondaryButton((Button) mPathContainer.getChildAt(i));
         }
 
-        configurePrimaryButton((Button) mPathContainer.getChildAt(count-1));
+        configurePrimaryButton((Button) mPathContainer.getChildAt(count - 1));
     }
 
     private void configurePrimaryButton(Button item) {
@@ -219,7 +264,7 @@ public class PathContainerView extends HorizontalScrollView {
         item.setTextSize(COMPLEX_UNIT_SP, 24);  // Title style as per spec
         item.setPadding(eightDp, item.getPaddingTop(), eightDp * 2, item.getPaddingBottom());
         item.setOnClickListener(mPrimaryButtonListener);
-        setCaretToButton(item, 1f);
+        setCaretOn(item, 1f);
     }
 
     private void configureSecondaryButton(Button item) {
@@ -232,20 +277,49 @@ public class PathContainerView extends HorizontalScrollView {
         item.setOnClickListener(mSecondaryButtonListener);
 
         if (!((File) item.getTag()).getAbsolutePath().equals("/")) {
-            setCaretToButton(item, 16f / 24f);
+            setCaretOn(item, 16f / 24f);
         }
     }
 
-    private void setCaretToButton(Button btn, float scale) {
+    private void setCaretOn(Button btn, float scale) {
         Drawable caret = btn.getContext().getDrawable(R.drawable.ic_item_caret);
-        caret.setBounds(0, 0, (int) (caret.getIntrinsicWidth()*scale), (int) (caret.getIntrinsicHeight()*scale));
+        caret.setBounds(0, 0, (int) (caret.getIntrinsicWidth() * scale), (int) (caret.getIntrinsicHeight() * scale));
         caret.setTint(Themer.getThemedColor(btn.getContext(), R.attr.textColorSecondaryPathBar));
         btn.setCompoundDrawablesRelative(caret, null, null, null);
     }
 
-    private void revealScroll() {
+    private Animator createAppearingAnimator(final LayoutTransition transition) {
+        ObjectAnimator anim = ofFloat(null, "translationX", screenWidth(), 0);
+        anim.setDuration(transition.getDuration(APPEARING));
+        anim.setStartDelay(transition.getStartDelay(APPEARING));
+        anim.setInterpolator(transition.getInterpolator(APPEARING));
+        return anim;
+    }
+
+    private Animator createDisappearingAnimator(final LayoutTransition transition) {
+        ObjectAnimator anim = ofFloat(null, "translationX", screenWidth());
+        anim.setDuration(transition.getDuration(DISAPPEARING));
+        anim.setStartDelay(transition.getStartDelay(DISAPPEARING));
+        anim.setInterpolator(transition.getInterpolator(DISAPPEARING));
+        return anim;
+    }
+
+    private void changeAppearingWorkaround(View view, int initValue) {
+        view.setTranslationX(initValue);
+        Animator animator = ObjectAnimator.ofFloat(view, "translationX", 0);
+        animator.setDuration(ANIM_DURATION);
+        animator.setStartDelay(ANIM_START_DELAY);
+        animator.setInterpolator(IN_INTERPOLATOR);
+        animator.start();
+    }
+
+    private int screenWidth() {
+        return getResources().getDisplayMetrics().widthPixels;
+    }
+
+    private void smoothRevealButtons() {
         ObjectAnimator scrollXAnim = ofInt(this, "scrollX", max(0, mRevealScrollPixels));
-        scrollXAnim.setInterpolator(inInterpolator);
+        scrollXAnim.setInterpolator(IN_INTERPOLATOR);
         scrollXAnim.setDuration(ANIM_DURATION / 2);
         scrollXAnim.start();
     }

@@ -420,7 +420,7 @@ public class SimpleFileListFragment extends FileListFragment {
 //                ObjectAnimator anim5 = ObjectAnimator.ofFloat(listView, "scaleY", 1F);
 //
 //                set.setDuration(getResources().getInteger(config_shortAnimTime));
-//                set.setInterpolator(inInterpolator);
+//                set.setInterpolator(IN_INTERPOLATOR);
 //                set.playTogether(anim, anim2, anim3, anim4, anim5);
 //                set.start();
 //                return true;
