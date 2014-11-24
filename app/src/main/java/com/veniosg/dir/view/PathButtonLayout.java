@@ -42,6 +42,7 @@ import static com.veniosg.dir.view.Themer.getThemedResourceId;
  * {@link PathBar#mCurrentDirectory} field. <b>Note: </b> Never use this with
  * a width of WRAP_CONTENT.
  */
+@Deprecated
 class PathButtonLayout extends LinearLayout implements OnLongClickListener {
 	private PathBar mPathBar = null;
 	/** <absolute path, R.drawable id of image to use> */
