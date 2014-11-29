@@ -21,9 +21,9 @@ public class AnimationConstants {
      <!-- The duration (in milliseconds) of a long animation. -->
      <integer name="config_longAnimTime">500</integer>
      */
-    public static final int ANIM_DURATION = 400;
+    public static final int ANIM_DURATION = 400 *10;
 
-    public static final int ANIM_START_DELAY = 10;
+    public static final int ANIM_START_DELAY = 10 *10;
 
     public static final Interpolator IN_INTERPOLATOR = new LinearInterpolator();//new PathInterpolator(0.8F, 0, 0.2F, 1);  // slow_in_slow_out
     public static final Interpolator OUT_INTERPOLATOR = new LinearInterpolator();// new PathInterpolator(0.8F, 0, 0.2F, 1);

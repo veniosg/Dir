@@ -1,28 +1,21 @@
 package com.veniosg.dir.view;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import com.veniosg.dir.R;
-import com.veniosg.dir.util.Utils;
 
 import java.io.File;
+import java.util.List;
 
-import static android.animation.LayoutTransition.APPEARING;
-import static android.animation.LayoutTransition.CHANGE_APPEARING;
-import static android.animation.LayoutTransition.CHANGE_DISAPPEARING;
-import static android.animation.LayoutTransition.CHANGING;
-import static android.animation.LayoutTransition.DISAPPEARING;
+import static android.animation.LayoutTransition.*;
 import static android.animation.ObjectAnimator.ofFloat;
 import static android.animation.ObjectAnimator.ofInt;
 import static android.graphics.Typeface.create;
@@ -31,9 +24,7 @@ import static android.util.TypedValue.COMPLEX_UNIT_SP;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
-import static com.veniosg.dir.AnimationConstants.OUT_INTERPOLATOR;
 import static com.veniosg.dir.util.Utils.dp;
-import static com.veniosg.dir.util.Utils.getLastChild;
 import static com.veniosg.dir.util.Utils.lastCommonDirectoryIndex;
 import static com.veniosg.dir.util.Utils.measureExactly;
 import static com.veniosg.dir.view.PathButtonFactory.newButton;
@@ -46,7 +37,7 @@ public class PathContainerView extends HorizontalScrollView {
      * so that the last item is left aligned to the grid.
      */
     private int mPathContainerRightPadding;
-    private LinearLayout mPathContainer;
+    private ChildrenChangedListeningLinearLayout mPathContainer;
     private RightEdgeRangeListener mRightEdgeRangeListener = noOpRangeListener();
     private int mRightEdgeRange;
     private int mRevealScrollPixels;
@@ -66,6 +57,17 @@ public class PathContainerView extends HorizontalScrollView {
         @Override
         public void onClick(View v) {
             smoothRevealButtons();
+        }
+    };
+    private ChildrenChangedListeningLinearLayout.OnChildrenChangedListener mOnPathChildrenChangedListener = new ChildrenChangedListeningLinearLayout.OnChildrenChangedListener() {
+        @Override
+        public void childrenAdded(final List<View> newChildren) {
+            System.out.println("ADDED!");
+        }
+
+        @Override
+        public void childrenRemoved(final List<View> oldChildren) {
+            System.out.println("REMOVED!");
         }
     };
 //    private LayoutTransition.TransitionListener mTransitionListener = new LayoutTransition.TransitionListener() {
@@ -120,9 +122,9 @@ public class PathContainerView extends HorizontalScrollView {
     @Override
     protected void onFinishInflate() {
         try {
-            mPathContainer = (LinearLayout) getChildAt(0);
+            mPathContainer = (ChildrenChangedListeningLinearLayout) getChildAt(0);
         } catch (ClassCastException ex) {
-            throw new RuntimeException("First and only child of PathContainerView must be a LinearLayout");
+            throw new RuntimeException("First and only child of PathContainerView must be a ChildrenChangedListeningLinearLayout");
         }
 
         mPathContainer.addOnLayoutChangeListener(new OnLayoutChangeListener() {
@@ -134,6 +136,22 @@ public class PathContainerView extends HorizontalScrollView {
                 scrollTo(mPathContainer.getWidth(), 0);
             }
         });
+        mPathContainer.setOnChildrenChangedListener(mOnPathChildrenChangedListener);
+        LayoutTransition transition = delayRemovalOfChild();
+        mPathContainer.setLayoutTransition(transition);
+    }
+
+    private LayoutTransition delayRemovalOfChild() {
+        // Workaround to keep items around until our removal animations are finished.
+        LayoutTransition transition = new LayoutTransition();
+        transition.disableTransitionType(APPEARING);
+        transition.disableTransitionType(CHANGE_DISAPPEARING);
+        transition.disableTransitionType(CHANGE_APPEARING);
+        transition.disableTransitionType(CHANGING);
+        transition.setAnimator(DISAPPEARING, ofFloat(0, 0));
+        transition.setDuration(ANIM_DURATION);
+        transition.setStartDelay(ANIM_START_DELAY, DISAPPEARING);
+        return transition;
     }
 
     @Override
