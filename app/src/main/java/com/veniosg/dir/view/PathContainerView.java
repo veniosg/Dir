@@ -71,20 +71,20 @@ public class PathContainerView extends HorizontalScrollView {
     private LayoutTransition.TransitionListener mTransitionListener = new LayoutTransition.TransitionListener() {
         @Override
         public void startTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+            Animator anim = null;
             if (transitionType == APPEARING) {
-                Animator animator2 = ObjectAnimator.ofInt(PathContainerView.this, "scrollX", mPathContainer.getWidth());
-                animator2.setDuration(ANIM_DURATION);
-                animator2.setInterpolator(IN_INTERPOLATOR);
-                animator2.setStartDelay(ANIM_START_DELAY);
-                animator2.start();
+                anim = ObjectAnimator.ofInt(PathContainerView.this, "scrollX", mPathContainer.getWidth());
+                anim.setInterpolator(IN_INTERPOLATOR);
             } else if (transitionType == DISAPPEARING) {
                 View futureLastChild = mPathContainer.getChildAt(mPathContainer.getChildCount()-2);
                 mPathContainer.setTranslationX(-futureLastChild.getMeasuredWidth());
-                Animator animator = ObjectAnimator.ofFloat(mPathContainer, "translationX", 0);
-                animator.setDuration(ANIM_DURATION);
-                animator.setStartDelay(ANIM_START_DELAY);
-                animator.setInterpolator(OUT_INTERPOLATOR);
-                animator.start();
+                anim = ObjectAnimator.ofFloat(mPathContainer, "translationX", 0);
+                anim.setInterpolator(OUT_INTERPOLATOR);
+            }
+            if (anim != null) {
+                anim.setDuration(ANIM_DURATION);
+                anim.setStartDelay(ANIM_START_DELAY);
+                anim.start();
             }
         }
 
