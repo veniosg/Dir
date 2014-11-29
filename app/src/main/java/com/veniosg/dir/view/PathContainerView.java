@@ -68,31 +68,31 @@ public class PathContainerView extends HorizontalScrollView {
             smoothRevealButtons();
         }
     };
-    private LayoutTransition.TransitionListener mTransitionListener = new LayoutTransition.TransitionListener() {
-        @Override
-        public void startTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
-            Animator anim = null;
-            if (transitionType == APPEARING) {
-                anim = ObjectAnimator.ofInt(PathContainerView.this, "scrollX", mPathContainer.getWidth());
-                anim.setInterpolator(IN_INTERPOLATOR);
-            } else if (transitionType == DISAPPEARING) {
-                View futureLastChild = mPathContainer.getChildAt(mPathContainer.getChildCount()-2);
-                mPathContainer.setTranslationX(-futureLastChild.getMeasuredWidth());
-                anim = ObjectAnimator.ofFloat(mPathContainer, "translationX", 0);
-                anim.setInterpolator(OUT_INTERPOLATOR);
-            }
-            if (anim != null) {
-                anim.setDuration(ANIM_DURATION);
-                anim.setStartDelay(ANIM_START_DELAY);
-                anim.start();
-            }
-        }
-
-        @Override
-        public void endTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
-//            configureButtons();
-        }
-    };
+//    private LayoutTransition.TransitionListener mTransitionListener = new LayoutTransition.TransitionListener() {
+//        @Override
+//        public void startTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+//            Animator anim = null;
+//            if (transitionType == APPEARING) {
+//                anim = ObjectAnimator.ofInt(PathContainerView.this, "scrollX", mPathContainer.getWidth());
+//                anim.setInterpolator(IN_INTERPOLATOR);
+//            } else if (transitionType == DISAPPEARING) {
+//                View futureLastChild = mPathContainer.getChildAt(mPathContainer.getChildCount()-2);
+//                mPathContainer.setTranslationX(-futureLastChild.getMeasuredWidth());
+//                anim = ObjectAnimator.ofFloat(mPathContainer, "translationX", 0);
+//                anim.setInterpolator(OUT_INTERPOLATOR);
+//            }
+//            if (anim != null) {
+//                anim.setDuration(ANIM_DURATION);
+//                anim.setStartDelay(ANIM_START_DELAY);
+//                anim.start();
+//            }
+//        }
+//
+//        @Override
+//        public void endTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+////            configureButtons();
+//        }
+//    };
 
     public PathContainerView(Context context) {
         super(context);
@@ -134,20 +134,6 @@ public class PathContainerView extends HorizontalScrollView {
                 scrollTo(mPathContainer.getWidth(), 0);
             }
         });
-        LayoutTransition transition = new LayoutTransition();
-        // Next two values should be the same as in AnimatedFileListContainer
-        transition.setDuration(ANIM_DURATION);
-        transition.setInterpolator(APPEARING, IN_INTERPOLATOR);
-        transition.setInterpolator(DISAPPEARING, OUT_INTERPOLATOR);
-        transition.setAnimator(APPEARING, createAppearingAnimator(transition));
-        transition.setAnimator(DISAPPEARING, createDisappearingAnimator(transition));
-        transition.setStartDelay(APPEARING, ANIM_START_DELAY);
-        transition.setStartDelay(DISAPPEARING, ANIM_START_DELAY);
-        transition.disableTransitionType(CHANGE_APPEARING);
-        transition.disableTransitionType(CHANGE_DISAPPEARING);
-        transition.disableTransitionType(CHANGING);
-        transition.addTransitionListener(mTransitionListener);
-        mPathContainer.setLayoutTransition(transition);
     }
 
     @Override
@@ -288,30 +274,30 @@ public class PathContainerView extends HorizontalScrollView {
         btn.setCompoundDrawablesRelative(caret, null, null, null);
     }
 
-    private Animator createAppearingAnimator(final LayoutTransition transition) {
-        ObjectAnimator anim = ofFloat(null, "translationX", screenWidth(), 0);
-        anim.setDuration(transition.getDuration(APPEARING));
-        anim.setStartDelay(transition.getStartDelay(APPEARING));
-        anim.setInterpolator(transition.getInterpolator(APPEARING));
-        return anim;
-    }
-
-    private Animator createDisappearingAnimator(final LayoutTransition transition) {
-        ObjectAnimator anim = ofFloat(null, "translationX", screenWidth());
-        anim.setDuration(transition.getDuration(DISAPPEARING));
-        anim.setStartDelay(transition.getStartDelay(DISAPPEARING));
-        anim.setInterpolator(transition.getInterpolator(DISAPPEARING));
-        return anim;
-    }
-
-    private void changeAppearingWorkaround(View view, int initValue) {
-        view.setTranslationX(initValue);
-        Animator animator = ObjectAnimator.ofFloat(view, "translationX", 0);
-        animator.setDuration(ANIM_DURATION);
-        animator.setStartDelay(ANIM_START_DELAY);
-        animator.setInterpolator(IN_INTERPOLATOR);
-        animator.start();
-    }
+//    private Animator createAppearingAnimator(final LayoutTransition transition) {
+//        ObjectAnimator anim = ofFloat(null, "translationX", screenWidth(), 0);
+//        anim.setDuration(transition.getDuration(APPEARING));
+//        anim.setStartDelay(transition.getStartDelay(APPEARING));
+//        anim.setInterpolator(transition.getInterpolator(APPEARING));
+//        return anim;
+//    }
+//
+//    private Animator createDisappearingAnimator(final LayoutTransition transition) {
+//        ObjectAnimator anim = ofFloat(null, "translationX", screenWidth());
+//        anim.setDuration(transition.getDuration(DISAPPEARING));
+//        anim.setStartDelay(transition.getStartDelay(DISAPPEARING));
+//        anim.setInterpolator(transition.getInterpolator(DISAPPEARING));
+//        return anim;
+//    }
+//
+//    private void changeAppearingWorkaround(View view, int initValue) {
+//        view.setTranslationX(initValue);
+//        Animator animator = ObjectAnimator.ofFloat(view, "translationX", 0);
+//        animator.setDuration(ANIM_DURATION);
+//        animator.setStartDelay(ANIM_START_DELAY);
+//        animator.setInterpolator(IN_INTERPOLATOR);
+//        animator.start();
+//    }
 
     private int screenWidth() {
         return getResources().getDisplayMetrics().widthPixels;
