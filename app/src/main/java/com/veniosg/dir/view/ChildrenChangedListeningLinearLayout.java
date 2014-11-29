@@ -21,6 +21,7 @@ public class ChildrenChangedListeningLinearLayout extends LinearLayout implement
     private List<View> mAddedWaitingViews = new ArrayList<View>();
     private List<View> mRemovedWaitingViews = new ArrayList<View>();
     private OnChildrenChangedListener mListener = OnChildrenChangedListener.NO_OP;
+    private boolean firstDraw = true;
 
     public ChildrenChangedListeningLinearLayout(Context context) {
         super(context);
@@ -91,9 +92,10 @@ public class ChildrenChangedListeningLinearLayout extends LinearLayout implement
 
     @Override
     public boolean onPreDraw() {
-        if (!mAddedWaitingViews.isEmpty()) {
+        if (!mAddedWaitingViews.isEmpty() && !firstDraw) {
             mListener.childrenAdded(mAddedWaitingViews);
         }
+        firstDraw = false;
         mAddedWaitingViews.clear();
         return true;
     }

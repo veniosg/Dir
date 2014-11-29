@@ -1,5 +1,7 @@
 package com.veniosg.dir.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -11,8 +13,10 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 import com.veniosg.dir.R;
+import com.veniosg.dir.util.Logger;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.animation.LayoutTransition.*;
@@ -32,6 +36,8 @@ import static com.veniosg.dir.view.Themer.getThemedResourceId;
 import static java.lang.Math.max;
 
 public class PathContainerView extends HorizontalScrollView {
+    private static final String LOG_TAG = PathContainerView.class.getName();
+
     /**
      * Additional padding to the end of mPathContainer
      * so that the last item is left aligned to the grid.
@@ -62,39 +68,24 @@ public class PathContainerView extends HorizontalScrollView {
     private ChildrenChangedListeningLinearLayout.OnChildrenChangedListener mOnPathChildrenChangedListener = new ChildrenChangedListeningLinearLayout.OnChildrenChangedListener() {
         @Override
         public void childrenAdded(final List<View> newChildren) {
-            System.out.println("ADDED!");
+            Logger.logV(LOG_TAG, "Starting add animation");
+            AnimatorSet animSet = new AnimatorSet();
+            animSet.setDuration(ANIM_DURATION);
+            animSet.setStartDelay(ANIM_START_DELAY);
+            animSet.setInterpolator(IN_INTERPOLATOR);
+            animSet.playTogether(
+                    scrollToEndAnimator(),
+                    // TODO                   secondToLastItemAnimator,
+                    addedViewsAnimator(newChildren)
+            );
+            animSet.start();
         }
 
         @Override
         public void childrenRemoved(final List<View> oldChildren) {
-            System.out.println("REMOVED!");
+            Logger.logV(LOG_TAG, "Starting remove animation");
         }
     };
-//    private LayoutTransition.TransitionListener mTransitionListener = new LayoutTransition.TransitionListener() {
-//        @Override
-//        public void startTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
-//            Animator anim = null;
-//            if (transitionType == APPEARING) {
-//                anim = ObjectAnimator.ofInt(PathContainerView.this, "scrollX", mPathContainer.getWidth());
-//                anim.setInterpolator(IN_INTERPOLATOR);
-//            } else if (transitionType == DISAPPEARING) {
-//                View futureLastChild = mPathContainer.getChildAt(mPathContainer.getChildCount()-2);
-//                mPathContainer.setTranslationX(-futureLastChild.getMeasuredWidth());
-//                anim = ObjectAnimator.ofFloat(mPathContainer, "translationX", 0);
-//                anim.setInterpolator(OUT_INTERPOLATOR);
-//            }
-//            if (anim != null) {
-//                anim.setDuration(ANIM_DURATION);
-//                anim.setStartDelay(ANIM_START_DELAY);
-//                anim.start();
-//            }
-//        }
-//
-//        @Override
-//        public void endTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
-////            configureButtons();
-//        }
-//    };
 
     public PathContainerView(Context context) {
         super(context);
@@ -243,9 +234,6 @@ public class PathContainerView extends HorizontalScrollView {
                 if (cDir++ >= firstDirToAdd) {
                     item = newButton(cPath.toString(), context);
                     mPathContainer.addView(item);
-                    // TODO uncomment
-//                    if(firstDirToAdd != 0) // if not on first draw
-//                        item.setAlpha(0); // So that it doesn't flash due to the animation's delay
                 }
             }
         }
@@ -292,30 +280,38 @@ public class PathContainerView extends HorizontalScrollView {
         btn.setCompoundDrawablesRelative(caret, null, null, null);
     }
 
-//    private Animator createAppearingAnimator(final LayoutTransition transition) {
-//        ObjectAnimator anim = ofFloat(null, "translationX", screenWidth(), 0);
-//        anim.setDuration(transition.getDuration(APPEARING));
-//        anim.setStartDelay(transition.getStartDelay(APPEARING));
-//        anim.setInterpolator(transition.getInterpolator(APPEARING));
-//        return anim;
-//    }
-//
-//    private Animator createDisappearingAnimator(final LayoutTransition transition) {
-//        ObjectAnimator anim = ofFloat(null, "translationX", screenWidth());
-//        anim.setDuration(transition.getDuration(DISAPPEARING));
-//        anim.setStartDelay(transition.getStartDelay(DISAPPEARING));
-//        anim.setInterpolator(transition.getInterpolator(DISAPPEARING));
-//        return anim;
-//    }
-//
-//    private void changeAppearingWorkaround(View view, int initValue) {
-//        view.setTranslationX(initValue);
-//        Animator animator = ObjectAnimator.ofFloat(view, "translationX", 0);
-//        animator.setDuration(ANIM_DURATION);
-//        animator.setStartDelay(ANIM_START_DELAY);
-//        animator.setInterpolator(IN_INTERPOLATOR);
-//        animator.start();
-//    }
+    private Animator addedViewsAnimator(List<View> newChildren) {
+        if (newChildren != null) {
+            AnimatorSet anim = new AnimatorSet();
+            List<Animator> animList = new ArrayList<Animator>(newChildren.size());
+            View previousView;
+            View viewToAnimate;
+
+            for(int i = 0; i < newChildren.size(); i++) {
+                viewToAnimate = newChildren.get(i);
+                // Too tired to figure out a single formula for the index.
+                if (newChildren.size() == 1 || i == 0) {
+                    // Last child, excluding the ones to animate
+                    previousView = mPathContainer.getChildAt(
+                            mPathContainer.getChildCount() - newChildren.size() - 1);
+                } else {
+                    previousView = newChildren.get(i-1);
+                }
+                viewToAnimate.setTranslationX(
+                        getWidth() - previousView.getWidth());
+                animList.add(ofFloat(viewToAnimate, "translationX", 0));
+            }
+            anim.playTogether(animList);
+
+            return anim;
+        }
+
+        return null;
+    }
+
+    private Animator scrollToEndAnimator() {
+        return ofInt(this, "scrollX", mPathContainer.getWidth() - getWidth());
+    }
 
     private int screenWidth() {
         return getResources().getDisplayMetrics().widthPixels;
