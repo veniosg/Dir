@@ -40,6 +40,7 @@ import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
 import static android.graphics.Bitmap.Config.ARGB_8888;
 import static android.graphics.Matrix.ScaleToFit.CENTER;
 import static android.graphics.Shader.TileMode.CLAMP;
+import static android.net.Uri.decode;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
@@ -59,7 +60,7 @@ public class ThumbnailHelper {
                 .extraForDownloader(holder)
                 .build();
 
-        getInstance().displayImage(uri.toString(), imageView, options);
+        getInstance().displayImage(decode(uri.toString()), imageView, options);
     }
 
     /**
