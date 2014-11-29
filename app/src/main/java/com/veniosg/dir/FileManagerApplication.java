@@ -1,5 +1,6 @@
 package com.veniosg.dir;
 
+import android.animation.Animator;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.view.ViewConfiguration;
@@ -12,6 +13,7 @@ import com.nostra13.universalimageloader.core.decode.ImageDecodingInfo;
 import com.nostra13.universalimageloader.core.download.ImageDownloader;
 import com.veniosg.dir.misc.MimeTypes;
 import com.veniosg.dir.util.CopyHelper;
+import com.veniosg.dir.view.AnimatorSynchroniser;
 import com.veniosg.dir.view.Themer;
 
 import java.io.IOException;
@@ -57,5 +59,11 @@ public class FileManagerApplication extends Application{
 
     public MimeTypes getMimeTypes() {
         return mMimeTypes;
+    }
+
+    // Static for easier access
+    private static AnimatorSynchroniser mAnimSync = new AnimatorSynchroniser();
+    public static void enqueueAnimator(Animator animator) {
+        mAnimSync.addWaitingAnimation(animator);
     }
 }

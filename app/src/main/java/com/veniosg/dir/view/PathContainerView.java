@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
+import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
 
@@ -69,21 +70,24 @@ public class PathContainerView extends HorizontalScrollView {
         @Override
         public void childrenAdded(final List<View> newChildren) {
             Logger.logV(LOG_TAG, "Starting add animation");
+
             AnimatorSet animSet = new AnimatorSet();
             animSet.setDuration(ANIM_DURATION);
             animSet.setStartDelay(ANIM_START_DELAY);
             animSet.setInterpolator(IN_INTERPOLATOR);
             animSet.playTogether(
                     scrollToEndAnimator(),
-                    // TODO                   secondToLastItemAnimator,
+                    secondToLastItemAnimator(),
                     addedViewsAnimator(newChildren)
             );
-            animSet.start();
+            FileManagerApplication.enqueueAnimator(animSet);
         }
 
         @Override
         public void childrenRemoved(final List<View> oldChildren) {
             Logger.logV(LOG_TAG, "Starting remove animation");
+
+            FileManagerApplication.enqueueAnimator(ofFloat(0, 0));
         }
     };
 
@@ -278,6 +282,12 @@ public class PathContainerView extends HorizontalScrollView {
         caret.setBounds(0, 0, (int) (caret.getIntrinsicWidth() * scale), (int) (caret.getIntrinsicHeight() * scale));
         caret.setTint(Themer.getThemedColor(btn.getContext(), R.attr.textColorSecondaryPathBar));
         btn.setCompoundDrawablesRelative(caret, null, null, null);
+    }
+
+
+    private Animator secondToLastItemAnimator() {
+        // TODO
+        return null;
     }
 
     private Animator addedViewsAnimator(List<View> newChildren) {

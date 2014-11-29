@@ -34,6 +34,7 @@ import android.view.ViewOutlineProvider;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
+import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
 
@@ -43,6 +44,7 @@ import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
 import static com.veniosg.dir.AnimationConstants.OUT_INTERPOLATOR;
+import static com.veniosg.dir.FileManagerApplication.enqueueAnimator;
 import static com.veniosg.dir.util.Logger.TAG_ANIMATION;
 
 /**
@@ -139,7 +141,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         AnimatorSet scene = new AnimatorSet();
         setupSceneAnimation(oldContent, hero, contentAnim, heroAnim, IN_INTERPOLATOR, scene);
         Logger.log(DEBUG, TAG_ANIMATION, "Starting animation");
-        scene.start();
+        enqueueAnimator(scene);
     }
 
     public void animateBwd() {
@@ -169,7 +171,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         AnimatorSet scene = new AnimatorSet();
         setupSceneAnimation(oldContent, hero, contentAnim, heroAnim, OUT_INTERPOLATOR, scene);
         Logger.log(DEBUG, TAG_ANIMATION, "Starting animation");
-        scene.start();
+        enqueueAnimator(scene);
     }
 
     private AnimatorSet forwardHeroAnimation(final View hero) {
