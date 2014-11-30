@@ -5,15 +5,14 @@ import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.veniosg.dir.FileManagerApplication;
-import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
 
 import java.io.File;
@@ -25,13 +24,13 @@ import static android.animation.ObjectAnimator.ofFloat;
 import static android.animation.ObjectAnimator.ofInt;
 import static android.graphics.Typeface.create;
 import static android.text.TextUtils.TruncateAt.MIDDLE;
-import static android.util.TypedValue.COMPLEX_UNIT_SP;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
-import static com.veniosg.dir.util.Utils.dp;
+import static com.veniosg.dir.util.Utils.getLastChild;
 import static com.veniosg.dir.util.Utils.lastCommonDirectoryIndex;
 import static com.veniosg.dir.util.Utils.measureExactly;
+import static com.veniosg.dir.view.PathButtonFactory.SECONDARY_ITEM_FACTOR;
 import static com.veniosg.dir.view.PathButtonFactory.newButton;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
 import static java.lang.Math.max;
@@ -48,6 +47,7 @@ public class PathContainerView extends HorizontalScrollView {
     private RightEdgeRangeListener mRightEdgeRangeListener = noOpRangeListener();
     private int mRightEdgeRange;
     private int mRevealScrollPixels;
+    private int itemsAddedOnLastCd;
     private PathControllerGetter mControllerGetter;
     private final OnClickListener mSecondaryButtonListener = new OnClickListener() {
         @Override
@@ -77,7 +77,7 @@ public class PathContainerView extends HorizontalScrollView {
             animSet.setInterpolator(IN_INTERPOLATOR);
             animSet.playTogether(
                     scrollToEndAnimator(),
-                    secondToLastItemAnimator(),
+                    transformToSecondaryAnimator(mPathContainer, 0, mPathContainer.getChildCount() - 1),
                     addedViewsAnimator(newChildren)
             );
             FileManagerApplication.enqueueAnimator(animSet);
@@ -206,29 +206,49 @@ public class PathContainerView extends HorizontalScrollView {
         // Remove only the non-matching buttons.
         int count = mPathContainer.getChildCount();
         int lastCommonDirectory;
+        boolean forceStyle = false;
         if(previousDir != null && count > 0) {
             lastCommonDirectory = lastCommonDirectoryIndex(previousDir, newDir);
             mPathContainer.removeViews(lastCommonDirectory + 1, count - lastCommonDirectory - 1);
         } else {
             // First layout, init by hand.
+            forceStyle = true;
             lastCommonDirectory = -1;
             mPathContainer.removeAllViews();
         }
 
-        // Reload buttons.
-        fillPathContainer(lastCommonDirectory + 1, newDir, getContext());
+        // Add children as necessary.
+        itemsAddedOnLastCd = fillPathContainer(lastCommonDirectory + 1, newDir, getContext());
+
+        // Static styling and click configuration.
+        View child;
+        for (int i = 0; i < mPathContainer.getChildCount()-1; i++) {
+            child = mPathContainer.getChildAt(i);
+            child.setOnClickListener(mSecondaryButtonListener);
+            ((TextView) child).setEllipsize(MIDDLE);
+        }
+        if (forceStyle) {
+            for (int i = 0; i < mPathContainer.getChildCount()-1; i++) {
+                forceStyleAsSecondary(mPathContainer.getChildAt(i));
+            }
+        }
+        child = getLastChild(mPathContainer);
+        child.setOnClickListener(mPrimaryButtonListener);
+        ((TextView) child).setEllipsize(null);
     }
 
     /**
      * Adds new buttons according to the fPath parameter.
      * @param firstDirToAdd The index of the first directory of fPath to add.
+     * @return How many new items where added.
      */
-    private void fillPathContainer(int firstDirToAdd, File fPath, Context context) {
+    private int fillPathContainer(int firstDirToAdd, File fPath, Context context) {
         StringBuilder cPath = new StringBuilder();
+        String path = fPath.getAbsolutePath();
         char cChar;
         int cDir = 0;
-        String path = fPath.getAbsolutePath();
         View item;
+        int added = 0;
 
         for (int i = 0; i < path.length(); i++) {
             cChar = path.charAt(i);
@@ -236,58 +256,41 @@ public class PathContainerView extends HorizontalScrollView {
 
             if ((cChar == '/' || i == path.length() - 1)) { // if folder name ended, or path string ended but not if we're on root
                 if (cDir++ >= firstDirToAdd) {
-                    item = newButton(cPath.toString(), context);
-                    mPathContainer.addView(item);
+                    mPathContainer.addView(newButton(cPath.toString(), context));
+                    added++;
                 }
             }
         }
+
+        return added;
     }
 
-    private void configureButtons() {
-        int count = mPathContainer.getChildCount();
-        for (int i = 0; i < count -1; i++) {
-            configureSecondaryButton((Button) mPathContainer.getChildAt(i));
+    private Animator transformToSecondaryAnimator(ViewGroup container, int first, int count) {
+        List<Animator> anims = new ArrayList<Animator>(count);
+        AnimatorSet set;
+        View v;
+
+        for (int i = first; i < first + count; i++) {
+            set = new AnimatorSet();
+            v = container.getChildAt(i);
+
+            set.playTogether(
+                    ofFloat(v, "scaleX", SECONDARY_ITEM_FACTOR),
+                    ofFloat(v, "scaleY", SECONDARY_ITEM_FACTOR),
+                    ofFloat(v, "alpha", SECONDARY_ITEM_FACTOR)
+            );
+            anims.add(set);
         }
 
-        configurePrimaryButton((Button) mPathContainer.getChildAt(count - 1));
+        AnimatorSet result = new AnimatorSet();
+        result.playTogether(anims);
+        return result;
     }
 
-    private void configurePrimaryButton(Button item) {
-        int eightDp = (int) dp(8, getContext());
-        item.setTextColor(getResources().getColor(
-                getThemedResourceId(getContext(), R.attr.textColorPathBar)));
-        item.setEllipsize(MIDDLE);
-        item.setTextSize(COMPLEX_UNIT_SP, 24);  // Title style as per spec
-        item.setPadding(eightDp, item.getPaddingTop(), eightDp * 2, item.getPaddingBottom());
-        item.setOnClickListener(mPrimaryButtonListener);
-        setCaretOn(item, 1f);
-    }
-
-    private void configureSecondaryButton(Button item) {
-        int eightDp = (int) dp(8, getContext());
-        item.setTextColor(getResources().getColor(
-                getThemedResourceId(getContext(), R.attr.textColorSecondaryPathBar)));
-        item.setEllipsize(null);
-        item.setTextSize(COMPLEX_UNIT_SP, 16);
-        item.setPadding(eightDp, item.getPaddingTop(), eightDp * 2, item.getPaddingBottom());
-        item.setOnClickListener(mSecondaryButtonListener);
-
-        if (!((File) item.getTag()).getAbsolutePath().equals("/")) {
-            setCaretOn(item, 16f / 24f);
-        }
-    }
-
-    private void setCaretOn(Button btn, float scale) {
-        Drawable caret = btn.getContext().getDrawable(R.drawable.ic_item_caret);
-        caret.setBounds(0, 0, (int) (caret.getIntrinsicWidth() * scale), (int) (caret.getIntrinsicHeight() * scale));
-        caret.setTint(Themer.getThemedColor(btn.getContext(), R.attr.textColorSecondaryPathBar));
-        btn.setCompoundDrawablesRelative(caret, null, null, null);
-    }
-
-
-    private Animator secondToLastItemAnimator() {
-        // TODO
-        return null;
+    private void forceStyleAsSecondary(View childToStyle) {
+        childToStyle.setScaleX(SECONDARY_ITEM_FACTOR);
+        childToStyle.setScaleY(SECONDARY_ITEM_FACTOR);
+        childToStyle.setAlpha(SECONDARY_ITEM_FACTOR);
     }
 
     private Animator addedViewsAnimator(List<View> newChildren) {

@@ -13,13 +13,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.util.TypedValue;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 

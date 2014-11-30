@@ -19,7 +19,7 @@ public class AnimatorSynchroniser {
     /**
      * Add an animation and fire it as soon as the number of waiting animators reaches the max.
      */
-    public void addWaitingAnimation(Animator anim) {
+    public synchronized void addWaitingAnimation(Animator anim) {
         mAnimators.add(anim);
 
         if (mAnimators.size() >= mMaxAnimators) {
