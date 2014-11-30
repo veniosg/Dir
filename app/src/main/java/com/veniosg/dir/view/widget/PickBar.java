@@ -74,7 +74,10 @@ public class PickBar extends LinearLayout {
 			mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 						@Override
 						public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-							if (actionId == EditorInfo.IME_ACTION_GO || (event.getAction() == KeyEvent.ACTION_DOWN && (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_CENTER || event.getKeyCode() == KeyEvent.KEYCODE_ENTER))) {
+							if (actionId == EditorInfo.IME_ACTION_GO
+                                    || (event.getAction() == KeyEvent.ACTION_DOWN
+                                            && (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_CENTER
+                                                || event.getKeyCode() == KeyEvent.KEYCODE_ENTER))) {
 								if(mListener!=null)
 									mListener.pickRequested(mEditText.getText().toString());
 								return true;
