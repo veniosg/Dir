@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.veniosg.dir.view;
+package com.veniosg.dir.view.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.veniosg.dir.view;
+package com.veniosg.dir.view.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -37,6 +37,7 @@ import android.widget.FrameLayout;
 import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.view.Themer;
 
 import static android.graphics.PorterDuff.Mode.SRC_OVER;
 import static android.util.Log.DEBUG;

@@ -2,14 +2,12 @@ package com.veniosg.dir.view;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.view.View;
 
 import java.io.File;
 
 public interface PathController {
     /**
-     * The available Modes of this PathBar. </br> See {@link PathBar#switchToManualInput() switchToManualInput()} and {@link PathBar#switchToStandardInput() switchToStandardInput()}.
+     * The available Modes of this PathBar. </br> See {@link com.veniosg.dir.view.widget.PathBar#switchToManualInput() switchToManualInput()} and {@link com.veniosg.dir.view.widget.PathBar#switchToStandardInput() switchToStandardInput()}.
      */
     public enum Mode {
         /**
@@ -27,7 +25,7 @@ public interface PathController {
     void switchToManualInput();
 
     /**
-     * @see {@link com.veniosg.dir.view.PathBar#cd(File) cd(File)}
+     * @see {@link com.veniosg.dir.view.widget.PathBar#cd(File) cd(File)}
      * @param path
      *            The path of the Directory to {@code cd} to.
      * @return Whether the path entered exists and can be navigated to.

@@ -56,10 +56,10 @@ import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.util.MediaScannerUtils;
 import com.veniosg.dir.util.Utils;
-import com.veniosg.dir.view.AnimatedFileListContainer;
-import com.veniosg.dir.view.PathView;
+import com.veniosg.dir.view.widget.AnimatedFileListContainer;
+import com.veniosg.dir.view.widget.PathView;
 import com.veniosg.dir.view.PathController;
-import com.veniosg.dir.view.PathViewCompatibleToolbar;
+import com.veniosg.dir.view.widget.PathViewCompatibleToolbar;
 
 import java.io.File;
 import java.io.IOException;

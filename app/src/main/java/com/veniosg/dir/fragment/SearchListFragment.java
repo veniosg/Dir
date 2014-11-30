@@ -36,7 +36,7 @@ import com.veniosg.dir.loader.SearchLoader;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.util.Utils;
 import com.veniosg.dir.view.Themer;
-import com.veniosg.dir.view.WaitingViewFlipper;
+import com.veniosg.dir.view.widget.WaitingViewFlipper;
 
 import java.io.File;
 import java.util.List;

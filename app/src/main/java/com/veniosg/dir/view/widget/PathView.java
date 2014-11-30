@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package com.veniosg.dir.view;
+package com.veniosg.dir.view.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -30,6 +29,7 @@ import android.widget.ViewFlipper;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.view.PathController;
 
 import java.io.File;
 
@@ -45,7 +45,7 @@ import static android.view.inputmethod.EditorInfo.IME_ACTION_GO;
 import static com.veniosg.dir.util.FileUtils.isOk;
 import static com.veniosg.dir.util.Utils.backWillExit;
 import static com.veniosg.dir.view.PathButtonFactory.newButton;
-import static com.veniosg.dir.view.PathContainerView.RightEdgeRangeListener;
+import static com.veniosg.dir.view.widget.PathContainerView.RightEdgeRangeListener;
 import static com.veniosg.dir.view.PathController.Mode.MANUAL_INPUT;
 import static com.veniosg.dir.view.PathController.Mode.STANDARD_INPUT;
 import static com.veniosg.dir.view.Themer.getThemedDimension;

@@ -32,8 +32,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 
 import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.IntentConstants;
@@ -43,16 +41,15 @@ import com.veniosg.dir.misc.DirectoryContents;
 import com.veniosg.dir.misc.DirectoryScanner;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.util.Logger;
-import com.veniosg.dir.util.Utils;
-import com.veniosg.dir.view.WaitingViewFlipper;
+import com.veniosg.dir.view.widget.WaitingViewFlipper;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import static com.veniosg.dir.IntentConstants.ACTION_REFRESH_LIST;
 import static com.veniosg.dir.IntentConstants.EXTRA_DIR_PATH;
-import static com.veniosg.dir.view.WaitingViewFlipper.PAGE_INDEX_CONTENT;
-import static com.veniosg.dir.view.WaitingViewFlipper.PAGE_INDEX_LOADING;
+import static com.veniosg.dir.view.widget.WaitingViewFlipper.PAGE_INDEX_CONTENT;
+import static com.veniosg.dir.view.widget.WaitingViewFlipper.PAGE_INDEX_LOADING;
 
 /**
  * A {@link ListFragment} that displays the contents of a directory.

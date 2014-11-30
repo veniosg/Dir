@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  -->
-<com.veniosg.dir.view.PathViewCompatibleToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<com.veniosg.dir.view.widget.PathViewCompatibleToolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,4 +23,4 @@
     android:minHeight="?android:actionBarSize"
     android:popupTheme="?android:actionBarPopupTheme"
     android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar" >
-</com.veniosg.dir.view.PathViewCompatibleToolbar>
+</com.veniosg.dir.view.widget.PathViewCompatibleToolbar>

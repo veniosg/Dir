@@ -1,4 +1,4 @@
-<com.veniosg.dir.view.WaitingViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+<com.veniosg.dir.view.widget.WaitingViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/flipper"
     android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.veniosg.dir.view.DividerGridView
+        <com.veniosg.dir.view.widget.DividerGridView
             android:id="@android:id/list"
             android:numColumns="@integer/grid_columns"
             android:layout_width="match_parent"
@@ -81,4 +81,4 @@
     </LinearLayout>
 
 
-</com.veniosg.dir.view.WaitingViewFlipper>
+</com.veniosg.dir.view.widget.WaitingViewFlipper>

@@ -20,26 +20,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
-import com.veniosg.dir.activity.PreferenceActivity;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.provider.FileManagerProvider;
-import com.veniosg.dir.view.PickBar;
-import com.veniosg.dir.view.PickBar.OnPickRequestedListener;
+import com.veniosg.dir.view.widget.PickBar;
+import com.veniosg.dir.view.widget.PickBar.OnPickRequestedListener;
 
 import java.io.File;
 

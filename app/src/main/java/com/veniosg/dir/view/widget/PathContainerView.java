@@ -1,4 +1,4 @@
-package com.veniosg.dir.view;
+package com.veniosg.dir.view.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.view.PathController;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,7 +23,6 @@ import static android.animation.LayoutTransition.*;
 import static android.animation.ObjectAnimator.ofFloat;
 import static android.animation.ObjectAnimator.ofInt;
 import static android.graphics.Typeface.create;
-import static android.text.TextUtils.TruncateAt.MIDDLE;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;

@@ -29,14 +29,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.AbsListView;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.veniosg.dir.view.DividerGridView;
+import com.veniosg.dir.view.widget.DividerGridView;
 
 /**
  * Static library support version of the framework's {@link android.app.ListFragment}.

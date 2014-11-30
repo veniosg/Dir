@@ -1,4 +1,4 @@
-package com.veniosg.dir.view;
+package com.veniosg.dir.view.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;

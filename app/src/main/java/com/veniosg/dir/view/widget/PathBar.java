@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.veniosg.dir.view;
+package com.veniosg.dir.view.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -38,6 +38,7 @@ import android.widget.ViewFlipper;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.view.PathController;
 
 import java.io.File;
 
@@ -72,9 +73,9 @@ import static com.veniosg.dir.view.Themer.getThemedResourceId;
  * Provides a self contained way to represent the current path and provides a handy way of navigating. <br/><br/>
  *
  * <b>Note 1:</b> If you need to allow directory navigation outside of this class (e.g. when the user clicks on a folder from a {@link ListView}), use {@link #cd(File)} or {@link #cd(String)}. This is a requirement for the views of this class to
- * properly refresh themselves. <i>You will get notified through the usual {@link OnDirectoryChangedListener}. </i><br/><br/>
+ * properly refresh themselves. <i>You will get notified through the usual {@link com.veniosg.dir.view.PathController.OnDirectoryChangedListener}. </i><br/><br/>
  *
- * <b>Note 2:</b> To switch between {@link Mode Modes} use the {@link #switchToManualInput()} and {@link #switchToStandardInput()} methods!
+ * <b>Note 2:</b> To switch between {@link com.veniosg.dir.view.PathController.Mode Modes} use the {@link #switchToManualInput()} and {@link #switchToStandardInput()} methods!
  *
  * @author George Venios
  */

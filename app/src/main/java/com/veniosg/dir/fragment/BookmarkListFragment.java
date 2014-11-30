@@ -36,7 +36,7 @@ import android.widget.TextView;
 import com.veniosg.dir.R;
 import com.veniosg.dir.adapter.BookmarkListAdapter;
 import com.veniosg.dir.provider.BookmarkProvider;
-import com.veniosg.dir.view.WaitingViewFlipper;
+import com.veniosg.dir.view.widget.WaitingViewFlipper;
 
 import java.io.File;
 

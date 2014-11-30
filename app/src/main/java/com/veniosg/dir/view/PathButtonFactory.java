@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.veniosg.dir.R;
 
@@ -28,7 +27,7 @@ public abstract class PathButtonFactory {
      * Creates a Button or ImageButton according to the path. e.g. {@code if(file.getAbsolutePath() == '/')}, it should return an ImageButton with the home drawable on it.
      *
      * @param file           The directory this button will represent.
-     * @param pathController The {@link PathBar} which will contain the created buttons.
+     * @param pathController The {@link com.veniosg.dir.view.widget.PathBar} which will contain the created buttons.
      * @return An {@link android.widget.ImageButton} or a {@link android.widget.Button}.
      */
     public static Button newButton(final File file, Context context) {
@@ -65,7 +64,7 @@ public abstract class PathButtonFactory {
     }
 
     /**
-     * @see {@link #newButton(File, PathBar)}
+     * @see {@link #newButton(File, com.veniosg.dir.view.widget.PathBar)}
      */
     public static View newButton(String path, Context context) {
         return newButton(new File(path), context);
