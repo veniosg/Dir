@@ -4,12 +4,14 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.veniosg.dir.R;
 
 import java.io.File;
 
 import static android.graphics.Typeface.create;
+import static android.text.TextUtils.TruncateAt.MIDDLE;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static android.widget.LinearLayout.LayoutParams;
@@ -43,6 +45,7 @@ public abstract class PathButtonFactory {
         btn.setMinimumWidth(0);
         btn.setMaxLines(1);
         btn.setAllCaps(false);
+        btn.setEllipsize(MIDDLE);
         btn.setTextAppearance(context, android.R.style.TextAppearance_Material_Title);
         btn.setPadding(eightDp, btn.getPaddingTop(), eightDp * 2, btn.getPaddingBottom());
         btn.setTag(file);

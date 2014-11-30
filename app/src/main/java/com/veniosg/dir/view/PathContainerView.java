@@ -225,7 +225,6 @@ public class PathContainerView extends HorizontalScrollView {
         for (int i = 0; i < mPathContainer.getChildCount()-1; i++) {
             child = mPathContainer.getChildAt(i);
             child.setOnClickListener(mSecondaryButtonListener);
-            ((TextView) child).setEllipsize(MIDDLE);
         }
         if (forceStyle) {
             for (int i = 0; i < mPathContainer.getChildCount()-1; i++) {
@@ -234,7 +233,6 @@ public class PathContainerView extends HorizontalScrollView {
         }
         child = getLastChild(mPathContainer);
         child.setOnClickListener(mPrimaryButtonListener);
-        ((TextView) child).setEllipsize(null);
     }
 
     /**
