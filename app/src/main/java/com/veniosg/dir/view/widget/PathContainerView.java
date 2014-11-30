@@ -26,6 +26,7 @@ import static android.graphics.Typeface.create;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
+import static com.veniosg.dir.AnimationConstants.OUT_INTERPOLATOR;
 import static com.veniosg.dir.util.Utils.getLastChild;
 import static com.veniosg.dir.util.Utils.lastCommonDirectoryIndex;
 import static com.veniosg.dir.util.Utils.measureExactly;
@@ -59,7 +60,7 @@ public class PathContainerView extends HorizontalScrollView {
     private final OnClickListener mPrimaryButtonListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            smoothRevealButtons();
+            smoothRevealButtonsAnimator().start();
         }
     };
     private ChildrenChangedListeningLinearLayout.OnChildrenChangedListener mOnPathChildrenChangedListener = new ChildrenChangedListeningLinearLayout.OnChildrenChangedListener() {
@@ -73,7 +74,7 @@ public class PathContainerView extends HorizontalScrollView {
             animSet.setInterpolator(IN_INTERPOLATOR);
             animSet.playTogether(
                     scrollToEndAnimator(),
-                    transformToSecondaryAsNeededAnimator(mPathContainer, 0, mPathContainer.getChildCount() - 1),
+                    transformToSecondaryAsNeededAnimator(),
                     addedViewsAnimator(newChildren)
             );
             FileManagerApplication.enqueueAnimator(animSet);
@@ -84,7 +85,17 @@ public class PathContainerView extends HorizontalScrollView {
             Logger.logV(LOG_TAG, "Starting remove animation");
 
             if (mPathContainer.getLastAddedChildrenCount() <= 0) {
-                FileManagerApplication.enqueueAnimator(ofFloat(0, 0));
+                AnimatorSet animSet = new AnimatorSet();
+                animSet.setDuration(ANIM_DURATION);
+                animSet.setStartDelay(ANIM_START_DELAY);
+                animSet.setInterpolator(OUT_INTERPOLATOR);
+                animSet.playTogether(
+                        scrollForChildrenRemovalAnimator(oldChildren),
+                        transformToPrimaryAnimator(oldChildren),
+                        removedViewsAnimator(oldChildren)
+                );
+
+                FileManagerApplication.enqueueAnimator(animSet);
             }
         }
     };
@@ -142,7 +153,9 @@ public class PathContainerView extends HorizontalScrollView {
         transition.disableTransitionType(CHANGE_APPEARING);
         transition.disableTransitionType(CHANGING);
         transition.setAnimator(DISAPPEARING, ofFloat(0, 0));
-        transition.setDuration(ANIM_DURATION);
+        transition.setDuration((long) (ANIM_DURATION * 1.5f));  // Account for possible delays
+                                                                // between this and other
+                                                                // animations' start
         transition.setStartDelay(ANIM_START_DELAY, DISAPPEARING);
         return transition;
     }
@@ -254,13 +267,14 @@ public class PathContainerView extends HorizontalScrollView {
         }
     }
 
-    private Animator transformToSecondaryAsNeededAnimator(ViewGroup container, int first, int count) {
+    private Animator transformToSecondaryAsNeededAnimator() {
         AnimatorSet result = new AnimatorSet();
+        int count = mPathContainer.getChildCount() - 1;
         List<Animator> anims = new ArrayList<Animator>(count);
         PathItemView v;
 
-        for (int i = first; i < first + count; i++) {
-            v = (PathItemView) container.getChildAt(i);
+        for (int i = 0; i < count; i++) {
+            v = (PathItemView) mPathContainer.getChildAt(i);
 
             if (!v.isStyledAsSecondary()) {
                 anims.add(v.getTransformToSecondaryAnimator());
@@ -306,15 +320,47 @@ public class PathContainerView extends HorizontalScrollView {
         return ofInt(this, "scrollX", mPathContainer.getWidth() - getWidth());
     }
 
-    private int screenWidth() {
-        return getResources().getDisplayMetrics().widthPixels;
+    private Animator removedViewsAnimator(List<View> oldChildren) {
+        AnimatorSet animSet = new AnimatorSet();
+        List<Animator> animators = new ArrayList<Animator>(oldChildren.size());
+        int oldChildrenWidthSum = 0;
+        for (View v : oldChildren) {
+            oldChildrenWidthSum += v.getWidth();
+        }
+
+        for (View v : oldChildren) {
+            animators.add(ofFloat(v, "translationX", getWidth() - oldChildrenWidthSum));
+        }
+        animSet.playTogether(animators);
+        return animSet;
     }
 
-    private void smoothRevealButtons() {
+    private Animator transformToPrimaryAnimator(List<View> oldChildren) {
+        int nextNewPrimaryItemIndex = mPathContainer.getChildCount() - oldChildren.size();
+        PathItemView newPrimaryItem = (PathItemView) mPathContainer.getChildAt(nextNewPrimaryItemIndex);
+
+        return newPrimaryItem.getTransformToPrimaryAnimator();
+    }
+
+    private Animator scrollForChildrenRemovalAnimator(List<View> oldChildren) {
+        // TODO
+        int oldChildrenWidthSum = 0;
+        for (View v : oldChildren) {
+            oldChildrenWidthSum += v.getWidth();
+        }
+        mPathContainer.setTranslationX(-oldChildrenWidthSum);
+        return ofFloat(mPathContainer, "translationX", 0);
+    }
+
+    private Animator smoothRevealButtonsAnimator() {
         ObjectAnimator scrollXAnim = ofInt(this, "scrollX", max(0, mRevealScrollPixels));
         scrollXAnim.setInterpolator(IN_INTERPOLATOR);
         scrollXAnim.setDuration(ANIM_DURATION / 2);
-        scrollXAnim.start();
+        return scrollXAnim;
+    }
+
+    private int screenWidth() {
+        return getResources().getDisplayMetrics().widthPixels;
     }
 
     private void invokeRightEdgeRangeListener(int l) {

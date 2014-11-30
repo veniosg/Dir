@@ -132,4 +132,9 @@ public class PathItemView extends FrameLayout {
         );
         return set;
     }
+
+    public Animator getTransformToPrimaryAnimator() {
+        // TODO implement
+        return ofFloat(0,0);
+    }
 }
