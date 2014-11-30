@@ -44,7 +44,6 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_GO;
 import static com.veniosg.dir.util.FileUtils.isOk;
 import static com.veniosg.dir.util.Utils.backWillExit;
-import static com.veniosg.dir.view.PathButtonFactory.newButton;
 import static com.veniosg.dir.view.widget.PathContainerView.RightEdgeRangeListener;
 import static com.veniosg.dir.view.PathController.Mode.MANUAL_INPUT;
 import static com.veniosg.dir.view.PathController.Mode.STANDARD_INPUT;

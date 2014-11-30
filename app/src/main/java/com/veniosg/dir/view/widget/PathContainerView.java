@@ -29,8 +29,6 @@ import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
 import static com.veniosg.dir.util.Utils.getLastChild;
 import static com.veniosg.dir.util.Utils.lastCommonDirectoryIndex;
 import static com.veniosg.dir.util.Utils.measureExactly;
-import static com.veniosg.dir.view.PathButtonFactory.SECONDARY_ITEM_FACTOR;
-import static com.veniosg.dir.view.PathButtonFactory.newButton;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
 import static java.lang.Math.max;
 
@@ -75,7 +73,7 @@ public class PathContainerView extends HorizontalScrollView {
             animSet.setInterpolator(IN_INTERPOLATOR);
             animSet.playTogether(
                     scrollToEndAnimator(),
-                    transformToSecondaryAnimator(mPathContainer, 0, mPathContainer.getChildCount() - 1),
+                    transformToSecondaryAsNeededAnimator(mPathContainer, 0, mPathContainer.getChildCount() - 1),
                     addedViewsAnimator(newChildren)
             );
             FileManagerApplication.enqueueAnimator(animSet);
@@ -221,18 +219,16 @@ public class PathContainerView extends HorizontalScrollView {
         fillPathContainer(lastCommonDirectory + 1, newDir, getContext());
 
         // Static styling and click configuration.
-        View child;
+        PathItemView child;
         for (int i = 0; i < mPathContainer.getChildCount()-1; i++) {
-            child = mPathContainer.getChildAt(i);
+            child = (PathItemView) mPathContainer.getChildAt(i);
             child.setOnClickListener(mSecondaryButtonListener);
-        }
-        if (forceStyle) {
-            for (int i = 0; i < mPathContainer.getChildCount()-1; i++) {
-                forceStyleAsSecondary(mPathContainer.getChildAt(i));
+            if (forceStyle) {
+                child.styleAsSecondary();
             }
         }
-        child = getLastChild(mPathContainer);
-        child.setOnClickListener(mPrimaryButtonListener);
+        getLastChild(mPathContainer)
+                .setOnClickListener(mPrimaryButtonListener);
     }
 
     /**
@@ -252,44 +248,25 @@ public class PathContainerView extends HorizontalScrollView {
 
             if ((cChar == '/' || i == path.length() - 1)) { // if folder name ended, or path string ended but not if we're on root
                 if (cDir++ >= firstDirToAdd) {
-                    mPathContainer.addView(newButton(cPath.toString(), context));
+                    mPathContainer.addView(PathItemView.newInstanceFor(cPath.toString(), context));
                 }
             }
         }
     }
 
-    private void forceStyleAsSecondary(View childToStyle) {
-        childToStyle.setScaleX(SECONDARY_ITEM_FACTOR);
-        childToStyle.setScaleY(SECONDARY_ITEM_FACTOR);
-        childToStyle.setAlpha(SECONDARY_ITEM_FACTOR);
-    }
-
-    private boolean isStyledAsSecondary(View v) {
-        return v.getAlpha() == SECONDARY_ITEM_FACTOR
-                && v.getScaleX() == SECONDARY_ITEM_FACTOR
-                && v.getScaleY() == SECONDARY_ITEM_FACTOR;
-    }
-
-    private Animator transformToSecondaryAnimator(ViewGroup container, int first, int count) {
+    private Animator transformToSecondaryAsNeededAnimator(ViewGroup container, int first, int count) {
+        AnimatorSet result = new AnimatorSet();
         List<Animator> anims = new ArrayList<Animator>(count);
-        AnimatorSet set;
-        View v;
+        PathItemView v;
 
         for (int i = first; i < first + count; i++) {
-            v = container.getChildAt(i);
+            v = (PathItemView) container.getChildAt(i);
 
-            if (!isStyledAsSecondary(v)) {
-                set = new AnimatorSet();
-                set.playTogether(
-                        ofFloat(v, "scaleX", SECONDARY_ITEM_FACTOR),
-                        ofFloat(v, "scaleY", SECONDARY_ITEM_FACTOR),
-                        ofFloat(v, "alpha", SECONDARY_ITEM_FACTOR)
-                );
-                anims.add(set);
+            if (!v.isStyledAsSecondary()) {
+                anims.add(v.getTransformToSecondaryAnimator());
             }
         }
 
-        AnimatorSet result = new AnimatorSet();
         result.playTogether(anims);
         return result;
     }
@@ -298,21 +275,23 @@ public class PathContainerView extends HorizontalScrollView {
         if (newChildren != null) {
             AnimatorSet anim = new AnimatorSet();
             List<Animator> animList = new ArrayList<Animator>(newChildren.size());
-            View previousView;
-            View viewToAnimate;
+            View secondToLastView = null;
+            View viewToAnimate = null;
 
-            for(int i = 0; i < newChildren.size(); i++) {
+            for(int i = newChildren.size()-1; i >= 0; i--) {
                 viewToAnimate = newChildren.get(i);
-                // Too tired to figure out a single formula for the index.
-                if (newChildren.size() == 1 || i == 0) {
-                    // Last child, excluding the ones to animate
-                    previousView = mPathContainer.getChildAt(
-                            mPathContainer.getChildCount() - newChildren.size() - 1);
-                } else {
-                    previousView = newChildren.get(i-1);
+                if (secondToLastView == null) {
+                    // Too tired to figure out a single formula for the index.
+                    if (newChildren.size() == 1 || i == 0) {
+                        // Last child, excluding the ones to animate
+                        secondToLastView = mPathContainer.getChildAt(
+                                mPathContainer.getChildCount() - newChildren.size() - 1);
+                    } else {
+                        secondToLastView = newChildren.get(i - 1);
+                    }
                 }
                 viewToAnimate.setTranslationX(
-                        getWidth() - previousView.getWidth());
+                        getWidth() - secondToLastView.getWidth());
                 animList.add(ofFloat(viewToAnimate, "translationX", 0));
             }
             anim.playTogether(animList);

@@ -19,9 +19,9 @@
                 android:orientation="horizontal" />
         </com.veniosg.dir.view.widget.PathContainerView>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/pathview_button_right"
-            style="@android:style/Widget.Material.Button.Borderless"
+            style="?android:actionButtonStyle"
             android:layout_width="?android:actionBarSize"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
@@ -44,9 +44,9 @@
             android:paddingEnd="@dimen/item_text_margin_left"
             android:paddingStart="@dimen/item_text_margin_left" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/pathview_manual_button_left"
-            style="?android:attr/buttonBarButtonStyle"
+            style="?android:actionButtonStyle"
             android:layout_width="?android:actionBarSize"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
@@ -56,9 +56,9 @@
             android:src="@android:drawable/arrow_down_float"
             android:tint="?android:textColorPrimary" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/pathview_manual_button_right"
-            style="@android:style/Widget.Material.Button.Borderless"
+            style="?android:actionButtonStyle"
             android:layout_width="?android:actionBarSize"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
