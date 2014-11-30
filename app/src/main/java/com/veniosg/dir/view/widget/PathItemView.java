@@ -95,6 +95,7 @@ public class PathItemView extends FrameLayout {
         mTextView = new TextView(getContext(), null);
         mTextView.setGravity(Gravity.CENTER);
         mTextView.setMaxLines(1);
+        mTextView.setSingleLine(true);
         mTextView.setAllCaps(false);
         mTextView.setEllipsize(MIDDLE);
         mTextView.setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Headline);
