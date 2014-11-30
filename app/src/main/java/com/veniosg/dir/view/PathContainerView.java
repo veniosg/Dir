@@ -263,32 +263,40 @@ public class PathContainerView extends HorizontalScrollView {
         return added;
     }
 
+    private void forceStyleAsSecondary(View childToStyle) {
+        childToStyle.setScaleX(SECONDARY_ITEM_FACTOR);
+        childToStyle.setScaleY(SECONDARY_ITEM_FACTOR);
+        childToStyle.setAlpha(SECONDARY_ITEM_FACTOR);
+    }
+
+    private boolean isStyledAsSecondary(View v) {
+        return v.getAlpha() == SECONDARY_ITEM_FACTOR
+                && v.getScaleX() == SECONDARY_ITEM_FACTOR
+                && v.getScaleY() == SECONDARY_ITEM_FACTOR;
+    }
+
     private Animator transformToSecondaryAnimator(ViewGroup container, int first, int count) {
         List<Animator> anims = new ArrayList<Animator>(count);
         AnimatorSet set;
         View v;
 
         for (int i = first; i < first + count; i++) {
-            set = new AnimatorSet();
             v = container.getChildAt(i);
 
-            set.playTogether(
-                    ofFloat(v, "scaleX", SECONDARY_ITEM_FACTOR),
-                    ofFloat(v, "scaleY", SECONDARY_ITEM_FACTOR),
-                    ofFloat(v, "alpha", SECONDARY_ITEM_FACTOR)
-            );
-            anims.add(set);
+            if (!isStyledAsSecondary(v)) {
+                set = new AnimatorSet();
+                set.playTogether(
+                        ofFloat(v, "scaleX", SECONDARY_ITEM_FACTOR),
+                        ofFloat(v, "scaleY", SECONDARY_ITEM_FACTOR),
+                        ofFloat(v, "alpha", SECONDARY_ITEM_FACTOR)
+                );
+                anims.add(set);
+            }
         }
 
         AnimatorSet result = new AnimatorSet();
         result.playTogether(anims);
         return result;
-    }
-
-    private void forceStyleAsSecondary(View childToStyle) {
-        childToStyle.setScaleX(SECONDARY_ITEM_FACTOR);
-        childToStyle.setScaleY(SECONDARY_ITEM_FACTOR);
-        childToStyle.setAlpha(SECONDARY_ITEM_FACTOR);
     }
 
     private Animator addedViewsAnimator(List<View> newChildren) {
