@@ -47,7 +47,6 @@ public class PathContainerView extends HorizontalScrollView {
     private RightEdgeRangeListener mRightEdgeRangeListener = noOpRangeListener();
     private int mRightEdgeRange;
     private int mRevealScrollPixels;
-    private int itemsAddedOnLastCd;
     private PathControllerGetter mControllerGetter;
     private final OnClickListener mSecondaryButtonListener = new OnClickListener() {
         @Override
@@ -87,7 +86,9 @@ public class PathContainerView extends HorizontalScrollView {
         public void childrenRemoved(final List<View> oldChildren) {
             Logger.logV(LOG_TAG, "Starting remove animation");
 
-            FileManagerApplication.enqueueAnimator(ofFloat(0, 0));
+            if (mPathContainer.getLastAddedChildrenCount() <= 0) {
+                FileManagerApplication.enqueueAnimator(ofFloat(0, 0));
+            }
         }
     };
 
@@ -218,7 +219,7 @@ public class PathContainerView extends HorizontalScrollView {
         }
 
         // Add children as necessary.
-        itemsAddedOnLastCd = fillPathContainer(lastCommonDirectory + 1, newDir, getContext());
+        fillPathContainer(lastCommonDirectory + 1, newDir, getContext());
 
         // Static styling and click configuration.
         View child;
@@ -238,15 +239,13 @@ public class PathContainerView extends HorizontalScrollView {
     /**
      * Adds new buttons according to the fPath parameter.
      * @param firstDirToAdd The index of the first directory of fPath to add.
-     * @return How many new items where added.
      */
-    private int fillPathContainer(int firstDirToAdd, File fPath, Context context) {
+    private void fillPathContainer(int firstDirToAdd, File fPath, Context context) {
         StringBuilder cPath = new StringBuilder();
         String path = fPath.getAbsolutePath();
         char cChar;
         int cDir = 0;
         View item;
-        int added = 0;
 
         for (int i = 0; i < path.length(); i++) {
             cChar = path.charAt(i);
@@ -255,12 +254,9 @@ public class PathContainerView extends HorizontalScrollView {
             if ((cChar == '/' || i == path.length() - 1)) { // if folder name ended, or path string ended but not if we're on root
                 if (cDir++ >= firstDirToAdd) {
                     mPathContainer.addView(newButton(cPath.toString(), context));
-                    added++;
                 }
             }
         }
-
-        return added;
     }
 
     private void forceStyleAsSecondary(View childToStyle) {

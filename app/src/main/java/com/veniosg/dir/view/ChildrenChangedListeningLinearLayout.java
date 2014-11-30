@@ -69,18 +69,11 @@ public class ChildrenChangedListeningLinearLayout extends LinearLayout implement
         }
 
         super.removeViews(start, count);
-
-        if (!mRemovedWaitingViews.isEmpty()) {
-            mListener.childrenRemoved(mRemovedWaitingViews);
-            mRemovedWaitingViews.clear();
-        }
     }
 
     @Override
     public void removeView(final View view) {
-        mListener.childrenRemoved(new ArrayList<View>(){{
-            add(view);
-        }});
+        mRemovedWaitingViews.add(view);
 
         super.removeView(view);
     }
@@ -92,12 +85,23 @@ public class ChildrenChangedListeningLinearLayout extends LinearLayout implement
 
     @Override
     public boolean onPreDraw() {
-        if (!mAddedWaitingViews.isEmpty() && !firstDraw) {
-            mListener.childrenAdded(mAddedWaitingViews);
+        if (!mAddedWaitingViews.isEmpty()) {
+            if (!firstDraw) {
+                mListener.childrenAdded(mAddedWaitingViews);
+            }
         }
+        if (!mRemovedWaitingViews.isEmpty()) {
+            mListener.childrenRemoved(mRemovedWaitingViews);
+        }
+
         firstDraw = false;
         mAddedWaitingViews.clear();
+        mRemovedWaitingViews.clear();
         return true;
+    }
+
+    public int getLastAddedChildrenCount() {
+        return mAddedWaitingViews.size();
     }
 
     public interface OnChildrenChangedListener {
