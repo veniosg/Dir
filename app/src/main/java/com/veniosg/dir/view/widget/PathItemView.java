@@ -44,20 +44,21 @@ public class PathItemView extends FrameLayout {
 
     private ImageView mCaretView;
     private TextView mTextView;
-    private int mCaretMarginStart;
-    private int mTextMarginStart;
 
     public static PathItemView newInstanceFor(String path, Context context) {
-        PathItemView result = new PathItemView(context, null, -1, android.R.style.Widget_Material_Button_Borderless);
+        PathItemView v = new PathItemView(context, null, -1, android.R.style.Widget_Material_Button_Borderless);
         File file = new File(path);
-        result.setTag(file);
-        result.mTextView.setText(getFileName(file));
+        v.setTag(file);
+        v.mTextView.setText(getFileName(file));
         if (file.getAbsolutePath().equals("/")) {
-            result.mCaretView.setVisibility(GONE);
+            v.mCaretView.setVisibility(INVISIBLE);
+            v.mCaretView.setMinimumWidth(context.getResources().getDimensionPixelSize(R.dimen.item_text_margin_left));
+            v.mTextView.setPadding(0, v.mTextView.getPaddingTop(),
+                    v.mTextView.getPaddingRight(), v.mTextView.getPaddingBottom());
         }
-        result.setLayoutParams(new LayoutParams(WRAP_CONTENT, MATCH_PARENT));
+        v.setLayoutParams(new LayoutParams(WRAP_CONTENT, MATCH_PARENT));
 
-        return result;
+        return v;
     }
 
     public PathItemView(Context context) {
@@ -104,7 +105,6 @@ public class PathItemView extends FrameLayout {
         addView(mTextView, new LayoutParams(MATCH_PARENT, MATCH_PARENT));
         ((LayoutParams) mCaretView.getLayoutParams()).setMarginStart(iconMargin);
         mTextView.setPaddingRelative(textMargin, 0, 0, 0);
-//        ((LayoutParams) mTextView.getLayoutParams()).setMarginStart(textMargin);
     }
 
     public void setText(CharSequence text) {
