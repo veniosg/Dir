@@ -21,7 +21,7 @@ public class AnimationConstants {
      <!-- The duration (in milliseconds) of a long animation. -->
      <integer name="config_longAnimTime">500</integer>
      */
-    public static final int ANIM_DURATION = 400 *10;
+    public static final int ANIM_DURATION = 400 *4;
 
     public static final int ANIM_START_DELAY = 0 *10;
 

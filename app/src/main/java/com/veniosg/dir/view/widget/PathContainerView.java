@@ -5,9 +5,9 @@ import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
@@ -19,6 +19,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.animation.Animator.AnimatorListener;
 import static android.animation.LayoutTransition.*;
 import static android.animation.ObjectAnimator.ofFloat;
 import static android.animation.ObjectAnimator.ofInt;
@@ -74,8 +75,8 @@ public class PathContainerView extends HorizontalScrollView {
             animSet.setInterpolator(IN_INTERPOLATOR);
             animSet.playTogether(
                     scrollToEndAnimator(),
-                    transformToSecondaryAsNeededAnimator(),
-                    addedViewsAnimator(newChildren)
+                    addedViewsAnimator(newChildren),
+                    transformToSecondaryAsNeededAnimator()
             );
             FileManagerApplication.enqueueAnimator(animSet);
         }
@@ -90,9 +91,9 @@ public class PathContainerView extends HorizontalScrollView {
                 animSet.setStartDelay(ANIM_START_DELAY);
                 animSet.setInterpolator(OUT_INTERPOLATOR);
                 animSet.playTogether(
-                        scrollForChildrenRemovalAnimator(oldChildren),
-                        transformToPrimaryAnimator(oldChildren),
-                        removedViewsAnimator(oldChildren)
+                        translateForChildrenRemovalAnimator(oldChildren),
+                        removedViewsAnimator(oldChildren),
+                        transformToPrimaryAnimator(oldChildren)
                 );
 
                 FileManagerApplication.enqueueAnimator(animSet);
@@ -324,12 +325,13 @@ public class PathContainerView extends HorizontalScrollView {
         AnimatorSet animSet = new AnimatorSet();
         List<Animator> animators = new ArrayList<Animator>(oldChildren.size());
         int oldChildrenWidthSum = 0;
+        int lastChildWidth = getLastChild(mPathContainer).getWidth();
         for (View v : oldChildren) {
             oldChildrenWidthSum += v.getWidth();
         }
 
         for (View v : oldChildren) {
-            animators.add(ofFloat(v, "translationX", getWidth() - oldChildrenWidthSum));
+            animators.add(ofFloat(v, "translationX", getWidth() - lastChildWidth));
         }
         animSet.playTogether(animators);
         return animSet;
@@ -342,14 +344,16 @@ public class PathContainerView extends HorizontalScrollView {
         return newPrimaryItem.getTransformToPrimaryAnimator();
     }
 
-    private Animator scrollForChildrenRemovalAnimator(List<View> oldChildren) {
-        // TODO
+    private Animator translateForChildrenRemovalAnimator(List<View> oldChildren) {
         int oldChildrenWidthSum = 0;
         for (View v : oldChildren) {
             oldChildrenWidthSum += v.getWidth();
         }
-        mPathContainer.setTranslationX(-oldChildrenWidthSum);
-        return ofFloat(mPathContainer, "translationX", 0);
+        int lastChildWidth = getLastChild(mPathContainer).getWidth();
+        mPathContainer.setTranslationX(-lastChildWidth);
+        ObjectAnimator anim = ofFloat(mPathContainer, "translationX", 0);
+        anim.addListener(pathContainerClipAnimatorListener(oldChildrenWidthSum));
+        return anim;
     }
 
     private Animator smoothRevealButtonsAnimator() {
@@ -357,6 +361,26 @@ public class PathContainerView extends HorizontalScrollView {
         scrollXAnim.setInterpolator(IN_INTERPOLATOR);
         scrollXAnim.setDuration(ANIM_DURATION / 2);
         return scrollXAnim;
+    }
+
+    private AnimatorListener pathContainerClipAnimatorListener(final int widthSumOfOldChildren) {
+        return new AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                setClipChildren(false);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                setClipChildren(true);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {}
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {}
+        };
     }
 
     private int screenWidth() {
