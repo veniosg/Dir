@@ -49,6 +49,7 @@ public class PathContainerView extends HorizontalScrollView {
     private int mRightEdgeRange;
     private int mRevealScrollPixels;
     private int mLatestScrollOffset;
+    private int mLatestPaddingRight;
     private PathControllerGetter mControllerGetter;
     private final OnClickListener mSecondaryButtonListener = new OnClickListener() {
         @Override
@@ -253,6 +254,7 @@ public class PathContainerView extends HorizontalScrollView {
         int lastCommonDirectory;
         boolean forceStyle = false;
         mLatestScrollOffset = mPathContainer.getWidth() - (getWidth() + getScrollX());
+        mLatestPaddingRight = getPaddingRight();
         if(previousDir != null && count > 0) {
             lastCommonDirectory = lastCommonDirectoryIndex(previousDir, newDir);
             mPathContainer.removeViews(lastCommonDirectory + 1, count - lastCommonDirectory - 1);
@@ -352,7 +354,7 @@ public class PathContainerView extends HorizontalScrollView {
     }
 
     private Animator scrollToEndAnimator() {
-        return ofInt(this, "scrollX", mPathContainer.getWidth() - getWidth());
+        return ofInt(this, "scrollX", mPathContainer.getWidth() - getWidth() + getPaddingRight());
     }
 
     private Animator removedViewsAnimator(List<View> oldChildren) {
@@ -365,7 +367,7 @@ public class PathContainerView extends HorizontalScrollView {
         }
 
         for (View v : oldChildren) {
-            animators.add(ofFloat(v, "translationX", getWidth() - lastChildWidth + mLatestScrollOffset));
+            animators.add(ofFloat(v, "translationX", getWidth() - lastChildWidth + mLatestScrollOffset + mLatestPaddingRight));
         }
         animSet.playTogether(animators);
         return animSet;
@@ -384,7 +386,7 @@ public class PathContainerView extends HorizontalScrollView {
             oldChildrenWidthSum += v.getWidth();
         }
         int lastChildWidth = getLastChild(mPathContainer).getWidth();
-        mPathContainer.setTranslationX(min(0, -lastChildWidth + mLatestScrollOffset));
+        mPathContainer.setTranslationX(min(0, -lastChildWidth + mLatestScrollOffset + mLatestPaddingRight));
         ObjectAnimator anim = ofFloat(mPathContainer, "translationX", 0);
         anim.addListener(pathContainerClipAnimatorListener(oldChildrenWidthSum));
         return anim;
