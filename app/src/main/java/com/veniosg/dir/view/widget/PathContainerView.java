@@ -5,8 +5,8 @@ import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -33,6 +33,7 @@ import static com.veniosg.dir.util.Utils.lastCommonDirectoryIndex;
 import static com.veniosg.dir.util.Utils.measureExactly;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
 import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 public class PathContainerView extends HorizontalScrollView {
     private static final String LOG_TAG = PathContainerView.class.getName();
@@ -44,8 +45,10 @@ public class PathContainerView extends HorizontalScrollView {
     private int mPathContainerRightPadding;
     private ChildrenChangedListeningLinearLayout mPathContainer;
     private RightEdgeRangeListener mRightEdgeRangeListener = noOpRangeListener();
+    private boolean mBlockTouch = false;
     private int mRightEdgeRange;
     private int mRevealScrollPixels;
+    private int mLatestScrollOffset;
     private PathControllerGetter mControllerGetter;
     private final OnClickListener mSecondaryButtonListener = new OnClickListener() {
         @Override
@@ -64,6 +67,25 @@ public class PathContainerView extends HorizontalScrollView {
             smoothRevealButtonsAnimator().start();
         }
     };
+    private AnimatorListener mBlockTouchAnimatorListener = new AnimatorListener() {
+        @Override
+        public void onAnimationStart(Animator animation) {
+            mBlockTouch = true;
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            mBlockTouch = false;
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+            mBlockTouch = false;
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {}
+    };
     private ChildrenChangedListeningLinearLayout.OnChildrenChangedListener mOnPathChildrenChangedListener = new ChildrenChangedListeningLinearLayout.OnChildrenChangedListener() {
         @Override
         public void childrenAdded(final List<View> newChildren) {
@@ -78,6 +100,7 @@ public class PathContainerView extends HorizontalScrollView {
                     addedViewsAnimator(newChildren),
                     transformToSecondaryAsNeededAnimator()
             );
+            animSet.addListener(mBlockTouchAnimatorListener);
             FileManagerApplication.enqueueAnimator(animSet);
         }
 
@@ -91,10 +114,12 @@ public class PathContainerView extends HorizontalScrollView {
                 animSet.setStartDelay(ANIM_START_DELAY);
                 animSet.setInterpolator(OUT_INTERPOLATOR);
                 animSet.playTogether(
+                        scrollToEndAnimator(),
                         translateForChildrenRemovalAnimator(oldChildren),
                         removedViewsAnimator(oldChildren),
                         transformToPrimaryAnimator(oldChildren)
                 );
+                animSet.addListener(mBlockTouchAnimatorListener);
 
                 FileManagerApplication.enqueueAnimator(animSet);
             }
@@ -192,6 +217,14 @@ public class PathContainerView extends HorizontalScrollView {
         invokeRightEdgeRangeListener(l);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        if (mBlockTouch) {
+            return true;
+        }
+        return super.onTouchEvent(ev);
+    }
+
     public void setEdgeListener(RightEdgeRangeListener listener) {
         if (listener != null) {
             mRightEdgeRangeListener = listener;
@@ -219,6 +252,7 @@ public class PathContainerView extends HorizontalScrollView {
         int count = mPathContainer.getChildCount();
         int lastCommonDirectory;
         boolean forceStyle = false;
+        mLatestScrollOffset = mPathContainer.getWidth() - (getWidth() + getScrollX());
         if(previousDir != null && count > 0) {
             lastCommonDirectory = lastCommonDirectoryIndex(previousDir, newDir);
             mPathContainer.removeViews(lastCommonDirectory + 1, count - lastCommonDirectory - 1);
@@ -331,7 +365,7 @@ public class PathContainerView extends HorizontalScrollView {
         }
 
         for (View v : oldChildren) {
-            animators.add(ofFloat(v, "translationX", getWidth() - lastChildWidth));
+            animators.add(ofFloat(v, "translationX", getWidth() - lastChildWidth + mLatestScrollOffset));
         }
         animSet.playTogether(animators);
         return animSet;
@@ -350,7 +384,7 @@ public class PathContainerView extends HorizontalScrollView {
             oldChildrenWidthSum += v.getWidth();
         }
         int lastChildWidth = getLastChild(mPathContainer).getWidth();
-        mPathContainer.setTranslationX(-lastChildWidth);
+        mPathContainer.setTranslationX(min(0, -lastChildWidth + mLatestScrollOffset));
         ObjectAnimator anim = ofFloat(mPathContainer, "translationX", 0);
         anim.addListener(pathContainerClipAnimatorListener(oldChildrenWidthSum));
         return anim;
