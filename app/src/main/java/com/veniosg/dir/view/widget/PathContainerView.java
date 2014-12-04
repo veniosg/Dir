@@ -374,7 +374,7 @@ public class PathContainerView extends HorizontalScrollView {
     }
 
     private Animator transformToPrimaryAnimator(List<View> oldChildren) {
-        int nextNewPrimaryItemIndex = mPathContainer.getChildCount() - oldChildren.size();
+        int nextNewPrimaryItemIndex = mPathContainer.getChildCount() - 1;
         PathItemView newPrimaryItem = (PathItemView) mPathContainer.getChildAt(nextNewPrimaryItemIndex);
 
         return newPrimaryItem.getTransformToPrimaryAnimator();
