@@ -40,7 +40,6 @@ import static com.veniosg.dir.view.Themer.getThemedResourceId;
  */
 public class PathItemView extends FrameLayout {
     private static final float SECONDARY_ITEM_ALPHA = 0.54f;
-    private static final float SECONDARY_ITEM_SCALE = 0.70f;
 
     private ImageView mCaretView;
     private TextView mTextView;
@@ -52,9 +51,6 @@ public class PathItemView extends FrameLayout {
         v.mTextView.setText(getFileName(file));
         if (file.getAbsolutePath().equals("/")) {
             v.mCaretView.setVisibility(INVISIBLE);
-            v.mCaretView.setMinimumWidth(context.getResources().getDimensionPixelSize(R.dimen.item_text_margin_left));
-            v.mTextView.setPadding(0, v.mTextView.getPaddingTop(),
-                    v.mTextView.getPaddingRight(), v.mTextView.getPaddingBottom());
         }
         v.setLayoutParams(new LayoutParams(WRAP_CONTENT, MATCH_PARENT));
 
@@ -112,29 +108,30 @@ public class PathItemView extends FrameLayout {
     }
 
     public void styleAsSecondary() {
-        mTextView.setScaleX(SECONDARY_ITEM_SCALE);
-        mTextView.setScaleY(SECONDARY_ITEM_SCALE);
         mTextView.setAlpha(SECONDARY_ITEM_ALPHA);
     }
 
+    public void styleAsPrimary() {
+        mTextView.setAlpha(1);
+    }
+
     public boolean isStyledAsSecondary() {
-        return mTextView.getAlpha() == SECONDARY_ITEM_ALPHA
-                && mTextView.getScaleX() == SECONDARY_ITEM_SCALE
-                && mTextView.getScaleY() == SECONDARY_ITEM_SCALE;
+        return mTextView.getAlpha() == SECONDARY_ITEM_ALPHA;
     }
 
     public Animator getTransformToSecondaryAnimator() {
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
-                ofFloat(mTextView, "scaleX", SECONDARY_ITEM_SCALE),
-                ofFloat(mTextView, "scaleY", SECONDARY_ITEM_SCALE),
                 ofFloat(mTextView, "alpha", SECONDARY_ITEM_ALPHA)
         );
         return set;
     }
 
     public Animator getTransformToPrimaryAnimator() {
-        // TODO implement
-        return ofFloat(0,0);
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+                ofFloat(mTextView, "alpha", 1)
+        );
+        return set;
     }
 }
