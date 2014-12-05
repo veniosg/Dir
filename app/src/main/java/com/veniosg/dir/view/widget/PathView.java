@@ -44,7 +44,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_GO;
 import static com.veniosg.dir.util.FileUtils.isOk;
 import static com.veniosg.dir.util.Utils.backWillExit;
-import static com.veniosg.dir.view.widget.PathContainerView.RightEdgeRangeListener;
+import static com.veniosg.dir.view.widget.PathHorizontalScrollView.RightEdgeRangeListener;
 import static com.veniosg.dir.view.PathController.Mode.MANUAL_INPUT;
 import static com.veniosg.dir.view.PathController.Mode.STANDARD_INPUT;
 import static com.veniosg.dir.view.Themer.getThemedDimension;
@@ -55,7 +55,7 @@ public class PathView extends ViewFlipper implements PathController {
     private File mCurrentDirectory = getExternalStorageDirectory();
     private File mInitialDirectory = getExternalStorageDirectory();
 
-    private PathContainerView mPathContainer;
+    private PathHorizontalScrollView mPathContainer;
     private View mButtonRight;
     private View mManualButtonLeft;
     private View mManualButtonRight;
@@ -113,7 +113,7 @@ public class PathView extends ViewFlipper implements PathController {
         setLayoutParams(toolbarLayoutParams());
         from(getContext()).inflate(R.layout.widget_pathview, this, true);
 
-        mPathContainer = (PathContainerView) findViewById(R.id.pathview_path_container);
+        mPathContainer = (PathHorizontalScrollView) findViewById(R.id.pathview_path_container);
         mButtonRight = findViewById(R.id.pathview_button_right);
         mManualButtonLeft = findViewById(R.id.pathview_manual_button_left);
         mManualButtonRight = findViewById(R.id.pathview_manual_button_right);

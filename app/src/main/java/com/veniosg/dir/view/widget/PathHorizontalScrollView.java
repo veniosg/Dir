@@ -24,6 +24,7 @@ import static android.animation.LayoutTransition.*;
 import static android.animation.ObjectAnimator.ofFloat;
 import static android.animation.ObjectAnimator.ofInt;
 import static android.graphics.Typeface.create;
+import static android.view.View.MeasureSpec.getSize;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
@@ -35,15 +36,15 @@ import static com.veniosg.dir.view.Themer.getThemedResourceId;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class PathContainerView extends HorizontalScrollView {
-    private static final String LOG_TAG = PathContainerView.class.getName();
+public class PathHorizontalScrollView extends HorizontalScrollView {
+    private static final String LOG_TAG = PathHorizontalScrollView.class.getName();
 
     /**
      * Additional padding to the end of mPathContainer
      * so that the last item is left aligned to the grid.
      */
     private int mPathContainerRightPadding;
-    private ChildrenChangedListeningLinearLayout mPathContainer;
+    private PathContainerLayout mPathContainer;
     private RightEdgeRangeListener mRightEdgeRangeListener = noOpRangeListener();
     private boolean mBlockTouch = false;
     private int mRightEdgeRange;
@@ -127,22 +128,22 @@ public class PathContainerView extends HorizontalScrollView {
         }
     };
 
-    public PathContainerView(Context context) {
+    public PathHorizontalScrollView(Context context) {
         super(context);
         init();
     }
 
-    public PathContainerView(Context context, AttributeSet attrs) {
+    public PathHorizontalScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public PathContainerView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PathHorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
-    public PathContainerView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public PathHorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
@@ -153,7 +154,7 @@ public class PathContainerView extends HorizontalScrollView {
     @Override
     protected void onFinishInflate() {
         try {
-            mPathContainer = (ChildrenChangedListeningLinearLayout) getChildAt(0);
+            mPathContainer = (PathContainerLayout) getChildAt(0);
         } catch (ClassCastException ex) {
             throw new RuntimeException("First and only child of PathContainerView must be a ChildrenChangedListeningLinearLayout");
         }
@@ -189,21 +190,12 @@ public class PathContainerView extends HorizontalScrollView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        mPathContainer.setMaxChildWidth(getSize(widthMeasureSpec) - mRightEdgeRange);
+
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        View lastChild = mPathContainer.getChildAt(mPathContainer.getChildCount() - 1);
-        int marginStart = ((LinearLayout.LayoutParams) lastChild.getLayoutParams()).getMarginStart();
-        mPathContainerRightPadding = getMeasuredWidth()
-                - lastChild.getMeasuredWidth()
-                - marginStart;
-
-        // On really long names that take up the whole screen width
-        if (lastChild.getMeasuredWidth() >= getMeasuredWidth() - marginStart - mRightEdgeRange) {
-            mPathContainerRightPadding -= getMeasuredHeight();
-            setPaddingRelative(0, 0, getMeasuredHeight(), 0);
-        } else {
-            setPaddingRelative(0, 0, 0, 0);
-        }
+        int lastChildDesiredWidth = getLastChild(mPathContainer).getMeasuredWidth();
+        mPathContainerRightPadding = getMeasuredWidth() - lastChildDesiredWidth;
 
         mPathContainer.measure(measureExactly(mPathContainerRightPadding + mPathContainer.getMeasuredWidth()),
                 measureExactly(getMeasuredHeight()));
