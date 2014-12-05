@@ -24,7 +24,10 @@ import static android.animation.LayoutTransition.*;
 import static android.animation.ObjectAnimator.ofFloat;
 import static android.animation.ObjectAnimator.ofInt;
 import static android.graphics.Typeface.create;
+import static android.view.View.MeasureSpec.AT_MOST;
+import static android.view.View.MeasureSpec.EXACTLY;
 import static android.view.View.MeasureSpec.getSize;
+import static android.view.View.MeasureSpec.makeMeasureSpec;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
@@ -190,16 +193,21 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        mPathContainer.setMaxChildWidth(getSize(widthMeasureSpec) - mRightEdgeRange);
+        setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
+        int maxChildWidthPx = getMeasuredWidth() - mRightEdgeRange;
 
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        // Probe last child width and set up container padding
+        View lastItem = getLastChild(mPathContainer);
+        lastItem.measure(makeMeasureSpec(maxChildWidthPx, AT_MOST), 0);
+        mPathContainerRightPadding = getMeasuredWidth() - lastItem.getMeasuredWidth();
 
-        int lastChildDesiredWidth = getLastChild(mPathContainer).getMeasuredWidth();
-        mPathContainerRightPadding = getMeasuredWidth() - lastChildDesiredWidth;
-
+        // Finally measure path container
+        mPathContainer.setMaxChildWidth(maxChildWidthPx);
+        mPathContainer.measure(0, heightMeasureSpec);
         mPathContainer.measure(measureExactly(mPathContainerRightPadding + mPathContainer.getMeasuredWidth()),
                 measureExactly(getMeasuredHeight()));
 
+        // Now that we know the container's width we know the right amount of scroll to reveal items
         mRevealScrollPixels = mPathContainer.getMeasuredWidth() - getMeasuredWidth() * 2;
     }
 

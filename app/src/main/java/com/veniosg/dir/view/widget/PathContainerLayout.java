@@ -33,6 +33,16 @@ public class PathContainerLayout extends ChildrenChangedListeningLinearLayout {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        // Avoid measuring children twice. See PathHorizontalScrollView#onMeasure() for more info.
+        if (getMode(widthMeasureSpec) == EXACTLY) {
+            setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
+        } else {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
+    }
+
+    @Override
     protected void measureChildWithMargins(View child, int parentWidthMeasureSpec, int widthUsed, int parentHeightMeasureSpec, int heightUsed) {
         int childWidthSpec = makeMeasureSpec(0, UNSPECIFIED);
         if (mMaxChildWidth > 0) {
