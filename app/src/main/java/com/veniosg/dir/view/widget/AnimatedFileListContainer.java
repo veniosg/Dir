@@ -25,6 +25,7 @@ import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Outline;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -34,7 +35,6 @@ import android.view.ViewOutlineProvider;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
-import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.view.Themer;
@@ -47,6 +47,7 @@ import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
 import static com.veniosg.dir.AnimationConstants.OUT_INTERPOLATOR;
 import static com.veniosg.dir.FileManagerApplication.enqueueAnimator;
 import static com.veniosg.dir.util.Logger.TAG_ANIMATION;
+import static com.veniosg.dir.view.Themer.getThemedColor;
 
 /**
  * @author George Venios
@@ -60,6 +61,8 @@ public class AnimatedFileListContainer extends FrameLayout {
     private int mDimColor = getResources().getColor(
             Themer.getThemedResourceId(getContext(), R.attr.colorFadeCovered));
     private float mHeroTop = 0;
+    private float mHeroLeft = 0;
+    private float mHeroRight = 0;
     private final Drawable mBackground;
 
     public AnimatedFileListContainer(Context context) {
@@ -100,15 +103,17 @@ public class AnimatedFileListContainer extends FrameLayout {
 
             Bitmap heroCache = Bitmap.createBitmap(listWidth, hero.getHeight(), Bitmap.Config.ARGB_8888);
             Canvas heroCanvas = new Canvas(heroCache);
-            mBackground.draw(heroCanvas);
             heroCanvas.save();
                 heroCanvas.translate(leftPadding, 0);
+                heroCanvas.translate(hero.getLeft(), 0);
                 hero.draw(heroCanvas);
             heroCanvas.restore();
             mHeroshot = new BitmapDrawable(getResources(), heroCache);
             mHeroshot.setBounds(0, 0, heroCanvas.getWidth(), heroCanvas.getHeight());
 
             mHeroTop = hero.getY();
+            mHeroLeft = hero.getLeft();
+            mHeroRight = hero.getRight();
         }
 
         Logger.log(DEBUG, TAG_ANIMATION, "Recorded drawable");
@@ -120,9 +125,10 @@ public class AnimatedFileListContainer extends FrameLayout {
         }
 
         final View newContent = getChildAt(INDEX_CONTENT);
-        final DrawableView oldContent = new DrawableView(getContext());
-        final DrawableView hero = new DrawableView(getContext());
+        final RippleBackgroundDrawableView oldContent = new RippleBackgroundDrawableView(getContext());
+        final RippleBackgroundDrawableView hero = new RippleBackgroundDrawableView(getContext());
         hero.setY(mHeroTop);
+        hero.setInitialBackgroundPosition((int) mHeroLeft, (int) mHeroRight);
         AnimatorSet contentAnim = new AnimatorSet();
         AnimatorSet heroAnim = new AnimatorSet();
 
@@ -151,9 +157,10 @@ public class AnimatedFileListContainer extends FrameLayout {
         }
 
         final View newContent = getChildAt(INDEX_CONTENT);
-        final DrawableView oldContent = new DrawableView(getContext());
-        final DrawableView hero = new DrawableView(getContext());
+        final RippleBackgroundDrawableView oldContent = new RippleBackgroundDrawableView(getContext());
+        final RippleBackgroundDrawableView hero = new RippleBackgroundDrawableView(getContext());
         hero.setY(mHeroTop);
+        hero.setInitialBackgroundPosition((int) mHeroLeft, (int) mHeroRight);
         AnimatorSet contentAnim = new AnimatorSet();
         AnimatorSet heroAnim = new AnimatorSet();
 
@@ -179,13 +186,14 @@ public class AnimatedFileListContainer extends FrameLayout {
         AnimatorSet heroAnim = new AnimatorSet();
         ObjectAnimator anim = ObjectAnimator.ofFloat(hero, "translationX", 0, -getWidth());
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(hero, "translationZ", 0F, 15F);
+        ObjectAnimator anim3 = ObjectAnimator.ofFloat(hero, "backgroundProgress", 0F, 1F);
 
         heroAnim.addListener(resetTranslationZOnEndListener(hero));
-        heroAnim.playTogether(anim, anim2);
+        heroAnim.playTogether(anim, anim2, anim3);
         return heroAnim;
     }
 
-    private AnimatorSet forwardContentAnimation(final View newContent, final View oldContent, final DrawableView hero) {
+    private AnimatorSet forwardContentAnimation(final View newContent, final View oldContent, final RippleBackgroundDrawableView hero) {
         int heroHeight = hero.getDrawableHeight();
         if (heroHeight > 0) {
             oldContent.setPivotY(hero.getY() + heroHeight / 2);
@@ -218,8 +226,9 @@ public class AnimatedFileListContainer extends FrameLayout {
         AnimatorSet heroAnim = new AnimatorSet();
         ObjectAnimator anim = ObjectAnimator.ofFloat(hero, "translationX", -getWidth(), 0);
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(hero, "translationZ", 15F, 0F);
+        ObjectAnimator anim3 = ObjectAnimator.ofFloat(hero, "backgroundProgress", 1F, 0F);
 
-        heroAnim.playTogether(anim, anim2);
+        heroAnim.playTogether(anim, anim2, anim3);
         return heroAnim;
     }
 
@@ -244,7 +253,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         return contentAnim;
     }
 
-    private void setupSceneAnimation(final DrawableView oldContent, final DrawableView hero, AnimatorSet contentAnim,
+    private void setupSceneAnimation(final RippleBackgroundDrawableView oldContent, final RippleBackgroundDrawableView hero, AnimatorSet contentAnim,
                                      AnimatorSet heroAnim, Interpolator interpolator, AnimatorSet scene) {
         scene.setDuration(ANIM_DURATION);
         scene.setInterpolator(interpolator);
@@ -254,6 +263,7 @@ public class AnimatedFileListContainer extends FrameLayout {
             @Override
             public void onAnimationStart(Animator animation) {
                 Logger.log(DEBUG, TAG_ANIMATION, "Started animation");
+
             }
 
             @Override
@@ -276,7 +286,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         });
     }
 
-    private void finishAnimation(DrawableView oldContent, DrawableView hero) {
+    private void finishAnimation(RippleBackgroundDrawableView oldContent, RippleBackgroundDrawableView hero) {
         try {
             removeView(oldContent);
             removeView(hero);
@@ -344,24 +354,51 @@ public class AnimatedFileListContainer extends FrameLayout {
         return color;
     }
 
-    private class DrawableView extends View {
+    private class RippleBackgroundDrawableView extends View {
+        private static final float BACKGROUND_TIMESCALE_FACTOR = 2f;
         private Drawable drawable;
         private ColorMatrix saturationMatrix = new ColorMatrix();
         private ColorMatrix blacknessMatrix = new ColorMatrix();
 
-        public DrawableView(Context context) {
+        private Paint backgroundPaint;
+        private int initialBackgroundRight;
+        private int initialBackgroundLeft;
+        private int currentBackgroundLeft;
+        private int currentBackgroundRight;
+
+        public RippleBackgroundDrawableView(Context context) {
             super(context);
 
             setWillNotDraw(false);
             setClipToOutline(true);
             setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
             saturationMatrix.setSaturation(1F);
+
+            backgroundPaint = new Paint();
+            backgroundPaint.setColor(getThemedColor(getContext(), android.R.attr.colorBackground));
+            backgroundPaint.setStyle(Paint.Style.FILL);
+        }
+
+        public void setInitialBackgroundPosition(int left, int right) {
+            initialBackgroundLeft = left;
+            initialBackgroundRight = right;
         }
 
         @Override
         public void draw(Canvas canvas) {
             if (drawable != null) {
+                canvas.drawRect(currentBackgroundLeft, 0, currentBackgroundRight, drawable.getIntrinsicHeight(), backgroundPaint);
                 drawable.draw(canvas);
+            }
+        }
+
+        public void setBackgroundProgress(float progress) {
+            if (drawable != null) {
+                progress *= BACKGROUND_TIMESCALE_FACTOR;
+                currentBackgroundLeft = (int) (initialBackgroundLeft - initialBackgroundLeft * progress);
+                currentBackgroundRight = (int) (initialBackgroundRight + (drawable.getIntrinsicWidth() - initialBackgroundRight) * progress);
+
+                invalidate();
             }
         }
 
@@ -371,12 +408,12 @@ public class AnimatedFileListContainer extends FrameLayout {
             setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    if (view instanceof DrawableView) {
+                    if (view instanceof RippleBackgroundDrawableView) {
                         if (outline == null) {
                             outline = new Outline();
                         }
 
-                        outline.setRect(0, 0, ((DrawableView) view).getDrawableWidth(), ((DrawableView) view).getDrawableHeight());
+                        outline.setRect(0, 0, ((RippleBackgroundDrawableView) view).getDrawableWidth(), ((RippleBackgroundDrawableView) view).getDrawableHeight());
                     }
                 }
             });
