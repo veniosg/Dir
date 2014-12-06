@@ -355,7 +355,10 @@ public class AnimatedFileListContainer extends FrameLayout {
     }
 
     private class RippleBackgroundDrawableView extends View {
-        private static final float BACKGROUND_TIMESCALE_FACTOR = 2f;
+        // A value of 2 causes the right edge to remain in the same physical position on the screen.
+        // We want to follow the direction of the rest of the animations so always use values < 2.
+        private static final float BACKGROUND_PROGRESS_FACTOR = 1.25f;
+
         private Drawable drawable;
         private ColorMatrix saturationMatrix = new ColorMatrix();
         private ColorMatrix blacknessMatrix = new ColorMatrix();
@@ -365,6 +368,12 @@ public class AnimatedFileListContainer extends FrameLayout {
         private int initialBackgroundLeft;
         private int currentBackgroundLeft;
         private int currentBackgroundRight;
+        private int backgroundRadius;
+        private int backgroundCenterX;
+        private int backgroundCenterY;
+
+        private boolean multiColumnFilelist = false;
+        private boolean withBackground = false;
 
         public RippleBackgroundDrawableView(Context context) {
             super(context);
@@ -377,9 +386,13 @@ public class AnimatedFileListContainer extends FrameLayout {
             backgroundPaint = new Paint();
             backgroundPaint.setColor(getThemedColor(getContext(), android.R.attr.colorBackground));
             backgroundPaint.setStyle(Paint.Style.FILL);
+            backgroundPaint.setAntiAlias(true);
+
+            multiColumnFilelist = getResources().getInteger(R.integer.grid_columns) > 1;
         }
 
         public void setInitialBackgroundPosition(int left, int right) {
+            withBackground = true;
             initialBackgroundLeft = left;
             initialBackgroundRight = right;
         }
@@ -387,18 +400,27 @@ public class AnimatedFileListContainer extends FrameLayout {
         @Override
         public void draw(Canvas canvas) {
             if (drawable != null) {
-                canvas.drawRect(currentBackgroundLeft, 0, currentBackgroundRight, drawable.getIntrinsicHeight(), backgroundPaint);
+                if (multiColumnFilelist) {
+                    canvas.drawCircle(backgroundCenterX, backgroundCenterY, backgroundRadius, backgroundPaint);
+                } else {
+                    canvas.drawColor(backgroundPaint.getColor());
+                }
                 drawable.draw(canvas);
             }
         }
 
         public void setBackgroundProgress(float progress) {
             if (drawable != null) {
-                progress *= BACKGROUND_TIMESCALE_FACTOR;
+                progress *= BACKGROUND_PROGRESS_FACTOR;
                 currentBackgroundLeft = (int) (initialBackgroundLeft - initialBackgroundLeft * progress);
                 currentBackgroundRight = (int) (initialBackgroundRight + (drawable.getIntrinsicWidth() - initialBackgroundRight) * progress);
 
-                invalidate();
+                // Only needed if drawing a circle background
+                backgroundRadius = (currentBackgroundRight - currentBackgroundLeft) / 2;
+                backgroundCenterX = currentBackgroundLeft + backgroundRadius;
+                backgroundCenterY = getHeight() / 2;
+
+                postInvalidateOnAnimation(currentBackgroundLeft, 0, currentBackgroundRight, getHeight());
             }
         }
 
@@ -413,7 +435,9 @@ public class AnimatedFileListContainer extends FrameLayout {
                             outline = new Outline();
                         }
 
-                        outline.setRect(0, 0, ((RippleBackgroundDrawableView) view).getDrawableWidth(), ((RippleBackgroundDrawableView) view).getDrawableHeight());
+                        outline.setRect(0, 0,
+                                ((RippleBackgroundDrawableView) view).getDrawableWidth(),
+                                ((RippleBackgroundDrawableView) view).getDrawableHeight());
                     }
                 }
             });
@@ -429,7 +453,7 @@ public class AnimatedFileListContainer extends FrameLayout {
             }
         }
 
-        public int getDrawableWidth() {
+        private int getDrawableWidth() {
             if (drawable != null) {
                 return drawable.getIntrinsicWidth();
             } else {
@@ -437,7 +461,7 @@ public class AnimatedFileListContainer extends FrameLayout {
             }
         }
 
-        public int getDrawableHeight() {
+        private int getDrawableHeight() {
             if (drawable != null) {
                 return drawable.getIntrinsicHeight();
             } else {
@@ -453,7 +477,7 @@ public class AnimatedFileListContainer extends FrameLayout {
             if (drawable != null) {
                 drawable.setColorFilter(new ColorMatrixColorFilter(saturationMatrix));
             }
-            invalidate();
+            postInvalidateOnAnimation(0, 0 , getWidth(), getHeight());
         }
     }
 }
