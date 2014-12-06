@@ -357,7 +357,7 @@ public class AnimatedFileListContainer extends FrameLayout {
     private class RippleBackgroundDrawableView extends View {
         // A value of 2 causes the right edge to remain in the same physical position on the screen.
         // We want to follow the direction of the rest of the animations so always use values < 2.
-        private static final float BACKGROUND_PROGRESS_FACTOR = 1.25f;
+        private static final float BACKGROUND_PROGRESS_FACTOR = 1.5f;
 
         private Drawable drawable;
         private ColorMatrix saturationMatrix = new ColorMatrix();
@@ -436,7 +436,8 @@ public class AnimatedFileListContainer extends FrameLayout {
                         }
 
                         outline.setRect(0, 0,
-                                ((RippleBackgroundDrawableView) view).getDrawableWidth(),
+                                // Extending outline to the right to avoid shadow glitch
+                                ((RippleBackgroundDrawableView) view).getDrawableWidth() * 2,
                                 ((RippleBackgroundDrawableView) view).getDrawableHeight());
                     }
                 }
