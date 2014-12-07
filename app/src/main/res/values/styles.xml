@@ -22,7 +22,7 @@
     <style name="TextAppearance.Dir.Medium" parent="android:TextAppearance.Material.Subhead">
         <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>-->
     </style>
-    <style name="TextAppearance.Dir.Small" parent="android:TextAppearance.Material.Caption">
+    <style name="TextAppearance.Dir.Small" parent="android:TextAppearance.Material.Body1">
         <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>-->
     </style>
 

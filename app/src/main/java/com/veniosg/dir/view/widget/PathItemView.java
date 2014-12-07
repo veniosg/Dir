@@ -95,7 +95,7 @@ public class PathItemView extends FrameLayout {
         mTextView.setSingleLine(true);
         mTextView.setAllCaps(false);
         mTextView.setEllipsize(MIDDLE);
-        mTextView.setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Headline);
+        mTextView.setTextAppearance(getContext(), R.style.TextAppearance_Dir_Large);
 
         addView(mCaretView, new LayoutParams(WRAP_CONTENT, MATCH_PARENT));
         addView(mTextView, new LayoutParams(MATCH_PARENT, MATCH_PARENT));

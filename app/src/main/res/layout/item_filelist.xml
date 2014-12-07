@@ -40,9 +40,7 @@
         android:layout_marginEnd="@dimen/item_icon_margin_left"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:fontFamily="sans-serif-medium"
-        android:textColor="?android:attr/textColorPrimary" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/tertiary_info"
@@ -53,8 +51,7 @@
         android:layout_marginEnd="@dimen/item_icon_margin_left"
         android:layout_marginStart="4dp"
         android:maxLines="1"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="?android:attr/textColorSecondary" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/secondary_info"
