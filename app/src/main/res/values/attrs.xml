@@ -20,8 +20,6 @@
     <attr name="colorPrimaryLight" format="reference|color" />
     <attr name="colorIcon" format="reference|color" />
     <attr name="colorIconExpandedCabAction" format="reference|color" />
-    <attr name="textColorPathBar" format="reference|color" />
-    <attr name="textColorSecondaryPathBar" format="reference|color" />
 
     <attr name="colorFadeCovered" format="reference|color" />
     <attr name="colorFadeSlider" format="reference|color" />

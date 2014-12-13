@@ -23,6 +23,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
@@ -35,6 +36,7 @@ import android.widget.ViewFlipper;
 import com.veniosg.dir.AnimationConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.view.CheatSheet;
 import com.veniosg.dir.view.PathController;
 
 import java.io.File;
@@ -53,6 +55,7 @@ import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
 import static com.veniosg.dir.util.FileUtils.isOk;
 import static com.veniosg.dir.util.Utils.backWillExit;
+import static com.veniosg.dir.view.CheatSheet.setup;
 import static com.veniosg.dir.view.widget.PathHorizontalScrollView.RightEdgeRangeListener;
 import static com.veniosg.dir.view.PathController.Mode.MANUAL_INPUT;
 import static com.veniosg.dir.view.PathController.Mode.STANDARD_INPUT;
@@ -69,6 +72,8 @@ public class PathView extends FrameLayout implements PathController {
     private View mManualButtonLeft;
     private View mManualButtonRight;
     private EditText mManualText;
+
+    private boolean interceptTouch = false;
 
     private OnDirectoryChangedListener mDirectoryChangedListener = noOpOnDirectoryChangedListener();
     private final OnClickListener mSwitchToManualOnClickListener = new OnClickListener() {
@@ -136,6 +141,10 @@ public class PathView extends FrameLayout implements PathController {
         // XML doesn't always work
         mManualText.setInputType(TYPE_TEXT_VARIATION_URI | TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         scheduleSetRightEdgeRangeListener();
+
+        setup(mButtonRight);
+        setup(mManualButtonRight);
+        setup(mManualButtonLeft);
     }
 
     private void scheduleSetRightEdgeRangeListener() {
@@ -274,7 +283,12 @@ public class PathView extends FrameLayout implements PathController {
 
     @Override
     public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
+        interceptTouch = !enabled;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return interceptTouch;
     }
 
     private boolean manualInputCd(String path) {

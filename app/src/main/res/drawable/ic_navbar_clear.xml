@@ -1,0 +1,25 @@
+<!--
+Copyright (C) 2014 George Venios
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24.0"
+    android:viewportHeight="24.0"
+    android:alpha="0.54">
+    <path
+        android:pathData="M14,6.41L12.59,5L7,10.59L1.41,5L0,6.41L5.59,12L0,17.59L1.41,19L7,13.41L12.59,19L14,17.59L8.41,12L14,6.41z"
+        android:fillColor="#FFF"/>
+</vector>
