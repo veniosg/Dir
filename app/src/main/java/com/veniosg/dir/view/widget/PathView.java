@@ -18,26 +18,26 @@ package com.veniosg.dir.view.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
-import android.widget.ViewFlipper;
 
-import com.veniosg.dir.AnimationConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
-import com.veniosg.dir.view.CheatSheet;
 import com.veniosg.dir.view.PathController;
+import com.veniosg.dir.view.Themer;
 
 import java.io.File;
 
@@ -74,6 +74,7 @@ public class PathView extends FrameLayout implements PathController {
     private EditText mManualText;
 
     private boolean interceptTouch = false;
+    private ActivityProvider mActivityProvider = noOpActivityProvider();
 
     private OnDirectoryChangedListener mDirectoryChangedListener = noOpOnDirectoryChangedListener();
     private final OnClickListener mSwitchToManualOnClickListener = new OnClickListener() {
@@ -111,6 +112,29 @@ public class PathView extends FrameLayout implements PathController {
             return false;
         }
     };
+    private ActionMode.Callback mEditorActionModeCallback = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            Themer.setStatusBarColour(mActivityProvider.getActivity(), true);
+
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            Themer.setStatusBarColour(mActivityProvider.getActivity(), false);
+        }
+    };
 
     public PathView(Context context) {
         super(context);
@@ -137,6 +161,7 @@ public class PathView extends FrameLayout implements PathController {
         mManualButtonLeft.setOnClickListener(mResetManualInputClickListener);
         mManualButtonRight.setOnClickListener(mApplyManualInputClickListener);
         mManualText.setOnEditorActionListener(mOnEditorActionListener);
+        mManualText.setCustomSelectionActionModeCallback(mEditorActionModeCallback);
 
         // XML doesn't always work
         mManualText.setInputType(TYPE_TEXT_VARIATION_URI | TYPE_TEXT_FLAG_NO_SUGGESTIONS);
@@ -281,6 +306,13 @@ public class PathView extends FrameLayout implements PathController {
         }
     }
 
+    public void setActivityProvider(ActivityProvider activityProvider) {
+        if (activityProvider == null) {
+            this.mActivityProvider = noOpActivityProvider();
+        }
+        this.mActivityProvider = activityProvider;
+    }
+
     @Override
     public void setEnabled(boolean enabled) {
         interceptTouch = !enabled;
@@ -406,5 +438,18 @@ public class PathView extends FrameLayout implements PathController {
             public void directoryChanged(File newCurrentDir) {
             }
         };
+    }
+
+    private ActivityProvider noOpActivityProvider() {
+        return new ActivityProvider() {
+            @Override
+            public Activity getActivity() {
+                return null;
+            }
+        };
+    }
+
+    public static interface ActivityProvider {
+        public Activity getActivity();
     }
 }

@@ -68,6 +68,7 @@ import java.util.HashMap;
 
 import static com.veniosg.dir.view.PathController.OnDirectoryChangedListener;
 import static com.veniosg.dir.view.Themer.setStatusBarColour;
+import static com.veniosg.dir.view.widget.PathView.ActivityProvider;
 
 /**
  * A file list fragment that supports CAB selection.
@@ -182,6 +183,12 @@ public class SimpleFileListFragment extends FileListFragment {
         public void onItemToggle(int position) {
             getListView().setItemChecked(position,
                     !Utils.getItemChecked(getListView(), position));
+        }
+    };
+    private ActivityProvider mActivityProvider = new ActivityProvider() {
+        @Override
+        public Activity getActivity() {
+            return SimpleFileListFragment.this.getActivity();
         }
     };
 
@@ -364,7 +371,9 @@ public class SimpleFileListFragment extends FileListFragment {
         PathViewCompatibleToolbar toolbar = (PathViewCompatibleToolbar)
                 getActivity().findViewById(R.id.toolbar);
         if (!toolbar.hasPathView()) {
-            toolbar.addView(new PathView(toolbar.getContext()));
+            PathView pathView = new PathView(toolbar.getContext());
+            pathView.setActivityProvider(mActivityProvider);
+            toolbar.addView(pathView);
         }
 
         return inflater.inflate(R.layout.filelist_simple, null);

@@ -29,7 +29,7 @@ public class FileManagerApplication extends Application{
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		
+
 		mCopyHelper = new CopyHelper();
         mMimeTypes = MimeTypes.newInstance(this);
 
