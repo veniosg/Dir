@@ -83,11 +83,12 @@ public class PathView extends FrameLayout implements PathController {
             switchToManualInput();
         }
     };
-    private final OnClickListener mResetManualInputClickListener = new OnClickListener() {
+    private final OnClickListener mCloseManualInputClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
             String path = mCurrentDirectory.getAbsolutePath();
             setManualInputPath(path);
+            switchToStandardInput();
         }
     };
 
@@ -158,7 +159,7 @@ public class PathView extends FrameLayout implements PathController {
         mManualText = (EditText) findViewById(R.id.pathview_manual_text);
 
         mButtonRight.setOnClickListener(mSwitchToManualOnClickListener);
-        mManualButtonLeft.setOnClickListener(mResetManualInputClickListener);
+        mManualButtonLeft.setOnClickListener(mCloseManualInputClickListener);
         mManualButtonRight.setOnClickListener(mApplyManualInputClickListener);
         mManualText.setOnEditorActionListener(mOnEditorActionListener);
         mManualText.setCustomSelectionActionModeCallback(mEditorActionModeCallback);

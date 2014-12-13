@@ -54,9 +54,9 @@
             android:layout_alignParentStart="true"
             android:paddingEnd="@dimen/item_icon_margin_left"
             android:paddingStart="@dimen/item_icon_margin_left"
-            android:src="@drawable/ic_navbar_clear"
+            android:src="@drawable/ic_navbar_close"
             android:tint="?android:textColorPrimary"
-            android:contentDescription="@string/reset_path"/>
+            android:contentDescription="@string/close_path"/>
 
         <ImageView
             android:id="@+id/pathview_manual_button_right"

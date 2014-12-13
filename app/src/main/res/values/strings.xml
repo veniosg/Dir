@@ -136,6 +136,6 @@
     <!-- Right pathview button description -->
     <string name="edit_path">Edit path</string>
     <!-- Left pathview manual input button description -->
-    <string name="reset_path">Reset path</string>
+    <string name="close_path">Close editor</string>
     <string name="goto_path">Go to path</string>
 </resources>
