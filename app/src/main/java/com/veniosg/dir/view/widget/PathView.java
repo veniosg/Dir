@@ -16,23 +16,30 @@
 
 package com.veniosg.dir.view.widget;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
 import android.widget.ViewFlipper;
 
+import com.veniosg.dir.AnimationConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.view.PathController;
 
 import java.io.File;
 
+import static android.animation.ObjectAnimator.ofFloat;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.os.Environment.getExternalStorageDirectory;
 import static android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS;
@@ -42,6 +49,8 @@ import static android.view.KeyEvent.KEYCODE_DPAD_CENTER;
 import static android.view.LayoutInflater.from;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_GO;
+import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
+import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
 import static com.veniosg.dir.util.FileUtils.isOk;
 import static com.veniosg.dir.util.Utils.backWillExit;
 import static com.veniosg.dir.view.widget.PathHorizontalScrollView.RightEdgeRangeListener;
@@ -50,7 +59,7 @@ import static com.veniosg.dir.view.PathController.Mode.STANDARD_INPUT;
 import static com.veniosg.dir.view.Themer.getThemedDimension;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
-public class PathView extends ViewFlipper implements PathController {
+public class PathView extends FrameLayout implements PathController {
     private Mode mCurrentMode = STANDARD_INPUT;
     private File mCurrentDirectory = getExternalStorageDirectory();
     private File mInitialDirectory = getExternalStorageDirectory();
@@ -158,14 +167,20 @@ public class PathView extends ViewFlipper implements PathController {
 
     @Override
     public void switchToStandardInput() {
-        setDisplayedChild(0);
-        mCurrentMode = STANDARD_INPUT;
+        if (mCurrentMode != STANDARD_INPUT) {
+            switchToStandardInputAnimator().start();
+
+            mCurrentMode = STANDARD_INPUT;
+        }
     }
 
     @Override
     public void switchToManualInput() {
-        setDisplayedChild(1);
-        mCurrentMode = MANUAL_INPUT;
+        if (mCurrentMode != MANUAL_INPUT) {
+            switchToManualAnimator().start();
+
+            mCurrentMode = MANUAL_INPUT;
+        }
     }
 
     @Override
@@ -282,6 +297,85 @@ public class PathView extends ViewFlipper implements PathController {
     private void setManualInputPath(String path) {
         mManualText.setText(path);
         mManualText.setSelection(path.length());
+    }
+
+    private Animator switchToStandardInputAnimator() {
+        final View standard = getChildAt(0);
+        final View manual = getChildAt(1);
+
+        AnimatorSet set = new AnimatorSet();
+        set.setInterpolator(IN_INTERPOLATOR);
+        set.setDuration(ANIM_DURATION);
+        set.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                manual.setVisibility(VISIBLE);
+                standard.setVisibility(VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                manual.setVisibility(GONE);
+                standard.setVisibility(VISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                manual.setVisibility(GONE);
+                standard.setVisibility(VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {}
+        });
+        set.playTogether(
+                ofFloat(manual, "translationY", 0, getHeight()),
+                ofFloat(manual, "alpha", 1f, 0f),
+                ofFloat(standard, "scaleX", 0.5f, 1f),
+                ofFloat(standard, "scaleY", 0.5f, 1f),
+                ofFloat(standard, "alpha", 0f, 1f)
+        );
+
+        return set;
+    }
+
+    private Animator switchToManualAnimator() {
+        final View standard = getChildAt(0);
+        final View manual = getChildAt(1);
+
+        AnimatorSet set = new AnimatorSet();
+        set.setInterpolator(IN_INTERPOLATOR);
+        set.setDuration(ANIM_DURATION);
+        set.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                standard.setVisibility(VISIBLE);
+                manual.setVisibility(VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                standard.setVisibility(GONE);
+                manual.setVisibility(VISIBLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                standard.setVisibility(GONE);
+                manual.setVisibility(VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {}
+        });
+        set.playTogether(
+                ofFloat(manual, "translationY", getHeight(), 0),
+                ofFloat(manual, "alpha", 0f, 1f),
+                ofFloat(standard, "scaleX", 1f, 0.5f),
+                ofFloat(standard, "scaleY", 1f, 0.5f),
+                ofFloat(standard, "alpha", 1f, 0f)
+        );
+        return set;
     }
 
     private Toolbar.LayoutParams toolbarLayoutParams() {
