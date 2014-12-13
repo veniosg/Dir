@@ -22,16 +22,10 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Outline;
-import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
@@ -125,8 +119,8 @@ public class AnimatedFileListContainer extends FrameLayout {
         }
 
         final View newContent = getChildAt(INDEX_CONTENT);
-        final RippleBackgroundDrawableView oldContent = new RippleBackgroundDrawableView(getContext());
-        final RippleBackgroundDrawableView hero = new RippleBackgroundDrawableView(getContext());
+        final RippleEnabledDrawableView oldContent = new RippleEnabledDrawableView(getContext());
+        final RippleEnabledDrawableView hero = new RippleEnabledDrawableView(getContext());
         hero.setY(mHeroTop);
         hero.setInitialBackgroundPosition((int) mHeroLeft, (int) mHeroRight);
         AnimatorSet contentAnim = new AnimatorSet();
@@ -157,8 +151,8 @@ public class AnimatedFileListContainer extends FrameLayout {
         }
 
         final View newContent = getChildAt(INDEX_CONTENT);
-        final RippleBackgroundDrawableView oldContent = new RippleBackgroundDrawableView(getContext());
-        final RippleBackgroundDrawableView hero = new RippleBackgroundDrawableView(getContext());
+        final RippleEnabledDrawableView oldContent = new RippleEnabledDrawableView(getContext());
+        final RippleEnabledDrawableView hero = new RippleEnabledDrawableView(getContext());
         hero.setY(mHeroTop);
         hero.setInitialBackgroundPosition((int) mHeroLeft, (int) mHeroRight);
         AnimatorSet contentAnim = new AnimatorSet();
@@ -193,7 +187,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         return heroAnim;
     }
 
-    private AnimatorSet forwardContentAnimation(final View newContent, final View oldContent, final RippleBackgroundDrawableView hero) {
+    private AnimatorSet forwardContentAnimation(final View newContent, final View oldContent, final RippleEnabledDrawableView hero) {
         int heroHeight = hero.getDrawableHeight();
         if (heroHeight > 0) {
             oldContent.setPivotY(hero.getY() + heroHeight / 2);
@@ -253,7 +247,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         return contentAnim;
     }
 
-    private void setupSceneAnimation(final RippleBackgroundDrawableView oldContent, final RippleBackgroundDrawableView hero, AnimatorSet contentAnim,
+    private void setupSceneAnimation(final RippleEnabledDrawableView oldContent, final RippleEnabledDrawableView hero, AnimatorSet contentAnim,
                                      AnimatorSet heroAnim, Interpolator interpolator, AnimatorSet scene) {
         scene.setDuration(ANIM_DURATION);
         scene.setInterpolator(interpolator);
@@ -286,7 +280,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         });
     }
 
-    private void finishAnimation(RippleBackgroundDrawableView oldContent, RippleBackgroundDrawableView hero) {
+    private void finishAnimation(RippleEnabledDrawableView oldContent, RippleEnabledDrawableView hero) {
         try {
             removeView(oldContent);
             removeView(hero);
@@ -352,133 +346,5 @@ public class AnimatedFileListContainer extends FrameLayout {
         int imag = (int) (baseAlpha * mDimAmount);
         int color = imag << 24 | (mDimColor & 0xffffff);
         return color;
-    }
-
-    private class RippleBackgroundDrawableView extends View {
-        // A value of 2 causes the right edge to remain in the same physical position on the screen.
-        // We want to follow the direction of the rest of the animations so always use values < 2.
-        private static final float BACKGROUND_PROGRESS_FACTOR = 1.5f;
-
-        private Drawable drawable;
-        private ColorMatrix saturationMatrix = new ColorMatrix();
-        private ColorMatrix blacknessMatrix = new ColorMatrix();
-
-        private Paint backgroundPaint;
-        private int initialBackgroundRight;
-        private int initialBackgroundLeft;
-        private int currentBackgroundLeft;
-        private int currentBackgroundRight;
-        private int backgroundRadius;
-        private int backgroundCenterX;
-        private int backgroundCenterY;
-
-        private boolean multiColumnFilelist = false;
-        private boolean withBackground = false;
-
-        public RippleBackgroundDrawableView(Context context) {
-            super(context);
-
-            setWillNotDraw(false);
-            setClipToOutline(true);
-            setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
-            saturationMatrix.setSaturation(1F);
-
-            backgroundPaint = new Paint();
-            backgroundPaint.setColor(getThemedColor(getContext(), android.R.attr.colorBackground));
-            backgroundPaint.setStyle(Paint.Style.FILL);
-            backgroundPaint.setAntiAlias(true);
-
-            multiColumnFilelist = getResources().getInteger(R.integer.grid_columns) > 1;
-        }
-
-        public void setInitialBackgroundPosition(int left, int right) {
-            withBackground = true;
-            initialBackgroundLeft = left;
-            initialBackgroundRight = right;
-        }
-
-        @Override
-        public void draw(Canvas canvas) {
-            if (drawable != null) {
-                if (multiColumnFilelist) {
-                    canvas.drawCircle(backgroundCenterX, backgroundCenterY, backgroundRadius, backgroundPaint);
-                } else {
-                    canvas.drawColor(backgroundPaint.getColor());
-                }
-                drawable.draw(canvas);
-            }
-        }
-
-        public void setBackgroundProgress(float progress) {
-            if (drawable != null) {
-                progress *= BACKGROUND_PROGRESS_FACTOR;
-                currentBackgroundLeft = (int) (initialBackgroundLeft - initialBackgroundLeft * progress);
-                currentBackgroundRight = (int) (initialBackgroundRight + (drawable.getIntrinsicWidth() - initialBackgroundRight) * progress);
-
-                // Only needed if drawing a circle background
-                backgroundRadius = (currentBackgroundRight - currentBackgroundLeft) / 2;
-                backgroundCenterX = currentBackgroundLeft + backgroundRadius;
-                backgroundCenterY = getHeight() / 2;
-
-                postInvalidateOnAnimation(currentBackgroundLeft, 0, currentBackgroundRight, getHeight());
-            }
-        }
-
-        public void setDrawable(Drawable drawable) {
-            this.drawable = drawable;
-
-            setOutlineProvider(new ViewOutlineProvider() {
-                @Override
-                public void getOutline(View view, Outline outline) {
-                    if (view instanceof RippleBackgroundDrawableView) {
-                        if (outline == null) {
-                            outline = new Outline();
-                        }
-
-                        outline.setRect(0, 0,
-                                // Extending outline to the right to avoid shadow glitch
-                                ((RippleBackgroundDrawableView) view).getDrawableWidth() * 2,
-                                ((RippleBackgroundDrawableView) view).getDrawableHeight());
-                    }
-                }
-            });
-        }
-
-        @Override
-        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-            if (drawable == null) {
-                setMeasuredDimension(0, 0);
-            } else {
-                // We know the view will never need to be less than its drawable's intrinsic size in this context.
-                setMeasuredDimension(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-            }
-        }
-
-        private int getDrawableWidth() {
-            if (drawable != null) {
-                return drawable.getIntrinsicWidth();
-            } else {
-                return 0;
-            }
-        }
-
-        private int getDrawableHeight() {
-            if (drawable != null) {
-                return drawable.getIntrinsicHeight();
-            } else {
-                return 0;
-            }
-        }
-
-        public void setSaturation(float sat) {
-            if (sat < 0)
-                sat = 0;
-
-            saturationMatrix.setSaturation(sat);
-            if (drawable != null) {
-                drawable.setColorFilter(new ColorMatrixColorFilter(saturationMatrix));
-            }
-            postInvalidateOnAnimation(0, 0 , getWidth(), getHeight());
-        }
     }
 }
