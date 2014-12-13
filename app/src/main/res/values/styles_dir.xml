@@ -23,7 +23,4 @@
     <style name="Widget.Dir.ButtonStyle" parent="android:Widget.Material.Button">
         <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
     </style>
-    <style name="Widget.Dir.EditTextStyle" parent="android:Widget.Material.EditText">
-        <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>
-    </style>
 </resources>

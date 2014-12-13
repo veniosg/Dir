@@ -32,7 +32,6 @@
         <item name="android:textAppearanceSmall">@style/TextAppearance.Dir.Small</item>
         <item name="android:textViewStyle">@style/Widget.Dir.TextViewStyle</item>
         <item name="android:buttonStyle">@style/Widget.Dir.ButtonStyle</item>
-        <item name="android:editTextStyle">@style/Widget.Dir.EditTextStyle</item>
         <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
         <item name="colorIcon">?android:colorBackground</item>
         <item name="android:textColorHighlight">@color/textColorHighlight</item>
@@ -83,7 +82,6 @@
         <item name="android:textAppearanceSmall">@style/TextAppearance.Dir.Small</item>
         <item name="android:textViewStyle">@style/Widget.Dir.TextViewStyle</item>
         <item name="android:buttonStyle">@style/Widget.Dir.ButtonStyle</item>
-        <item name="android:editTextStyle">@style/Widget.Dir.EditTextStyle</item>
         <item name="android:actionModeBackground">@drawable/bg_actionmode</item>
         <item name="colorIcon">?android:colorBackground</item>
         <item name="android:textColorHighlight">@color/textColorHighlight</item>
