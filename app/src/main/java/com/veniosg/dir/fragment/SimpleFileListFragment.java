@@ -56,9 +56,9 @@ import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.util.MediaScannerUtils;
 import com.veniosg.dir.util.Utils;
+import com.veniosg.dir.view.PathController;
 import com.veniosg.dir.view.widget.AnimatedFileListContainer;
 import com.veniosg.dir.view.widget.PathView;
-import com.veniosg.dir.view.PathController;
 import com.veniosg.dir.view.widget.PathViewCompatibleToolbar;
 
 import java.io.File;
@@ -67,6 +67,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static com.veniosg.dir.view.PathController.OnDirectoryChangedListener;
+import static com.veniosg.dir.view.Themer.setStatusBarColour;
 
 /**
  * A file list fragment that supports CAB selection.
@@ -132,15 +133,17 @@ public class SimpleFileListFragment extends FileListFragment {
 
         @Override
         public void onDestroyActionMode(android.view.ActionMode mode) {
-            mPathBar.setEnabled(true);
             mActionMode = null;
+            mPathBar.setEnabled(true);
+            setStatusBarColour(getActivity(), false);
         }
 
         @Override
-        public boolean onCreateActionMode(android.view.ActionMode mode,
-                                          Menu menu) {
+        public boolean onCreateActionMode(android.view.ActionMode mode, Menu menu) {
             mActionMode = mode;
             mPathBar.setEnabled(false);
+            setStatusBarColour(getActivity(), true);
+
             return true;
         }
 

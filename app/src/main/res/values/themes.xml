@@ -50,6 +50,7 @@
 
         <!-- Control colour -->
         <item name="android:colorAccent">@color/dir_accent</item>
+        <item name="colorActionModeStatusBar">@color/dir_cabStatus</item>
 
         <!-- Background colours -->
         <item name="android:colorBackground">@color/dir_background</item>
@@ -100,6 +101,7 @@
 
         <!-- Control colour -->
         <item name="android:colorAccent">@color/dark_accent</item>
+        <item name="colorActionModeStatusBar">@color/dark_cabStatus</item>
 
         <!-- Background colours -->
         <item name="android:colorBackground">@color/dark_background</item>

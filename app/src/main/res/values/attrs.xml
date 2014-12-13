@@ -20,6 +20,7 @@
     <attr name="colorPrimaryLight" format="reference|color" />
     <attr name="colorIcon" format="reference|color" />
     <attr name="colorIconExpandedCabAction" format="reference|color" />
+    <attr name="colorActionModeStatusBar" format="reference|color" />
 
     <attr name="colorFadeCovered" format="reference|color" />
     <attr name="colorFadeSlider" format="reference|color" />

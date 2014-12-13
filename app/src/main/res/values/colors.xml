@@ -29,6 +29,7 @@
     <color name="dir_accent">#6889ff</color>
     <color name="dir_background">#EEEEEE</color> <!-- default material light background -->
     <color name="dir_cabBackground">#424242</color>
+    <color name="dir_cabStatus">#212121</color>
     <color name="dir_backgroundSecondary">#E0E0E0</color>
     <color name="dir_divider">#13000000</color>
     <color name="dir_multiSelectHighlight">#bdbdbd</color>
@@ -47,6 +48,7 @@
     <color name="dark_accent">#f5f5f5</color>
     <color name="dark_background">#303030</color> <!-- default material dark background -->
     <color name="dark_cabBackground">#424242</color>
+    <color name="dark_cabStatus">#212121</color>
     <color name="dark_backgroundSecondary">#2B2B2B</color>
     <color name="dark_divider">#13FFFFFF</color>
     <color name="dark_multiSelectHighlight">#505050</color>
