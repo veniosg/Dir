@@ -16,6 +16,8 @@ import com.veniosg.dir.view.ViewHolder;
 
 import java.io.File;
 
+import static android.view.View.INVISIBLE;
+
 /**
  * @author George Venios
  */
@@ -52,9 +54,7 @@ public class BookmarkListAdapter extends CursorAdapter {
         holder.primaryInfo.setText(item.getName());
         holder.secondaryInfo.setMaxLines(3);
         holder.secondaryInfo.setText(item.getFile().getAbsolutePath());
-        // Hide directories' size as it's irrelevant if we can't recursively find it.
-        holder.tertiaryInfo.setText(item.getFile().isDirectory()? "" : item.getFormattedSize(
-                convertView.getContext(), false));
+        holder.tertiaryInfo.setVisibility(INVISIBLE);
 
         ThumbnailHelper.requestIcon(item, holder.icon);
     }

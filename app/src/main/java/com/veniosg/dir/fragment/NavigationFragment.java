@@ -16,6 +16,7 @@
 
 package com.veniosg.dir.fragment;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -34,24 +35,39 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.veniosg.dir.R;
+import com.veniosg.dir.activity.AboutActivity;
+import com.veniosg.dir.activity.PreferenceActivity;
 import com.veniosg.dir.adapter.BookmarkListAdapter;
 import com.veniosg.dir.provider.BookmarkProvider;
+import com.veniosg.dir.view.Themer;
 import com.veniosg.dir.view.widget.WaitingViewFlipper;
 
 import java.io.File;
 
 import static android.view.View.GONE;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
+import static com.veniosg.dir.view.Themer.setStatusBarColour;
 
-/**
- * @author George Venios
- */
-public class BookmarkListFragment extends AbsListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class NavigationFragment extends AbsListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private WaitingViewFlipper mFlipper;
+    private View.OnClickListener mSettingsClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), PreferenceActivity.class);
+            startActivity(intent);
+        }
+    };
+    private View.OnClickListener mAboutClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getActivity(), AboutActivity.class);
+            startActivity(intent);
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.filelist, null);
+        return inflater.inflate(R.layout.fragment_navigation, null);
     }
 
     @Override
@@ -61,19 +77,20 @@ public class BookmarkListFragment extends AbsListFragment implements LoaderManag
         mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
 
         setLoading(true);
-        ImageView emptyImage = (ImageView) view.findViewById(R.id.empty_img);
-        emptyImage.setBackground(null);
-        emptyImage.setPadding(0, 0, 0, 0);
-        emptyImage.setImageResource(R.drawable.ic_state_bookmarks);
-        ((TextView) view.findViewById(R.id.empty_text)).setVisibility(GONE);
+        view.findViewById(R.id.empty_img)
+                .setVisibility(GONE);
+        ((TextView) view.findViewById(R.id.empty_text))
+                .setText(R.string.bookmark_empty);
 
         if (getListView() instanceof GridView) {
             ((GridView) getListView()).setNumColumns(1);
         }
         setListAdapter(new BookmarkListAdapter(getActivity(), null));
         setListChoiceListener();
-        view.setBackgroundResource(getThemedResourceId(getActivity(), R.attr.colorSidePaneBackground));
+        view.setBackgroundResource(getThemedResourceId(getActivity(), android.R.attr.colorBackground));
 
+        view.findViewById(R.id.action_settings).setOnClickListener(mSettingsClickListener);
+        view.findViewById(R.id.action_about).setOnClickListener(mAboutClickListener);
         getLoaderManager().initLoader(0, null, this);
 	}
 
@@ -110,10 +127,12 @@ public class BookmarkListFragment extends AbsListFragment implements LoaderManag
 
             @Override
             public void onDestroyActionMode(android.view.ActionMode mode) {
+                setStatusBarColour(getActivity(), false);
             }
 
             @Override
             public boolean onCreateActionMode(android.view.ActionMode mode, Menu menu) {
+                setStatusBarColour(getActivity(), true);
                 return true;
             }
 

@@ -21,9 +21,5 @@
     <attr name="colorIcon" format="reference|color" />
     <attr name="colorIconExpandedCabAction" format="reference|color" />
     <attr name="colorActionModeStatusBar" format="reference|color" />
-
     <attr name="colorFadeCovered" format="reference|color" />
-    <attr name="colorFadeSlider" format="reference|color" />
-    <attr name="colorSidePaneBackground" format="reference|color" />
-    <attr name="drawerShadow" format="reference" />
 </resources>

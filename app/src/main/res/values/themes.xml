@@ -60,13 +60,8 @@
         <!-- Misc colours -->
         <item name="android:colorEdgeEffect">@color/dir_edgeEffect</item>
         <item name="colorIconExpandedCabAction">?android:textColorPrimaryInverse</item>
-
-        <!-- SlidingPaneLayout colours -->
         <item name="colorFadeCovered">@color/dir_fadeCovered</item>
-        <item name="colorFadeSlider">@color/dir_fadeSlider</item>
-        <item name="colorSidePaneBackground">@color/dir_sidePaneBackground</item>
 
-        <item name="drawerShadow">@drawable/dir_bg_drawer_shadow</item>
         <item name="android:alertDialogTheme">@style/Theme.Dir.Dialog.Alert</item>
     </style>
 
@@ -110,13 +105,8 @@
         <!-- Misc colours -->
         <item name="android:colorEdgeEffect">@color/dark_edgeEffect</item>
         <item name="colorIconExpandedCabAction">?android:textColorPrimary</item>
-
-        <!-- SlidingPaneLayout colours -->
         <item name="colorFadeCovered">@color/dark_fadeCovered</item>
-        <item name="colorFadeSlider">@color/dark_fadeSlider</item>
-        <item name="colorSidePaneBackground">@color/dark_sidePaneBackground</item>
 
-        <item name="drawerShadow">@drawable/dark_bg_drawer_shadow</item>
         <item name="android:alertDialogTheme">@style/Theme.Dark.Dialog.Alert</item>
     </style>
 

@@ -355,8 +355,8 @@ public class SimpleFileListFragment extends FileListFragment {
         }
 
         Activity act = getActivity();
-        if (act != null && act instanceof BookmarkListFragment.BookmarkContract) {
-            ((BookmarkListFragment.BookmarkContract) act).showBookmarks();
+        if (act != null && act instanceof NavigationFragment.BookmarkContract) {
+            ((NavigationFragment.BookmarkContract) act).showBookmarks();
         }
         
         query.close();

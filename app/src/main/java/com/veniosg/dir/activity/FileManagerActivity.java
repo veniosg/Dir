@@ -19,26 +19,26 @@ package com.veniosg.dir.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
-import com.veniosg.dir.fragment.BookmarkListFragment;
+import com.veniosg.dir.fragment.NavigationFragment;
 import com.veniosg.dir.fragment.SimpleFileListFragment;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.util.FileUtils;
-import com.veniosg.dir.view.Themer;
 
 import java.io.File;
 
+import static android.view.Gravity.START;
+
 public class FileManagerActivity extends BaseActivity
-        implements BookmarkListFragment.BookmarkContract {
+        implements NavigationFragment.BookmarkContract {
 	private SimpleFileListFragment mFragment;
-    private SlidingPaneLayout mSpl;
+    private DrawerLayout mDrawerLayout;
 
     @Override
 	protected void onNewIntent(Intent intent) {
@@ -103,20 +103,7 @@ public class FileManagerActivity extends BaseActivity
 				mFragment.openInformingPathBar(new FileHolder(new File(data.toString()), this));
 		}
 
-        // Side pane
-        mSpl = (SlidingPaneLayout) findViewById(R.id.drawer);
-        mSpl.setShadowResource(Themer.getThemedResourceId(this, R.attr.drawerShadow));
-        mSpl.setCoveredFadeColor(getResources().getColor(
-                Themer.getThemedResourceId(this, R.attr.colorFadeCovered)));
-        mSpl.setSliderFadeColor(getResources().getColor(
-                Themer.getThemedResourceId(this, R.attr.colorFadeSlider)));
-        int sidePaneWidth = (int) (getResources().getDisplayMetrics().widthPixels * 0.8F);
-        View bookmarks = findViewById(R.id.bookmarks);
-        SlidingPaneLayout.LayoutParams params = new SlidingPaneLayout.LayoutParams(
-                bookmarks.getLayoutParams());
-        params.width = sidePaneWidth;
-        bookmarks.setLayoutParams(params);
-        mSpl.setParallaxDistance(sidePaneWidth / 4);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 	}
 
     @Override
@@ -133,17 +120,6 @@ public class FileManagerActivity extends BaseActivity
             case R.id.menu_search:
                 onSearchRequested();
                 return true;
-
-            case R.id.menu_settings:
-                Intent intent = new Intent(this, PreferenceActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.menu_about:
-                Intent about = new Intent(this, AboutActivity.class);
-                startActivity(about);
-                return true;
-
             case android.R.id.home:
                 mFragment.browseToHome();
                 return true;
@@ -154,8 +130,8 @@ public class FileManagerActivity extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        if (mSpl.isOpen()) {
-            mSpl.closePane();
+        if (mDrawerLayout.isDrawerOpen(START)) {
+            mDrawerLayout.closeDrawer(START);
         } else {
             if (!mFragment.pressBack()) {
                 super.onBackPressed();
@@ -176,11 +152,11 @@ public class FileManagerActivity extends BaseActivity
     public void onBookmarkSelected(String path) {
         mFragment.openInformingPathBar(new FileHolder(new File(path), this));
         mFragment.closeActionMode();
-        mSpl.closePane();
+        mDrawerLayout.closeDrawer(START);
     }
 
     @Override
     public void showBookmarks() {
-        mSpl.openPane();
+        mDrawerLayout.openDrawer(START);
     }
 }

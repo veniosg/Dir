@@ -2,6 +2,7 @@
 <resources>
     <!-- Bookmark action. This is a verb. -->
     <string name="menu_bookmark">Bookmark</string>
+    <string name="bookmarks">Bookmarks</string>
     <string name="create_new_folder">Create new folder</string>
     <string name="folder_name">Folder name</string>
     <string name="this_folder_is_empty">Folder empty</string>
@@ -89,7 +90,7 @@
     <string name="notif_extracted_success">Extraction successful</string>
     <string name="notif_extracted_fail">Extraction failed</string>
     <string name="selected">selected</string>
-    <string name="bookmark_empty">No bookmarks added.</string>
+    <string name="bookmark_empty">No bookmarks</string>
     <string name="bookmark_already_exists">This file is already bookmarked</string>
     <string name="search_hint">Search files</string>
     <string name="query_error">Query error</string>

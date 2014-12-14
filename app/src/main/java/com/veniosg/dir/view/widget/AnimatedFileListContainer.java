@@ -42,6 +42,7 @@ import static com.veniosg.dir.AnimationConstants.OUT_INTERPOLATOR;
 import static com.veniosg.dir.FileManagerApplication.enqueueAnimator;
 import static com.veniosg.dir.util.Logger.TAG_ANIMATION;
 import static com.veniosg.dir.view.Themer.getThemedColor;
+import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
 /**
  * @author George Venios
@@ -53,7 +54,7 @@ public class AnimatedFileListContainer extends FrameLayout {
     private BitmapDrawable mHeroshot;
     private float mDimAmount = 0;
     private int mDimColor = getResources().getColor(
-            Themer.getThemedResourceId(getContext(), R.attr.colorFadeCovered));
+            getThemedResourceId(getContext(), R.attr.colorFadeCovered));
     private float mHeroTop = 0;
     private float mHeroLeft = 0;
     private float mHeroRight = 0;
