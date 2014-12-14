@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="?android:colorAccent"
+        android:drawablePadding="32dp"
+        android:drawableStart="@drawable/ic_sidenav_title"
+        android:gravity="start|center_vertical"
+        android:paddingEnd="@dimen/item_icon_margin_left"
+        android:paddingStart="@dimen/item_icon_margin_left"
+        android:text="@string/bookmarks"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="?android:textColorPrimaryInverse" />
+
+    <include
+        layout="@layout/filelist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/secondary_actions"
+        android:layout_below="@id/title" />
+
+    <LinearLayout
+        android:id="@id/secondary_actions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:showDividers="beginning"
+        android:divider="@drawable/divider">
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:id="@+id/action_settings"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:background="?android:selectableItemBackground"
+            android:drawablePadding="32dp"
+            android:drawableStart="@drawable/ic_sidenav_settings"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/item_icon_margin_left"
+            android:paddingStart="@dimen/item_icon_margin_left"
+            android:text="@string/menu_settings"
+            android:textAppearance="@android:style/TextAppearance.Material.Body2" />
+
+        <TextView
+            android:id="@+id/action_about"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:background="?android:selectableItemBackground"
+            android:drawablePadding="32dp"
+            android:drawableStart="@drawable/ic_sidenav_about"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/item_icon_margin_left"
+            android:paddingStart="@dimen/item_icon_margin_left"
+            android:text="@string/menu_about"
+            android:textAppearance="@android:style/TextAppearance.Material.Body2" />
+    </LinearLayout>
+
+</RelativeLayout>
