@@ -14,38 +14,43 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
 
-public class BookmarkProvider extends ContentProvider implements BaseColumns{
+import java.io.File;
+
+import static android.os.Environment.DIRECTORY_DCIM;
+import static android.os.Environment.DIRECTORY_DOWNLOADS;
+import static android.os.Environment.DIRECTORY_MOVIES;
+import static android.os.Environment.DIRECTORY_MUSIC;
+import static android.os.Environment.getExternalStoragePublicDirectory;
+
+public class BookmarkProvider extends ContentProvider implements BaseColumns {
     private static final String TB_NAME = "bookmarks";
     public static final String NAME = "name";
     public static final String PATH = "path";
     public static final String CHECKED = "checked"; // Only because of multiple choice delete dialog
     public static final String PROVIDER_NAME = "com.veniosg.dir.bookmarks";
-    public static final Uri CONTENT_URI = 
-            Uri.parse("content://"+PROVIDER_NAME);
-    public static final String BOOKMARK_MIMETYPE =
-    		"vnd.android.cursor.item/vnd.veniosg.dir.bookmark";
-    public static final String BOOKMARKS_MIMETYPE =
-    		"vnd.android.cursor.dir/vnd.veniosg.dir.bookmark";
+    public static final Uri CONTENT_URI = Uri.parse("content://"+PROVIDER_NAME);
+    public static final String BOOKMARK_MIMETYPE = "vnd.android.cursor.item/vnd.veniosg.dir.bookmark";
+    public static final String BOOKMARKS_MIMETYPE = "vnd.android.cursor.dir/vnd.veniosg.dir.bookmark";
 
     private static final int BOOKMARKS = 1;
     private static final int BOOKMARK_ID = 2;
     private static final UriMatcher uriMatcher;
-    static{
-       uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-       uriMatcher.addURI(PROVIDER_NAME, null, BOOKMARKS);   
-       uriMatcher.addURI(PROVIDER_NAME, "#", BOOKMARK_ID);  
+    static {
+        uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+        uriMatcher.addURI(PROVIDER_NAME, null, BOOKMARKS);
+        uriMatcher.addURI(PROVIDER_NAME, "#", BOOKMARK_ID);
     }
 
     private DatabaseHelper dbHelper;
     private SQLiteDatabase db;
 
     private static final String DATABASE_CREATE =
-        String.format("CREATE TABLE %s (%s integer primary key autoincrement, "
-        		+ "%s text not null, %s text not null, %s integer default 0);",
-        		TB_NAME, _ID, NAME, PATH, CHECKED);
+            String.format("CREATE TABLE %s (%s integer primary key autoincrement, "
+                            + "%s text not null, %s text not null, %s integer default 0);",
+                    TB_NAME, _ID, NAME, PATH, CHECKED);
 
     private static final String DATABASE_NAME = "com.veniosg.dir.filemanager";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -55,7 +60,32 @@ public class BookmarkProvider extends ContentProvider implements BaseColumns{
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(DATABASE_CREATE);
+            db.beginTransaction();
+            try {
+                db.execSQL(DATABASE_CREATE);
+                db.insert(TB_NAME,
+                        null,
+                        contentValuesFor(getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS)));
+                db.insert(TB_NAME,
+                        null,
+                        contentValuesFor(getExternalStoragePublicDirectory(DIRECTORY_MUSIC)));
+                db.insert(TB_NAME,
+                        null,
+                        contentValuesFor(getExternalStoragePublicDirectory(DIRECTORY_DCIM)));
+                db.insert(TB_NAME,
+                        null,
+                        contentValuesFor(getExternalStoragePublicDirectory(DIRECTORY_MOVIES)));
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+        }
+
+        private ContentValues contentValuesFor(File file) {
+            ContentValues values = new ContentValues();
+            values.put(BookmarkProvider.NAME, file.getName());
+            values.put(BookmarkProvider.PATH, file.getPath());
+            return values;
         }
 
         /*
@@ -65,11 +95,10 @@ public class BookmarkProvider extends ContentProvider implements BaseColumns{
          */
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS "+TB_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + TB_NAME);
             onCreate(db);
         }
     }
-    
 
 	@Override
 	public int delete(Uri arg0, String arg1, String[] arg2) {
@@ -96,11 +125,11 @@ public class BookmarkProvider extends ContentProvider implements BaseColumns{
 		switch (uriMatcher.match(uri)){
 		case BOOKMARKS:
 			return BOOKMARKS_MIMETYPE;
-		case BOOKMARK_ID:                
+		case BOOKMARK_ID:
 			return BOOKMARK_MIMETYPE;
 		default:
-			throw new IllegalArgumentException("Unsupported URI: " + uri);        
-		}   
+			throw new IllegalArgumentException("Unsupported URI: " + uri);
+		}
 	}
 
 	@Override
@@ -108,8 +137,8 @@ public class BookmarkProvider extends ContentProvider implements BaseColumns{
 		long rowID = db.insert(TB_NAME, "", values);
 		if (rowID > 0){
 			Uri _uri = ContentUris.withAppendedId(CONTENT_URI, rowID);
-			getContext().getContentResolver().notifyChange(_uri, null);    
-			return _uri;                
+			getContext().getContentResolver().notifyChange(_uri, null);
+			return _uri;
 		}
 		throw new SQLException("Failed to insert row into " + uri);
 	}
@@ -127,18 +156,18 @@ public class BookmarkProvider extends ContentProvider implements BaseColumns{
 		SQLiteQueryBuilder sqlBuilder = new SQLiteQueryBuilder();
 		sqlBuilder.setTables(TB_NAME);
 		if (uriMatcher.match(uri) == BOOKMARK_ID){
-			sqlBuilder.appendWhere(_ID + " = " + uri.getPathSegments().get(0));  
+			sqlBuilder.appendWhere(_ID + " = " + uri.getPathSegments().get(0));
 		}
-		
+
 		if (sortOrder==null || sortOrder=="")
 			sortOrder = _ID;
-		
-		Cursor c = sqlBuilder.query(db, 
-									projection, 
-									selection, 
-									selectionArgs, 
-									null, 
-									null, 
+
+		Cursor c = sqlBuilder.query(db,
+									projection,
+									selection,
+									selectionArgs,
+									null,
+									null,
 									sortOrder);
 		c.setNotificationUri(getContext().getContentResolver(), uri);
 		return c;
@@ -151,20 +180,20 @@ public class BookmarkProvider extends ContentProvider implements BaseColumns{
 		switch (uriMatcher.match(uri)){
 		case BOOKMARKS:
 			count = db.update(
-						TB_NAME, 
+						TB_NAME,
 						values,
-						selection, 
+						selection,
 						selectionArgs);
 			break;
-		case BOOKMARK_ID:   
+		case BOOKMARK_ID:
 			count = db.update(
-					TB_NAME, 
+					TB_NAME,
 					values,
 					_ID + " = " + uri.getPathSegments().get(0)
 						+ (!TextUtils.isEmpty(selection) ? " AND (" + selection + ')' : ""),
 					selectionArgs);
 			break;
-		default: throw new IllegalArgumentException("Unknown URI " + uri);    
+		default: throw new IllegalArgumentException("Unknown URI " + uri);
 		}
 		getContext().getContentResolver().notifyChange(uri, null);
 		return count;
