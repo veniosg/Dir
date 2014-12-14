@@ -6,13 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ColorMatrix;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -32,6 +35,7 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.graphics.Bitmap.Config.ARGB_8888;
 import static android.util.TypedValue.COMPLEX_UNIT_DIP;
 import static android.util.TypedValue.applyDimension;
 import static android.view.View.MeasureSpec.EXACTLY;
@@ -126,8 +130,9 @@ public abstract class Utils {
         shortcutintent.putExtra("duplicate", false);
         shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_NAME, fileholder.getName());
         try {
-            shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON, ((BitmapDrawable) fileholder
-                    .getBestIcon()).getBitmap());
+            Intent intent = shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON,
+                    bitmapFrom(context.getResources().getDisplayMetrics(),
+                            fileholder.getBestIcon()));
         } catch (Exception ex) {
             Logger.log(ex);
             Parcelable icon = Intent.ShortcutIconResource.fromContext(
@@ -145,6 +150,17 @@ public abstract class Utils {
             shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, itl);
             context.sendBroadcast(shortcutintent);
         }
+    }
+
+    private static Bitmap bitmapFrom(DisplayMetrics metrics, Drawable drawable) {
+        Bitmap result = Bitmap.createBitmap(
+                metrics,
+                drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(),
+                ARGB_8888);
+        Canvas c = new Canvas(result);
+        drawable.draw(c);
+        return result;
     }
 
     /**
