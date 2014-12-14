@@ -51,7 +51,8 @@
         android:layout_marginEnd="@dimen/item_icon_margin_left"
         android:layout_marginStart="4dp"
         android:maxLines="1"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="?android:attr/textColorSecondary" />
 
     <TextView
         android:id="@+id/secondary_info"
