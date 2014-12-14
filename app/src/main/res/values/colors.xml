@@ -26,7 +26,7 @@
     <color name="dir_primary">#8e24aa</color>
     <color name="dir_primaryDark">#6a1b9a</color>
     <color name="dir_primaryLight">#7b1fa2</color>
-    <color name="dir_accent">#6889ff</color>
+    <color name="dir_accent">#00BFA5</color>
     <color name="dir_background">#EEEEEE</color> <!-- default material light background -->
     <color name="dir_cabBackground">#424242</color>
     <color name="dir_cabStatus">#212121</color>

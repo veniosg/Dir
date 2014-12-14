@@ -28,7 +28,7 @@
                 android:entryValues="@array/sortby_values"
                 android:title="@string/preference_sortby" />
         
-        <CheckBoxPreference
+        <SwitchPreference
                 android:title="@string/preference_sortby_ascending"
                 android:key="ascending"
                 android:summaryOff="@string/preference_sortby_ascending_summary_off"
@@ -46,14 +46,14 @@
             android:entryValues="@array/theme_values"
             android:title="@string/preference_theme" />
 
-        <CheckBoxPreference
+        <SwitchPreference
                 android:key="mediascan"
                 android:defaultValue="false"
                 android:title="@string/preference_medialib_title"
                 android:summaryOn="@string/preference_medialib_summary_on"
                 android:summaryOff="@string/preference_medialib_summary_off" />
 
-        <CheckBoxPreference 
+        <SwitchPreference
                 android:key="displayhiddenfiles"
                 android:title="@string/preference_displayhiddenfiles_title"
                 android:defaultValue="false"
