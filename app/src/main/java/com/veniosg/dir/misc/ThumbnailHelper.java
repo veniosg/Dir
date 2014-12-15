@@ -173,10 +173,10 @@ public class ThumbnailHelper {
     private static DisplayImageOptions.Builder defaultOptionsBuilder() {
         if (sDefaultImageOptionsBuilder == null) {
             sDefaultImageOptionsBuilder = new DisplayImageOptions.Builder()
-                    .displayer(new FadeInBitmapDisplayer(FADE_IN_DURATION))
+                    .displayer(new FadeInBitmapDisplayer(FADE_IN_DURATION, true, true, false))
                     .cacheInMemory(true)
                     .cacheOnDisk(false)
-                    .delayBeforeLoading(75)
+                    .delayBeforeLoading(125)
                     .imageScaleType(EXACTLY);
         }
 
