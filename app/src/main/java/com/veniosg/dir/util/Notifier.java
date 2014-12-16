@@ -29,13 +29,25 @@ import com.veniosg.dir.activity.FileManagerActivity;
 import com.veniosg.dir.misc.FileHolder;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
+import static java.lang.System.currentTimeMillis;
+
 /**
- * @author George Venios
+ * George: Everything that needs to show notifications is finally neat and clean.
+ * Notifier.java: Please kill me.
  */
 public abstract class Notifier {
-    private Notifier() {
+    private static final int DONE_NOTIF_LOWER_BOUND = 500;
+
+    private static final HashMap<Integer, Long> notificationToStartTime = new HashMap<Integer, Long>();
+
+    private Notifier() {}
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     public static void showCopyProgressNotification(int filesCopied, int fileCount, int notId,
@@ -57,6 +69,8 @@ public abstract class Notifier {
                 .setOnlyAlertOnce(true)
                 .build();
 
+        storeStartTimeIfNeeded(notId);
+
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notId, not);
@@ -64,27 +78,31 @@ public abstract class Notifier {
 
     public static void showCopyDoneNotification(boolean success, int notId,
                                                 String toPath, Context context) {
-        Intent browseIntent = new Intent(context, FileManagerActivity.class);
-        browseIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_NEW_TASK);
-        browseIntent.setData(Uri.fromFile(new File(toPath)));
-
-        Notification not = new NotificationCompat.Builder(context)
-                .setAutoCancel(true)
-                .setContentTitle(context.getString(success ? R.string.copied : R.string.copy_error))
-                .setContentText(toPath)
-                .setContentIntent(PendingIntent.getActivity(context, 0, browseIntent,
-                        PendingIntent.FLAG_CANCEL_CURRENT))
-                .setOngoing(false)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setSmallIcon(R.drawable.ic_stat_notify_paste_0)
-                .setTicker(context.getString(success ? R.string.copied : R.string.copy_error))
-                .setOnlyAlertOnce(true)
-                .build();
-
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(notId, not);
+
+        if (!shouldShowDoneNotification(notId, success)) {
+            notificationManager.cancel(notId);
+        } else {
+            Intent browseIntent = new Intent(context, FileManagerActivity.class);
+            browseIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_NEW_TASK);
+            browseIntent.setData(Uri.fromFile(new File(toPath)));
+
+            Notification not = new NotificationCompat.Builder(context)
+                    .setAutoCancel(true)
+                    .setContentTitle(context.getString(success ? R.string.copied : R.string.copy_error))
+                    .setContentText(toPath)
+                    .setContentIntent(PendingIntent.getActivity(context, 0, browseIntent,
+                            PendingIntent.FLAG_CANCEL_CURRENT))
+                    .setOngoing(false)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setSmallIcon(R.drawable.ic_stat_notify_paste_0)
+                    .setTicker(context.getString(success ? R.string.copied : R.string.copy_error))
+                    .setOnlyAlertOnce(true)
+                    .build();
+            notificationManager.notify(notId, not);
+        }
     }
 
     public static void showMoveProgressNotification(int filesMoved, List<FileHolder> files,
@@ -105,6 +123,8 @@ public abstract class Notifier {
                 .setOnlyAlertOnce(true)
                 .build();
 
+        storeStartTimeIfNeeded(files.hashCode());
+
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(files.hashCode(), not);
@@ -112,27 +132,32 @@ public abstract class Notifier {
 
     public static void showMoveDoneNotification(boolean success, List<FileHolder> files,
                                                 String toPath, Context context) {
-        Intent browseIntent = new Intent(context, FileManagerActivity.class);
-        browseIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_NEW_TASK);
-        browseIntent.setData(Uri.fromFile(new File(toPath)));
-
-        Notification not = new NotificationCompat.Builder(context)
-                .setAutoCancel(true)
-                .setContentTitle(context.getString(success ? R.string.moved : R.string.move_error))
-                .setContentText(toPath)
-                .setContentIntent(PendingIntent.getActivity(context, 0, browseIntent,
-                        PendingIntent.FLAG_CANCEL_CURRENT))
-                .setOngoing(false)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setSmallIcon(R.drawable.ic_stat_notify_paste_0)
-                .setTicker(context.getString(success ? R.string.moved : R.string.move_error))
-                .setOnlyAlertOnce(true)
-                .build();
-
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(files.hashCode(), not);
+        int notId = files.hashCode();
+
+        if (!shouldShowDoneNotification(notId, success)) {
+            notificationManager.cancel(notId);
+        } else {
+            Intent browseIntent = new Intent(context, FileManagerActivity.class);
+            browseIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_NEW_TASK);
+            browseIntent.setData(Uri.fromFile(new File(toPath)));
+
+            Notification not = new NotificationCompat.Builder(context)
+                    .setAutoCancel(true)
+                    .setContentTitle(context.getString(success ? R.string.moved : R.string.move_error))
+                    .setContentText(toPath)
+                    .setContentIntent(PendingIntent.getActivity(context, 0, browseIntent,
+                            PendingIntent.FLAG_CANCEL_CURRENT))
+                    .setOngoing(false)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setSmallIcon(R.drawable.ic_stat_notify_paste_0)
+                    .setTicker(context.getString(success ? R.string.moved : R.string.move_error))
+                    .setOnlyAlertOnce(true)
+                    .build();
+            notificationManager.notify(notId, not);
+        }
     }
 
     public static void showNotEnoughSpaceNotification(long spaceNeeded, List<FileHolder> files,
@@ -178,6 +203,8 @@ public abstract class Notifier {
                 .setOnlyAlertOnce(true)
                 .build();
 
+        storeStartTimeIfNeeded(notId);
+
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notId, not);
@@ -203,6 +230,8 @@ public abstract class Notifier {
                 .setOnlyAlertOnce(true)
                 .build();
 
+        storeStartTimeIfNeeded(notId);
+
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notId, not);
@@ -210,55 +239,78 @@ public abstract class Notifier {
 
     public static void showCompressDoneNotification(boolean success, int notId, File zipFile,
                                                     Context context) {
-        Intent browseIntent = new Intent(context, FileManagerActivity.class);
-        browseIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_NEW_TASK);
-        browseIntent.setData(Uri.fromFile(zipFile.getParentFile()));
-
-        Notification not = new NotificationCompat.Builder(context)
-                .setAutoCancel(true)
-                .setContentTitle(context.getString(success ? R.string.notif_compressed_success
-                        : R.string.notif_compressed_fail))
-                .setContentText(zipFile.getName())
-                .setContentIntent(PendingIntent.getActivity(context, 0, browseIntent,
-                        PendingIntent.FLAG_CANCEL_CURRENT))
-                .setOngoing(false)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setSmallIcon(R.drawable.ic_stat_notify_compress_5)
-                .setTicker(context.getString(success ? R.string.notif_compressed_success
-                        : R.string.notif_compressed_fail))
-                .setOnlyAlertOnce(true)
-                .build();
-
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(notId, not);
+
+        if (!shouldShowDoneNotification(notId, success)) {
+            notificationManager.cancel(notId);
+        } else {
+            Intent browseIntent = new Intent(context, FileManagerActivity.class);
+            browseIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_NEW_TASK);
+            browseIntent.setData(Uri.fromFile(zipFile.getParentFile()));
+
+            Notification not = new NotificationCompat.Builder(context)
+                    .setAutoCancel(true)
+                    .setContentTitle(context.getString(success ? R.string.notif_compressed_success
+                            : R.string.notif_compressed_fail))
+                    .setContentText(zipFile.getName())
+                    .setContentIntent(PendingIntent.getActivity(context, 0, browseIntent,
+                            PendingIntent.FLAG_CANCEL_CURRENT))
+                    .setOngoing(false)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setSmallIcon(R.drawable.ic_stat_notify_compress_5)
+                    .setTicker(context.getString(success ? R.string.notif_compressed_success
+                            : R.string.notif_compressed_fail))
+                    .setOnlyAlertOnce(true)
+                    .build();
+
+            notificationManager.notify(notId, not);
+        }
     }
 
     public static void showExtractDoneNotification(boolean success, int notId, File extractedTo,
                                                    Context context) {
-        Intent browseIntent = new Intent(context, FileManagerActivity.class);
-        browseIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_NEW_TASK);
-        browseIntent.setData(Uri.fromFile(extractedTo));
-
-        Notification not = new NotificationCompat.Builder(context)
-                .setAutoCancel(true)
-                .setContentTitle(context.getString(success ? R.string.notif_extracted_success
-                        : R.string.notif_extracted_fail))
-                .setContentText(extractedTo.getName())
-                .setContentIntent(PendingIntent.getActivity(context, 0, browseIntent,
-                        PendingIntent.FLAG_CANCEL_CURRENT))
-                .setOngoing(false)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setSmallIcon(R.drawable.ic_stat_notify_compress_5)
-                .setTicker(context.getString(success ? R.string.notif_extracted_success
-                        : R.string.notif_extracted_fail))
-                .setOnlyAlertOnce(true)
-                .build();
-
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(notId, not);
+
+        if (!shouldShowDoneNotification(notId, success)) {
+            notificationManager.cancel(notId);
+        } else {
+            Intent browseIntent = new Intent(context, FileManagerActivity.class);
+            browseIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_NEW_TASK);
+            browseIntent.setData(Uri.fromFile(extractedTo));
+
+            Notification not = new NotificationCompat.Builder(context)
+                    .setAutoCancel(true)
+                    .setContentTitle(context.getString(success ? R.string.notif_extracted_success
+                            : R.string.notif_extracted_fail))
+                    .setContentText(extractedTo.getName())
+                    .setContentIntent(PendingIntent.getActivity(context, 0, browseIntent,
+                            PendingIntent.FLAG_CANCEL_CURRENT))
+                    .setOngoing(false)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setSmallIcon(R.drawable.ic_stat_notify_compress_5)
+                    .setTicker(context.getString(success ? R.string.notif_extracted_success
+                            : R.string.notif_extracted_fail))
+                    .setOnlyAlertOnce(true)
+                    .build();
+
+            notificationManager.notify(notId, not);
+        }
+    }
+
+    private static void storeStartTimeIfNeeded(int notId) {
+        if (!notificationToStartTime.containsKey(notId)) {
+            notificationToStartTime.put(notId, currentTimeMillis());
+        }
+    }
+
+    private static boolean shouldShowDoneNotification(int notId, boolean operationSuccessful) {
+        long progressDuration = currentTimeMillis() - notificationToStartTime.get(notId);
+        boolean durationAboveBound = notificationToStartTime.containsKey(notId)
+                && progressDuration >= DONE_NOTIF_LOWER_BOUND;
+        return durationAboveBound || !operationSuccessful;
     }
 }
