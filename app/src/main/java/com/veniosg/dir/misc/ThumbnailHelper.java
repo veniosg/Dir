@@ -130,7 +130,7 @@ public class ThumbnailHelper {
                                         idi.getDownloader(), defaultOptionsBuilder().build()
                                 );
                                 Bitmap bmp = internal.decode(info);
-//
+
                                 // Make bmp round
                                 int targetHeight = idi.getTargetSize().getHeight();
                                 int targetWidth = idi.getTargetSize().getWidth();
