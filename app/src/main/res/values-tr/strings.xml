@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+    <!--
+ * Copyright (C) 2014 George Venios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
 <resources>
     <!-- Bookmark action. This is a verb. -->
     <string name="menu_bookmark">Yer işaretine ekle</string>
@@ -40,6 +55,7 @@
     <string name="preference_medialib_summary_on">Medya kütüphane durumunu klasörler için göster</string>
     <string name="preference_medialib_summary_off">Medya kütüphane durumunu klasörler için gizle</string>
     <string name="preference_sortby_name">İsim</string>
+    <string name="preference_sortby_size">Boyut</string>
     <string name="preference_sortby_last_modified">Son değişiklikler</string>
     <string name="preference_theme_grayscale">Gri ton</string>
     <string name="preference_theme_dark">Koyu</string>
@@ -130,4 +146,6 @@
     <string name="about_contribute">Github\'da görüntüle</string>
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
+    <!-- Right pathview button description -->
+    <!-- Left pathview manual input button description -->
 </resources>
