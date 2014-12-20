@@ -34,7 +34,7 @@
         android:textColor="?android:textColorPrimaryInverse" />
 
     <include
-        layout="@layout/filelist"
+        layout="@layout/fragment_filelist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/secondary_actions"

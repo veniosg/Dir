@@ -44,7 +44,7 @@ public class PickFileListFragment extends SimpleFileListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.filelist_pick, null);
+		return inflater.inflate(R.layout.fragment_filelist_pick, null);
 	}
 
 

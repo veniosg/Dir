@@ -27,7 +27,7 @@
         android:layout_height="match_parent"
         android:background="?android:attr/colorBackground">
 
-        <include layout="@layout/filelist" />
+        <include layout="@layout/fragment_filelist" />
     </com.veniosg.dir.view.widget.AnimatedFileListContainer>
 
 </LinearLayout>

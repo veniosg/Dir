@@ -375,7 +375,7 @@ public class SimpleFileListFragment extends FileListFragment {
             toolbar.addView(pathView);
         }
 
-        return inflater.inflate(R.layout.filelist_simple, null);
+        return inflater.inflate(R.layout.fragment_filelist_simple, null);
     }
 
     @Override

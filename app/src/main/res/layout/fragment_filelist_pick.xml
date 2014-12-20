@@ -69,6 +69,6 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/bottomBar"
         android:layout_alignParentTop="true"
-        layout="@layout/filelist_simple" />
+        layout="@layout/fragment_filelist_simple" />
 
 </RelativeLayout>
