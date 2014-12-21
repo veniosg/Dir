@@ -32,6 +32,8 @@
     <string name="details_permissions">Permissions</string>
     <string name="details_hidden">Hidden</string>
     <string name="details_lastmodified">Last Modified</string>
+    <string name="details_items">Items</string>
+    <string name="details_resolution">Resolution</string>
     <string name="copied_file_name">Copy of %s</string>
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="copied_file_name_2">Copy %1$d of %2$s</string>

@@ -19,25 +19,34 @@ package com.veniosg.dir.dialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.util.FileUtils;
+import com.veniosg.dir.util.Utils;
 
 import java.io.File;
 
+import static android.graphics.BitmapFactory.decodeFile;
 import static android.view.LayoutInflater.from;
+import static com.veniosg.dir.util.FileUtils.canExecute;
+import static com.veniosg.dir.util.Utils.getChildAtFromEnd;
+import static com.veniosg.dir.util.Utils.getLastChild;
+import static com.veniosg.dir.util.Utils.isImage;
+import static java.lang.String.valueOf;
 
 public class DetailsDialog extends BaseDialogFragment {
 	private FileHolder mFileHolder;
-	private TextView mSizeView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -48,25 +57,31 @@ public class DetailsDialog extends BaseDialogFragment {
 
     @Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		File f = mFileHolder.getFile();
+		final File f = mFileHolder.getFile();
 		final View v = from(getActivity()).inflate(R.layout.dialog_details, null);
+        final ViewGroup container = (ViewGroup) v.findViewById(R.id.details_container);
 
-        mSizeView = (TextView) v.findViewById(R.id.details_size_value);
-        TextView detailsView = (TextView) v.findViewById(R.id.details_type_value);
-        TextView permissionsView = (TextView) v.findViewById(R.id.details_permissions_value);
-        TextView hiddenView = (TextView) v.findViewById(R.id.details_hidden_value);
-        TextView lastModifiedView = (TextView) v.findViewById(R.id.details_lastmodified_value);
+        boolean isDirectory = f.isDirectory();
         String folderStr = getString(R.string.details_type_folder);
         String otherStr = getString(R.string.details_type_other);
-		String perms = (f.canRead() ? "R" : "-") + (f.canWrite() ? "W" : "-") + (FileUtils.canExecute(f) ? "X" : "-");
+		String perms = (f.canRead() ? "R" : "-") + (f.canWrite() ? "W" : "-") + (canExecute(f) ? "X" : "-");
+        String mimeType = mFileHolder.getMimeType();
 
-        detailsView.setText(f.isDirectory() ? folderStr :
-                (f.isFile() ? mFileHolder.getMimeType() : otherStr));
-        permissionsView.setText(perms);
-		new SizeRefreshTask().execute();
-        hiddenView.setText(f.isHidden() ? R.string.yes : R.string.no);
-        lastModifiedView.setText(
-                mFileHolder.getFormattedModificationDate(getActivity()));
+        String typeValue = isDirectory ? folderStr : (f.isFile() ? mimeType : otherStr);
+        String hiddenValue = getString(f.isHidden() ? R.string.yes : R.string.no);
+        String lastModifiedValue = mFileHolder
+                .getFormattedModificationDate(getActivity()).toString();
+
+        addSizeDetailsItem(container);
+        addDetailsItem(container, R.string.details_type, typeValue);
+        if (isDirectory) {
+            addDetailsItem(container, R.string.details_items, valueOf(f.list().length));
+        } else if (isImage(mimeType)) {
+            addResolutionDetailsItem(container);
+        }
+        addDetailsItem(container, R.string.details_lastmodified, lastModifiedValue);
+        addDetailsItem(container, R.string.details_hidden, hiddenValue);
+        addDetailsItem(container, R.string.details_permissions, perms);
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(mFileHolder.getName())
@@ -84,28 +99,67 @@ public class DetailsDialog extends BaseDialogFragment {
         dialog.setIcon(tintIcon(mFileHolder.getIcon()));
         return dialog;
 	}
-    /**
-	 * This task doesn't update the text viewed to the user until it's finished, 
-	 * so that the user knows the size he sees is indeed the final one.
-	 * 
-	 * @author George Venios
-	 *
-	 */
-	private class SizeRefreshTask extends AsyncTask<Void, Void, String> {
 
-		@Override
-		protected void onPreExecute() {
-			mSizeView.setText(R.string.loading);
-		}
-		
-		@Override
-		protected String doInBackground(Void... params) {
-			return mFileHolder.getFormattedSize(getActivity(), true);
-		}
-		
-		@Override
-		protected void onPostExecute(String result) {
-			mSizeView.setText(result);
-		}
-	}
+    private void addDetailsItem(ViewGroup container, int titleResId, String value) {
+        from(container.getContext()).inflate(R.layout.item_details, container);
+
+        ((TextView) getChildAtFromEnd(container, 1)).setText(titleResId);
+        ((TextView) getLastChild(container)).setText(value);
+    }
+
+    private void addSizeDetailsItem(ViewGroup container) {
+        from(container.getContext()).inflate(R.layout.item_details, container);
+        TextView valueView = (TextView) getLastChild(container);
+
+        ((TextView) getChildAtFromEnd(container, 1)).setText(R.string.details_size);
+        valueView.setText(R.string.loading);
+        new SizeRefreshTask((TextView) getLastChild(container)).execute();
+    }
+
+    private void addResolutionDetailsItem(ViewGroup container) {
+        from(container.getContext()).inflate(R.layout.item_details, container);
+        TextView valueView = (TextView) getLastChild(container);
+
+        ((TextView) getChildAtFromEnd(container, 1)).setText(R.string.details_resolution);
+        valueView.setText(R.string.loading);
+        new ResolutionRefreshTask(valueView).execute();
+    }
+
+    private abstract class RefreshTask extends AsyncTask<Void, Void, String> {
+        private final TextView mView;
+
+        RefreshTask(TextView view) {
+            mView = view;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            mView.setText(result);
+        }
+    }
+
+    private class SizeRefreshTask extends RefreshTask {
+        SizeRefreshTask(TextView view) {
+            super(view);
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            return mFileHolder.getFormattedSize(getActivity(), true);
+        }
+    }
+
+    private class ResolutionRefreshTask extends RefreshTask {
+        ResolutionRefreshTask(TextView view) {
+            super(view);
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            decodeFile(mFileHolder.getFile().getAbsolutePath(), options);
+            return "" + options.outHeight + 'x' + options.outWidth;
+        }
+    }
 }

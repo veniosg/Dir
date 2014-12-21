@@ -32,6 +32,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -413,12 +414,18 @@ public abstract class Utils {
         return makeMeasureSpec(pixels, EXACTLY);
     }
 
+    @Nullable
     public static View getLastChild(ViewGroup group) {
+        return getChildAtFromEnd(group, 0);
+    }
+
+    @Nullable
+    public static View getChildAtFromEnd(ViewGroup group, int i) {
         int childCount = group.getChildCount();
         if (childCount == 0) {
             return null;
         }
 
-        return group.getChildAt(childCount - 1);
+        return group.getChildAt(childCount - (i+1));
     }
 }

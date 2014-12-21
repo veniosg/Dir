@@ -24,57 +24,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <!-- Size -->
-        <TextView
-            android:id="@+id/details_size_text"
-            style="@style/dialogDetailsPrimaryText"
-            android:text="@string/details_size" />
-
-        <TextView
-            android:id="@+id/details_size_value"
-            style="@style/dialogDetailsSecondaryText" />
-
-        <!-- Type -->
-        <TextView
-            android:id="@+id/details_type_text"
-            style="@style/dialogDetailsPrimaryText"
-            android:text="@string/details_type" />
-
-        <TextView
-            android:id="@+id/details_type_value"
-            style="@style/dialogDetailsSecondaryText" />
-
-        <!-- Modification date -->
-        <TextView
-            android:id="@+id/details_lastmodified_text"
-            style="@style/dialogDetailsPrimaryText"
-            android:text="@string/details_lastmodified" />
-
-        <TextView
-            android:id="@+id/details_lastmodified_value"
-            style="@style/dialogDetailsSecondaryText" />
-
-        <!-- Visibility -->
-        <TextView
-            android:id="@+id/details_hidden_text"
-            style="@style/dialogDetailsPrimaryText"
-            android:text="@string/details_hidden" />
-
-        <TextView
-            android:id="@+id/details_hidden_value"
-            style="@style/dialogDetailsSecondaryText" />
-
-        <!-- Permissions -->
-        <TextView
-            android:id="@+id/details_permissions_text"
-            style="@style/dialogDetailsPrimaryText"
-            android:text="@string/details_permissions" />
-
-        <TextView
-            android:id="@+id/details_permissions_value"
-            style="@style/dialogDetailsSecondaryText" />
-    </LinearLayout>
+        android:id="@+id/details_container"
+        android:orientation="vertical" />
 
 </ScrollView>
