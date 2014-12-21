@@ -51,24 +51,23 @@ public class DetailsDialog extends BaseDialogFragment {
 		File f = mFileHolder.getFile();
 		final View v = from(getActivity()).inflate(R.layout.dialog_details, null);
 
+        mSizeView = (TextView) v.findViewById(R.id.details_size_value);
+        TextView detailsView = (TextView) v.findViewById(R.id.details_type_value);
+        TextView permissionsView = (TextView) v.findViewById(R.id.details_permissions_value);
+        TextView hiddenView = (TextView) v.findViewById(R.id.details_hidden_value);
+        TextView lastModifiedView = (TextView) v.findViewById(R.id.details_lastmodified_value);
         String folderStr = getString(R.string.details_type_folder);
         String otherStr = getString(R.string.details_type_other);
-        TextView detailsTextView = (TextView) v.findViewById(R.id.details_type_value);
-        detailsTextView.setText(f.isDirectory() ? folderStr :
-                (f.isFile() ? mFileHolder.getMimeType() : otherStr));
-
-        mSizeView = (TextView) v.findViewById(R.id.details_size_value);
-		new SizeRefreshTask().execute();
-		
 		String perms = (f.canRead() ? "R" : "-") + (f.canWrite() ? "W" : "-") + (FileUtils.canExecute(f) ? "X" : "-");
-		((TextView) v.findViewById(R.id.details_permissions_value)).setText(perms);
-		
-		((TextView) v.findViewById(R.id.details_hidden_value)).setText(f.isHidden() ? R.string.yes : R.string.no);
-		
-		((TextView) v.findViewById(R.id.details_lastmodified_value)).setText(
+
+        detailsView.setText(f.isDirectory() ? folderStr :
+                (f.isFile() ? mFileHolder.getMimeType() : otherStr));
+        permissionsView.setText(perms);
+		new SizeRefreshTask().execute();
+        hiddenView.setText(f.isHidden() ? R.string.yes : R.string.no);
+        lastModifiedView.setText(
                 mFileHolder.getFormattedModificationDate(getActivity()));
-		
-		// Finally create the dialog
+
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(mFileHolder.getName())
                 .setView(v)
