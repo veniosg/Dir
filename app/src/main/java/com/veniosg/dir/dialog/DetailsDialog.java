@@ -33,6 +33,8 @@ import com.veniosg.dir.util.FileUtils;
 
 import java.io.File;
 
+import static android.view.LayoutInflater.from;
+
 public class DetailsDialog extends BaseDialogFragment {
 	private FileHolder mFileHolder;
 	private TextView mSizeView;
@@ -47,15 +49,15 @@ public class DetailsDialog extends BaseDialogFragment {
     @Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		File f = mFileHolder.getFile();
-		// Inflate the view to display
-		LayoutInflater inflater = LayoutInflater.from(getActivity());
-		final View v = inflater.inflate(R.layout.dialog_details, null);
-		
-		// Fill the views
-		((TextView) v.findViewById(R.id.details_type_value)).setText((f.isDirectory() ? R.string.details_type_folder :
-																		(f.isFile() ? R.string.details_type_file : R.string.details_type_other) ));
-		
-		mSizeView = (TextView) v.findViewById(R.id.details_size_value);
+		final View v = from(getActivity()).inflate(R.layout.dialog_details, null);
+
+        String folderStr = getString(R.string.details_type_folder);
+        String otherStr = getString(R.string.details_type_other);
+        TextView detailsTextView = (TextView) v.findViewById(R.id.details_type_value);
+        detailsTextView.setText(f.isDirectory() ? folderStr :
+                (f.isFile() ? mFileHolder.getMimeType() : otherStr));
+
+        mSizeView = (TextView) v.findViewById(R.id.details_size_value);
 		new SizeRefreshTask().execute();
 		
 		String perms = (f.canRead() ? "R" : "-") + (f.canWrite() ? "W" : "-") + (FileUtils.canExecute(f) ? "X" : "-");
