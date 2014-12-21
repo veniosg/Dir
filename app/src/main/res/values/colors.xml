@@ -15,12 +15,12 @@
  * limitations under the License.
  -->
 <resources>
-    <!-- Common colors -->
+    <!-- Common colours -->
     <eat-comment />
 
     <color name="textColorHighlight">#8888</color>
 
-    <!-- Dir colors -->
+    <!-- Dir colours -->
     <eat-comment />
 
     <color name="dir_primary">#8e24aa</color>
@@ -39,7 +39,12 @@
     <color name="dir_fadeCovered">#BB222222</color>
     <color name="dir_fadeSlider">#CCD6D6D6</color>
 
-    <!-- Dark colors -->
+    <!-- Greyscale colours -->
+    <eat-comment />
+    <color name="grsc_primaryDark">#000</color>
+    <color name="grsc_accent">#181818</color>
+
+    <!-- Dark colours -->
     <eat-comment />
 
     <color name="dark_primary">#212121</color>

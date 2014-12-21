@@ -114,11 +114,11 @@
     <style name="Theme.Dir.Grayscale" >
         <!-- Base colours -->
         <item name="android:colorPrimary">@color/dark_primary</item>
-        <item name="android:colorPrimaryDark">@color/dark_primaryDark</item>
+        <item name="android:colorPrimaryDark">@color/grsc_primaryDark</item>
         <item name="colorPrimaryLight">@color/dark_primaryLight</item>
 
         <!-- Control colour -->
-        <item name="android:colorAccent">@color/dark_primaryDark</item>
+        <item name="android:colorAccent">@color/grsc_accent</item>
         <item name="android:alertDialogTheme">@style/Theme.Grayscale.Dialog.Alert</item>
     </style>
 
