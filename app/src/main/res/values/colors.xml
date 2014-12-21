@@ -32,7 +32,6 @@
     <color name="dir_cabStatus">#212121</color>
     <color name="dir_backgroundSecondary">#E0E0E0</color>
     <color name="dir_divider">#13000000</color>
-    <color name="dir_multiSelectHighlight">#bdbdbd</color>
     <color name="dir_edgeEffect">#757575</color>
 
     <color name="dir_sidePaneBackground">#CCC</color>
@@ -56,7 +55,6 @@
     <color name="dark_cabStatus">#212121</color>
     <color name="dark_backgroundSecondary">#2B2B2B</color>
     <color name="dark_divider">#13FFFFFF</color>
-    <color name="dark_multiSelectHighlight">#505050</color>
     <color name="dark_edgeEffect">#9E9E9E</color>
 
     <color name="dark_sidePaneBackground">@color/dark_background</color>

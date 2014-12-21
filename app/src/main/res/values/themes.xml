@@ -55,7 +55,6 @@
         <item name="android:colorBackground">@color/dir_background</item>
         <item name="colorCabBackground">@color/dir_cabBackground</item>
         <item name="colorBackgroundSecondary">@color/dir_backgroundSecondary</item>
-        <item name="android:colorMultiSelectHighlight">@color/dir_multiSelectHighlight</item>
 
         <!-- Misc colours -->
         <item name="android:colorEdgeEffect">@color/dir_edgeEffect</item>
@@ -100,7 +99,6 @@
         <item name="android:colorBackground">@color/dark_background</item>
         <item name="colorCabBackground">@color/dark_cabBackground</item>
         <item name="colorBackgroundSecondary">@color/dark_backgroundSecondary</item>
-        <item name="android:colorMultiSelectHighlight">@color/dark_multiSelectHighlight</item>
 
         <!-- Misc colours -->
         <item name="android:colorEdgeEffect">@color/dark_edgeEffect</item>
