@@ -18,56 +18,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <!-- Used for showing the divider -->
-    <LinearLayout
-        android:background="?attr/colorBackgroundSecondary"
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:divider="?android:attr/dividerHorizontal"
-        android:dividerPadding="0dip"
-        android:orientation="vertical"
-        android:showDividers="beginning" >
-
         <!-- We switch between these programmatically based on the type of pick request. -->
-
         <ViewFlipper
+            android:background="?attr/colorBackgroundSecondary"
+            android:layout_alignParentBottom="true"
         	android:id="@+id/modeSelector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="?android:actionBarSize"
+            android:elevation="8dp" >
 
             <LinearLayout
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:measureWithLargestChild="true"
-                android:orientation="horizontal" >
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/button"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:maxLines="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:text="@string/directory_pick" />
             </LinearLayout>
 
             <com.veniosg.dir.view.widget.PickBar
                 android:id="@+id/pickBar"
+                android:gravity="center_vertical"
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize" />
+                android:layout_height="match_parent" />
         </ViewFlipper>
-    </LinearLayout>
 
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/bottomBar"
+        android:layout_above="@id/modeSelector"
         android:layout_alignParentTop="true"
         layout="@layout/fragment_filelist_simple" />
 

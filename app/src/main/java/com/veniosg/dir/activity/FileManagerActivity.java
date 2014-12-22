@@ -34,6 +34,9 @@ import com.veniosg.dir.util.FileUtils;
 import java.io.File;
 
 import static android.view.Gravity.START;
+import static com.veniosg.dir.IntentConstants.EXTRA_FROM_OI_FILEMANAGER;
+import static com.veniosg.dir.util.FileUtils.getFile;
+import static com.veniosg.dir.util.FileUtils.openFile;
 
 public class FileManagerActivity extends BaseActivity
         implements NavigationFragment.BookmarkContract {
@@ -43,7 +46,7 @@ public class FileManagerActivity extends BaseActivity
     @Override
 	protected void onNewIntent(Intent intent) {
 		if(intent.getData() != null)
-			mFragment.openInformingPathBar(new FileHolder(FileUtils.getFile(intent.getData()), this),
+			mFragment.openInformingPathBar(new FileHolder(getFile(intent.getData()), this),
                     true);  // We force no anim as the layout transition does not run properly
                             // when the view is not visible and consequently the buttons will stay invisible.
 	}
@@ -54,21 +57,20 @@ public class FileManagerActivity extends BaseActivity
 	 * @return The folder to navigate to, if applicable. Null otherwise.
 	 */
 	private File resolveIntentData(){
-		File data = FileUtils.getFile(getIntent().getData());
+		File data = getFile(getIntent().getData());
 		if(data == null)
 			return null;
 		
-		if(data.isFile() && ! getIntent().getBooleanExtra(IntentConstants.EXTRA_FROM_OI_FILEMANAGER, false)){
-			FileUtils.openFile(new FileHolder(data, this), this);
+		if (data.isFile() && !getIntent().getBooleanExtra(EXTRA_FROM_OI_FILEMANAGER, false)) {
+			openFile(new FileHolder(data, this), this);
 
 			finish();
 			return null;
-		}
-		else
-			return FileUtils.getFile(getIntent().getData());
+		} else {
+            return getFile(getIntent().getData());
+        }
 	}
 	
-	/** Called when the activity is first created. */
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 

@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2008-2012 OpenIntents.org
+ * Copyright (C) 2014 George Venios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.veniosg.dir.test;
 
 import android.content.Intent;
@@ -46,13 +63,13 @@ public class FileManagerActivityTest extends ActivityInstrumentationTestCase2<Fi
     }
 
     protected void tearDown() throws Exception {
+        TestUtils.cleanDirectory(new File(sdcardPath + "oi-filemanager-tests"));
         try {
             this.solo.finishOpenedActivities();
         } catch (Throwable e) {
             Logger.log(e);
         }
         super.tearDown();
-        TestUtils.cleanDirectory(new File(sdcardPath + "oi-filemanager-tests"));
     }
 
     public void testActions() throws IOException {
@@ -86,7 +103,7 @@ public class FileManagerActivityTest extends ActivityInstrumentationTestCase2<Fi
         clickOnCAB(R.id.menu_file_ops);
         solo.clickOnText(solo.getString(R.string.menu_rename));
         solo.enterText(0, "oi-renamed-file.txt");
-        solo.clickOnText(solo.getString(android.R.string.ok)); // not sure what to do
+        solo.clickOnText(solo.getString(android.R.string.ok));
         assertTrue(solo.searchText("oi-renamed-file.txt"));
 
         solo.goBack();
@@ -104,13 +121,14 @@ public class FileManagerActivityTest extends ActivityInstrumentationTestCase2<Fi
         clickOnCAB(R.id.menu_bookmark, solo.getString(R.string.menu_bookmark));
 
         // navigate to it
+        solo.scrollToSide(Solo.LEFT, 1F);
         solo.clickOnText(fn);
         assertTrue(solo.searchText("oi-inside-book.txt"));
 
         // remove it
         solo.goBack();
         solo.goBack(); // navigate away from the list. needed for the last assertion
-        solo.scrollToSide(Solo.LEFT);
+        solo.scrollToSide(Solo.LEFT, 1F);
         solo.clickLongOnText(fn);
         clickOnCAB(R.id.menu_delete);
 
@@ -173,7 +191,7 @@ public class FileManagerActivityTest extends ActivityInstrumentationTestCase2<Fi
 
         solo.clickLongOnText("oi-detail.txt");
         clickOnCAB(R.id.menu_details, solo.getString(R.string.menu_details));
-        assertTrue(solo.searchText(solo.getString(R.string.details_type_file)));
+        assertTrue(solo.searchText("text/plain"));
         assertTrue(solo.searchText(FileUtils.formatSize(getActivity(), 7)));
 
         solo.goBack();
@@ -188,7 +206,8 @@ public class FileManagerActivityTest extends ActivityInstrumentationTestCase2<Fi
 
         boolean origState = solo.searchText(".oi-hidden.txt");
 
-        solo.clickOnMenuItem(solo.getString(R.string.settings));
+        solo.scrollToSide(Solo.LEFT, 1F);
+        solo.clickOnText(solo.getString(R.string.settings));
 
         solo.clickOnText(solo.getString(R.string.preference_displayhiddenfiles_title));
         solo.goBack();
@@ -231,7 +250,7 @@ public class FileManagerActivityTest extends ActivityInstrumentationTestCase2<Fi
         TestUtils.createDirectory(sdcardPath + dirPath);
         TestUtils.createFile(sdcardPath + dirPath + "/" + filename, "");
 
-        solo.clickLongOnView(getActivity().findViewById(R.id.textView));
+        solo.clickOnView(getActivity().findViewById(R.id.pathview_button_right));
 
         solo.clickOnEditText(0); // Let the editText have focus to be able to send the enter key.
         solo.enterText(0, "/" + dirPath);
@@ -328,7 +347,8 @@ public class FileManagerActivityTest extends ActivityInstrumentationTestCase2<Fi
     }
 
     private void setSortOrder(String name) {
-        solo.clickOnMenuItem(solo.getString(R.string.settings));
+        solo.scrollToSide(Solo.LEFT, 1F);
+        solo.clickOnText(solo.getString(R.string.settings));
         solo.clickOnText(solo.getString(R.string.preference_sortby));
         solo.clickOnText(name);
         solo.goBack();

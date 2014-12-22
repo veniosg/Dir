@@ -16,9 +16,11 @@
 
 package com.veniosg.dir.activity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.MenuItem;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
@@ -39,7 +41,6 @@ public class IntentFilterActivity extends BaseActivity {
         setupToolbar();
 
 		Intent intent = getIntent();
-
 		// Initialize arguments
 		Bundle extras = intent.getExtras();
 		if (extras == null)
@@ -86,13 +87,13 @@ public class IntentFilterActivity extends BaseActivity {
 
 	private void chooseListType(Intent intent, Bundle extras) {
 		// Item pickers
-		if ( IntentConstants.ACTION_PICK_DIRECTORY.equals(intent.getAction())
+		if (IntentConstants.ACTION_PICK_DIRECTORY.equals(intent.getAction())
 				|| IntentConstants.ACTION_PICK_FILE.equals(intent.getAction())
 				|| Intent.ACTION_GET_CONTENT.equals(intent.getAction())){
 			if (intent.hasExtra(IntentConstants.EXTRA_TITLE))
-				setTitle(intent.getStringExtra(IntentConstants.EXTRA_TITLE));
+				getActionBar().setTitle(intent.getStringExtra(IntentConstants.EXTRA_TITLE));
 			else
-				setTitle(R.string.pick_title);
+                getActionBar().setTitle(R.string.pick_title);
 
 			mFragment = (PickFileListFragment) getSupportFragmentManager()
 					.findFragmentByTag(PickFileListFragment.class.getName());
@@ -117,8 +118,20 @@ public class IntentFilterActivity extends BaseActivity {
 						.add(R.id.fragment, mFragment,
 								PickFileListFragment.class.getName()).commit();
 			}
-		}
+		} else {
+            // Don't stay alive without a UI
+            finish();
+        }
 	}
+
+    @Override
+    protected void setupToolbar() {
+        super.setupToolbar();
+        if (getActionBar() != null) {
+            getActionBar().setDisplayShowTitleEnabled(true);
+            getActionBar().setHomeAsUpIndicator(R.drawable.ic_logo);
+        }
+    }
 
     @Override
     public void onBackPressed() {

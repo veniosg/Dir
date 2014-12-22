@@ -24,6 +24,7 @@ import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +32,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.veniosg.dir.R;
+
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class PickBar extends LinearLayout {
 	private EditText mEditText;
@@ -49,12 +53,12 @@ public class PickBar extends LinearLayout {
 	private void init() {
         mButton = new Button(getContext(), null, android.R.attr.buttonBarButtonStyle);
 		{
-            mButton.setTextAppearance(getContext(), R.style.TextAppearance_Dir_Medium);
+            LayoutParams layoutParams = new LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
             mButton.setText(R.string.pick_button_default);
 			mButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if(mListener!=null)
+					if (mListener != null)
 						mListener.pickRequested(mEditText.getText().toString());
 				}
 			});
@@ -63,9 +67,11 @@ public class PickBar extends LinearLayout {
 		// EditText
 		mEditText = new EditText(getContext());
 		{
-			LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+            int sideMargin = getResources().getDimensionPixelSize(R.dimen.item_icon_margin_left);
+			LayoutParams layoutParams = new LayoutParams(0, WRAP_CONTENT);
 			// Take up as much space as possible.
 			layoutParams.weight = 1;
+            layoutParams.setMarginStart(sideMargin);
 
 			mEditText.setLayoutParams(layoutParams);
 			mEditText.setHint(R.string.filename_hint);
@@ -78,7 +84,7 @@ public class PickBar extends LinearLayout {
                                     || (event.getAction() == KeyEvent.ACTION_DOWN
                                             && (event.getKeyCode() == KeyEvent.KEYCODE_DPAD_CENTER
                                                 || event.getKeyCode() == KeyEvent.KEYCODE_ENTER))) {
-								if(mListener!=null)
+								if (mListener != null)
 									mListener.pickRequested(mEditText.getText().toString());
 								return true;
 							}

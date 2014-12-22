@@ -60,8 +60,6 @@ import static com.veniosg.dir.view.widget.WaitingViewFlipper.PAGE_INDEX_LOADING;
  * Refreshes on OnSharedPreferenceChange and when receiving
  * a local ACTION_REFRESH_LIST broadcast with EXTRA_DIR_PATH matching this folder.
  * </p>
- * 
- * @author George Venios
  */
 public abstract class FileListFragment extends AbsListFragment {
 	private static final String INSTANCE_STATE_PATH = "path";
