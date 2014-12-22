@@ -97,7 +97,7 @@ public abstract class Notifier {
                             PendingIntent.FLAG_CANCEL_CURRENT))
                     .setOngoing(false)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setSmallIcon(R.drawable.ic_stat_notify_paste_0)
+                    .setSmallIcon(R.drawable.ic_stat_notify_paste_5)
                     .setTicker(context.getString(success ? R.string.copied : R.string.copy_error))
                     .setOnlyAlertOnce(true)
                     .build();
@@ -152,7 +152,7 @@ public abstract class Notifier {
                             PendingIntent.FLAG_CANCEL_CURRENT))
                     .setOngoing(false)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .setSmallIcon(R.drawable.ic_stat_notify_paste_0)
+                    .setSmallIcon(R.drawable.ic_stat_notify_paste_5)
                     .setTicker(context.getString(success ? R.string.moved : R.string.move_error))
                     .setOnlyAlertOnce(true)
                     .build();
