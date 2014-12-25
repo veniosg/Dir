@@ -16,8 +16,8 @@ Copyright (C) 2014 The Android Open Source Project
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
-    android:viewportWidth="24.0"
-    android:viewportHeight="24.0"
+    android:viewportWidth="127.558"
+    android:viewportHeight="127.547"
     android:autoMirrored="false" >
     <path
         android:pathData="M26.465,116.846C41.924,116.858,80.38,92.991,80.38,63.56S41.924,10.273,26.465,10.273
