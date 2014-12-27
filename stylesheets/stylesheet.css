@@ -269,24 +269,12 @@ Full-Width Styles
   margin: 0 auto;
 }
 
-#forkme_banner {
-  display: block;
-  position: absolute;
-  top:0;
-  right: 10px;
-  z-index: 10;
-  padding: 10px 50px 10px 10px;
-  color: #fff;
-  background: url('../images/blacktocat.png') #0090ff no-repeat 95% 50%;
-  font-weight: 700;
-  box-shadow: 0 0 10px rgba(0,0,0,.5);
-  border-bottom-left-radius: 2px;
-  border-bottom-right-radius: 2px;
-  visibility: hidden;
+#header_wrap {
+  background: #8e24aa;
 }
 
-#header_wrap {
-  background: #691a99;
+.title_wrap {
+  background: url('../images/logo.fw.png') no-repeat -8px 50%;
 }
 
 #header_wrap .inner {
@@ -295,7 +283,7 @@ Full-Width Styles
 
 #project_title {
   font-family: 'Roboto', 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  margin: 0;
+  margin: 0 0 0 65px;
   color: #fff;
   font-size: 60px;
   font-weight: 300;
@@ -376,8 +364,7 @@ Full-Width Styles
 
 #main_content_wrap {
   background: #e4e4e4;
-  border-top: 1px solid #111;
-  border-bottom: 1px solid #111;
+  border-top: 1px solid #b4b4b4;
 }
 
 #main_content {
