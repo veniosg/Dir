@@ -286,12 +286,7 @@ Full-Width Styles
 }
 
 #header_wrap {
-  background: #210030;
-  background: -moz-linear-gradient(top, #2C0040, #210030);
-  background: -webkit-linear-gradient(top, #2C0040, #210030);
-  background: -ms-linear-gradient(top, #2C0040, #210030);
-  background: -o-linear-gradient(top, #2C0040, #210030);
-  background: linear-gradient(top, #2C0040, #210030);
+  background: #691a99;
 }
 
 #header_wrap .inner {
@@ -299,21 +294,19 @@ Full-Width Styles
 }
 
 #project_title {
-  font-family: 'Roboto Thin', 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   margin: 0;
   color: #fff;
   font-size: 60px;
-  font-weight: 500;
-  text-shadow: #111 0px 0px 10px;
+  font-weight: 300;
 }
 
 #project_tagline {
-  font-family: 'Roboto Condensed', 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #ccc;
+  font-family: 'Roboto Thin', 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #ddd;
   font-size: 24px;
   font-weight: 300;
   background: none;
-  text-shadow: #111 0px 0px 10px;
 }
 
 #links {
@@ -392,7 +385,7 @@ Full-Width Styles
 }
 
 #footer_wrap {
-  background: #210030;
+  background: #691a99;
 }
 
 
