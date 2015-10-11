@@ -33,12 +33,11 @@ import com.veniosg.dir.fragment.PreferenceFragment;
 
 import static android.graphics.Color.LTGRAY;
 import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.L;
 import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static com.veniosg.dir.view.Themer.getThemedColor;
 
 public class Themer {
-    public static enum Theme {
+    public enum Theme {
         DIR,
         GRAYSCALE,
         DARK
