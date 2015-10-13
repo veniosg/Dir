@@ -90,7 +90,7 @@ public class FileManagerActivity extends BaseActivity
 		if (mFragment == null) {
 			mFragment = new SimpleFileListFragment();
 			Bundle args = new Bundle();
-			if(data == null)
+			if (data == null)
 				args.putString(IntentConstants.EXTRA_DIR_PATH,
                         Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
                                 ? Environment.getExternalStorageDirectory().getAbsolutePath()
@@ -101,7 +101,7 @@ public class FileManagerActivity extends BaseActivity
 			getSupportFragmentManager().beginTransaction().add(R.id.fragment, mFragment, FRAGMENT_TAG).commit();
 		} else {
 			// If we didn't rotate and data wasn't null.
-			if(icicle == null && data!=null)
+			if (icicle == null && data != null)
 				mFragment.openInformingPathBar(new FileHolder(new File(data.toString()), this));
 		}
 

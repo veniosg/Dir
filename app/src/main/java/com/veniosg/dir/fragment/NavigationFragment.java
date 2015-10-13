@@ -30,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,7 +38,6 @@ import com.veniosg.dir.activity.AboutActivity;
 import com.veniosg.dir.activity.PreferenceActivity;
 import com.veniosg.dir.adapter.BookmarkListAdapter;
 import com.veniosg.dir.provider.BookmarkProvider;
-import com.veniosg.dir.view.Themer;
 import com.veniosg.dir.view.widget.WaitingViewFlipper;
 
 import java.io.File;
@@ -67,7 +65,7 @@ public class NavigationFragment extends AbsListFragment implements LoaderManager
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_navigation, null);
+        return inflater.inflate(R.layout.fragment_drawer, null);
     }
 
     @Override
@@ -77,10 +75,8 @@ public class NavigationFragment extends AbsListFragment implements LoaderManager
         mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
 
         setLoading(true);
-        view.findViewById(R.id.empty_img)
-                .setVisibility(GONE);
-        ((TextView) view.findViewById(R.id.empty_text))
-                .setText(R.string.bookmark_empty);
+        view.findViewById(R.id.empty_img).setVisibility(GONE);
+        ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.bookmark_empty);
 
         if (getListView() instanceof GridView) {
             ((GridView) getListView()).setNumColumns(1);

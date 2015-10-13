@@ -34,13 +34,7 @@ import java.io.File;
 
 import static android.view.View.INVISIBLE;
 
-/**
- * @author George Venios
- */
 public class BookmarkListAdapter extends CursorAdapter {
-	// Thumbnail specific
-    private boolean scrolling = false;
-    
 	public BookmarkListAdapter(Context context, Cursor cursor){
         super(context, cursor, 0);
 	}
@@ -48,8 +42,7 @@ public class BookmarkListAdapter extends CursorAdapter {
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         ViewHolder viewHolder;
-        View view = LayoutInflater.from(context)
-                .inflate(R.layout.item_filelist, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_filelist, null);
 
         viewHolder = new ViewHolder();
         viewHolder.icon = (ImageView) view.findViewById(R.id.icon);
@@ -74,8 +67,4 @@ public class BookmarkListAdapter extends CursorAdapter {
 
         ThumbnailHelper.requestIcon(item, holder.icon);
     }
-
-	private boolean shouldLoadIcon(FileHolder item){
-		return !scrolling && item.getFile().isFile() && !item.getMimeType().equals("video/mpeg");
-	}
 }
