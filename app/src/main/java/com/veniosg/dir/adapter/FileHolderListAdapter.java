@@ -31,8 +31,6 @@ import com.veniosg.dir.view.ViewHolder;
 
 import java.util.List;
 
-import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
-
 public class FileHolderListAdapter extends BaseAdapter {
     private List<FileHolder> mItems;
 	private int mItemLayoutId = R.layout.item_filelist;
@@ -100,15 +98,12 @@ public class FileHolderListAdapter extends BaseAdapter {
 			convertView = newView(parent.getContext());
 		ViewHolder holder = (ViewHolder) convertView.getTag();
 
-        getInstance().cancelDisplayTask(holder.icon);
 		holder.icon.setImageDrawable(item.getBestIcon());
 		holder.primaryInfo.setText(item.getName());
 		holder.secondaryInfo.setText(item.getFormattedModificationDate(convertView.getContext()));
 		// Hide directories' size as it's irrelevant if we can't recursively find it.
 		holder.tertiaryInfo.setText(item.getFile().isDirectory()? "" : item.getFormattedSize(
                 convertView.getContext(), false));
-
-        ThumbnailHelper.requestIcon(item, holder.icon);
 
 		return convertView;
 	}

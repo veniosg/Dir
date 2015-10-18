@@ -38,6 +38,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
     private static final String PREFS_MEDIASCAN = "mediascan";
     private static final String PREFS_DISPLAYHIDDENFILES = "displayhiddenfiles";
     private static final String PREFS_DEFAULTPICKFILEPATH = "defaultpickfilepath";
+    private static final String PREFS_SHOWTHUMBNAILS = "showthumbnails";
     private static final String PREFS_SORTBY = "sortby";
     private static final String PREFS_ASCENDING = "ascending";
     public static final String PREFS_THEME = "themeindex";
@@ -64,12 +65,15 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(PREFS_SORTBY)) {
-            changeListPreferenceSummaryToCurrentValue((ListPreference) findPreference(key));
-        } else if (key.equals(PREFS_THEME)) {
-            changeListPreferenceSummaryToCurrentValue((ListPreference) findPreference(key));
-            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(IntentConstants.ACTION_REFRESH_THEME));
-        }
+        switch (key) {
+            case PREFS_SORTBY:
+                changeListPreferenceSummaryToCurrentValue((ListPreference) findPreference(key));
+                break;
+            case PREFS_THEME:
+                changeListPreferenceSummaryToCurrentValue((ListPreference) findPreference(key));
+                LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(IntentConstants.ACTION_REFRESH_THEME));
+                break;
+       }
     }
 
     private void changeListPreferenceSummaryToCurrentValue(ListPreference listPref) {
@@ -93,6 +97,17 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
                 .getBoolean(PREFS_DISPLAYHIDDENFILES, false);
     }
 
+    static void setShowThumbnails(Context context, boolean enabled) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(PREFS_SHOWTHUMBNAILS, enabled);
+        editor.commit();
+    }
+
+    public static boolean getShowThumbnails(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(PREFS_SHOWTHUMBNAILS, true);
+    }
 
     public static int getSortBy(Context context) {
         /* entryValues must be a string-array while we need integers */

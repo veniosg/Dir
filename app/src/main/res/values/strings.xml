@@ -57,6 +57,7 @@
     <string name="preference_medialib_title">Media library action</string>
     <string name="preference_medialib_summary_on">Show media library action for folders</string>
     <string name="preference_medialib_summary_off">Hide media library action for folders</string>
+    <string name="preference_show_thumbnails">Show thumbnails</string>
     <string name="preference_sortby_name">Name</string>
     <string name="preference_sortby_size">Size</string>
     <string name="preference_sortby_last_modified">Last modified</string>

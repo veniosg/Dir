@@ -60,6 +60,11 @@
                 android:defaultValue="false"
                 android:summaryOff="@string/preference_displayhiddenfiles_summary_off"
                 android:summaryOn="@string/preference_displayhiddenfiles_summary_on" />
+
+        <SwitchPreference
+                android:key="showthumbnails"
+                android:title="@string/preference_show_thumbnails"
+                android:defaultValue="true" />
         </PreferenceCategory>
 </PreferenceScreen>
     

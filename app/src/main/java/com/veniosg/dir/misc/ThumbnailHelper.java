@@ -33,21 +33,15 @@ import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.assist.LoadedFrom;
-import com.nostra13.universalimageloader.core.assist.ViewScaleType;
-import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
-import com.nostra13.universalimageloader.core.decode.ImageDecoder;
-import com.nostra13.universalimageloader.core.decode.ImageDecodingInfo;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.imageaware.ImageAware;
 import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.util.Utils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -59,41 +53,58 @@ import static android.graphics.Shader.TileMode.CLAMP;
 import static android.net.Uri.decode;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.KITKAT;
-import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
-import static com.nostra13.universalimageloader.core.assist.ImageScaleType.EXACTLY;
-import static com.nostra13.universalimageloader.core.assist.ImageScaleType.IN_SAMPLE_POWER_OF_2;
 import static java.lang.Math.min;
 
 public class ThumbnailHelper {
-    private static final int FADE_IN_DURATION = 400;
+    public static Drawable getPreview(Context context, String mimetype, File file) {
+        Bitmap bitmap = null;
+        Drawable drawable = null;
 
-    private static ImageDecoder sDecoder = null;
-    private static DisplayImageOptions.Builder sDefaultImageOptionsBuilder;
+        if (!file.isDirectory()) {
+            if (Utils.isImage(mimetype)) {
+                DisplayMetrics metrics = new DisplayMetrics();
+                ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(metrics);
+                Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
 
-    public static void requestIcon(FileHolder holder, ImageView imageView) {
-        Uri uri = Uri.fromFile(holder.getFile());
-        DisplayImageOptions options = defaultOptionsBuilder()
-                .extraForDownloader(holder)
-                .build();
+                // Make bmp round
+                int targetHeight = (int) (36 * metrics.density);
+                int targetWidth = (int) (36 * metrics.density);
+                int radius = targetWidth/2;
+                bitmap = Bitmap.createBitmap(targetWidth, targetHeight, ARGB_8888);
+                BitmapShader shader = new BitmapShader(Bitmap.createScaledBitmap(bmp, targetWidth, targetHeight, false), CLAMP, CLAMP);
+                Canvas canvas = new Canvas(bitmap);
+                Paint paint = new Paint();
+                paint.setAntiAlias(true);
+                paint.setShader(shader);
+                canvas.drawCircle(radius, radius, radius, paint);
 
-        getInstance().displayImage(decode(uri.toString()), imageView, options);
+                bmp.recycle();
+                drawable = new BitmapDrawable(bitmap);
+            } else if (Utils.isAPK(mimetype)) {
+                drawable = getApkIconDrawable(file, context);
+            } else {
+                drawable = getAssociatedAppIconDrawable(file, mimetype, context);
+            }
+        }
+
+        return drawable;
     }
 
     /**
      * Unfortunately getting the default is not straightforward..
      * See https://groups.google.com/forum/#!topic/android-developers/UkfP70MtjGA
      */
-    private static Drawable getAssociatedAppIconDrawable(FileHolder holder, Context context) {
+    private static Drawable getAssociatedAppIconDrawable(File file, String mimetype, Context context) {
         PackageManager pm = context.getPackageManager();
-        Intent intent = FileUtils.getViewIntentFor(holder, context);
+        Intent intent = FileUtils.getViewIntentFor(file, mimetype, context);
         Drawable icon = null;
 
         // Contrary to queryIntentActivities documentation, the first item IS NOT the same
         // as the one returned by resolveActivity.
         ResolveInfo resolveInfo = pm.resolveActivity(intent, MATCH_DEFAULT_ONLY);
-        if (!FileUtils.isResolverActivity(resolveInfo)) {
+        if (resolveInfo != null && !FileUtils.isResolverActivity(resolveInfo)) {
             icon = resolveInfo.loadIcon(pm);
-        } else if (!holder.getMimeType().equals("*/*")) {
+        } else if (!mimetype.equals("*/*")) {
             final List<ResolveInfo> lri = pm.queryIntentActivities(intent,
                     MATCH_DEFAULT_ONLY);
             if (lri != null && lri.size() > 0) {
@@ -105,9 +116,9 @@ public class ThumbnailHelper {
         return icon;
     }
 
-    private static final Drawable getApkIconDrawable(FileHolder holder, Context context) {
+    private static final Drawable getApkIconDrawable(File file, Context context) {
         PackageManager pm = context.getPackageManager();
-        String path = holder.getFile().getPath();
+        String path = file.getPath();
         PackageInfo pInfo = pm.getPackageArchiveInfo(path,
                 PackageManager.GET_ACTIVITIES);
         if (pInfo != null) {
@@ -124,94 +135,5 @@ public class ThumbnailHelper {
         }
 
         return null;
-    }
-
-    public static ImageDecoder imageDecoder(final Context context) {
-        if (sDecoder == null) {
-            sDecoder = new ImageDecoder() {
-                private BaseImageDecoder internal = new BaseImageDecoder(false);
-
-                @Override
-                public Bitmap decode(ImageDecodingInfo idi) throws IOException {
-                    FileHolder holder = (FileHolder) idi.getExtraForDownloader();
-                    Bitmap bitmap = null;
-
-                    if (!holder.getFile().isDirectory()) {
-                        if (Utils.isImage(holder.getMimeType())) {
-                            try {
-                                ImageDecodingInfo info = new ImageDecodingInfo(
-                                        idi.getImageKey(), idi.getImageUri(),
-                                        idi.getOriginalImageUri(), idi.getTargetSize(),
-                                        ViewScaleType.CROP,
-                                        idi.getDownloader(), defaultOptionsBuilder().build()
-                                );
-                                Bitmap bmp = internal.decode(info);
-
-                                // Make bmp round
-                                int targetHeight = idi.getTargetSize().getHeight();
-                                int targetWidth = idi.getTargetSize().getWidth();
-                                int radius = targetWidth/2;
-                                bitmap = Bitmap.createBitmap(targetWidth, targetHeight, ARGB_8888);
-                                BitmapShader shader = new BitmapShader(bmp, CLAMP, CLAMP);
-                                Canvas canvas = new Canvas(bitmap);
-                                Paint paint = new Paint();
-                                paint.setAntiAlias(true);
-                                paint.setShader(shader);
-                                canvas.drawCircle(radius, radius, radius, paint);
-
-                                bmp.recycle();
-                            } catch (FileNotFoundException ex) {
-                                Logger.log(ex);
-                                return null;
-                                // Fail silently.
-                            }
-                        } else if (Utils.isAPK(holder.getMimeType())) {
-                            Drawable drawable = getApkIconDrawable(holder, context);
-                            if (drawable != null) {
-                                bitmap = ((BitmapDrawable) drawable).getBitmap();
-                            }
-                        } else {
-                            Drawable drawable = getAssociatedAppIconDrawable(holder, context);
-                            if (drawable != null) {
-                                bitmap = ((BitmapDrawable) drawable).getBitmap();
-                            }
-                        }
-                    }
-
-                    return bitmap;
-                }
-            };
-        }
-
-        return sDecoder;
-    }
-
-    private static DisplayImageOptions.Builder defaultOptionsBuilder() {
-        if (sDefaultImageOptionsBuilder == null) {
-            sDefaultImageOptionsBuilder = new DisplayImageOptions.Builder()
-                    .displayer(new FadeInBitmapDisplayer(FADE_IN_DURATION, true, true, false))
-                    .cacheInMemory(true)
-                    .cacheOnDisk(false)
-                    .delayBeforeLoading(125)
-                    .imageScaleType(EXACTLY);
-        }
-
-        return sDefaultImageOptionsBuilder;
-    }
-
-    private static String getPackageNameFromInfo(ResolveInfo ri) {
-        if (ri.resolvePackageName == null) {
-            if (ri.activityInfo != null) {
-                return ri.activityInfo.packageName;
-            } else if (ri.serviceInfo.packageName != null) {
-                return ri.serviceInfo.packageName;
-            } else if (SDK_INT >= KITKAT) {
-                return ri.providerInfo.packageName;
-            } else {
-                return "";
-            }
-        } else {
-            return ri.resolvePackageName;
-        }
     }
 }

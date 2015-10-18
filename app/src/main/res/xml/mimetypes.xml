@@ -33,6 +33,8 @@
 	
 	<!-- Video types -->
 	<type extension=".mpeg" mimetype="video/mpeg" icon="4" />
+    <type extension=".mpg" mimetype="video/mpeg" icon="4" />
+    <type extension=".mp4" mimetype="video/mp4" icon="4" />
 	<type extension=".3gp" mimetype="video/3gpp" icon="4" />
 	
 	<!-- Package types -->
