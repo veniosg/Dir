@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,6 +45,7 @@
             android:showDividers="middle">
 
             <LinearLayout
+                android:id="@+id/topText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
@@ -52,12 +53,20 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/dirTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:drawableStart="@drawable/ic_logo"
+                    android:gravity="center"
+                    android:text="@string/app_name"
                     android:textAppearance="@android:style/TextAppearance.Material.Display2"
-                    android:textColor="?android:textColorTertiary"/>
+                    android:textColor="?android:textColorTertiary" />
+
+                <TextView
+                    android:id="@+id/dirVersion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@android:style/TextAppearance.Material.Body1"
+                    android:textColor="?android:textColorTertiary" />
             </LinearLayout>
 
             <LinearLayout
@@ -81,25 +90,25 @@
                     android:layout_gravity="center_horizontal"
                     android:text="@string/about_forked_from"
                     android:textAppearance="?android:textAppearanceSmall"
-                    android:textColor="?android:textColorTertiary"/>
+                    android:textColor="?android:textColorTertiary" />
 
                 <TextView
                     android:id="@+id/thanksOifm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:text="@string/about_thanks_oifm"
                     android:textAppearance="?android:textAppearanceSmall"
-                    android:textColor="?android:textColorTertiary" />
+                    android:textColor="?android:textColorTertiary"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
-                android:layout_weight="0.2"
-                android:gravity="center"
                 android:layout_marginEnd="@dimen/item_icon_margin_left"
-                android:layout_marginStart="@dimen/item_icon_margin_left">
+                android:layout_marginStart="@dimen/item_icon_margin_left"
+                android:layout_weight="0.2"
+                android:gravity="center">
 
                 <ImageButton
                     android:id="@+id/contact"

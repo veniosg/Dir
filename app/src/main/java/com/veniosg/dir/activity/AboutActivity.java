@@ -32,8 +32,6 @@ import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.view.CheatSheet;
 
 public class AboutActivity extends BaseActivity {
-    private String label;
-    private String versionName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +40,14 @@ public class AboutActivity extends BaseActivity {
         setupToolbar();
 
         try {
-            ApplicationInfo info = getPackageManager().getApplicationInfo(getPackageName(), 0);
-            label = String.valueOf(getPackageManager().getApplicationLabel(info));
-            versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            ((TextView) findViewById(R.id.dirVersion)).setText(
+                    getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
         } catch (PackageManager.NameNotFoundException e) {
             Logger.log(e);
         }
 
-        ((TextView) findViewById(R.id.dirTitle)).setText(label + " " + versionName);
-
         // Click listeners
-        findViewById(R.id.dirTitle).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.topText).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openWebLink("http://veniosg.github.io/Dir/");
