@@ -140,7 +140,7 @@ public class AboutActivity extends BaseActivity {
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
-        if(item.getItemId() == android.R.id.home) {
+        if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         } else {

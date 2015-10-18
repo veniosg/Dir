@@ -63,6 +63,6 @@ android {
 dependencies {
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.0.1'
 
-    compile 'com.android.support:support-v13:21.0.0'
+    compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
 }

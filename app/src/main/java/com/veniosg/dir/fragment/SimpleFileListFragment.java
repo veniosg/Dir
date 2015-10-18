@@ -345,16 +345,18 @@ public class SimpleFileListFragment extends FileListFragment {
                 BookmarkProvider.PATH + "=?",
                 new String[]{path},
                 null);
-        if (!query.moveToFirst()) {
-            ContentValues values = new ContentValues();
-            values.put(BookmarkProvider.NAME, file.getName());
-            values.put(BookmarkProvider.PATH, path);
-            getActivity().getContentResolver().insert(BookmarkProvider.CONTENT_URI, values);
+        if (query != null) {
+            if (!query.moveToFirst()) {
+                ContentValues values = new ContentValues();
+                values.put(BookmarkProvider.NAME, file.getName());
+                values.put(BookmarkProvider.PATH, path);
+                getActivity().getContentResolver().insert(BookmarkProvider.CONTENT_URI, values);
+            }
+            query.close();
         }
-        query.close();
 
         Activity act = getActivity();
-        if (act != null && act instanceof NavigationFragment.BookmarkContract) {
+        if (act instanceof NavigationFragment.BookmarkContract) {
             ((NavigationFragment.BookmarkContract) act).showBookmarks();
         }
     }

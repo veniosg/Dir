@@ -38,5 +38,5 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:elevation="4dp" />
+        android:elevation="16dp" />
 </android.support.v4.widget.DrawerLayout>
