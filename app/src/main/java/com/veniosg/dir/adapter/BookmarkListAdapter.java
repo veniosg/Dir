@@ -64,7 +64,5 @@ public class BookmarkListAdapter extends CursorAdapter {
         holder.secondaryInfo.setMaxLines(3);
         holder.secondaryInfo.setText(item.getFile().getAbsolutePath());
         holder.tertiaryInfo.setVisibility(INVISIBLE);
-
-        ThumbnailHelper.requestIcon(item, holder.icon);
     }
 }

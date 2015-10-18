@@ -21,11 +21,13 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 import android.text.format.Formatter;
 
 import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.R;
+import com.veniosg.dir.fragment.PreferenceFragment;
 import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Utils;
 
@@ -43,15 +45,27 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 		mExtension = parseExtension();
         MimeTypes mimeTypes = ((FileManagerApplication) c.getApplicationContext()).getMimeTypes();
 		mMimeType = mimeTypes.getMimeType(f.getName());
+        if (PreferenceFragment.getShowThumbnails(c) == true) {
+            mPreview = ThumbnailHelper.getPreview(c, mMimeType, mFile);
+        }
+        else {
+            mPreview = null;
+        }
         mIcon = Utils.getIconForFile(c, mMimeType, mFile);
 	}
 
 	/**
 	 * Fastest constructor as it takes everything ready.
 	 */
-	public FileHolder(File f, String m, Drawable i){
+	public FileHolder(File f, String m, Drawable i, Context c){
 		mFile = f;
 		mIcon = i;
+        if (PreferenceFragment.getShowThumbnails(c) == true) {
+            mPreview = ThumbnailHelper.getPreview(c, m, f);
+        }
+        else {
+            mPreview = null;
+        }
 		mExtension = parseExtension();
 		mMimeType = m;
 	}

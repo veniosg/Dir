@@ -87,7 +87,7 @@ public abstract class Utils {
             for (File f : filteredFiles) {
                 String mimeType = mimeTypes.getMimeType(f.getName());
 
-                result.add(new FileHolder(f, mimeType, getIconForFile(context, mimeType, f)));
+                result.add(new FileHolder(f, mimeType, getIconForFile(context, mimeType, f), context));
             }
         }
 

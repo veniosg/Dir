@@ -142,7 +142,8 @@ public class DirectoryScanner extends Thread {
 					if (currentFile.getAbsolutePath().equals(mSdCardPath)) {
 						listSdCard.add(new FileHolder(currentFile,
                                 mMimeTypes.getMimeType(currentFile.getName()),
-                                Utils.getSdCardIcon(mContext)));
+                                Utils.getSdCardIcon(mContext),
+                                mContext));
 					}
 					// It's a normal directory.
 					else {
@@ -150,7 +151,8 @@ public class DirectoryScanner extends Thread {
                             String mimetype = mMimeTypes.getMimeType(currentFile.getName());
                             listDir.add(new FileHolder(currentFile,
                                     mMimeTypes.getMimeType(currentFile.getName()),
-                                    Utils.getIconForFile(mContext, mimetype, currentFile)));
+                                    Utils.getIconForFile(mContext, mimetype, currentFile),
+                                    mContext));
 //                      }
 					}
 				// It's a file. Handle it too :P
@@ -169,7 +171,8 @@ public class DirectoryScanner extends Thread {
                         listFile.add(new FileHolder(currentFile,
                                 mimetype,
                                 // Take advantage of the already parsed mimetype to set a specific icon.
-                                Utils.getIconForFile(mContext, mimetype, currentFile)));
+                                Utils.getIconForFile(mContext, mimetype, currentFile),
+                                mContext));
 					}
 				}
 			}

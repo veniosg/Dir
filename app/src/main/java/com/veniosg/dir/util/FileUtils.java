@@ -303,10 +303,15 @@ public class FileUtils {
         launchFileIntent(intent, c);
 	}
 
-    public static Intent getViewIntentFor(FileHolder fileholder, Context c) {
+    // Overload for getViewIntentFor
+    public static Intent getViewIntentFor(FileHolder fileHolder, Context c) {
+        return getViewIntentFor(fileHolder.getFile(), fileHolder.getMimeType(), c);
+    }
+
+    public static Intent getViewIntentFor(File f, String mimetype, Context c) {
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-        Uri data = FileUtils.getUri(fileholder.getFile());
-        String type = fileholder.getMimeType();
+        Uri data = FileUtils.getUri(f);
+        String type = mimetype;
 
         intent.setDataAndType(data, type);
         return intent;
