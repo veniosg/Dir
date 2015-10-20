@@ -75,7 +75,8 @@ class RippleEnabledDrawableView extends View {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
         if (drawable != null) {
             if (multiColumnFilelist) {
                 canvas.drawCircle(backgroundCenterX, backgroundCenterY, backgroundRadius, backgroundPaint);
