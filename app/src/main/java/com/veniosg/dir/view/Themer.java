@@ -20,21 +20,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
-import android.graphics.Xfermode;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.support.v4.app.FragmentActivity;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.fragment.PreferenceFragment;
-
-import static android.graphics.Color.LTGRAY;
-import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.LOLLIPOP;
-import static com.veniosg.dir.view.Themer.getThemedColor;
 
 public class Themer {
     public enum Theme {
@@ -43,7 +31,7 @@ public class Themer {
         DARK
     }
 
-    public static final void applyTheme(Activity act) {
+    public static void applyTheme(Activity act) {
         switch (Theme.values()[PreferenceFragment.getThemeIndex(act)]) {
             case DIR:
                 act.setTheme(R.style.Theme_Dir);
@@ -65,30 +53,30 @@ public class Themer {
         }
     }
 
-    public static final int getThemedResourceId(Context ctx, int attributeId) {
+    public static int getThemedResourceId(Context ctx, int attributeId) {
         return getThemedResourceId(ctx.getTheme(), attributeId);
     }
 
 
-    public static final int getThemedResourceId(Resources.Theme theme, int attributeId) {
+    public static int getThemedResourceId(Resources.Theme theme, int attributeId) {
         TypedArray a = theme.obtainStyledAttributes(new int[]{attributeId});
         int result = a.getResourceId(0, -1);
         a.recycle();
         return result;
     }
 
-    public static final int getThemedColor(Context ctx, int attributeId) {
+    public static int getThemedColor(Context ctx, int attributeId) {
         return getThemedColor(ctx.getTheme(), attributeId);
     }
 
-    public static final int getThemedColor(Resources.Theme theme, int attributeId) {
+    public static int getThemedColor(Resources.Theme theme, int attributeId) {
         TypedArray a = theme.obtainStyledAttributes(new int[] {attributeId});
         int result = a.getColor(0, -1);
         a.recycle();
         return result;
     }
 
-    public static final float getThemedDimension(Context ctx, int attributeId) {
+    public static float getThemedDimension(Context ctx, int attributeId) {
         TypedArray a = ctx.getTheme().obtainStyledAttributes(new int[] {attributeId});
         float result = a.getDimension(0, 0);
         a.recycle();
