@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 <resources>
     <!-- Bookmark action. This is a verb. -->
     <string name="menu_bookmark">Σελιδοδείκτης</string>
+    <string name="bookmarks">Σελιδοδείκτες</string>
     <string name="create_new_folder">Δημιουργία νέου φακέλου</string>
     <string name="folder_name">Όνομα φακέλου</string>
     <string name="this_folder_is_empty">Άδειος φάκελος</string>
@@ -31,6 +32,8 @@
     <string name="details_permissions">Δικαιώματα</string>
     <string name="details_hidden">Κρυφό</string>
     <string name="details_lastmodified">Τελευταία Τροποποίηση</string>
+    <string name="details_items">Αρχεία</string>
+    <string name="details_resolution">Ανάλυση</string>
     <string name="copied_file_name">Αντίγραφο του %s</string>
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="copied_file_name_2">Αντίγραφο %1$d από %2$s</string>
@@ -103,7 +106,7 @@
     <string name="notif_extracted_success">Επιτυχής αποσυμπίεση</string>
     <string name="notif_extracted_fail">Αποτυχία αποσυμπίεσης</string>
     <string name="selected">επιλεγμένα</string>
-    <string name="bookmark_empty">Δεν υπάρχουν σελιδοδείκτες.</string>
+    <string name="bookmark_empty">Κανένας σελιδοδείκτης</string>
     <string name="bookmark_already_exists">Ήδη αποθηκευμένο ως σελιδοδείκτης</string>
     <string name="search_hint">Αναζήτηση αρχείων</string>
     <string name="query_error">Σφάλμα αναζήτησης</string>
@@ -116,6 +119,7 @@
     <string name="rename_success">Επιτυχής μετονομασία</string>
     <string name="rename_failure">Μετονομασία αδύνατη</string>
     <string name="loading">\u03a6\u03cc\u03c1\u03c4\u03c9\u03c3\u03b7&#8230;</string>
+    <string name="searching">Αναζήτηση&#8230;</string>
     <string name="create_dir_success">Επιτυχής δημιουργία φακέλου</string>
     <string name="create_dir_failure">Δημιουργία φακέλου αδύνατη</string>
     <string name="compressed_file_name">Όνομα συμπιεσμένου αρχείου</string>
@@ -146,5 +150,10 @@
     <string name="yes">Ναι</string>
     <string name="no">Όχι</string>
     <!-- Right pathview button description -->
+    <string name="edit_path">Επεξεργασία</string>
     <!-- Left pathview manual input button description -->
+    <string name="close_path">Κλείσιμο</string>
+    <string name="goto_path">Επιβεβαίωση</string>
+    <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="permissions_denied">Το Dir χρειάζεται άδεια ανάγνωσης της μνήμης</string>
 </resources>
