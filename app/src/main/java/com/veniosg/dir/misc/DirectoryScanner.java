@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2012 OpenIntents.org
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
 package com.veniosg.dir.misc;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -105,11 +104,11 @@ public class DirectoryScanner extends Thread {
         Logger.logV(Logger.TAG_DIRSCANNER, "Total count=" + totalCount);
 
 		/** Directory container */
- 		listDir = new ArrayList<FileHolder>(totalCount);
+ 		listDir = new ArrayList<>(totalCount);
 		/** File container */
- 		listFile = new ArrayList<FileHolder>(totalCount);
+ 		listFile = new ArrayList<>(totalCount);
 		/** External storage container*/
-		listSdCard = new ArrayList<FileHolder>(3);
+		listSdCard = new ArrayList<>(3);
 	}
 
 	public void run() {
@@ -161,7 +160,7 @@ public class DirectoryScanner extends Thread {
 					String mimetype = mMimeTypes.getMimeType(fileName);
 					String filetype = FileUtils.getExtension(fileName);
 
-					boolean ext_allow = filetype.equalsIgnoreCase(mFilterFiletype) || mFilterFiletype == "";
+					boolean ext_allow = filetype.equalsIgnoreCase(mFilterFiletype) || mFilterFiletype.equals("");
 					boolean mime_allow = mFilterMimetype != null &&
 							(mimetype.contentEquals(mFilterMimetype) || mFilterMimetype.contentEquals("*/*") ||
 									mFilterFiletype == null);

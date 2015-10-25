@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@
     android:clickable="true"
     android:animateFirstView="false">
 
+    <!-- Content -->
     <FrameLayout
         android:id="@+id/list_container"
         android:layout_width="match_parent"
@@ -33,6 +34,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <!-- List -->
         <com.veniosg.dir.view.widget.DividerGridView
             android:id="@android:id/list"
             android:numColumns="@integer/grid_columns"
@@ -44,6 +46,7 @@
             android:fastScrollEnabled="true"
             android:scrollbarStyle="outsideOverlay" />
 
+        <!-- Empty state -->
         <LinearLayout
             android:id="@android:id/empty"
             android:layout_width="wrap_content"
@@ -70,13 +73,13 @@
                 android:background="@drawable/bg_empty_state_circle"
                 android:scaleType="centerInside"
                 android:layout_marginBottom="4dp"
-                android:src="@drawable/ic_state_back"
+                android:src="@drawable/ic_button_back"
                 android:stateListAnimator="@anim/state_list_anim_material"
                 tools:ignore="ContentDescription" />
         </LinearLayout>
-
     </FrameLayout>
 
+    <!-- Loading -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -96,5 +99,33 @@
             android:textColor="?android:attr/textColorTertiary" />
     </LinearLayout>
 
+    <!-- No permissions -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="24dp"
+        tools:ignore="UseCompoundDrawables">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/permissions_denied"
+            style="@style/TextAppearance.Dir.Empty" />
+
+        <ImageView
+            android:id="@+id/permissions_button"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_empty_state_circle"
+            android:scaleType="centerInside"
+            android:layout_marginBottom="4dp"
+            android:src="@drawable/ic_button_permission"
+            android:stateListAnimator="@anim/state_list_anim_material"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
 </com.veniosg.dir.view.widget.WaitingViewFlipper>

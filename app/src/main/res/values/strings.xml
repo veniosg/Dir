@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -156,4 +156,6 @@
     <!-- Left pathview manual input button description -->
     <string name="close_path">Close editor</string>
     <string name="goto_path">Go to path</string>
+    <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="permissions_denied">Dir needs your permission to access storage</string>
 </resources>

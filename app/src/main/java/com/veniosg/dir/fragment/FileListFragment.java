@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2012 OpenIntents.org
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,14 +27,13 @@ import android.os.Bundle;
 import android.os.FileObserver;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.veniosg.dir.FileManagerApplication;
-import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.adapter.FileHolderListAdapter;
 import com.veniosg.dir.misc.DirectoryContents;
@@ -46,23 +45,38 @@ import com.veniosg.dir.view.widget.WaitingViewFlipper;
 import java.io.File;
 import java.util.ArrayList;
 
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+import static android.support.v4.content.ContextCompat.checkSelfPermission;
+import static com.veniosg.dir.IntentConstants.*;
 import static com.veniosg.dir.IntentConstants.ACTION_REFRESH_LIST;
+import static com.veniosg.dir.IntentConstants.EXTRA_DIRECTORIES_ONLY;
 import static com.veniosg.dir.IntentConstants.EXTRA_DIR_PATH;
+import static com.veniosg.dir.IntentConstants.EXTRA_FILTER_MIMETYPE;
+import static com.veniosg.dir.IntentConstants.EXTRA_WRITEABLE_ONLY;
+import static com.veniosg.dir.fragment.PreferenceFragment.PREFS_THEME;
 import static com.veniosg.dir.view.widget.WaitingViewFlipper.PAGE_INDEX_CONTENT;
 import static com.veniosg.dir.view.widget.WaitingViewFlipper.PAGE_INDEX_LOADING;
+import static com.veniosg.dir.view.widget.WaitingViewFlipper.PAGE_INDEX_PERMISSION_DENIED;
 
 /**
- * A {@link ListFragment} that displays the contents of a directory.
+ * An {@link AbsListFragment} that displays the contents of a directory.
  * <p>
- * Clicks do nothing.
+ *     Clicks do nothing.
  * </p>
  * <p>
- * Refreshes on OnSharedPreferenceChange and when receiving
- * a local ACTION_REFRESH_LIST broadcast with EXTRA_DIR_PATH matching this folder.
+ *     Refreshes on OnSharedPreferenceChange and when receiving
+ *     a local ACTION_REFRESH_LIST broadcast with EXTRA_DIR_PATH matching this folder.
+ * </p>
+ * <p>
+ *     Requests permissions if they're not granted.
  * </p>
  */
 public abstract class FileListFragment extends AbsListFragment {
-	private static final String INSTANCE_STATE_PATH = "path";
+
+    private static final int REQUEST_CODE_STORAGE_PERMISSION = 0;
+    private static final String INSTANCE_STATE_PATH = "path";
 	private static final String INSTANCE_STATE_FILES = "files";
     private static final String INSTANCE_STATE_NEEDS_LOADING = "needsLoading";
 
@@ -72,28 +86,23 @@ public abstract class FileListFragment extends AbsListFragment {
 		@Override
 		public void onSharedPreferenceChanged(
 				SharedPreferences sharedPreferences, String key) {
-			// We only care for list-altering preferences. This could be
-			// dangerous though,
-			// as later contributors might not see this, and have their settings
-			// not work in realtime.
-			// Therefore this is commented out, since it's not likely the
-			// refresh is THAT heavy.
+			// We only care for list-altering preferences. This could be dangerous though,
+			// as later contributors might not see this, and have their settings not work in realtime.
+			// Therefore this is commented out, since it's not likely the refresh is THAT heavy.
 			// *****************
 			// if (PreferenceActivity.PREFS_DISPLAYHIDDENFILES.equals(key)
 			// || PreferenceActivity.PREFS_SORTBY.equals(key)
 			// || PreferenceActivity.PREFS_ASCENDING.equals(key))
 
-			// Prevent NullPointerException caused from this getting called
-			// after we have finish()ed the activity.
-			if (getActivity() != null
-                    && !key.equals(PreferenceFragment.PREFS_THEME)) // We're restarting, no need for refresh
+			// Prevent NullPointerException caused from this getting called after the activity is finished.
+			if (getActivity() != null && !key.equals(PREFS_THEME)) // We're restarting, no need for refresh
 				refresh();
 		}
 	};
 
 	FileHolderListAdapter mAdapter;
-	DirectoryScanner mScanner;
-	private ArrayList<FileHolder> mFiles = new ArrayList<FileHolder>();
+	private DirectoryScanner mScanner;
+	private ArrayList<FileHolder> mFiles = new ArrayList<>();
 	private String mPath;
 	private String mFilename;
     private FileObserver mFileObserver;
@@ -114,19 +123,24 @@ public abstract class FileListFragment extends AbsListFragment {
             onEmptyViewClicked();
         }
     };
+    private View.OnClickListener mRequestPermissionsListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            requestPermissions();
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         LocalBroadcastManager.getInstance(getActivity())
-                .registerReceiver(mRefreshReceiver,
-                        new IntentFilter(ACTION_REFRESH_LIST));
+                .registerReceiver(mRefreshReceiver, new IntentFilter(ACTION_REFRESH_LIST));
     }
 
     @Override
     public void onDestroy() {
-        mScanner.cancel();
+        stopScanner();
         LocalBroadcastManager.getInstance(getActivity())
                 .unregisterReceiver(mRefreshReceiver);
         if (mFileObserver != null) {
@@ -154,7 +168,7 @@ public abstract class FileListFragment extends AbsListFragment {
         super.onViewCreated(view, savedInstanceState);
 
 		// Set auto refresh on preference change.
-		PreferenceManager.getDefaultSharedPreferences(getActivity())
+		getDefaultSharedPreferences(getActivity())
 				.registerOnSharedPreferenceChangeListener(preferenceListener);
 
 		// Set list properties
@@ -163,13 +177,13 @@ public abstract class FileListFragment extends AbsListFragment {
 
 		mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
         view.findViewById(R.id.empty_img).setOnClickListener(mEmptyViewClickListener);
+        view.findViewById(R.id.permissions_button).setOnClickListener(mRequestPermissionsListener);
 
 		// Get arguments
         boolean needsLoading = true;
 		if (savedInstanceState == null) {
             setPath(new File(getArguments().getString(EXTRA_DIR_PATH)));
-			mFilename = getArguments().getString(
-					IntentConstants.EXTRA_FILENAME);
+			mFilename = getArguments().getString(EXTRA_FILENAME);
 		} else {
 			setPath(new File(savedInstanceState.getString(INSTANCE_STATE_PATH)));
 			mFiles = savedInstanceState
@@ -177,11 +191,9 @@ public abstract class FileListFragment extends AbsListFragment {
             needsLoading = savedInstanceState.getInt(INSTANCE_STATE_NEEDS_LOADING) != 0;
 		}
 		pathCheckAndFix();
-        renewScanner();
 
         if (needsLoading) {
-            showLoading(true);
-            mScanner.start();
+            refresh();
         }
 
         mAdapter = new FileHolderListAdapter(mFiles);
@@ -192,30 +204,44 @@ public abstract class FileListFragment extends AbsListFragment {
 	 * Reloads {@link #mPath}'s contents.
 	 */
 	protected void refresh() {
-        // Cancel and GC previous scanner so that it doesn't load on top of the
-		// new list.
-		// Race condition seen if a long list is requested, and a short list is
-		// requested before the long one loads.
-		mScanner.cancel();
-		mScanner = null;
-
-		// Indicate loading and start scanning.
-		showLoading(true);
-		renewScanner().start();
+        if (hasPermissions()) {
+            showLoading(true);
+            renewScanner().start();
+        } else {
+            requestPermissions();
+        }
 	}
 
-	/**
-	 * Make the UI indicate loading.
-	 */
-	private void showLoading(boolean loading) {
-        onLoadingChanging(loading);
+    private boolean hasPermissions() {
+        return checkSelfPermission(getActivity(), WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED;
+    }
+
+    private void requestPermissions() {
+        showLoading(true);
+        requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
+    }
+
+    /**
+     * Switch to permission request mode.
+     */
+    private void showPermissionDenied() {
+        onListVisibilityChanging(false);
+        mFlipper.setDisplayedChild(PAGE_INDEX_PERMISSION_DENIED);
+        onListVisibilityChanging(false);
+    }
+
+    /**
+     * Make the UI indicate loading.
+     */
+    private void showLoading(boolean loading) {
+        onListVisibilityChanging(!loading);
         if (loading) {
             mFlipper.setDisplayedChildDelayed(PAGE_INDEX_LOADING);
         } else {
             mFlipper.setDisplayedChild(PAGE_INDEX_CONTENT);
         }
-        onLoadingChanged(loading);
-	}
+        onListVisibilityChanged(!loading);
+    }
 
     /**
 	 * Recreates the {@link #mScanner} using the previously set arguments and
@@ -224,14 +250,13 @@ public abstract class FileListFragment extends AbsListFragment {
 	 * @return {@link #mScanner} for convenience.
 	 */
 	protected DirectoryScanner renewScanner() {
-		String filetypeFilter = getArguments().getString(
-				IntentConstants.EXTRA_FILTER_FILETYPE);
-		String mimetypeFilter = getArguments().getString(
-				IntentConstants.EXTRA_FILTER_MIMETYPE);
-		boolean writeableOnly = getArguments().getBoolean(
-				IntentConstants.EXTRA_WRITEABLE_ONLY);
-		boolean directoriesOnly = getArguments().getBoolean(
-				IntentConstants.EXTRA_DIRECTORIES_ONLY);
+        // Cancel previous scanner so that it doesn't load on top of the new list.
+        stopScanner();
+
+        String filetypeFilter = getArguments().getString(EXTRA_FILTER_FILETYPE);
+		String mimetypeFilter = getArguments().getString(EXTRA_FILTER_MIMETYPE);
+		boolean writeableOnly = getArguments().getBoolean(EXTRA_WRITEABLE_ONLY);
+		boolean directoriesOnly = getArguments().getBoolean(EXTRA_DIRECTORIES_ONLY);
 
 		mScanner = new DirectoryScanner(new File(mPath),
                 getActivity(),
@@ -244,10 +269,24 @@ public abstract class FileListFragment extends AbsListFragment {
 		return mScanner;
 	}
 
+    private void stopScanner() {
+        if (hasScanner()) {
+            mScanner.cancel();
+        }
+    }
+
     public boolean isScannerRunning() {
-        return mScanner != null
+        return hasScanner()
                 && mScanner.isAlive()
                 && mScanner.isRunning();
+    }
+
+    protected boolean isMediaScannerDisabledForPath() {
+        return mScanner.getNoMedia();
+    }
+
+    protected boolean hasScanner() {
+        return mScanner != null;
     }
 
     private class FileListMessageHandler extends Handler {
@@ -374,20 +413,35 @@ public abstract class FileListFragment extends AbsListFragment {
     protected void onDataApplied() {}
 
     /**
-     * Used to inform subclasses about loading state changing. Can be used to
-     * make the ui indicate the loading state of the fragment. This is called before the actual change.
+     * Used to inform subclasses about list visibility changing. Can be used to
+     * make the ui indicate the visible state of the fragment. This is called before the actual change.
      *
-     * @param loading If the list started or stopped loading.
+     * @param visible If the list started or stopped being visible.
      */
-    protected void onLoadingChanging(boolean loading) {}
+    protected void onListVisibilityChanging(boolean visible) {}
 
     /**
-     * Used to inform subclasses about loading state changing. Can be used to
-     * make the ui indicate the loading state of the fragment. This is called before the actual change.
+     * Used to inform subclasses about visible state changing. Can be used to
+     * make the ui indicate the visible state of the fragment. This is called after the actual change.
      *
-     * @param loading If the list started or stopped loading.
+     * @param visible If the list started or stopped being visible.
      */
-    protected void onLoadingChanged(boolean loading) {}
+    protected void onListVisibilityChanged(boolean visible) {}
 
     protected void onEmptyViewClicked(){}
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_STORAGE_PERMISSION:
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PERMISSION_GRANTED) {
+                    refresh();
+                } else {
+                    showPermissionDenied();
+                }
+                break;
+        }
+    }
 }

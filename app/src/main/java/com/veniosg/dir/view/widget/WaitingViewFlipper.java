@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,11 +25,11 @@ import com.veniosg.dir.AnimationConstants;
 
 /**
  * Children must always follow the PAGE_INDEX_* indexing.
- * @author George Venios
  */
 public class WaitingViewFlipper extends ViewFlipper {
     public static final int PAGE_INDEX_CONTENT = 0;
     public static final int PAGE_INDEX_LOADING = 1;
+    public static final int PAGE_INDEX_PERMISSION_DENIED = 2;
 
     private Handler mWaiterHandler = new Handler();
     private Runnable mWaiter;

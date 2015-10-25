@@ -66,6 +66,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static com.veniosg.dir.fragment.PreferenceFragment.getMediaScanFromPreference;
+import static com.veniosg.dir.util.CopyHelper.Operation.COPY;
 import static com.veniosg.dir.view.PathController.OnDirectoryChangedListener;
 import static com.veniosg.dir.view.Themer.setStatusBarColour;
 import static com.veniosg.dir.view.widget.PathView.ActivityProvider;
@@ -386,19 +388,20 @@ public class SimpleFileListFragment extends FileListFragment {
         mZoomView = (AnimatedFileListContainer) view.findViewById(R.id.zoomview);
 
         // Handle mPath differently if we restore state or just initially create the view.
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
             mPathBar.setInitialDirectory(getPath());
-        else
+        } else {
             mPathBar.cd(getPath());
+        }
         mPathBar.setOnDirectoryChangedListener(new OnDirectoryChangedListener() {
-
             @Override
             public void directoryChanged(File newCurrentDir) {
                 open(new FileHolder(newCurrentDir, getActivity()));
             }
         });
-        if (savedInstanceState != null && savedInstanceState.getBoolean(INSTANCE_STATE_PATHBAR_MODE))
+        if (savedInstanceState != null && savedInstanceState.getBoolean(INSTANCE_STATE_PATHBAR_MODE)) {
             mPathBar.switchToManualInput();
+        }
         // Removed else clause as the other mode is the default. It seems faster this way on Nexus S.
 
         initContextualActions();
@@ -501,10 +504,10 @@ public class SimpleFileListFragment extends FileListFragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
-        // We only know about ".nomedia" once scanning is finished.
-        boolean showMediaScanMenuItem = PreferenceFragment.getMediaScanFromPreference(getActivity());
-        if (!mScanner.isRunning() && showMediaScanMenuItem) {
-            boolean noMedia = mScanner.getNoMedia();
+        boolean showMediaScanMenuItem = getMediaScanFromPreference(getActivity());
+        if (hasScanner() && !isScannerRunning() && showMediaScanMenuItem) {
+            // We only know about ".nomedia" once scanning is finished.
+            boolean noMedia = isMediaScannerDisabledForPath();
             menu.findItem(R.id.menu_media_scan_include).setVisible(noMedia);
             menu.findItem(R.id.menu_media_scan_exclude).setVisible(!noMedia);
         } else {
@@ -515,7 +518,7 @@ public class SimpleFileListFragment extends FileListFragment {
         CopyHelper copyHelper = ((FileManagerApplication) getActivity().getApplication()).getCopyHelper();
         MenuItem pasteAction = menu.findItem(R.id.menu_paste);
         if (copyHelper.canPaste()) {
-            int stringResource = (copyHelper.getOperationType() == CopyHelper.Operation.COPY
+            int stringResource = (copyHelper.getOperationType() == COPY
                     ? R.plurals.menu_copy_items_to : R.plurals.menu_move_items_to);
             pasteAction.setTitle(getResources().getQuantityString(stringResource,
                     copyHelper.getItemCount(), copyHelper.getItemCount()));
@@ -527,7 +530,12 @@ public class SimpleFileListFragment extends FileListFragment {
             pasteAction.setVisible(false);
             menu.findItem(R.id.menu_clear_clipboard).setVisible(false);
         }
+    }
 
+    @Override
+    protected void onDataApplied() {
+        super.onDataApplied();
+        getActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -708,8 +716,8 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     @Override
-    protected void onLoadingChanging(boolean loading) {
-        if (!loading) {
+    protected void onListVisibilityChanging(boolean visible) {
+        if (visible) {
             if (sScrollPositions.containsKey(getPath())) {
                 ScrollPosition pos = sScrollPositions.get(getPath());
                 useFolderScroll(pos);
@@ -720,8 +728,8 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     @Override
-    protected void onLoadingChanged(boolean loading) {
-        if (loading && mZoomView != null) {
+    protected void onListVisibilityChanged(boolean visible) {
+        if (!visible && mZoomView != null) {
             if (mNavigationDirection == 1) {
                 mZoomView.animateFwd();
             } else if (mNavigationDirection == -1) {
