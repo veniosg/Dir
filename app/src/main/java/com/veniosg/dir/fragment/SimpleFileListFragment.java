@@ -504,6 +504,10 @@ public class SimpleFileListFragment extends FileListFragment {
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
+        if (getActivity() == null) {
+            return;
+        }
+
         boolean showMediaScanMenuItem = getMediaScanFromPreference(getActivity());
         if (hasScanner() && !isScannerRunning() && showMediaScanMenuItem) {
             // We only know about ".nomedia" once scanning is finished.
