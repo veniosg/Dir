@@ -37,6 +37,7 @@ import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 
+import static android.content.Intent.ACTION_VIEW;
 import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
 
 /**
@@ -48,43 +49,6 @@ import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
 public class FileUtils {
 	private static final int X_OK = 1;
 	public static final String NOMEDIA_FILE_NAME = ".nomedia";
-	
-	private static boolean libLoadSuccess;
-	
-	static {
-		try {
-			System.loadLibrary("access");
-			libLoadSuccess = true;
-		} catch(UnsatisfiedLinkError e) {
-			libLoadSuccess = false;
-            Logger.log(Log.DEBUG, "libaccess.so failed to load.");
-		}
-	}
-
-	/**
-	 * Whether the filename is a video file.
-	 * 
-	 * @param filename
-	 * @return
-	 *//*
-	public static boolean isVideo(String filename) {
-		String mimeType = getMimeType(filename);
-		if (mimeType != null && mimeType.startsWith("video/")) {
-			return true;
-		} else {
-			return false;
-		}
-	}*/
-
-	/**
-	 * Whether the URI is a local one.
-	 * 
-	 * @param uri The URI to check.
-	 * @return If the URI is local.
-	 */
-	public static boolean isLocal(String uri) {
-        return uri != null && !uri.startsWith("http://");
-    }
 
 	/**
 	 * Gets the extension of a file name, like ".png" or ".jpg".
@@ -105,19 +69,6 @@ public class FileUtils {
         return ext;
 	}
 
-	/**
-	 * Check if uri is a media uri.
-	 * 
-	 * @param uri The URI to check.
-	 * @return Whether it's an Android media URI.
-	 */
-	public static boolean isMediaUri(String uri) {
-        return uri.startsWith(Audio.Media.INTERNAL_CONTENT_URI.toString())
-                || uri.startsWith(Audio.Media.EXTERNAL_CONTENT_URI.toString())
-                || uri.startsWith(Video.Media.INTERNAL_CONTENT_URI.toString())
-                || uri.startsWith(Video.Media.EXTERNAL_CONTENT_URI.toString());
-	}
-	
 	/**
 	 * Convert File into Uri.
 	 * @param file The file to convert.
@@ -160,11 +111,11 @@ public class FileUtils {
 				 String filepath = file.getAbsolutePath();
 	  
 				 // Construct path without file name.
-				 String pathwithoutname = filepath.substring(0, filepath.length() - filename.length());
-				 if (pathwithoutname.endsWith("/")) {
-					 pathwithoutname = pathwithoutname.substring(0, pathwithoutname.length() - 1);
+				 String pathWithoutName = filepath.substring(0, filepath.length() - filename.length());
+				 if (pathWithoutName.endsWith("/")) {
+					 pathWithoutName = pathWithoutName.substring(0, pathWithoutName.length() - 1);
 				 }
-				 return new File(pathwithoutname);
+				 return new File(pathWithoutName);
 			 }
 		 }
 		 return null;
@@ -186,10 +137,6 @@ public class FileUtils {
 		return length;
 	}
 	
-	public static String formatDate(Context context, long dateTime) {
-		return DateFormat.getDateFormat(context).format(new Date(dateTime));
-	}
-
     /**
      * @param f File which needs to be checked.
      * @return True if the file is a zip archive.
@@ -233,19 +180,9 @@ public class FileUtils {
 	 * @return returns TRUE if the current process has execute privilages.
 	 */
 	public static boolean canExecute(File mContextFile) {
-		try {
-			// File.canExecute() was introduced in API 9.  If it doesn't exist, then
-			// this will throw an exception and the NDK version will be used.
-			Method m = File.class.getMethod("canExecute", new Class[] {} );
-			return (Boolean) m.invoke(mContextFile);
-		} catch (Exception e) {
-            return libLoadSuccess && access(mContextFile.getPath(), X_OK);
-		}
+		return mContextFile.canExecute();
 	}
-	
-	// Native interface to unistd.h's access(*char, int) method.
-	public static native boolean access(String path, int mode);
-	
+
 	/**
 	 * @param path The path that the file is supposed to be in.
 	 * @param fileName Desired file name. This name will be modified to create a unique file if necessary.
@@ -304,7 +241,7 @@ public class FileUtils {
 	}
 
     public static Intent getViewIntentFor(FileHolder fileholder, Context c) {
-        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+        Intent intent = new Intent(ACTION_VIEW);
         Uri data = FileUtils.getUri(fileholder.getFile());
         String type = fileholder.getMimeType();
 
@@ -330,12 +267,10 @@ public class FileUtils {
             } else {
                 c.startActivity(intent);
             }
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(c.getApplicationContext(), R.string.application_not_available, Toast.LENGTH_SHORT).show();
-        } catch (SecurityException e){
+        } catch (ActivityNotFoundException | SecurityException e) {
             Toast.makeText(c.getApplicationContext(), R.string.application_not_available, Toast.LENGTH_SHORT).show();
         }
-    }
+	}
 
     public static boolean isResolverActivity(ResolveInfo resolveInfo) {
         // Please kill me..
