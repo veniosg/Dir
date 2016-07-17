@@ -8,7 +8,7 @@ For more information see http://veniosg.github.io/Dir/.
 License
 --------
 
-	Copyright (C) 2014-2015 George Venios
+	Copyright (C) 2014-2016 George Venios
     Copyright (C) 2007-2014 OpenIntents.org
 
     Licensed under the Apache License, Version 2.0 (the "License");
