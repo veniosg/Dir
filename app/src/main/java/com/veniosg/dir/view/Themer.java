@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2016 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import android.content.res.TypedArray;
 import com.veniosg.dir.R;
 import com.veniosg.dir.fragment.PreferenceFragment;
 
-public class Themer {
+public abstract class Themer {
     public enum Theme {
         DIR,
         GRAYSCALE,
@@ -56,7 +56,6 @@ public class Themer {
     public static int getThemedResourceId(Context ctx, int attributeId) {
         return getThemedResourceId(ctx.getTheme(), attributeId);
     }
-
 
     public static int getThemedResourceId(Resources.Theme theme, int attributeId) {
         TypedArray a = theme.obtainStyledAttributes(new int[]{attributeId});

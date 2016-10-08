@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2016 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 package com.veniosg.dir.activity;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,19 +24,24 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
-
-import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.view.Themer;
 
-@SuppressLint("Registered")
-abstract class BaseActivity extends FragmentActivity {
-    protected static final String FRAGMENT_TAG = "content_fragment";
+import static com.veniosg.dir.IntentConstants.ACTION_REFRESH_THEME;
 
-    private BroadcastReceiver mThemeReceiver = new BroadcastReceiver() {
+abstract class BaseActivity extends FragmentActivity {
+    static final String FRAGMENT_TAG = "content_fragment";
+
+    private final BroadcastReceiver mThemeReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            recreate();
+            if (PreferenceActivity.class.equals(BaseActivity.this.getClass())) {
+                finish();
+                startActivity(getIntent());
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            } else {
+                recreate();
+            }
         }
     };
 
@@ -47,8 +51,15 @@ abstract class BaseActivity extends FragmentActivity {
 
         Themer.applyTheme(this);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mThemeReceiver,
-                new IntentFilter(IntentConstants.ACTION_REFRESH_THEME));
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mThemeReceiver, new IntentFilter(ACTION_REFRESH_THEME));
+    }
+
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this)
+                .unregisterReceiver(mThemeReceiver);
+        super.onDestroy();
     }
 
     /**
@@ -58,14 +69,8 @@ abstract class BaseActivity extends FragmentActivity {
         View toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setActionBar((android.widget.Toolbar) toolbar);
+            //noinspection ConstantConditions
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mThemeReceiver);
-
-        super.onDestroy();
     }
 }

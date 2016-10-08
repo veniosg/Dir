@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2016 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,9 +30,8 @@ import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.view.Themer;
 
-/**
- * @author George Venios
- */
+import static com.veniosg.dir.IntentConstants.ACTION_REFRESH_THEME;
+
 public class PreferenceFragment extends android.preference.PreferenceFragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String PREFS_MEDIASCAN = "mediascan";
@@ -40,7 +39,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
     private static final String PREFS_DEFAULTPICKFILEPATH = "defaultpickfilepath";
     private static final String PREFS_SORTBY = "sortby";
     private static final String PREFS_ASCENDING = "ascending";
-    public static final String PREFS_THEME = "themeindex";
+    protected static final String PREFS_THEME = "themeindex";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +56,12 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
     }
 
     @Override
+    public void onDestroy() {
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+        super.onDestroy();
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         view.setBackgroundResource(Themer.getThemedResourceId(getActivity(), android.R.attr.colorBackground));
@@ -68,7 +73,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
             changeListPreferenceSummaryToCurrentValue((ListPreference) findPreference(key));
         } else if (key.equals(PREFS_THEME)) {
             changeListPreferenceSummaryToCurrentValue((ListPreference) findPreference(key));
-            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(IntentConstants.ACTION_REFRESH_THEME));
+            LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(new Intent(ACTION_REFRESH_THEME));
         }
     }
 
@@ -76,7 +81,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
         listPref.setSummary(listPref.getEntry());
     }
 
-    public static boolean getMediaScanFromPreference(Context context) {
+    static boolean getMediaScanFromPreference(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(PREFS_MEDIASCAN, false);
     }
@@ -85,7 +90,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(PREFS_DISPLAYHIDDENFILES, enabled);
-        editor.commit();
+        editor.apply();
     }
 
     public static boolean getDisplayHiddenFiles(Context context) {
@@ -109,7 +114,7 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(PREFS_DEFAULTPICKFILEPATH, path);
-        editor.commit();
+        editor.apply();
     }
 
     public static String getDefaultPickFilePath(Context context) {
