@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -68,38 +67,37 @@
                     android:textColor="?android:textColorTertiary" />
             </LinearLayout>
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="0.7"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:gravity="center">
 
-                <TextView
-                    android:id="@+id/createdBy"
+                <LinearLayout
+                    android:id="@+id/middleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/about_created_by"
-                    android:textAppearance="?android:textAppearanceMedium" />
+                    android:layout_gravity="center"
+                    android:background="?android:selectableItemBackground"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    tools:ignore="UselessParent">
 
-                <TextView
-                    android:id="@+id/forkedFrom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/about_forked_from"
-                    android:textAppearance="?android:textAppearanceSmall"
-                    android:textColor="?android:textColorTertiary" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_created_by"
+                        android:textAppearance="?android:textAppearanceMedium" />
 
-                <TextView
-                    android:id="@+id/thanksOifm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/about_thanks_oifm"
-                    android:textAppearance="?android:textAppearanceSmall"
-                    android:textColor="?android:textColorTertiary"
-                    android:visibility="gone" />
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/about_forked_from"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="?android:textColorTertiary" />
+                </LinearLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

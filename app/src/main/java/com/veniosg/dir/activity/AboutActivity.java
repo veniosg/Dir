@@ -53,13 +53,7 @@ public class AboutActivity extends BaseActivity {
                 openWebLink("http://veniosg.github.io/Dir/");
             }
         });
-        findViewById(R.id.forkedFrom).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openWebLink("https://github.com/openintents/filemanager");
-            }
-        });
-        findViewById(R.id.createdBy).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.middleText).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openWebLink("https://google.com/+GeorgeVenios");
@@ -113,7 +107,7 @@ public class AboutActivity extends BaseActivity {
             }
         });
 
-        // Cheatsheets
+        // CheatSheets
         CheatSheet.setup(findViewById(R.id.gplay));
         CheatSheet.setup(findViewById(R.id.beta));
         CheatSheet.setup(findViewById(R.id.contribute));
