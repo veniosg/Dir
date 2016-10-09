@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2016 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import static android.view.View.MeasureSpec.getSize;
 import static android.view.View.MeasureSpec.makeMeasureSpec;
 
 public class PathContainerLayout extends ChildrenChangedListeningLinearLayout {
-    private int mMaxChildWidth = -1;
+    private int mMaxChildWidth = 0;
 
     public PathContainerLayout(Context context) {
         super(context);
@@ -44,18 +44,8 @@ public class PathContainerLayout extends ChildrenChangedListeningLinearLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    public PathContainerLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        // Avoid measuring children twice. See PathHorizontalScrollView#onMeasure() for more info.
-        if (getMode(widthMeasureSpec) == EXACTLY) {
-            setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
-        } else {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        }
+    void setMeasuredWidth(int width) {
+        setMeasuredDimension(width, getMeasuredHeight());
     }
 
     @Override
@@ -70,12 +60,15 @@ public class PathContainerLayout extends ChildrenChangedListeningLinearLayout {
 
     /**
      * Set the maximum width that this layout's children are allowed to have.
+     *
      * @param maxChildWidthPx Negative or zero to cancel, positive to set the max width.
      */
+    @SuppressWarnings("WeakerAccess")
     public void setMaxChildWidth(int maxChildWidthPx) {
         this.mMaxChildWidth = maxChildWidthPx;
     }
 
+    @SuppressWarnings("unused")
     public int getMaxChildWidth() {
         return mMaxChildWidth;
     }

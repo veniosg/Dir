@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2016 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
-
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.view.PathController;
@@ -56,11 +55,10 @@ import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
 import static com.veniosg.dir.util.FileUtils.isOk;
 import static com.veniosg.dir.util.Utils.backWillExit;
 import static com.veniosg.dir.view.CheatSheet.setup;
-import static com.veniosg.dir.view.widget.PathHorizontalScrollView.RightEdgeRangeListener;
 import static com.veniosg.dir.view.PathController.Mode.MANUAL_INPUT;
 import static com.veniosg.dir.view.PathController.Mode.STANDARD_INPUT;
 import static com.veniosg.dir.view.Themer.getThemedDimension;
-import static com.veniosg.dir.view.Themer.getThemedResourceId;
+import static com.veniosg.dir.view.widget.PathHorizontalScrollView.RightEdgeRangeListener;
 
 public class PathView extends FrameLayout implements PathController {
     private Mode mCurrentMode = STANDARD_INPUT;
@@ -69,8 +67,6 @@ public class PathView extends FrameLayout implements PathController {
 
     private PathHorizontalScrollView mPathContainer;
     private View mButtonRight;
-    private View mManualButtonLeft;
-    private View mManualButtonRight;
     private EditText mManualText;
 
     private boolean interceptTouch = false;
@@ -91,7 +87,6 @@ public class PathView extends FrameLayout implements PathController {
             switchToStandardInput();
         }
     };
-
     private final OnClickListener mApplyManualInputClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -113,7 +108,7 @@ public class PathView extends FrameLayout implements PathController {
             return false;
         }
     };
-    private ActionMode.Callback mEditorActionModeCallback = new ActionMode.Callback() {
+    private final ActionMode.Callback mEditorActionModeCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             Themer.setStatusBarColour(mActivityProvider.getActivity(), true);
@@ -154,13 +149,13 @@ public class PathView extends FrameLayout implements PathController {
 
         mPathContainer = (PathHorizontalScrollView) findViewById(R.id.pathview_path_container);
         mButtonRight = findViewById(R.id.pathview_button_right);
-        mManualButtonLeft = findViewById(R.id.pathview_manual_button_left);
-        mManualButtonRight = findViewById(R.id.pathview_manual_button_right);
+        View buttonManualLeft = findViewById(R.id.pathview_manual_button_left);
+        View buttonManualRight = findViewById(R.id.pathview_manual_button_right);
         mManualText = (EditText) findViewById(R.id.pathview_manual_text);
 
         mButtonRight.setOnClickListener(mSwitchToManualOnClickListener);
-        mManualButtonLeft.setOnClickListener(mCloseManualInputClickListener);
-        mManualButtonRight.setOnClickListener(mApplyManualInputClickListener);
+        buttonManualLeft.setOnClickListener(mCloseManualInputClickListener);
+        buttonManualRight.setOnClickListener(mApplyManualInputClickListener);
         mManualText.setOnEditorActionListener(mOnEditorActionListener);
         mManualText.setCustomSelectionActionModeCallback(mEditorActionModeCallback);
 
@@ -168,31 +163,10 @@ public class PathView extends FrameLayout implements PathController {
         mManualText.setInputType(TYPE_TEXT_VARIATION_URI | TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         scheduleSetRightEdgeRangeListener();
 
+        // Setup CheatSheets
         setup(mButtonRight);
-        setup(mManualButtonRight);
-        setup(mManualButtonLeft);
-    }
-
-    private void scheduleSetRightEdgeRangeListener() {
-        addOnLayoutChangeListener(new OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                                       int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                removeOnLayoutChangeListener(this);
-
-                mPathContainer.setEdgeListener(new RightEdgeRangeListener() {
-                    @Override
-                    public int getRange() {
-                        return mButtonRight.getWidth();
-                    }
-
-                    @Override
-                    public void rangeOffsetChanged(int offsetInRange) {
-                        mButtonRight.setTranslationX(Math.max(0, offsetInRange));
-                    }
-                });
-            }
-        });
+        setup(buttonManualRight);
+        setup(buttonManualLeft);
     }
 
     @Override
@@ -230,7 +204,7 @@ public class PathView extends FrameLayout implements PathController {
 
     @Override
     public boolean cd(File file, boolean forceNoAnim) {
-        boolean result = false;
+        boolean result;
 
         if (isOk(file)) {
             File oldDir = new File(mCurrentDirectory.getAbsolutePath());
@@ -246,11 +220,6 @@ public class PathView extends FrameLayout implements PathController {
         mDirectoryChangedListener.directoryChanged(file);
 
         return result;
-    }
-
-    private void updateViews(File previousDir, File newDir) {
-        setManualInputPath(newDir.getAbsolutePath());
-        mPathContainer.updateWithPaths(previousDir, newDir, this);
     }
 
     @Override
@@ -322,6 +291,33 @@ public class PathView extends FrameLayout implements PathController {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         return interceptTouch;
+    }
+
+    private void updateViews(File previousDir, File newDir) {
+        setManualInputPath(newDir.getAbsolutePath());
+        mPathContainer.updateBasedOnPaths(previousDir, newDir, this);
+    }
+
+    private void scheduleSetRightEdgeRangeListener() {
+        addOnLayoutChangeListener(new OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom,
+                                       int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                removeOnLayoutChangeListener(this);
+
+                mPathContainer.setEdgeListener(new RightEdgeRangeListener() {
+                    @Override
+                    public int getRange() {
+                        return mButtonRight.getWidth();
+                    }
+
+                    @Override
+                    public void rangeOffsetChanged(int offsetInRange) {
+                        mButtonRight.setTranslationX(Math.max(0, offsetInRange));
+                    }
+                });
+            }
+        });
     }
 
     private boolean manualInputCd(String path) {
@@ -450,7 +446,7 @@ public class PathView extends FrameLayout implements PathController {
         };
     }
 
-    public static interface ActivityProvider {
-        public Activity getActivity();
+    public interface ActivityProvider {
+        Activity getActivity();
     }
 }

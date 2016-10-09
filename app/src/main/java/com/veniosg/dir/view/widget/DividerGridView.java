@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2016 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -48,6 +48,7 @@ public class DividerGridView extends GridView {
 
     private void init(Context context) {
         mDividerSize = 1;
+        //noinspection deprecation
         mDivider = context.getResources().getDrawable(getThemedResourceId(context, listDivider));
     }
 
@@ -59,39 +60,34 @@ public class DividerGridView extends GridView {
         Rect bounds = new Rect();
 
         for (int i = 0; i < count; i++) {
-            final int itemIndex = (getFirstVisiblePosition() + i);
             final View child = getChildAt(i);
-            final boolean isLastItem = (i == (count - 1));
-            // Pretent that we know this to be true. Was: if (mGroupFlags & CLIP_TO_PADDING_MASK) == CLIP_TO_PADDING_MASK)
-            int effectivePaddingTop = getPaddingTop();
-            int effectivePaddingBottom = getPaddingBottom();
+            int effectivePaddingBottom = getPaddingBottom();    // Correct only when clipToPadding is enabled
             final int listBottom = getBottom() - getTop() - effectivePaddingBottom + getScrollY();
-            top =  child.getTop();
+            top = child.getTop();
             bottom = child.getBottom();
             right = child.getRight();
 
             // Not the rightmost child
-            if (i % numColumns != numColumns-1) {
+            if (i % numColumns != numColumns - 1) {
                 bounds.top = top + child.getPaddingTop();
                 bounds.bottom = bottom - child.getPaddingBottom();
                 bounds.right = right;
                 bounds.left = right - mDividerSize;
-                drawDivider(canvas, bounds, i);
+                drawDivider(canvas, bounds);
             }
             if (bottom < listBottom) {
-                final int nextIndex = (itemIndex + 1);
                 bounds.top = bottom;
                 bounds.bottom = bottom + mDividerSize;
                 bounds.left = child.getLeft() + child.getPaddingLeft();
                 bounds.right = child.getRight() - child.getPaddingRight();
-                drawDivider(canvas, bounds, i);
+                drawDivider(canvas, bounds);
             }
         }
 
         super.dispatchDraw(canvas);
     }
 
-    void drawDivider(Canvas canvas, Rect bounds, int childIndex) {
+    private void drawDivider(Canvas canvas, Rect bounds) {
         mDivider.setBounds(bounds);
         mDivider.draw(canvas);
     }

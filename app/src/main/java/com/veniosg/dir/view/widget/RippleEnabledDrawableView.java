@@ -18,17 +18,16 @@ package com.veniosg.dir.view.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Outline;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-
 import com.veniosg.dir.R;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.veniosg.dir.view.Themer.getThemedColor;
 
 class RippleEnabledDrawableView extends View {
@@ -36,74 +35,79 @@ class RippleEnabledDrawableView extends View {
     // We want to follow the direction of the rest of the animations so always use values < 2.
     private static final float BACKGROUND_PROGRESS_FACTOR = 1.5f;
 
-    private Drawable drawable;
-    private ColorMatrix saturationMatrix = new ColorMatrix();
-    private ColorMatrix blacknessMatrix = new ColorMatrix();
+    private Drawable mDrawable;
+    private Paint mBackgroundPaint;
+    private int mInitialBackgroundRight;
+    private int mInitialBackgroundLeft;
+    private int mBackgroundRadius;
+    private int mBackgroundCenterX;
+    private int mBackgroundCenterY;
 
-    private Paint backgroundPaint;
-    private int initialBackgroundRight;
-    private int initialBackgroundLeft;
-    private int currentBackgroundLeft;
-    private int currentBackgroundRight;
-    private int backgroundRadius;
-    private int backgroundCenterX;
-    private int backgroundCenterY;
-
-    private boolean multiColumnFilelist = false;
-    private boolean withBackground = false;
+    private final boolean mDrawDynamicProtection = getResources().getInteger(R.integer.grid_columns) > 1;
 
     public RippleEnabledDrawableView(Context context) {
         super(context);
 
         setWillNotDraw(false);
         setClipToOutline(true);
-        setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
-        saturationMatrix.setSaturation(1F);
+        setLayoutParams(new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
 
-        backgroundPaint = new Paint();
-        backgroundPaint.setColor(getThemedColor(getContext(), android.R.attr.colorBackground));
-        backgroundPaint.setStyle(Paint.Style.FILL);
-        backgroundPaint.setAntiAlias(true);
-
-        multiColumnFilelist = getResources().getInteger(R.integer.grid_columns) > 1;
+        mBackgroundPaint = new Paint();
+        mBackgroundPaint.setColor(getThemedColor(getContext(), android.R.attr.colorBackground));
+        mBackgroundPaint.setStyle(Paint.Style.FILL);
+        mBackgroundPaint.setAntiAlias(true);
     }
 
-    public void setInitialBackgroundPosition(int left, int right) {
-        withBackground = true;
-        initialBackgroundLeft = left;
-        initialBackgroundRight = right;
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (mDrawable == null) {
+            setMeasuredDimension(0, 0);
+        } else {
+            // We know the view will never need to be less than its drawable's intrinsic size in this context.
+            setMeasuredDimension(mDrawable.getIntrinsicWidth(), mDrawable.getIntrinsicHeight());
+        }
     }
 
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        if (drawable != null) {
-            if (multiColumnFilelist) {
-                canvas.drawCircle(backgroundCenterX, backgroundCenterY, backgroundRadius, backgroundPaint);
+        if (mDrawable != null) {
+            if (mDrawDynamicProtection) {
+                canvas.drawCircle(mBackgroundCenterX, mBackgroundCenterY, mBackgroundRadius, mBackgroundPaint);
             } else {
-                canvas.drawColor(backgroundPaint.getColor());
+                canvas.drawColor(mBackgroundPaint.getColor());
             }
-            drawable.draw(canvas);
+            mDrawable.draw(canvas);
         }
     }
 
+    void setInitialBackgroundPosition(int left, int right) {
+        mInitialBackgroundLeft = left;
+        mInitialBackgroundRight = right;
+    }
+
+    @SuppressWarnings("unused")
     public void setBackgroundProgress(float progress) {
-        if (drawable != null) {
+        if (mDrawable != null) {
             progress *= BACKGROUND_PROGRESS_FACTOR;
-            currentBackgroundLeft = (int) (initialBackgroundLeft - initialBackgroundLeft * progress);
-            currentBackgroundRight = (int) (initialBackgroundRight + (drawable.getIntrinsicWidth() - initialBackgroundRight) * progress);
+            int currentBackgroundLeft = (int) (mInitialBackgroundLeft - mInitialBackgroundLeft * progress);
+            int currentBackgroundRight = (int) (mInitialBackgroundRight + (mDrawable.getIntrinsicWidth() - mInitialBackgroundRight) * progress);
 
             // Only needed if drawing a circle background
-            backgroundRadius = (currentBackgroundRight - currentBackgroundLeft) / 2;
-            backgroundCenterX = currentBackgroundLeft + backgroundRadius;
-            backgroundCenterY = getHeight() / 2;
+            mBackgroundRadius = (currentBackgroundRight - currentBackgroundLeft) / 2;
+            mBackgroundCenterX = currentBackgroundLeft + mBackgroundRadius;
+            mBackgroundCenterY = getHeight() / 2;
 
             postInvalidateOnAnimation(currentBackgroundLeft, 0, currentBackgroundRight, getHeight());
         }
     }
 
     public void setDrawable(Drawable drawable) {
-        this.drawable = drawable;
+        if (mDrawable != null && mDrawable instanceof BitmapDrawable) {
+            ((BitmapDrawable) mDrawable).getBitmap().recycle();
+        }
+
+        this.mDrawable = drawable;
 
         setOutlineProvider(new ViewOutlineProvider() {
             @Override
@@ -115,47 +119,27 @@ class RippleEnabledDrawableView extends View {
 
                     outline.setRect(0, 0,
                             // Extending outline to the right to avoid shadow glitch
-                            ((RippleEnabledDrawableView) view).getDrawableWidth() * 2,
+                            (int) (((RippleEnabledDrawableView) view).getDrawableWidth() * 1.05f),
                             ((RippleEnabledDrawableView) view).getDrawableHeight());
                 }
             }
         });
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (drawable == null) {
-            setMeasuredDimension(0, 0);
-        } else {
-            // We know the view will never need to be less than its drawable's intrinsic size in this context.
-            setMeasuredDimension(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        }
-    }
-
-    protected int getDrawableWidth() {
-        if (drawable != null) {
-            return drawable.getIntrinsicWidth();
+    @SuppressWarnings("WeakerAccess")
+    int getDrawableWidth() {
+        if (mDrawable != null) {
+            return mDrawable.getIntrinsicWidth();
         } else {
             return 0;
         }
     }
 
-    protected int getDrawableHeight() {
-        if (drawable != null) {
-            return drawable.getIntrinsicHeight();
+    int getDrawableHeight() {
+        if (mDrawable != null) {
+            return mDrawable.getIntrinsicHeight();
         } else {
             return 0;
         }
-    }
-
-    public void setSaturation(float sat) {
-        if (sat < 0)
-            sat = 0;
-
-        saturationMatrix.setSaturation(sat);
-        if (drawable != null) {
-            drawable.setColorFilter(new ColorMatrixColorFilter(saturationMatrix));
-        }
-        postInvalidateOnAnimation(0, 0 , getWidth(), getHeight());
     }
 }

@@ -16,9 +16,7 @@
 
 package com.veniosg.dir;
 
-import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.PathInterpolator;
 
 public class AnimationConstants {

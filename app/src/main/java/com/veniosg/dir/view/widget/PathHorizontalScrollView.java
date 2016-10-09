@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2016 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,11 +25,10 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.HorizontalScrollView;
-import android.widget.LinearLayout;
-
 import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.view.PathController;
+import com.veniosg.dir.view.widget.ChildrenChangedListeningLinearLayout.OnChildrenChangedListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,19 +38,10 @@ import static android.animation.Animator.AnimatorListener;
 import static android.animation.LayoutTransition.*;
 import static android.animation.ObjectAnimator.ofFloat;
 import static android.animation.ObjectAnimator.ofInt;
-import static android.graphics.Typeface.create;
 import static android.view.View.MeasureSpec.AT_MOST;
-import static android.view.View.MeasureSpec.EXACTLY;
-import static android.view.View.MeasureSpec.getSize;
 import static android.view.View.MeasureSpec.makeMeasureSpec;
-import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
-import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
-import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
-import static com.veniosg.dir.AnimationConstants.OUT_INTERPOLATOR;
-import static com.veniosg.dir.util.Utils.getLastChild;
-import static com.veniosg.dir.util.Utils.lastCommonDirectoryIndex;
-import static com.veniosg.dir.util.Utils.measureExactly;
-import static com.veniosg.dir.view.Themer.getThemedResourceId;
+import static com.veniosg.dir.AnimationConstants.*;
+import static com.veniosg.dir.util.Utils.*;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -71,6 +61,7 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
     private int mLatestScrollOffset;
     private int mLatestPaddingRight;
     private PathControllerGetter mControllerGetter;
+
     private final OnClickListener mSecondaryButtonListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -88,7 +79,7 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
             smoothRevealButtonsAnimator().start();
         }
     };
-    private AnimatorListener mBlockTouchAnimatorListener = new AnimatorListener() {
+    private final AnimatorListener mBlockTouchAnimatorListener = new AnimatorListener() {
         @Override
         public void onAnimationStart(Animator animation) {
             mBlockTouch = true;
@@ -105,9 +96,10 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
         }
 
         @Override
-        public void onAnimationRepeat(Animator animation) {}
+        public void onAnimationRepeat(Animator animation) {
+        }
     };
-    private ChildrenChangedListeningLinearLayout.OnChildrenChangedListener mOnPathChildrenChangedListener = new ChildrenChangedListeningLinearLayout.OnChildrenChangedListener() {
+    private final OnChildrenChangedListener mOnPathChildrenChangedListener = new OnChildrenChangedListener() {
         @Override
         public void childrenAdded(final List<View> newChildren) {
             Logger.logV(LOG_TAG, "Starting add animation");
@@ -149,33 +141,24 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
 
     public PathHorizontalScrollView(Context context) {
         super(context);
-        init();
     }
 
     public PathHorizontalScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
     public PathHorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    public PathHorizontalScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
-    private void init() {
     }
 
     @Override
     protected void onFinishInflate() {
+        super.onFinishInflate();
+
         try {
             mPathContainer = (PathContainerLayout) getChildAt(0);
         } catch (ClassCastException ex) {
-            throw new RuntimeException("First and only child of PathContainerView must be a ChildrenChangedListeningLinearLayout");
+            throw new RuntimeException("First and only child of PathHorizontalScrollView must be a PathContainerLayout.");
         }
 
         mPathContainer.addOnLayoutChangeListener(new OnLayoutChangeListener() {
@@ -192,21 +175,6 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
         mPathContainer.setLayoutTransition(transition);
     }
 
-    private LayoutTransition delayRemovalOfChild() {
-        // Workaround to keep items around until our removal animations are finished.
-        LayoutTransition transition = new LayoutTransition();
-        transition.disableTransitionType(APPEARING);
-        transition.disableTransitionType(CHANGE_DISAPPEARING);
-        transition.disableTransitionType(CHANGE_APPEARING);
-        transition.disableTransitionType(CHANGING);
-        transition.setAnimator(DISAPPEARING, ofFloat(0, 0));
-        transition.setDuration((long) (ANIM_DURATION * 1.5f));  // Account for possible delays
-                                                                // between this and other
-                                                                // animations' start
-        transition.setStartDelay(ANIM_START_DELAY, DISAPPEARING);
-        return transition;
-    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
@@ -214,34 +182,35 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
 
         // Probe last child width and set up container padding
         View lastItem = getLastChild(mPathContainer);
-        lastItem.measure(makeMeasureSpec(maxChildWidthPx, AT_MOST), 0);
-        mPathContainerRightPadding = getMeasuredWidth() - lastItem.getMeasuredWidth();
-
-        // Finally measure path container
+        if (lastItem != null) {
+            lastItem.measure(makeMeasureSpec(maxChildWidthPx, AT_MOST), 0);
+            mPathContainerRightPadding = getMeasuredWidth() - lastItem.getMeasuredWidth();
+        }
         mPathContainer.setMaxChildWidth(maxChildWidthPx);
+
+        // Probe complete content length
         mPathContainer.measure(0, heightMeasureSpec);
-        mPathContainer.measure(measureExactly(mPathContainerRightPadding + mPathContainer.getMeasuredWidth()),
-                measureExactly(getMeasuredHeight()));
+
+        // Force dimension of container (as we know child views are measured now), accounting for required padding to position last child correctly.
+        mPathContainer.setMeasuredWidth(mPathContainerRightPadding + mPathContainer.getMeasuredWidth());
 
         // Now that we know the container's width we know the right amount of scroll to reveal items
         mRevealScrollPixels = mPathContainer.getMeasuredWidth() - getMeasuredWidth() * 2;
     }
 
     @Override
-    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        super.onScrollChanged(l, t, oldl, oldt);
+    protected void onScrollChanged(int l, int t, int oldL, int oldT) {
+        super.onScrollChanged(l, t, oldL, oldT);
 
         invokeRightEdgeRangeListener(l);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        if (mBlockTouch) {
-            return true;
-        }
-        return super.onTouchEvent(ev);
+        return mBlockTouch || super.onTouchEvent(ev);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void setEdgeListener(RightEdgeRangeListener listener) {
         if (listener != null) {
             mRightEdgeRangeListener = listener;
@@ -251,11 +220,24 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
         mRightEdgeRange = mRightEdgeRangeListener.getRange();
     }
 
+    private LayoutTransition delayRemovalOfChild() {
+        // Workaround to keep items around until our removal animations are finished.
+        LayoutTransition transition = new LayoutTransition();
+        transition.disableTransitionType(APPEARING);
+        transition.disableTransitionType(CHANGE_DISAPPEARING);
+        transition.disableTransitionType(CHANGE_APPEARING);
+        transition.disableTransitionType(CHANGING);
+        transition.setAnimator(DISAPPEARING, ofFloat(0, 0));
+        transition.setDuration((long) (ANIM_DURATION * 1.5f));  // Account for possible delays between this and other animations' start
+        transition.setStartDelay(ANIM_START_DELAY, DISAPPEARING);
+        return transition;
+    }
+
     /**
      * @param previousDir Pass null to refresh the whole view.
-     * @param newDir The new current directory.
+     * @param newDir      The new current directory.
      */
-    public void updateWithPaths(File previousDir, File newDir, final PathController controller) {
+    void updateBasedOnPaths(File previousDir, File newDir, final PathController controller) {
         if (mControllerGetter == null) {
             mControllerGetter = new PathControllerGetter() {
                 @Override
@@ -271,7 +253,7 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
         boolean forceStyle = false;
         mLatestScrollOffset = mPathContainer.getWidth() - (getWidth() + getScrollX());
         mLatestPaddingRight = getPaddingRight();
-        if(previousDir != null && count > 0) {
+        if (previousDir != null && count > 0) {
             lastCommonDirectory = lastCommonDirectoryIndex(previousDir, newDir);
             mPathContainer.removeViews(lastCommonDirectory + 1, count - lastCommonDirectory - 1);
         } else {
@@ -286,19 +268,22 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
 
         // Static styling and click configuration.
         PathItemView child;
-        for (int i = 0; i < mPathContainer.getChildCount()-1; i++) {
+        for (int i = 0; i < mPathContainer.getChildCount() - 1; i++) {
             child = (PathItemView) mPathContainer.getChildAt(i);
             child.setOnClickListener(mSecondaryButtonListener);
             if (forceStyle) {
                 child.styleAsSecondary();
             }
         }
-        getLastChild(mPathContainer)
-                .setOnClickListener(mPrimaryButtonListener);
+        View lastChild = getLastChild(mPathContainer);
+        if (lastChild != null) {
+            lastChild.setOnClickListener(mPrimaryButtonListener);
+        }
     }
 
     /**
      * Adds new buttons according to the fPath parameter.
+     *
      * @param firstDirToAdd The index of the first directory of fPath to add.
      */
     private void fillPathContainer(int firstDirToAdd, File fPath, Context context) {
@@ -306,7 +291,6 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
         String path = fPath.getAbsolutePath();
         char cChar;
         int cDir = 0;
-        View item;
 
         for (int i = 0; i < path.length(); i++) {
             cChar = path.charAt(i);
@@ -323,18 +307,18 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
     private Animator transformToSecondaryAsNeededAnimator() {
         AnimatorSet result = new AnimatorSet();
         int count = mPathContainer.getChildCount() - 1;
-        List<Animator> anims = new ArrayList<Animator>(count);
+        List<Animator> animators = new ArrayList<Animator>(count);
         PathItemView v;
 
         for (int i = 0; i < count; i++) {
             v = (PathItemView) mPathContainer.getChildAt(i);
 
             if (!v.isStyledAsSecondary()) {
-                anims.add(v.getTransformToSecondaryAnimator());
+                animators.add(v.transformToSecondaryAnimator());
             }
         }
 
-        result.playTogether(anims);
+        result.playTogether(animators);
         return result;
     }
 
@@ -345,7 +329,7 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
             View secondToLastView = null;
             View viewToAnimate = null;
 
-            for(int i = newChildren.size()-1; i >= 0; i--) {
+            for (int i = newChildren.size() - 1; i >= 0; i--) {
                 viewToAnimate = newChildren.get(i);
                 if (secondToLastView == null) {
                     // Too tired to figure out a single formula for the index.
@@ -376,10 +360,10 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
     private Animator removedViewsAnimator(List<View> oldChildren) {
         AnimatorSet animSet = new AnimatorSet();
         List<Animator> animators = new ArrayList<Animator>(oldChildren.size());
-        int oldChildrenWidthSum = 0;
-        int lastChildWidth = getLastChild(mPathContainer).getWidth();
-        for (View v : oldChildren) {
-            oldChildrenWidthSum += v.getWidth();
+        int lastChildWidth = 0;
+        View lastChild = getLastChild(mPathContainer);
+        if (lastChild != null) {
+            lastChildWidth = lastChild.getWidth();
         }
 
         for (View v : oldChildren) {
@@ -393,18 +377,18 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
         int nextNewPrimaryItemIndex = mPathContainer.getChildCount() - 1;
         PathItemView newPrimaryItem = (PathItemView) mPathContainer.getChildAt(nextNewPrimaryItemIndex);
 
-        return newPrimaryItem.getTransformToPrimaryAnimator();
+        return newPrimaryItem.transformToPrimaryAnimator();
     }
 
     private Animator translateForChildrenRemovalAnimator(List<View> oldChildren) {
-        int oldChildrenWidthSum = 0;
-        for (View v : oldChildren) {
-            oldChildrenWidthSum += v.getWidth();
+        int lastChildWidth = 0;
+        View lastChild = getLastChild(mPathContainer);
+        if (lastChild != null) {
+            lastChildWidth = lastChild.getWidth();
         }
-        int lastChildWidth = getLastChild(mPathContainer).getWidth();
         mPathContainer.setTranslationX(min(0, -lastChildWidth + mLatestScrollOffset + mLatestPaddingRight));
         ObjectAnimator anim = ofFloat(mPathContainer, "translationX", 0);
-        anim.addListener(pathContainerClipAnimatorListener(oldChildrenWidthSum));
+        anim.addListener(pathContainerClipAnimatorListener());
         return anim;
     }
 
@@ -415,7 +399,7 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
         return scrollXAnim;
     }
 
-    private AnimatorListener pathContainerClipAnimatorListener(final int widthSumOfOldChildren) {
+    private AnimatorListener pathContainerClipAnimatorListener() {
         return new AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -428,21 +412,19 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
             }
 
             @Override
-            public void onAnimationCancel(Animator animation) {}
+            public void onAnimationCancel(Animator animation) {
+            }
 
             @Override
-            public void onAnimationRepeat(Animator animation) {}
+            public void onAnimationRepeat(Animator animation) {
+            }
         };
     }
 
-    private int screenWidth() {
-        return getResources().getDisplayMetrics().widthPixels;
-    }
-
-    private void invokeRightEdgeRangeListener(int l) {
+    private void invokeRightEdgeRangeListener(int scrollX) {
         // Scroll pixels for the last item's right edge to reach the parent's right edge
         int scrollToEnd = mPathContainer.getWidth() - getWidth() - max(mPathContainerRightPadding, 0);
-        int pixelsScrolledWithinRange = scrollToEnd - l + mRightEdgeRange;
+        int pixelsScrolledWithinRange = scrollToEnd - scrollX + mRightEdgeRange;
         mRightEdgeRangeListener.rangeOffsetChanged(pixelsScrolledWithinRange);
     }
 
@@ -454,29 +436,30 @@ public class PathHorizontalScrollView extends HorizontalScrollView {
             }
 
             @Override
-            public void rangeOffsetChanged(int offsetInRange) {}
+            public void rangeOffsetChanged(int offsetInRange) {
+            }
         };
     }
 
     /**
      * Listener for when the last child is within the supplied mRangeRight of the right edge of this view.
      */
-    public interface RightEdgeRangeListener {
+    interface RightEdgeRangeListener {
         /**
-         * @return The range in which to get the callback.
+         * @return The range at which to get the callback.
          */
-        public int getRange();
+        int getRange();
 
         /**
-         * Called when the distance of the last child in regards to the right edge of this view
-         * has changed.
-         * @param offsetInRange The current number of pixels within the range. If <0 means that the
+         * Called when the distance of the last child to the right edge of this view has changed.
+         *
+         * @param offsetInRange The distance travelled by the right child from the start of the range. If <0 means that the
          *                      child is not yet within the specified range.
          */
-        public void rangeOffsetChanged(int offsetInRange);
+        void rangeOffsetChanged(int offsetInRange);
     }
 
-    public interface PathControllerGetter {
-        public PathController getPathController();
+    interface PathControllerGetter {
+        PathController getPathController();
     }
 }

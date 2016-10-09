@@ -53,7 +53,6 @@ public class PickBar extends LinearLayout {
 	private void init() {
         mButton = new Button(getContext(), null, android.R.attr.buttonBarButtonStyle);
 		{
-            LayoutParams layoutParams = new LayoutParams(WRAP_CONTENT, WRAP_CONTENT);
             mButton.setText(R.string.pick_button_default);
 			mButton.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -107,7 +106,7 @@ public class PickBar extends LinearLayout {
 	}
 	
 	public interface OnPickRequestedListener {
-		public void pickRequested(String filename);
+		void pickRequested(String filename);
 	}
 
 	public void setButtonText(CharSequence text) {
@@ -126,10 +125,10 @@ public class PickBar extends LinearLayout {
 	
 	@Override
 	protected void onRestoreInstanceState(Parcelable state) {
-		Bundle savedstate = (Bundle) state;
+		Bundle savedState = (Bundle) state;
 		
-		super.onRestoreInstanceState(savedstate.getParcelable("superState"));
-		mEditText.onRestoreInstanceState(savedstate.getParcelable("editText"));
-		mButton.onRestoreInstanceState(savedstate.getParcelable("button"));
+		super.onRestoreInstanceState(savedState.getParcelable("superState"));
+		mEditText.onRestoreInstanceState(savedState.getParcelable("editText"));
+		mButton.onRestoreInstanceState(savedState.getParcelable("button"));
 	}
 }

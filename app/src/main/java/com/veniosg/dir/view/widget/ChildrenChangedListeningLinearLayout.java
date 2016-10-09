@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2016 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 package com.veniosg.dir.view.widget;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,47 +27,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A LinearLayout that exposes a listener for when children have been added and measured (or removed)
- * but not yet displayed. Useful for triggering complex animations where the TransitionAnimation framework
- * falls short due to its static nature. <br/>
+ * A LinearLayout that exposes an item addition/removal listener that gets called right before the change is displayed.
+ * Useful for triggering animations in cases where the TransitionAnimation framework falls short due to its static nature.
+ * <br/>
  * When batch removing views, always call endLayoutTransition() passing the removed view.
  */
-public class ChildrenChangedListeningLinearLayout extends LinearLayout implements ViewTreeObserver.OnPreDrawListener {
+class ChildrenChangedListeningLinearLayout extends LinearLayout implements ViewTreeObserver.OnPreDrawListener {
     private List<View> mAddedWaitingViews = new ArrayList<View>();
     private List<View> mRemovedWaitingViews = new ArrayList<View>();
     private OnChildrenChangedListener mListener = OnChildrenChangedListener.NO_OP;
     private boolean firstDraw = true;
 
     public ChildrenChangedListeningLinearLayout(Context context) {
-        super(context);
-        init();
+        this(context, null);
     }
 
     public ChildrenChangedListeningLinearLayout(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
+        this(context, attrs, 0);
     }
 
     public ChildrenChangedListeningLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
-    }
-
-    public ChildrenChangedListeningLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
-    private void init() {
         getViewTreeObserver().addOnPreDrawListener(this);
-    }
-
-    public void setOnChildrenChangedListener(OnChildrenChangedListener listener) {
-        if (listener != null) {
-            this.mListener = listener;
-        } else {
-            this.mListener = OnChildrenChangedListener.NO_OP;
-        }
     }
 
     @Override
@@ -116,15 +96,23 @@ public class ChildrenChangedListeningLinearLayout extends LinearLayout implement
         return true;
     }
 
-    public int getLastAddedChildrenCount() {
+    void setOnChildrenChangedListener(OnChildrenChangedListener listener) {
+        if (listener != null) {
+            this.mListener = listener;
+        } else {
+            this.mListener = OnChildrenChangedListener.NO_OP;
+        }
+    }
+
+    int getLastAddedChildrenCount() {
         return mAddedWaitingViews.size();
     }
 
-    public interface OnChildrenChangedListener {
-        public void childrenAdded(List<View> newChildren);
-        public void childrenRemoved(List<View> oldChildren);
+    interface OnChildrenChangedListener {
+        void childrenAdded(List<View> newChildren);
+        void childrenRemoved(List<View> oldChildren);
 
-        public static OnChildrenChangedListener NO_OP = new OnChildrenChangedListener() {
+        OnChildrenChangedListener NO_OP = new OnChildrenChangedListener() {
             @Override
             public void childrenAdded(final List<View> newChildren) {}
 

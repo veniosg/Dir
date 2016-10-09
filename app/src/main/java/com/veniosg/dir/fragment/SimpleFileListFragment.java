@@ -36,26 +36,15 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-
 import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.adapter.FileHolderListAdapter;
-import com.veniosg.dir.dialog.CreateDirectoryDialog;
-import com.veniosg.dir.dialog.DetailsDialog;
-import com.veniosg.dir.dialog.MultiCompressDialog;
-import com.veniosg.dir.dialog.MultiDeleteDialog;
-import com.veniosg.dir.dialog.RenameDialog;
-import com.veniosg.dir.dialog.SingleCompressDialog;
-import com.veniosg.dir.dialog.SingleDeleteDialog;
+import com.veniosg.dir.dialog.*;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.provider.BookmarkProvider;
 import com.veniosg.dir.service.ZipService;
-import com.veniosg.dir.util.CopyHelper;
-import com.veniosg.dir.util.FileUtils;
-import com.veniosg.dir.util.Logger;
-import com.veniosg.dir.util.MediaScannerUtils;
-import com.veniosg.dir.util.Utils;
+import com.veniosg.dir.util.*;
 import com.veniosg.dir.view.PathController;
 import com.veniosg.dir.view.widget.AnimatedFileListContainer;
 import com.veniosg.dir.view.widget.PathView;
@@ -78,12 +67,12 @@ import static com.veniosg.dir.view.widget.PathView.ActivityProvider;
 public class SimpleFileListFragment extends FileListFragment {
     private static final String INSTANCE_STATE_PATHBAR_MODE = "pathbar_mode";
 
-    protected static final int REQUEST_CODE_MULTISELECT = 2;
+    private static final int REQUEST_CODE_MULTISELECT = 2;
 
     private static HashMap<String, ScrollPosition> sScrollPositions = new HashMap<String, ScrollPosition>();
 
     private PathController mPathBar;
-    private AnimatedFileListContainer mZoomView;
+    private AnimatedFileListContainer mTransitionView;
     private ActionMode mActionMode;
     private boolean mActionsEnabled = true;
     private int mNavigationDirection = 0;
@@ -377,7 +366,7 @@ public class SimpleFileListFragment extends FileListFragment {
             toolbar.addView(pathView);
         }
 
-        return inflater.inflate(R.layout.fragment_filelist_simple, null);
+        return inflater.inflate(R.layout.fragment_filelist_simple, container, false);
     }
 
     @Override
@@ -385,7 +374,7 @@ public class SimpleFileListFragment extends FileListFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mPathBar = (PathController) getActivity().findViewById(R.id.pathview);
-        mZoomView = (AnimatedFileListContainer) view.findViewById(R.id.zoomview);
+        mTransitionView = (AnimatedFileListContainer) view.findViewById(R.id.zoomview);
 
         // Handle mPath differently if we restore state or just initially create the view.
         if (savedInstanceState == null) {
@@ -402,7 +391,7 @@ public class SimpleFileListFragment extends FileListFragment {
         if (savedInstanceState != null && savedInstanceState.getBoolean(INSTANCE_STATE_PATHBAR_MODE)) {
             mPathBar.switchToManualInput();
         }
-        // Removed else clause as the other mode is the default. It seems faster this way on Nexus S.
+        // Removed else clause as the other mode is the default.
 
         initContextualActions();
 
@@ -411,7 +400,7 @@ public class SimpleFileListFragment extends FileListFragment {
         ((ViewFlipper) view.findViewById(R.id.flipper)).setOutAnimation(null);
     }
 
-    private void firstTimeAnimation(final View root) {
+    private void firstTimeAnimation(@SuppressWarnings("UnusedParameters") final View root) {
         // NO-OP for now. Need to fine tune it on a real device.
         // Everyone hates lag on launch.
     }
@@ -419,7 +408,7 @@ public class SimpleFileListFragment extends FileListFragment {
     /**
      * Override this to handle initialization of list item long clicks.
      */
-    void initContextualActions() {
+    private void initContextualActions() {
         if (mActionsEnabled) {
             getListView().setMultiChoiceModeListener(mMultiChoiceModeListener);
             getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
@@ -477,11 +466,11 @@ public class SimpleFileListFragment extends FileListFragment {
      * Attempts to open a directory for browsing.
      * Override this to handle folder click behavior.
      *
-     * @param fileholder The holder of the directory to open.
+     * @param fileHolder The holder of the directory to open.
      */
-    protected void openDir(FileHolder fileholder) {
+    private void openDir(FileHolder fileHolder) {
         // Avoid unnecessary attempts to load.
-        if (fileholder.getFile().getAbsolutePath().equals(getPath()))
+        if (fileHolder.getFile().getAbsolutePath().equals(getPath()))
             return;
 
         if(getListAdapter().getCount() > 0) {
@@ -489,11 +478,11 @@ public class SimpleFileListFragment extends FileListFragment {
         }
 
         // Save required data for animation
-        mNavigationDirection = Utils.getNavigationDirection(new File(getPath()), fileholder.getFile());
-        mZoomView.setupAnimations(mNavigationDirection, heroView);
+        mNavigationDirection = Utils.getNavigationDirection(new File(getPath()), fileHolder.getFile());
+        mTransitionView.setupAnimations(mNavigationDirection, heroView);
 
         // Load
-        setPath(fileholder.getFile());
+        setPath(fileHolder.getFile());
         refresh();
     }
 
@@ -733,14 +722,14 @@ public class SimpleFileListFragment extends FileListFragment {
 
     @Override
     protected void onListVisibilityChanged(boolean visible) {
-        if (!visible && mZoomView != null) {
+        if (!visible && mTransitionView != null) {
             if (mNavigationDirection == 1) {
-                mZoomView.animateFwd();
+                mTransitionView.animateFwd();
             } else if (mNavigationDirection == -1) {
-                mZoomView.animateBwd();
+                mTransitionView.animateBwd();
             } else {
                 // Do not animate.
-                mZoomView.clearAnimations();
+                mTransitionView.clearAnimations();
             }
         }
     }

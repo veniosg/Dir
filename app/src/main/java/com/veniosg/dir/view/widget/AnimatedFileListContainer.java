@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2016 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,8 +31,8 @@ import android.widget.FrameLayout;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
-import com.veniosg.dir.view.Themer;
 
+import static android.graphics.Bitmap.createBitmap;
 import static android.graphics.PorterDuff.Mode.SRC_OVER;
 import static android.util.Log.DEBUG;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
@@ -41,18 +41,15 @@ import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
 import static com.veniosg.dir.AnimationConstants.OUT_INTERPOLATOR;
 import static com.veniosg.dir.FileManagerApplication.enqueueAnimator;
 import static com.veniosg.dir.util.Logger.TAG_ANIMATION;
-import static com.veniosg.dir.view.Themer.getThemedColor;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
-/**
- * @author George Venios
- */
 public class AnimatedFileListContainer extends FrameLayout {
     private static final int INDEX_CONTENT = 0;
 
-    private BitmapDrawable mScreenshot;
-    private BitmapDrawable mHeroshot;
+    private BitmapDrawable mOldContentDrawCache;
+    private BitmapDrawable mHeroElementDrawCache;
     private float mDimAmount = 0;
+    @SuppressWarnings("deprecation")
     private int mDimColor = getResources().getColor(
             getThemedResourceId(getContext(), R.attr.colorFadeCovered));
     private float mHeroTop = 0;
@@ -61,13 +58,11 @@ public class AnimatedFileListContainer extends FrameLayout {
     private final Drawable mBackground;
 
     public AnimatedFileListContainer(Context context) {
-        super(context);
-        mBackground = getBackground();
+        this(context, null);
     }
 
     public AnimatedFileListContainer(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        mBackground = getBackground();
+        this(context, attrs, 0);
     }
 
     public AnimatedFileListContainer(Context context, AttributeSet attrs, int defStyle) {
@@ -77,34 +72,31 @@ public class AnimatedFileListContainer extends FrameLayout {
 
     /**
      * Call this before changing the content! <br/>
+     *
      * @param direction 1 for forward, -1 for backward, 0 is undefined.
-     * @param hero The hero element, aka the one causing the transition. Can be null.
+     * @param hero      The hero element, aka the one causing the transition. Can be null.
      */
     public void setupAnimations(int direction, final View hero) {
         View oldView = getChildAt(INDEX_CONTENT);
 
-        Bitmap screenshotCache = Bitmap.createBitmap(oldView.getWidth(), oldView.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas screenshotCanvas = new Canvas(screenshotCache);
-        if (direction < 0)
-            mBackground.draw(screenshotCanvas);
-        oldView.draw(screenshotCanvas);
+        Bitmap screenshotCache = bitmapFromOldView(oldView, direction < 0);
 
-        mScreenshot = new BitmapDrawable(getResources(), screenshotCache);
-        mScreenshot.setBounds(0, 0, screenshotCanvas.getWidth(), screenshotCanvas.getHeight());
+        mOldContentDrawCache = new BitmapDrawable(getResources(), screenshotCache);
+        mOldContentDrawCache.setBounds(0, 0, oldView.getWidth(), oldView.getHeight());
 
         if (hero != null) {
             int leftPadding = findViewById(android.R.id.list).getPaddingLeft();
             int listWidth = findViewById(android.R.id.list).getWidth();
 
-            Bitmap heroCache = Bitmap.createBitmap(listWidth, hero.getHeight(), Bitmap.Config.ARGB_8888);
+            Bitmap heroCache = createBitmap(listWidth, hero.getHeight(), Bitmap.Config.ARGB_8888);
             Canvas heroCanvas = new Canvas(heroCache);
             heroCanvas.save();
-                heroCanvas.translate(leftPadding, 0);
-                heroCanvas.translate(hero.getLeft(), 0);
-                hero.draw(heroCanvas);
+            heroCanvas.translate(leftPadding, 0);
+            heroCanvas.translate(hero.getLeft(), 0);
+            hero.draw(heroCanvas);
             heroCanvas.restore();
-            mHeroshot = new BitmapDrawable(getResources(), heroCache);
-            mHeroshot.setBounds(0, 0, heroCanvas.getWidth(), heroCanvas.getHeight());
+            mHeroElementDrawCache = new BitmapDrawable(getResources(), heroCache);
+            mHeroElementDrawCache.setBounds(0, 0, heroCanvas.getWidth(), heroCanvas.getHeight());
 
             mHeroTop = hero.getY();
             mHeroLeft = hero.getLeft();
@@ -114,8 +106,18 @@ public class AnimatedFileListContainer extends FrameLayout {
         Logger.log(DEBUG, TAG_ANIMATION, "Recorded drawable");
     }
 
+    private Bitmap bitmapFromOldView(View view, boolean useBackground) {
+        Bitmap screenshotCache = createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas screenshotCanvas = new Canvas(screenshotCache);
+        if (useBackground) {
+            mBackground.draw(screenshotCanvas);
+        }
+        view.draw(screenshotCanvas);
+        return screenshotCache;
+    }
+
     public void animateFwd() {
-        if (mScreenshot == null) {
+        if (mOldContentDrawCache == null) {
             return;
         }
 
@@ -124,20 +126,20 @@ public class AnimatedFileListContainer extends FrameLayout {
         final RippleEnabledDrawableView hero = new RippleEnabledDrawableView(getContext());
         hero.setY(mHeroTop);
         hero.setInitialBackgroundPosition((int) mHeroLeft, (int) mHeroRight);
-        AnimatorSet contentAnim = new AnimatorSet();
-        AnimatorSet heroAnim = new AnimatorSet();
+        AnimatorSet contentAnim;
+        AnimatorSet heroAnim;
 
         // Add and show last list state
-        oldContent.setDrawable(mScreenshot);
-        hero.setDrawable(mHeroshot);
+        oldContent.setDrawable(mOldContentDrawCache);
+        hero.setDrawable(mHeroElementDrawCache);
         addView(hero, 0);
         addView(oldContent, 0);
-        newContent.setBackgroundDrawable(mBackground.mutate());
+        newContent.setBackground(mBackground.mutate());
         Logger.log(DEBUG, TAG_ANIMATION, "Added new views. New count: " + getChildCount());
 
         // Init animations
-        contentAnim = forwardContentAnimation(newContent, oldContent, hero);
-        heroAnim = forwardHeroAnimation(hero);
+        contentAnim = forwardContentAnimator(newContent, oldContent, hero);
+        heroAnim = forwardHeroAnimator(hero);
 
         // Play animations
         AnimatorSet scene = new AnimatorSet();
@@ -147,7 +149,7 @@ public class AnimatedFileListContainer extends FrameLayout {
     }
 
     public void animateBwd() {
-        if(mScreenshot == null) {
+        if (mOldContentDrawCache == null) {
             return;
         }
 
@@ -156,19 +158,19 @@ public class AnimatedFileListContainer extends FrameLayout {
         final RippleEnabledDrawableView hero = new RippleEnabledDrawableView(getContext());
         hero.setY(mHeroTop);
         hero.setInitialBackgroundPosition((int) mHeroLeft, (int) mHeroRight);
-        AnimatorSet contentAnim = new AnimatorSet();
-        AnimatorSet heroAnim = new AnimatorSet();
+        AnimatorSet contentAnim;
+        AnimatorSet heroAnim;
 
         // Add and show last list state
-        oldContent.setDrawable(mScreenshot);
-        hero.setDrawable(mHeroshot);
+        oldContent.setDrawable(mOldContentDrawCache);
+        hero.setDrawable(mHeroElementDrawCache);
         addView(oldContent);
         addView(hero);    // Since this is the last child, it'll be overlaid on top of the others
         Logger.log(DEBUG, TAG_ANIMATION, "Added new views. New count: " + getChildCount());
 
         // Init animations
-        contentAnim = backwardContentAnimation(newContent, oldContent);
-        heroAnim = backwardHeroAnimation(hero);
+        contentAnim = backwardContentAnimator(newContent, oldContent);
+        heroAnim = backwardHeroAnimator(hero);
 
         // Play animations
         AnimatorSet scene = new AnimatorSet();
@@ -177,7 +179,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         enqueueAnimator(scene);
     }
 
-    private AnimatorSet forwardHeroAnimation(final View hero) {
+    private AnimatorSet forwardHeroAnimator(final View hero) {
         AnimatorSet heroAnim = new AnimatorSet();
         ObjectAnimator anim = ObjectAnimator.ofFloat(hero, "translationX", 0, -getWidth());
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(hero, "translationZ", 0F, 15F);
@@ -188,7 +190,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         return heroAnim;
     }
 
-    private AnimatorSet forwardContentAnimation(final View newContent, final View oldContent, final RippleEnabledDrawableView hero) {
+    private AnimatorSet forwardContentAnimator(final View newContent, final View oldContent, final RippleEnabledDrawableView hero) {
         int heroHeight = hero.getDrawableHeight();
         if (heroHeight > 0) {
             oldContent.setPivotY(hero.getY() + heroHeight / 2);
@@ -198,7 +200,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         ObjectAnimator anim = ObjectAnimator.ofFloat(oldContent, "scaleX", 1F, 0.9F);
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(oldContent, "scaleY", 1F, 0.9F);
         ObjectAnimator anim3 = ObjectAnimator.ofFloat(oldContent, "saturation", 1F, -3F);
-        ObjectAnimator anim4 = ObjectAnimator.ofFloat(oldContent, "translationX", 0F, -getWidth()/2);
+        ObjectAnimator anim4 = ObjectAnimator.ofFloat(oldContent, "translationX", 0F, -getWidth() / 2);
         ObjectAnimator anim5 = ObjectAnimator.ofFloat(newContent, "translationZ", 0F, 15F);
         ObjectAnimator anim6 = ObjectAnimator.ofFloat(newContent, "translationX", getWidth(), 0F);
         ObjectAnimator anim7 = ObjectAnimator.ofFloat(this, "backgroundDim", 0F, 0.5F);
@@ -217,7 +219,7 @@ public class AnimatedFileListContainer extends FrameLayout {
         return contentAnim;
     }
 
-    private AnimatorSet backwardHeroAnimation(final View hero) {
+    private AnimatorSet backwardHeroAnimator(final View hero) {
         AnimatorSet heroAnim = new AnimatorSet();
         ObjectAnimator anim = ObjectAnimator.ofFloat(hero, "translationX", -getWidth(), 0);
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(hero, "translationZ", 15F, 0F);
@@ -227,11 +229,11 @@ public class AnimatedFileListContainer extends FrameLayout {
         return heroAnim;
     }
 
-    private AnimatorSet backwardContentAnimation(final View newContent, final View oldContent) {
+    private AnimatorSet backwardContentAnimator(final View newContent, final View oldContent) {
         AnimatorSet contentAnim = new AnimatorSet();
         ObjectAnimator anim = ObjectAnimator.ofFloat(newContent, "scaleX", 0.9F, 1F);
         ObjectAnimator anim2 = ObjectAnimator.ofFloat(newContent, "scaleY", 0.9F, 1F);
-        ObjectAnimator anim3 = ObjectAnimator.ofFloat(newContent, "translationX", -getWidth()/2, 0F);
+        ObjectAnimator anim3 = ObjectAnimator.ofFloat(newContent, "translationX", -getWidth() / 2, 0F);
         ObjectAnimator anim4 = ObjectAnimator.ofFloat(oldContent, "translationZ", 15F, 0F);
         ObjectAnimator anim5 = ObjectAnimator.ofFloat(oldContent, "translationX", 0F, getWidth());
         ObjectAnimator anim6 = ObjectAnimator.ofFloat(this, "backgroundDim", 0.5F, 0F);
@@ -294,17 +296,18 @@ public class AnimatedFileListContainer extends FrameLayout {
     }
 
     public void clearAnimations() {
-        mScreenshot = null;
-        mHeroshot = null;
+        mOldContentDrawCache = null;
+        mHeroElementDrawCache = null;
         setBackgroundDim(0);
-        getChildAt(INDEX_CONTENT).setBackgroundDrawable(null);
+        getChildAt(INDEX_CONTENT).setBackground(null);
         Logger.log(DEBUG, TAG_ANIMATION, "Cleared animations");
     }
 
     private Animator.AnimatorListener resetTranslationZOnEndListener(final View target) {
         return new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(Animator animator) {}
+            public void onAnimationStart(Animator animator) {
+            }
 
             @Override
             public void onAnimationEnd(Animator animator) {
@@ -313,10 +316,12 @@ public class AnimatedFileListContainer extends FrameLayout {
             }
 
             @Override
-            public void onAnimationCancel(Animator animator) {}
+            public void onAnimationCancel(Animator animator) {
+            }
 
             @Override
-            public void onAnimationRepeat(Animator animator) {}
+            public void onAnimationRepeat(Animator animator) {
+            }
         };
     }
 
@@ -333,19 +338,14 @@ public class AnimatedFileListContainer extends FrameLayout {
         return result;
     }
 
-    public void setBackgroundDim(float dim) {
+    private void setBackgroundDim(float dim) {
         mDimAmount = dim;
         invalidate();
     }
 
-    public float getBackgroundDim() {
-        return mDimAmount;
-    }
-
-    public int computeDarkenColor() {
+    private int computeDarkenColor() {
         final int baseAlpha = (mDimColor & 0xff000000) >>> 24;
-        int imag = (int) (baseAlpha * mDimAmount);
-        int color = imag << 24 | (mDimColor & 0xffffff);
-        return color;
+        int interpolatedAlpha = (int) (baseAlpha * mDimAmount);
+        return interpolatedAlpha << 24 | (mDimColor & 0xffffff);
     }
 }

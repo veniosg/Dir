@@ -25,12 +25,7 @@ import java.util.List;
 public class AnimatorSynchroniser {
     private static final int DEFAULT_NUM_COMPONENTS_TO_SYNCHRONISE = 2;
 
-    private int mMaxAnimators = DEFAULT_NUM_COMPONENTS_TO_SYNCHRONISE;
-    private List<Animator> mAnimators = new ArrayList<Animator>(mMaxAnimators);
-
-    public void setMaxAnimators(int num) {
-        this.mMaxAnimators = num;
-    }
+    private List<Animator> mAnimators = new ArrayList<>(DEFAULT_NUM_COMPONENTS_TO_SYNCHRONISE);
 
     /**
      * Add an animation and fire it as soon as the number of waiting animators reaches the max.
@@ -38,7 +33,7 @@ public class AnimatorSynchroniser {
     public synchronized void addWaitingAnimation(Animator anim) {
         mAnimators.add(anim);
 
-        if (mAnimators.size() >= mMaxAnimators) {
+        if (mAnimators.size() >= DEFAULT_NUM_COMPONENTS_TO_SYNCHRONISE) {
             AnimatorSet animSet = new AnimatorSet();
             animSet.playTogether(mAnimators);
             animSet.start();

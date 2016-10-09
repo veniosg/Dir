@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2016 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,23 +19,12 @@ package com.veniosg.dir.view.widget;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.veniosg.dir.R;
-import com.veniosg.dir.util.FileUtils;
-import com.veniosg.dir.view.Themer;
 
 import java.io.File;
 
@@ -44,23 +33,20 @@ import static android.graphics.Color.argb;
 import static android.text.TextUtils.TruncateAt.MIDDLE;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static android.widget.ImageView.ScaleType.CENTER;
 import static android.widget.ImageView.ScaleType.CENTER_INSIDE;
 import static com.veniosg.dir.util.FileUtils.getFileName;
-import static com.veniosg.dir.util.Utils.dp;
-import static com.veniosg.dir.view.Themer.getThemedResourceId;
 
 /**
  * A view that supports displaying a drawable to the left and text in the rest of the space
  * and can scale the text independently of the drawable/self measurements.
  */
-public class PathItemView extends FrameLayout {
+class PathItemView extends FrameLayout {
     private static final float SECONDARY_ITEM_ALPHA = 0.54f;
 
     private ImageView mCaretView;
     private TextView mTextView;
 
-    public static PathItemView newInstanceFor(String path, Context context) {
+    static PathItemView newInstanceFor(String path, Context context) {
         PathItemView v = new PathItemView(context, null, -1, android.R.style.Widget_Material_Button_Borderless);
         File file = new File(path);
         v.setTag(file);
@@ -88,7 +74,7 @@ public class PathItemView extends FrameLayout {
         init();
     }
 
-    public PathItemView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private PathItemView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
@@ -123,19 +109,20 @@ public class PathItemView extends FrameLayout {
         mTextView.setText(text);
     }
 
-    public void styleAsSecondary() {
+    void styleAsSecondary() {
         mTextView.setAlpha(SECONDARY_ITEM_ALPHA);
     }
 
-    public void styleAsPrimary() {
+    @SuppressWarnings("unused")
+    void styleAsPrimary() {
         mTextView.setAlpha(1);
     }
 
-    public boolean isStyledAsSecondary() {
+    boolean isStyledAsSecondary() {
         return mTextView.getAlpha() == SECONDARY_ITEM_ALPHA;
     }
 
-    public Animator getTransformToSecondaryAnimator() {
+    Animator transformToSecondaryAnimator() {
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
                 ofFloat(mTextView, "alpha", SECONDARY_ITEM_ALPHA)
@@ -143,7 +130,7 @@ public class PathItemView extends FrameLayout {
         return set;
     }
 
-    public Animator getTransformToPrimaryAnimator() {
+    Animator transformToPrimaryAnimator() {
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
                 ofFloat(mTextView, "alpha", 1)

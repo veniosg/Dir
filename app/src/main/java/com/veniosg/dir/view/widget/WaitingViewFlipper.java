@@ -23,6 +23,8 @@ import android.widget.ViewFlipper;
 
 import com.veniosg.dir.AnimationConstants;
 
+import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
+
 /**
  * Children must always follow the PAGE_INDEX_* indexing.
  */
@@ -54,7 +56,7 @@ public class WaitingViewFlipper extends ViewFlipper {
                 WaitingViewFlipper.this.setDisplayedChild(child);
             }
         };
-        mWaiterHandler.postDelayed(mWaiter, AnimationConstants.ANIM_START_DELAY);
+        mWaiterHandler.postDelayed(mWaiter, ANIM_START_DELAY);
         mWaitingChild = child;
     }
 

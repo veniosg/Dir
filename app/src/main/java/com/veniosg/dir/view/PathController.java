@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2016 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,11 @@ import java.io.File;
 
 public interface PathController {
     /**
-     * The available Modes of this PathBar. </br> See {@link com.veniosg.dir.view.widget.PathBar#switchToManualInput() switchToManualInput()} and {@link com.veniosg.dir.view.widget.PathBar#switchToStandardInput() switchToStandardInput()}.
+     * The available Modes of this PathBar. <br/>
+     * See {@link com.veniosg.dir.view.widget.PathView#switchToManualInput() switchToManualInput()}
+     * and {@link com.veniosg.dir.view.widget.PathView#switchToStandardInput() switchToStandardInput()}.
      */
-    public enum Mode {
+    enum Mode {
         /**
          * The button path selection mode.
          */
@@ -41,7 +43,7 @@ public interface PathController {
     void switchToManualInput();
 
     /**
-     * @see {@link com.veniosg.dir.view.widget.PathBar#cd(File) cd(File)}
+     * @see com.veniosg.dir.view.widget.PathView#cd(File)
      * @param path
      *            The path of the Directory to {@code cd} to.
      * @return Whether the path entered exists and can be navigated to.
@@ -78,12 +80,12 @@ public interface PathController {
     /**
      * Sets the directory the parent activity showed first so that back behavior is fixed.
      *
-     * @param initDir The directory.
+     * @param file The directory.
      */
     void setInitialDirectory(File file);
 
     /**
-     * See {@link #setInitialDirectory(File)}.
+     * @see #setInitialDirectory(File)
      */
     void setInitialDirectory(String path);
 
@@ -105,7 +107,7 @@ public interface PathController {
     /**
      * Interface notifying users of this class when the user has chosen to navigate elsewhere.
      */
-    public interface OnDirectoryChangedListener {
-        public void directoryChanged(File newCurrentDir);
+    interface OnDirectoryChangedListener {
+        void directoryChanged(File newCurrentDir);
     }
 }
