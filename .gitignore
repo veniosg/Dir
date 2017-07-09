@@ -1,6 +1,7 @@
 .DS_Store
 keystore.properties
 .idea
+*.iml
 
 # Built application files
 *.apk
