@@ -52,7 +52,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_GO;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
-import static com.veniosg.dir.util.FileUtils.isOk;
+import static com.veniosg.dir.util.FileUtils.isValidDirectory;
 import static com.veniosg.dir.util.Utils.backWillExit;
 import static com.veniosg.dir.view.CheatSheet.setup;
 import static com.veniosg.dir.view.PathController.Mode.MANUAL_INPUT;
@@ -206,7 +206,7 @@ public class PathView extends FrameLayout implements PathController {
     public boolean cd(File file, boolean forceNoAnim) {
         boolean result;
 
-        if (isOk(file)) {
+        if (isValidDirectory(file)) {
             File oldDir = new File(mCurrentDirectory.getAbsolutePath());
             mCurrentDirectory = file;
 
@@ -235,6 +235,16 @@ public class PathView extends FrameLayout implements PathController {
     @Override
     public File getInitialDirectory() {
         return mInitialDirectory;
+    }
+
+    @Override
+    public File getParentDirectory() {
+        return getCurrentDirectory().getParentFile();
+    }
+
+    @Override
+    public boolean isParentDirectoryNavigable() {
+        return mCurrentDirectory.getParentFile() != null;
     }
 
     @Override

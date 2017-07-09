@@ -77,6 +77,10 @@ public interface PathController {
      */
     File getInitialDirectory();
 
+    File getParentDirectory();
+
+    boolean isParentDirectoryNavigable();
+
     /**
      * Sets the directory the parent activity showed first so that back behavior is fixed.
      *

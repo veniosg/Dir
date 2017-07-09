@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2012 OpenIntents.org
+ * Copyright (C) 2017 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,6 +56,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.veniosg.dir.fragment.PreferenceFragment.getMediaScanFromPreference;
 import static com.veniosg.dir.util.CopyHelper.Operation.COPY;
 import static com.veniosg.dir.view.PathController.OnDirectoryChangedListener;
@@ -375,6 +378,7 @@ public class SimpleFileListFragment extends FileListFragment {
 
         mPathBar = (PathController) getActivity().findViewById(R.id.pathview);
         mTransitionView = (AnimatedFileListContainer) view.findViewById(R.id.zoomview);
+        final View backButton = view.findViewById(R.id.empty_img);
 
         // Handle mPath differently if we restore state or just initially create the view.
         if (savedInstanceState == null) {
@@ -386,6 +390,7 @@ public class SimpleFileListFragment extends FileListFragment {
             @Override
             public void directoryChanged(File newCurrentDir) {
                 open(new FileHolder(newCurrentDir, getActivity()));
+                backButton.setVisibility(mPathBar.isParentDirectoryNavigable() ? VISIBLE : GONE);
             }
         });
         if (savedInstanceState != null && savedInstanceState.getBoolean(INSTANCE_STATE_PATHBAR_MODE)) {
@@ -405,9 +410,6 @@ public class SimpleFileListFragment extends FileListFragment {
         // Everyone hates lag on launch.
     }
 
-    /**
-     * Override this to handle initialization of list item long clicks.
-     */
     private void initContextualActions() {
         if (mActionsEnabled) {
             getListView().setMultiChoiceModeListener(mMultiChoiceModeListener);
@@ -738,7 +740,9 @@ public class SimpleFileListFragment extends FileListFragment {
 
     @Override
     protected void onEmptyViewClicked() {
-        mPathBar.cd(mPathBar.getCurrentDirectory().getParentFile());
+        if (mPathBar.isParentDirectoryNavigable()) {
+            mPathBar.cd(mPathBar.getParentDirectory());
+        }
     }
 
     public void closeActionMode() {

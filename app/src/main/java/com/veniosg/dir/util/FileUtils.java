@@ -1,5 +1,6 @@
 /* 
  * Copyright (C) 2007-2008 OpenIntents.org
+ * Copyright (C) 2017 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +25,7 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.provider.MediaStore.Audio;
 import android.provider.MediaStore.Video;
+import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
 import android.text.format.Formatter;
 import android.util.Log;
@@ -249,14 +251,8 @@ public class FileUtils {
         return intent;
     }
 
-    public static boolean isOk(File file) {
-        // Check file state.
-        boolean isFileOK = true;
-        isFileOK &= file.exists();
-        isFileOK &= file.isDirectory();
-        // add more filters here..
-
-        return isFileOK;
+    public static boolean isValidDirectory(@NonNull File file) {
+		return file.exists() && file.isDirectory();
     }
 
     private static void launchFileIntent(Intent intent, Context c) {
