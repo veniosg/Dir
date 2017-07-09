@@ -19,12 +19,9 @@ package com.veniosg.dir.dialog;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -32,8 +29,6 @@ import android.widget.TextView;
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.misc.FileHolder;
-import com.veniosg.dir.util.FileUtils;
-import com.veniosg.dir.util.Utils;
 
 import java.io.File;
 
@@ -75,7 +70,10 @@ public class DetailsDialog extends BaseDialogFragment {
         addSizeDetailsItem(container);
         addDetailsItem(container, R.string.details_type, typeValue);
         if (isDirectory) {
-            addDetailsItem(container, R.string.details_items, valueOf(f.list().length));
+            String[] fList = f.list();
+            if (fList != null) {
+                addDetailsItem(container, R.string.details_items, valueOf(fList.length));
+            }
         } else if (isImage(mimeType)) {
             addResolutionDetailsItem(container);
         }
