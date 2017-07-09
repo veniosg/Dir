@@ -528,7 +528,9 @@ public class SimpleFileListFragment extends FileListFragment {
     @Override
     protected void onDataApplied() {
         super.onDataApplied();
-        getActivity().invalidateOptionsMenu();
+        if (getActivity() != null) {
+            getActivity().invalidateOptionsMenu();
+        }
     }
 
     @Override
