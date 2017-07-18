@@ -25,7 +25,6 @@
     <string name="pick_title">Dateiauswahl</string>
     <string name="details_type">Typ</string>
     <string name="details_type_folder">Ordner</string>
-    <string name="details_type_file">Datei</string>
     <string name="details_type_other">Andere</string>
     <string name="details_size">Größe</string>
     <string name="details_permissions">Berechtigungen</string>
@@ -105,12 +104,10 @@
     <string name="notif_extracted_fail">Entpacken fehlgeschlagen</string>
     <string name="selected">ausgewählt</string>
     <string name="bookmark_empty">Kein Lesenzeichen hinzugefügt.</string>
-    <string name="bookmark_already_exists">Lesezeichen für diese Datei schon vorhanden</string>
     <string name="search_hint">Dateien suchen</string>
     <string name="query_error">Abfragefehler</string>
     <string name="search_empty">Keine passenden Dateien gefunden!</string>
     <string name="item_icon">Icon</string>
-    <string name="scanning">Untersuche&#8230;</string>
     <string name="delete_success">Erfolgreich gelöscht</string>
     <string name="delete_failure">Einige Dateien wurden nicht gelöscht</string>
     <string name="deleting">L\u00f6sche&#8230;</string>
@@ -133,10 +130,8 @@
     <string name="moved">Erfolgreich verschoben</string>
     <string name="move_error">Einige oder alle Objekte konnte nicht verschoben werden!</string>
     <string name="nothing_to_paste">Zwischenablage ist leer. Zuerst Dateien kopieren oder auswählen.</string>
-    <string name="modified">Geändert</string>
     <string name="about_forked_from">Abgeleitet von OI File Manager</string>
     <string name="about_created_by">Erstellt von George Venios</string>
-    <string name="about_thanks_oifm">Dank an OpenIntents und OIFM Mitwirkende!</string>
     <string name="about">Über</string>
     <string name="about_share">Teilen</string>
     <string name="about_shareSubject">Holen Sie sich Dir auf Google Play</string>

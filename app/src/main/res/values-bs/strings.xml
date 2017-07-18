@@ -20,7 +20,6 @@
     <string name="this_folder_is_empty">Ovaj direktorij je prazan.</string>
     <string name="really_delete_multiselect">Da li stvarno želite izbrisati %d fajlove?</string>
     <string name="details_type">Vrsta</string>
-    <string name="details_type_file">Fajl</string>
     <string name="details_type_other">Ostalo</string>
     <string name="details_size">Velicina</string>
     <string name="details_hidden">Skriven</string>

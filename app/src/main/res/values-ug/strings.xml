@@ -23,7 +23,6 @@
     <string name="really_delete_multiselect">راستىنلا %d ھۆججەتنى ئۆچۈرەمسىز؟</string>
     <string name="details_type">تىپى</string>
     <string name="details_type_folder">قىسقۇچ</string>
-    <string name="details_type_file">ھۆججەت</string>
     <string name="details_type_other">باشقا</string>
     <string name="details_size">چوڭلۇقى</string>
     <string name="details_permissions">ھوقۇقلار</string>

@@ -22,7 +22,6 @@
     <string name="really_delete_multiselect">Sigur doriți ștergerea a %d fișiere?</string>
     <string name="details_type">Tip</string>
     <string name="details_type_folder">Dosar</string>
-    <string name="details_type_file">Fișier</string>
     <string name="details_type_other">Alte</string>
     <string name="details_size">Dimensiune</string>
     <string name="details_permissions">Permisiuni</string>

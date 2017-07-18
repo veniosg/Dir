@@ -22,7 +22,6 @@
     <string name="really_delete_multiselect">Esteu segurs que voleu eliminar %d fitxers?</string>
     <string name="details_type">Tipus</string>
     <string name="details_type_folder">Carpeta</string>
-    <string name="details_type_file">Fitxer</string>
     <string name="details_type_other">Un altre</string>
     <string name="details_size">Mida</string>
     <string name="details_permissions">Permisos</string>

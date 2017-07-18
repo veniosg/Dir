@@ -25,7 +25,6 @@
     <string name="pick_title">Izbor datoteke</string>
     <string name="details_type">Vrsta</string>
     <string name="details_type_folder">Mapa</string>
-    <string name="details_type_file">Datoteka</string>
     <string name="details_type_other">Ostalo</string>
     <string name="details_size">Veličina</string>
     <string name="details_permissions">Dopuštenja</string>
@@ -106,12 +105,10 @@
     <string name="notif_extracted_fail">Ekstrahiranje nije uspijelo</string>
     <string name="selected">odabrano</string>
     <string name="bookmark_empty">Nema dodanih oznaka.</string>
-    <string name="bookmark_already_exists">Ova datoteka je već označena</string>
     <string name="search_hint">Pretraži datoteke</string>
     <string name="query_error">Ispitivanje greške</string>
     <string name="search_empty">Nisu pronađene podudarajuće datoteke!</string>
     <string name="item_icon">Ikona stavke</string>
-    <string name="scanning">Skeniram&#8230;</string>
     <string name="delete_success">Uspješno obrisano</string>
     <string name="delete_failure">Neke datoteke nisu obrisane</string>
     <string name="deleting">Bri\u0161em&#8230;</string>
@@ -134,10 +131,8 @@
     <string name="moved">Uspješno premješteno</string>
     <string name="move_error">Neke ili sve stavke ne mogu biti premještene!</string>
     <string name="nothing_to_paste">Nema ništa za zalijepiti. Prvo kopirajte ili izrežite datoteku.</string>
-    <string name="modified">Izmjenjeno</string>
     <string name="about_forked_from">Izdvojeno od OI File Manager-a</string>
     <string name="about_created_by">Kreirao George Venios</string>
-    <string name="about_thanks_oifm">Hvala OpenIntents-u i OFIM suradnicima!</string>
     <string name="about">O</string>
     <string name="about_share">Podijelite</string>
     <string name="about_shareSubject">Preuzmite Dir na Trgovini Market</string>

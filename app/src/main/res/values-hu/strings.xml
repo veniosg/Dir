@@ -25,7 +25,6 @@
     <string name="pick_title">Fájl választó</string>
     <string name="details_type">Típus</string>
     <string name="details_type_folder">Mappa</string>
-    <string name="details_type_file">Fájl</string>
     <string name="details_type_other">Egyéb</string>
     <string name="details_size">Méret</string>
     <string name="details_permissions">Engedélyek</string>
@@ -105,12 +104,10 @@
     <string name="notif_extracted_fail">Sikertelen kibontás</string>
     <string name="selected">kiválasztva</string>
     <string name="bookmark_empty">Nincs hozzáadott könyvjelző.</string>
-    <string name="bookmark_already_exists">A fájlt már a könyvjelzőkhöz adta</string>
     <string name="search_hint">Fájlok keresése</string>
     <string name="query_error">Query hiba</string>
     <string name="search_empty">Nincs találat!</string>
     <string name="item_icon">Elem ikonja</string>
-    <string name="scanning">Elemz\u00e9s&#8230;</string>
     <string name="delete_success">Sikeresen törölve</string>
     <string name="delete_failure">Néhány fájlt nem sikerült törölni</string>
     <string name="deleting">T\u00f6rl\u00e9s&#8230;</string>
@@ -133,10 +130,8 @@
     <string name="moved">Sikeres áthelyezés</string>
     <string name="move_error">Néhány fájl nem lehet áthelyezni!</string>
     <string name="nothing_to_paste">Nincs mit beilleszteni. Másoljon vagy vágjon ki előbb valamit.</string>
-    <string name="modified">Módosítva</string>
     <string name="about_forked_from">OI File Manager-en alapszik</string>
     <string name="about_created_by">Készítette: George Venios</string>
-    <string name="about_thanks_oifm">Köszönet az OpenIntents és az OIFM közreműködéséért!</string>
     <string name="about">Rólunk</string>
     <string name="about_share">Megosztás</string>
     <string name="about_shareSubject">Szerezd meg a Dir-t a Google Play-ről</string>

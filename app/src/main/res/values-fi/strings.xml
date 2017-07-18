@@ -22,7 +22,6 @@
     <string name="really_delete_multiselect">Oletko aivan varma, että haluat poistaa %d tiedostot?</string>
     <string name="details_type">Tyyppi</string>
     <string name="details_type_folder">Hakemisto</string>
-    <string name="details_type_file">Tiedosto</string>
     <string name="details_type_other">Muu</string>
     <string name="details_size">Koko</string>
     <string name="details_permissions">Käyttöoikeudet</string>

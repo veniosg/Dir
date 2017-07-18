@@ -22,7 +22,6 @@
     <string name="really_delete_multiselect">Vai jūs tiešām vēlaties izdzēst %d failus?</string>
     <string name="details_type">Veids</string>
     <string name="details_type_folder">Mape</string>
-    <string name="details_type_file">Fails</string>
     <string name="details_type_other">Cits</string>
     <string name="details_size">Izmērs</string>
     <string name="details_permissions">Atļaujas</string>

@@ -25,7 +25,6 @@
     <string name="pick_title">ファイルを選択</string>
     <string name="details_type">種類</string>
     <string name="details_type_folder">フォルダ</string>
-    <string name="details_type_file">ファイル</string>
     <string name="details_type_other">その他</string>
     <string name="details_size">サイズ</string>
     <string name="details_permissions">権限</string>
@@ -103,12 +102,10 @@
     <string name="notif_extracted_fail">解凍が失敗しました</string>
     <string name="selected">件選択中</string>
     <string name="bookmark_empty">ブックマークがありません。</string>
-    <string name="bookmark_already_exists">このファイルは既にブックマークされています</string>
     <string name="search_hint">ファイル検索</string>
     <string name="query_error">クエリエラー</string>
     <string name="search_empty">一致するファイルが見つかりません</string>
     <string name="item_icon">アイテムアイコン</string>
-    <string name="scanning">\u30b9\u30ad\u30e3\u30f3\u4e2d&#8230;</string>
     <string name="delete_success">削除が完了しました</string>
     <string name="delete_failure">ファイルの一部を削除できませんでした</string>
     <string name="deleting">\u524a\u9664\u4e2d&#8230;</string>
@@ -131,10 +128,8 @@
     <string name="moved">移動が完了しました</string>
     <string name="move_error">Some or all items couldn\'t be moved!</string>
     <string name="nothing_to_paste">貼り付けるファイルはありません。まずファイルの切り取り、またはコピーをしてください。</string>
-    <string name="modified">変更日時：</string>
     <string name="about_forked_from">OI File Managerからフォークされたファイルマネージャアプリです。</string>
     <string name="about_created_by">作者: George Venios</string>
-    <string name="about_thanks_oifm">Thanks: OpenIntentsの皆様、OI File Manager 開発に参加された皆様！</string>
     <string name="about">Dirについて</string>
     <string name="about_share">共有</string>
     <string name="about_shareSubject">Google PlayからDirをダウンロード</string>

@@ -23,7 +23,6 @@
     <string name="really_delete_multiselect">האם אתה רוצה למחוק קבצי %d</string>
     <string name="details_type">סוג</string>
     <string name="details_type_folder">תיקייה</string>
-    <string name="details_type_file">קובץ</string>
     <string name="details_type_other">אחר</string>
     <string name="details_size">גודל</string>
     <string name="details_permissions">הרשאות</string>

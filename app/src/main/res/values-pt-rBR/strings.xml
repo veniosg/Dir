@@ -25,7 +25,6 @@
     <string name="pick_title">Escolher arquivo</string>
     <string name="details_type">Tipo</string>
     <string name="details_type_folder">Pasta</string>
-    <string name="details_type_file">Arquivo</string>
     <string name="details_type_other">Outro</string>
     <string name="details_size">Tamanho</string>
     <string name="details_permissions">Permissões</string>
@@ -105,12 +104,10 @@
     <string name="notif_extracted_fail">Extração falhou</string>
     <string name="selected">selecionado</string>
     <string name="bookmark_empty">Nenhum favorito adicionado.</string>
-    <string name="bookmark_already_exists">Esse arquivo já é um favorito</string>
     <string name="search_hint">Procurar arquivos</string>
     <string name="query_error">Erro de query</string>
     <string name="search_empty">Nenhum arquivo encontrado!</string>
     <string name="item_icon">"Ícone "</string>
-    <string name="scanning">Escaneando&#8230;</string>
     <string name="delete_success">Deletado com sucesso</string>
     <string name="delete_failure">Alguns arquivos não foram excluidos</string>
     <string name="deleting">Excluindo&#8230;</string>
@@ -133,10 +130,8 @@
     <string name="moved">Movido com sucesso</string>
     <string name="move_error">Some or all items couldn\'t be moved!</string>
     <string name="nothing_to_paste">Nada para colar. Copie ou recorte arquivos antes.</string>
-    <string name="modified">Modifcado</string>
     <string name="about_forked_from">Fork de OI File Manager</string>
     <string name="about_created_by">Criado por George Venios</string>
-    <string name="about_thanks_oifm">Obrigado Openintents e os contribuidores da OIFM!</string>
     <string name="about">Sobre</string>
     <string name="about_share">Compartilhar</string>
     <string name="about_shareSubject">Baixe Dir na Google Play</string>

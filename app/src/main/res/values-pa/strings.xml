@@ -22,7 +22,6 @@
     <string name="really_delete">ਕਯਾ ਆਪ %s ਹਟਾਨਾ ਚਾਹਤੇ ਹੈ ?</string>
     <string name="details_type">ਟਾਈਪ</string>
     <string name="details_type_folder">ਫੋਲਡਰ</string>
-    <string name="details_type_file">ਫਾਇਲ</string>
     <string name="details_type_other">ਹੋਰ</string>
     <string name="details_size">ਸਾਈਜ਼</string>
     <string name="details_permissions">ਅਧਿਕਾਰ</string>

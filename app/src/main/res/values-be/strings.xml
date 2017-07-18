@@ -23,7 +23,6 @@
     <string name="really_delete_multiselect">Вы ўпэўнены, што жадаеце выдаліць %d файлаў?</string>
     <string name="details_type">Тып</string>
     <string name="details_type_folder">Папка</string>
-    <string name="details_type_file">Файл</string>
     <string name="details_type_other">Іншае</string>
     <string name="details_size">Памер</string>
     <string name="details_permissions">Правы</string>

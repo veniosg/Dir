@@ -25,7 +25,6 @@
     <string name="pick_title">파일 선택기</string>
     <string name="details_type">종류</string>
     <string name="details_type_folder">폴더</string>
-    <string name="details_type_file">파일</string>
     <string name="details_type_other">기타</string>
     <string name="details_size">용량</string>
     <string name="details_permissions">권한</string>

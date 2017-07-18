@@ -25,7 +25,6 @@
     <string name="pick_title">Выбор файлов</string>
     <string name="details_type">Тип</string>
     <string name="details_type_folder">Папка</string>
-    <string name="details_type_file">Файл</string>
     <string name="details_type_other">Другое</string>
     <string name="details_size">Размер</string>
     <string name="details_permissions">Права доступа</string>
@@ -109,12 +108,10 @@
     <string name="notif_extracted_fail">Ошибка распаковки</string>
     <string name="selected">выбранный</string>
     <string name="bookmark_empty">Нет добавленных закладок</string>
-    <string name="bookmark_already_exists">Файл уже добавлен в закладки</string>
     <string name="search_hint">Поиск файлов</string>
     <string name="query_error">Ошибочный запрос</string>
     <string name="search_empty">Совпадений не найдено!</string>
     <string name="item_icon">Значок элемента</string>
-    <string name="scanning">\u0421\u043a\u0430\u043d\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435&#8230;</string>
     <string name="delete_success">Успешно удалено</string>
     <string name="delete_failure">Некоторые файлы не удалены</string>
     <string name="deleting">\u0423\u0434\u0430\u043b\u0435\u043d\u0438\u0435&#8230;</string>
@@ -137,10 +134,8 @@
     <string name="moved">Успешно перемещено</string>
     <string name="move_error">Некоторые или все элементы не могут быть перемещены!</string>
     <string name="nothing_to_paste">Нечего вставить. Скопируйте или переместите файлы.</string>
-    <string name="modified">Изменён</string>
     <string name="about_forked_from">Форк с OI File Manager</string>
     <string name="about_created_by">Создано George Venios</string>
-    <string name="about_thanks_oifm">Спасибо OpenIntents и OIFM участникам!</string>
     <string name="about">О программе</string>
     <string name="about_share">Отправить</string>
     <string name="about_shareSubject">Взять Dir на Google Play</string>

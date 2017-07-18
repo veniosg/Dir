@@ -25,7 +25,6 @@
     <string name="pick_title">Escolher ficheiro</string>
     <string name="details_type">Tipo</string>
     <string name="details_type_folder">Pasta</string>
-    <string name="details_type_file">Ficheiro</string>
     <string name="details_type_other">Outros</string>
     <string name="details_size">Tamanho</string>
     <string name="details_permissions">Permissões</string>
@@ -97,7 +96,6 @@
     <string name="notif_extracted_fail">Falhou a extração</string>
     <string name="selected">selecionado</string>
     <string name="bookmark_empty">Não existem marcadores.</string>
-    <string name="bookmark_already_exists">Já existe um marcador para este ficheiro</string>
     <string name="search_hint">Procurar ficheiros</string>
     <string name="query_error">Erro na consulta</string>
     <string name="search_empty">Não foi encontrado nenhum ficheiro!</string>
@@ -120,10 +118,8 @@
     <string name="moving">A mover&#8230;</string>
     <string name="moved">Movido com sucesso</string>
     <string name="nothing_to_paste">Antes de poder colar precisa de copiar ou cortar ficheiros.</string>
-    <string name="modified">Modificado</string>
     <string name="about_forked_from">Baseado em código do OI File Manager</string>
     <string name="about_created_by">Criado por George Venios</string>
-    <string name="about_thanks_oifm">Um agradecimento ao OpenIntents e aos que contribuem para o OIFM!</string>
     <string name="about">Sobre</string>
     <string name="about_share">Partilhar</string>
     <string name="about_shareSubject">Descarrega Dir no Google Play</string>

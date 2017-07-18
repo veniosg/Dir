@@ -22,7 +22,6 @@
     <string name="really_delete_multiselect">Vill du verkligen ta bort %d filer?</string>
     <string name="details_type">Typ</string>
     <string name="details_type_folder">Mapp</string>
-    <string name="details_type_file">Fil</string>
     <string name="details_type_other">Annat</string>
     <string name="details_size">Storlek</string>
     <string name="details_permissions">Behörigheter</string>

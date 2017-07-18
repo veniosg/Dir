@@ -26,7 +26,6 @@
     <string name="pick_title">Επιλογή αρχείου</string>
     <string name="details_type">Τύπος</string>
     <string name="details_type_folder">Φάκελος</string>
-    <string name="details_type_file">Αρχείο</string>
     <string name="details_type_other">Άλλο</string>
     <string name="details_size">Μέγεθος</string>
     <string name="details_permissions">Δικαιώματα</string>
@@ -107,12 +106,10 @@
     <string name="notif_extracted_fail">Αποτυχία αποσυμπίεσης</string>
     <string name="selected">επιλεγμένα</string>
     <string name="bookmark_empty">Κανένας σελιδοδείκτης</string>
-    <string name="bookmark_already_exists">Ήδη αποθηκευμένο ως σελιδοδείκτης</string>
     <string name="search_hint">Αναζήτηση αρχείων</string>
     <string name="query_error">Σφάλμα αναζήτησης</string>
     <string name="search_empty">Δεν βρέθηκαν στοιχεία που ταιριάζουν!</string>
     <string name="item_icon">Εικονίδιο στοιχείου</string>
-    <string name="scanning">\u03a3\u03ac\u03c1\u03c9\u03c3\u03b7&#8230;</string>
     <string name="delete_success">Επιτυχής διαγραφή</string>
     <string name="delete_failure">Κάποια αρχεία δεν μπορούσαν να διαγραφούν</string>
     <string name="deleting">\u0394\u03b9\u03b1\u03b3\u03c1\u03b1\u03c6\u03ae&#8230;</string>
@@ -136,10 +133,8 @@
     <string name="moved">Επιτυχής μετακίνηση</string>
     <string name="move_error">Κάποια αρχεία δεν μπόρεσαν να μετακινηθούν!</string>
     <string name="nothing_to_paste">Δεν υπάρχουν αρχεία για επικόλληση. Αντιγράψτε ή αποκόψτε αρχεία πρώτα.</string>
-    <string name="modified">Τροποποιημένο</string>
     <string name="about_forked_from">Fork του OI File Manager</string>
     <string name="about_created_by">Αναπτύχθηκε από τον Γιώργο Βενιό</string>
-    <string name="about_thanks_oifm">Ευχαριστούμε το OpenIntents και τους συνεισφέροντες σε αυτό!</string>
     <string name="about">Περί</string>
     <string name="about_share">Κοινοποίηση</string>
     <string name="about_shareSubject">Κατεβάστε το Dir στο Google Play</string>

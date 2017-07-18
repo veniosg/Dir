@@ -23,7 +23,6 @@
     <string name="really_delete_multiselect">آیا شما واقعا می خواهند انداختن‌ %d پرونده?</string>
     <string name="details_type">نوعی</string>
     <string name="details_type_folder">تاه‌ كن‌</string>
-    <string name="details_type_file">پرونده‌</string>
     <string name="details_type_other">ديگر</string>
     <string name="details_size">اندازه‌</string>
     <string name="details_permissions">براى سفرشان</string>

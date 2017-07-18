@@ -23,7 +23,6 @@
     <string name="really_delete_multiselect">您確定要將這 %d 個檔案刪除嗎？</string>
     <string name="details_type">類型</string>
     <string name="details_type_folder">資料夾</string>
-    <string name="details_type_file">檔案</string>
     <string name="details_type_other">其它</string>
     <string name="details_size">大小</string>
     <string name="details_permissions">權限</string>

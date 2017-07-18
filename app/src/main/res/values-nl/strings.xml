@@ -25,7 +25,6 @@
     <string name="pick_title">Bestand kiezen</string>
     <string name="details_type">Type</string>
     <string name="details_type_folder">Map</string>
-    <string name="details_type_file">Bestand</string>
     <string name="details_type_other">Overig</string>
     <string name="details_size">Grootte</string>
     <string name="details_permissions">Rechten</string>
@@ -105,12 +104,10 @@
     <string name="notif_extracted_fail">Uitpakken niet geslaagd</string>
     <string name="selected">Geselecteerd</string>
     <string name="bookmark_empty">Geen bladwijzers toegevoegd.</string>
-    <string name="bookmark_already_exists">Dit bestand is al een bladwijzer</string>
     <string name="search_hint">Zoek bestanden</string>
     <string name="query_error">Query fout</string>
     <string name="search_empty">Geen overeenkomende bestanden gevonden!</string>
     <string name="item_icon">Item icoon</string>
-    <string name="scanning">Zoeken&#8230;</string>
     <string name="delete_success">Verwijderen geslaagd</string>
     <string name="delete_failure">Bepaalde bestanden zijn niet verwijderd</string>
     <string name="deleting">Verwijderen&#8230;</string>
@@ -133,10 +130,8 @@
     <string name="moved">Verplaatsen geslaagd</string>
     <string name="move_error">Sommige of alle items kunnen niet worden verplaatst!</string>
     <string name="nothing_to_paste">Niks om te plakken. Kopieer of knip bestanden eerst.</string>
-    <string name="modified">Aangepast</string>
     <string name="about_forked_from">Afsplitsing van Ol File Manager</string>
     <string name="about_created_by">Gemaakt door George Venios</string>
-    <string name="about_thanks_oifm">Dank aan OpenIntents en OIFM contributors!</string>
     <string name="about">Over</string>
     <string name="about_share">Deel</string>
     <string name="about_shareSubject">Verkrijg Dir op Google Play</string>

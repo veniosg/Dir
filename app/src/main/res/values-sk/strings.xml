@@ -23,7 +23,6 @@
     <string name="really_delete_multiselect">Naozaj chcete zmazať %d súborov?</string>
     <string name="details_type">Typ</string>
     <string name="details_type_folder">Priečinok</string>
-    <string name="details_type_file">Súbor</string>
     <string name="details_type_other">Iné</string>
     <string name="details_size">Veľkosť</string>
     <string name="details_permissions">Práva</string>

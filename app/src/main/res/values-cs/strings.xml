@@ -23,7 +23,6 @@
     <string name="really_delete_multiselect">Opravdu chcete odstranit %d souborů?</string>
     <string name="details_type">Typ</string>
     <string name="details_type_folder">Složka</string>
-    <string name="details_type_file">Soubor</string>
     <string name="details_type_other">Jiné</string>
     <string name="details_size">Velikost</string>
     <string name="details_permissions">Oprávnění</string>

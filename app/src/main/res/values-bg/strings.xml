@@ -23,7 +23,6 @@
     <string name="really_delete_multiselect">Наистина ли искате да изтриете %d файла?</string>
     <string name="details_type">Вид</string>
     <string name="details_type_folder">Директория</string>
-    <string name="details_type_file">Файл</string>
     <string name="details_type_other">Други</string>
     <string name="details_size">Размер</string>
     <string name="details_permissions">Права</string>

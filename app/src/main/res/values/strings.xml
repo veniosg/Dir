@@ -26,7 +26,6 @@
     <string name="pick_title">File picker</string>
     <string name="details_type">Type</string>
     <string name="details_type_folder">Folder</string>
-    <string name="details_type_file">File</string>
     <string name="details_type_other">Other</string>
     <string name="details_size">Size</string>
     <string name="details_permissions">Permissions</string>
@@ -108,12 +107,10 @@
     <string name="notif_extracted_fail">Extraction failed</string>
     <string name="selected">selected</string>
     <string name="bookmark_empty">No bookmarks</string>
-    <string name="bookmark_already_exists">This file is already bookmarked</string>
     <string name="search_hint">Search files</string>
     <string name="query_error">Query error</string>
     <string name="search_empty">No matching files found!</string>
     <string name="item_icon">Item icon</string>
-    <string name="scanning">Scanning&#8230;</string>
     <string name="delete_success">Successfully deleted</string>
     <string name="delete_failure">Some files not deleted</string>
     <string name="deleting">Deleting&#8230;</string>
@@ -137,10 +134,8 @@
     <string name="moved">Successfully moved</string>
     <string name="move_error">Some or all items couldn\'t be moved!</string>
     <string name="nothing_to_paste">Nothing to paste. Copy or cut files first.</string>
-    <string name="modified">Modified</string>
     <string name="about_forked_from">Forked from OI File Manager</string>
     <string name="about_created_by">Created by George Venios</string>
-    <string name="about_thanks_oifm">Thanks to OpenIntents and OIFM contributors!</string>
     <string name="menu_about">@string/about</string>
     <string name="about">About</string>
     <string name="about_share">Share</string>

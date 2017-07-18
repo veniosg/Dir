@@ -23,7 +23,6 @@
     <string name="really_delete_multiselect">هل أنت متأكد من رغبتك في حذف الملفات %d؟</string>
     <string name="details_type">النوع</string>
     <string name="details_type_folder">المجلد</string>
-    <string name="details_type_file">الملف</string>
     <string name="details_type_other">أخرى</string>
     <string name="details_size">الحجم</string>
     <string name="details_permissions">الصلاحيات</string>
