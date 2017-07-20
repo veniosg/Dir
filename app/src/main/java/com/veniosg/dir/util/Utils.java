@@ -152,7 +152,7 @@ public abstract class Utils {
         } catch (Exception ex) {
             Logger.log(ex);
             Parcelable icon = Intent.ShortcutIconResource.fromContext(
-                    context.getApplicationContext(), R.drawable.ic_launcher);
+                    context.getApplicationContext(), R.mipmap.ic_launcher);
             shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
         } finally {
             Intent onClickIntent = new Intent(Intent.ACTION_VIEW);
