@@ -1,8 +1,23 @@
 Dir
 ===========
 
+[<img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">](https://play.google.com/store/apps/details?id=com.veniosg.dir)
+
 A modern Android file manager.  
 For more information see http://veniosg.github.io/Dir/.
+
+Overview
+--------
+
+Dir is a simple, beautiful, free and open source file manager for Android.
+
+Features:
+
+* Clean design with award winning animations*
+* Blazing fast - tiny size.
+* Themeable with battery friendly dark theme.
+* File and folder bookmarks and home screen shortcuts.
+* Free, open source and privacy minded: No data collection, no ads, no unnecessary permissions - absolutely no data collection!
 
 
 License
