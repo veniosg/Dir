@@ -21,15 +21,9 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.ColorMatrix;
-import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -54,8 +48,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.graphics.Bitmap.Config.ARGB_8888;
-import static android.util.TypedValue.COMPLEX_UNIT_DIP;
-import static android.util.TypedValue.applyDimension;
 import static android.view.View.MeasureSpec.EXACTLY;
 import static android.view.View.MeasureSpec.makeMeasureSpec;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
@@ -213,11 +205,11 @@ public abstract class Utils {
     }
 
     public static Drawable getSdCardIcon(Context c) {
-        return c.getDrawable(R.drawable.ic_item_sdcard_tinted);
+        return c.getDrawable(R.drawable.ic_item_sdcard);
     }
 
     private static Drawable getFolderIcon(Context c) {
-        return c.getDrawable(R.drawable.ic_item_folder_tinted);
+        return c.getDrawable(R.drawable.ic_item_folder);
     }
 
     /**

@@ -23,27 +23,27 @@
             <group android:checkableBehavior="none">
                 <item
                     android:id="@+id/menu_move"
-                    android:icon="@drawable/ic_action_cut_tinted"
+                    android:icon="@drawable/ic_action_cut"
                     android:title="@string/menu_move" />
                 <item
                     android:id="@+id/menu_copy"
-                    android:icon="@drawable/ic_action_copy_tinted"
+                    android:icon="@drawable/ic_action_copy"
                     android:title="@string/menu_copy" />
                 <item
                     android:id="@+id/menu_rename"
-                    android:icon="@drawable/ic_action_rename_tinted"
+                    android:icon="@drawable/ic_action_rename"
                     android:title="@string/menu_rename" />
                 <item
                     android:id="@+id/menu_compress"
-                    android:icon="@drawable/ic_action_box_tinted"
+                    android:icon="@drawable/ic_action_box"
                     android:title="@string/menu_compress" />
                 <item
                     android:id="@+id/menu_extract"
-                    android:icon="@drawable/ic_action_box_tinted"
+                    android:icon="@drawable/ic_action_box"
                     android:title="@string/menu_extract" />
                 <item
                     android:id="@+id/menu_delete"
-                    android:icon="@drawable/ic_action_delete_tinted"
+                    android:icon="@drawable/ic_action_delete"
                     android:title="@string/menu_delete" />
             </group>
         </menu>
@@ -58,12 +58,11 @@
         android:title="@string/menu_details" />
     <item
         android:id="@+id/menu_bookmark"
-        android:icon="@drawable/ic_action_bookmarks"
+        android:icon="@drawable/ic_action_bookmark"
         android:title="@string/menu_bookmark"
         android:showAsAction="never" />
     <item
         android:id="@+id/menu_create_shortcut"
-        android:icon="@drawable/ic_action_create_shortcut"
         android:title="@string/menu_create_shortcut"
         android:showAsAction="never" />
     <item

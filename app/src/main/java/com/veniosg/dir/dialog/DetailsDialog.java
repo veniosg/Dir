@@ -22,6 +22,7 @@ import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -40,7 +41,7 @@ import static com.veniosg.dir.util.Utils.getLastChild;
 import static com.veniosg.dir.util.Utils.isImage;
 import static java.lang.String.valueOf;
 
-public class DetailsDialog extends BaseDialogFragment {
+public class DetailsDialog extends DialogFragment {
 	private FileHolder mFileHolder;
 
 	@Override
@@ -94,7 +95,6 @@ public class DetailsDialog extends BaseDialogFragment {
                         }
                 )
                 .create();
-        dialog.setIcon(tintIcon(mFileHolder.getIcon()));
         return dialog;
 	}
 

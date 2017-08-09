@@ -20,6 +20,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,7 @@ import com.veniosg.dir.service.ZipService;
 import java.io.File;
 import java.util.List;
 
-public class MultiCompressDialog extends BaseDialogFragment implements Overwritable {
+public class MultiCompressDialog extends DialogFragment implements Overwritable {
 	private List<FileHolder> mFileHolders;
 
 	@Override
@@ -83,7 +84,6 @@ public class MultiCompressDialog extends BaseDialogFragment implements Overwrita
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
-        dialog.setIcon(tintIcon(R.drawable.ic_action_box));
         return dialog;
 	}
 	

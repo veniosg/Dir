@@ -21,11 +21,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 
 import com.veniosg.dir.R;
 
 @SuppressLint("ValidFragment")
-class OverwriteFileDialog extends BaseDialogFragment {
+class OverwriteFileDialog extends DialogFragment {
 	
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {

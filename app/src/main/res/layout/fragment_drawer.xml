@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,15 +44,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:divider="@drawable/divider"
         android:orientation="vertical"
-        android:showDividers="beginning"
-        android:divider="@drawable/divider">
+        android:showDividers="beginning">
 
         <TextView
-            android:layout_marginTop="8dp"
             android:id="@+id/action_settings"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
+            android:layout_marginTop="8dp"
             android:background="?android:selectableItemBackground"
             android:drawablePadding="32dp"
             android:drawableStart="@drawable/ic_sidenav_settings"

@@ -22,6 +22,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
 import com.veniosg.dir.IntentConstants;
@@ -34,7 +35,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SingleDeleteDialog extends BaseDialogFragment {
+public class SingleDeleteDialog extends DialogFragment {
 	private FileHolder mFileHolder;
 	
 	@Override
@@ -56,7 +57,7 @@ public class SingleDeleteDialog extends BaseDialogFragment {
                 })
                 .setNegativeButton(R.string.no, null)
                 .create();
-        dialog.setIcon(tintIcon(R.drawable.ic_action_delete));
+        dialog.setIcon(R.drawable.ic_dialog_delete);
         return dialog;
 	}
 	

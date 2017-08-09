@@ -19,15 +19,12 @@ package com.veniosg.dir.misc;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.XmlResourceParser;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.view.ContextThemeWrapper;
 import android.webkit.MimeTypeMap;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
-import com.veniosg.dir.view.Themer;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -35,24 +32,17 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.veniosg.dir.view.Themer.getThemedColor;
-import static com.veniosg.dir.view.Themer.getThemedResourceId;
-
 public class MimeTypes {
-
     private static final Integer[] sIconIds = new Integer[]{
-            R.drawable.ic_item_file_tinted,
-            R.drawable.ic_item_folder_tinted,
-            R.drawable.ic_item_image_tinted,
-            R.drawable.ic_item_audio_tinted,
-            R.drawable.ic_item_video_tinted,
-            R.drawable.ic_item_archive_tinted,
-            R.drawable.ic_item_text_tinted,
-            R.drawable.ic_item_text_web_tinted,
-            R.drawable.ic_item_text_tinted,
-            R.drawable.ic_item_text_xml_tinted,
-            R.drawable.ic_item_android_package_tinted,
-            R.drawable.ic_item_sdcard_tinted
+            R.drawable.ic_item_file,
+            R.drawable.ic_item_folder,
+            R.drawable.ic_item_image,
+            R.drawable.ic_item_audio,
+            R.drawable.ic_item_video,
+            R.drawable.ic_item_archive,
+            R.drawable.ic_item_text,
+            R.drawable.ic_item_android_package,
+            R.drawable.ic_item_sdcard
     };
 
 	private Map<String, String> mMimeTypes = new HashMap<String,String>();

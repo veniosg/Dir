@@ -112,9 +112,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@string/about_contact"
                     android:src="@drawable/ic_about_mail"
-                    android:tint="?android:attr/textColorTertiary"
                     tools:ignore="NestedWeights" />
 
                 <ImageButton
@@ -123,9 +123,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@string/about_beta"
-                    android:src="@drawable/ic_about_gplus"
-                    android:tint="?android:attr/textColorTertiary" />
+                    android:src="@drawable/ic_about_google_plus" />
 
                 <ImageButton
                     android:id="@+id/contribute"
@@ -133,9 +133,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@string/about_contribute"
-                    android:src="@drawable/ic_about_github"
-                    android:tint="?android:attr/textColorTertiary" />
+                    android:src="@drawable/ic_about_github" />
 
                 <ImageButton
                     android:id="@+id/gplay"
@@ -143,9 +143,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@string/about_gplay"
-                    android:src="@drawable/ic_about_google_play"
-                    android:tint="?android:attr/textColorTertiary" />
+                    android:src="@drawable/ic_about_google_play" />
 
                 <ImageButton
                     android:id="@+id/share"
@@ -153,8 +153,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
+                    android:adjustViewBounds="true"
                     android:contentDescription="@string/about_share"
-                    android:tint="?android:attr/textColorTertiary"
                     android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>

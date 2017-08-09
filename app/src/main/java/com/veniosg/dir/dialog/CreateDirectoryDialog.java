@@ -21,6 +21,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +40,7 @@ import com.veniosg.dir.fragment.FileListFragment;
 
 import java.io.File;
 
-public class CreateDirectoryDialog extends BaseDialogFragment implements Overwritable {
+public class CreateDirectoryDialog extends DialogFragment implements Overwritable {
 	private File mIn;
 
 	@Override
@@ -89,7 +90,7 @@ public class CreateDirectoryDialog extends BaseDialogFragment implements Overwri
                 )
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
-        dialog.setIcon(tintIcon(R.drawable.ic_item_folder));
+        dialog.setIcon(R.drawable.ic_dialog_folder);
         return dialog;
 	}
 

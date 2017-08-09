@@ -17,13 +17,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item android:id="@+id/menu_open_parent"
-        android:icon="@drawable/ic_action_folder"
+        android:icon="@drawable/ic_action_cab_folder"
         android:showAsAction="ifRoom"
         android:title="@string/menu_open_parent" />
 
     <item
         android:id="@+id/menu_delete"
-        android:icon="@drawable/ic_action_delete"
+        android:icon="@drawable/ic_action_cab_delete"
         android:showAsAction="ifRoom"
         android:title="@string/menu_remove_bookmark" />
 

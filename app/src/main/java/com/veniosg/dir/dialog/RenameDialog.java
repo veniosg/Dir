@@ -20,6 +20,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RenameDialog extends BaseDialogFragment {
+public class RenameDialog extends DialogFragment {
 	private FileHolder mFileHolder;
 	
 	@Override
@@ -89,7 +90,7 @@ public class RenameDialog extends BaseDialogFragment {
                             }
                         })
                 .create();
-        dialog.setIcon(tintIcon(mFileHolder.getIcon()));
+        dialog.setIcon(mFileHolder.getIcon());
         return dialog;
 	}
 

@@ -36,22 +36,21 @@
 	<type extension=".3gp" mimetype="video/3gpp" icon="4" />
 	
 	<!-- Package types -->
-	<type extension=".jar" mimetype="application/java-archive" icon="3" />
+	<type extension=".jar" mimetype="application/java-archive" icon="5" />
 	<type extension=".zip" mimetype="application/zip" icon="5" />
 	<type extension=".rar" mimetype="application/rar" icon="5" />
 	<type extension=".gz" mimetype="application/gzip" icon="5" /> <!-- NOT IN WEBKIT -->
 	
 	<!-- Web browser types -->
-	<type extension=".htm" mimetype="text/html" icon="7" />
-	<type extension=".html" mimetype="text/html" icon="7" />
-	<type extension=".php" mimetype="text/php" icon="1" /> <!-- NOT IN WEBKIT -->
+	<type extension=".htm" mimetype="text/html" icon="6" />
+	<type extension=".html" mimetype="text/html" icon="6" />
+	<type extension=".php" mimetype="text/php" icon="6" /> <!-- NOT IN WEBKIT -->
 	
 	<!-- Text types -->
 	<type extension=".txt" mimetype="text/plain" icon="6" />
-	<type extension=".csv" mimetype="text/csv" icon="8" />
-	<type extension=".xml" mimetype="text/xml" icon="9" />
+	<type extension=".csv" mimetype="text/csv" icon="6" />
+	<type extension=".xml" mimetype="text/xml" icon="6" />
 	
 	<!-- Android specific -->
-	<type extension=".apk" mimetype="application/vnd.android.package-archive" icon="10" />
-	
+	<type extension=".apk" mimetype="application/vnd.android.package-archive" icon="7" />
 </MimeTypes>
