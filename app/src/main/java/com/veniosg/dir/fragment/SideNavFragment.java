@@ -46,7 +46,7 @@ import static android.view.View.GONE;
 import static com.veniosg.dir.view.Themer.getThemedResourceId;
 import static com.veniosg.dir.view.Themer.setStatusBarColour;
 
-public class NavigationFragment extends AbsListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class SideNavFragment extends AbsListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private WaitingViewFlipper mFlipper;
     private View.OnClickListener mSettingsClickListener = new View.OnClickListener() {
         @Override

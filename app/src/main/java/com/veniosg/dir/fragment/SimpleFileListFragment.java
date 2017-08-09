@@ -350,8 +350,8 @@ public class SimpleFileListFragment extends FileListFragment {
         }
 
         Activity act = getActivity();
-        if (act instanceof NavigationFragment.BookmarkContract) {
-            ((NavigationFragment.BookmarkContract) act).showBookmarks();
+        if (act instanceof SideNavFragment.BookmarkContract) {
+            ((SideNavFragment.BookmarkContract) act).showBookmarks();
         }
     }
 

@@ -31,7 +31,7 @@ import android.view.ViewGroup;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
-import com.veniosg.dir.fragment.NavigationFragment;
+import com.veniosg.dir.fragment.SideNavFragment;
 import com.veniosg.dir.fragment.SimpleFileListFragment;
 import com.veniosg.dir.misc.FileHolder;
 
@@ -44,10 +44,9 @@ import static com.veniosg.dir.util.FileUtils.openFile;
 import static java.lang.Math.min;
 
 public class FileManagerActivity extends BaseActivity
-        implements NavigationFragment.BookmarkContract {
+        implements SideNavFragment.BookmarkContract {
 	private SimpleFileListFragment mFragment;
     private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
 	protected void onNewIntent(Intent intent) {
@@ -113,13 +112,6 @@ public class FileManagerActivity extends BaseActivity
 	}
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        mDrawerToggle.syncState();
-    }
-
-    @Override
  	public boolean onCreateOptionsMenu(Menu menu) {
  		getMenuInflater().inflate(R.menu.options_filemanager, menu);
  		return true;
@@ -127,16 +119,15 @@ public class FileManagerActivity extends BaseActivity
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        } else {
-            switch (item.getItemId()) {
-                case R.id.menu_search:
-                    onSearchRequested();
-                    return true;
-                default:
-                    return super.onOptionsItemSelected(item);
-            }
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                showBookmarks();
+                return true;
+            case R.id.menu_search:
+                onSearchRequested();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 	}
 
@@ -174,10 +165,14 @@ public class FileManagerActivity extends BaseActivity
 
     private void setupDrawer() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.string.app_name, R.string.app_name);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
         setOptimalDrawerWidth(findViewById(R.id.bookmarks));
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    protected void setupToolbar() {
+        super.setupToolbar();
+        getActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
     }
 
     /**
