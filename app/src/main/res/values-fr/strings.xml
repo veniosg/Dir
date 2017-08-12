@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <!--
- * Copyright (C) 2014 George Venios
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- -->
+<!--
+* Copyright (C) 2014-2015 George Venios
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*      http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+-->
 <resources>
     <!-- Bookmark action. This is a verb. -->
     <string name="menu_bookmark">Marque-page</string>
+    <string name="bookmarks">Favoris</string>
     <string name="create_new_folder">Créer un nouveau dossier</string>
     <string name="folder_name">Nom du dossier</string>
     <string name="this_folder_is_empty">Ce dossier est vide.</string>
@@ -25,11 +26,14 @@
     <string name="pick_title">Sélectionner un fichier</string>
     <string name="details_type">Tapez</string>
     <string name="details_type_folder">Dossier</string>
+    <string name="details_type_file">fichier</string>
     <string name="details_type_other">autres</string>
     <string name="details_size">Taille</string>
     <string name="details_permissions">autorisations</string>
     <string name="details_hidden">Invisible</string>
     <string name="details_lastmodified">Dernière mise à jour</string>
+    <string name="details_items">Entrée</string>
+    <string name="details_resolution">Résolution</string>
     <string name="copied_file_name">Copie de %s</string>
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="copied_file_name_2">Copie %1$d de %2$s</string>
@@ -104,16 +108,21 @@
     <string name="notif_extracted_fail">Extraction échouée</string>
     <string name="selected">sélectionné(s)</string>
     <string name="bookmark_empty">Pas de marque-page.</string>
+    <string name="bookmark_already_exists">Le fichier a déjà été marqué</string>
     <string name="search_hint">Rechercher des fichiers</string>
     <string name="query_error">Erreur de requête</string>
     <string name="search_empty">Pas de fichier correspondant trouvé!</string>
     <string name="item_icon">Icône de l\'élément</string>
+    <string name="scanning">Recherche&#8230;</string>
     <string name="delete_success">Suppression réussie</string>
     <string name="delete_failure">Des fichiers n\'ont pas été supprimés</string>
     <string name="deleting">Suppression&#8230;</string>
     <string name="rename_success">Renommé avec succès</string>
+    <string name="rename_failure">Impossible de renommer</string>
     <string name="loading">Chargement&#8230;</string>
+    <string name="searching">Recherche&#8230;</string>
     <string name="create_dir_success">Dossier créé avec succès</string>
+    <string name="create_dir_failure">Impossible de créer le dossier</string>
     <string name="compressed_file_name">Nom du fichier compressé</string>
     <string name="file_exists">Le fichier existe déjà</string>
     <string name="overwrite_question">Ecraser l\'ancien ?</string>
@@ -123,11 +132,15 @@
     <string name="pick_button_default">Choisir un fichier</string>
     <string name="copying">Copie&#8230;</string>
     <string name="copied">Copie réussie</string>
+    <string name="copy_error">Une ou plusieurs entrées ne peuvent pas être copiées!</string>
     <string name="moving">D\u00e9placement&#8230;</string>
     <string name="moved">Déplacement réussi</string>
+    <string name="move_error">Une ou plusieurs entrées ne peuvent pas être déplacées!</string>
     <string name="nothing_to_paste">Rien à copier. Coupez ou copiez des fichiers.</string>
+    <string name="modified">Modifié</string>
     <string name="about_forked_from">Adapté de OI File Manager</string>
     <string name="about_created_by">Créée par George Venios</string>
+    <string name="about_thanks_oifm">Merci aux contributeurs de OpenIntents et OIFM!</string>
     <string name="about">A propos</string>
     <string name="about_share">Partager</string>
     <string name="about_shareSubject">Télécharger Dir sur Google Play</string>
@@ -138,5 +151,10 @@
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <!-- Right pathview button description -->
+    <string name="edit_path">Modifier le chemin</string>
     <!-- Left pathview manual input button description -->
+    <string name="close_path">Fermer</string>
+    <string name="goto_path">Aller à</string>
+    <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="permissions_denied">Dir a besoin de votre autorisation pour accéder au stockage</string>
 </resources>
