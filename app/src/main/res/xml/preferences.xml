@@ -27,14 +27,16 @@
                 android:defaultValue="1"
                 android:entries="@array/preference_sortby_names"
                 android:entryValues="@array/sortby_values"
-                android:title="@string/preference_sortby" />
+                android:title="@string/preference_sortby"
+                android:icon="@drawable/ic_sort"/>
         
         <SwitchPreference
                 android:title="@string/preference_sortby_ascending"
                 android:key="ascending"
                 android:summaryOff="@string/preference_sortby_ascending_summary_off"
                 android:summaryOn="@string/preference_sortby_ascending_summary_on"
-                android:defaultValue="true" />
+                android:defaultValue="true"
+                android:icon="@drawable/ic_sort_ascending"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -45,21 +47,24 @@
             android:defaultValue="0"
             android:entries="@array/preference_theme_names"
             android:entryValues="@array/theme_values"
-            android:title="@string/preference_theme" />
+            android:title="@string/preference_theme"
+            android:icon="@drawable/ic_palette"/>
 
         <SwitchPreference
                 android:key="mediascan"
                 android:defaultValue="false"
                 android:title="@string/preference_medialib_title"
                 android:summaryOn="@string/preference_medialib_summary_on"
-                android:summaryOff="@string/preference_medialib_summary_off" />
+                android:summaryOff="@string/preference_medialib_summary_off"
+                android:icon="@drawable/ic_media_library"/>
 
         <SwitchPreference
                 android:key="displayhiddenfiles"
                 android:title="@string/preference_displayhiddenfiles_title"
                 android:defaultValue="false"
                 android:summaryOff="@string/preference_displayhiddenfiles_summary_off"
-                android:summaryOn="@string/preference_displayhiddenfiles_summary_on" />
+                android:summaryOn="@string/preference_displayhiddenfiles_summary_on"
+                android:icon="@drawable/ic_file_hidden"/>
         </PreferenceCategory>
 </PreferenceScreen>
     
