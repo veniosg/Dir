@@ -26,7 +26,6 @@
     <string name="pick_title">Sélectionner un fichier</string>
     <string name="details_type">Tapez</string>
     <string name="details_type_folder">Dossier</string>
-    <string name="details_type_file">fichier</string>
     <string name="details_type_other">autres</string>
     <string name="details_size">Taille</string>
     <string name="details_permissions">autorisations</string>
@@ -108,12 +107,10 @@
     <string name="notif_extracted_fail">Extraction échouée</string>
     <string name="selected">sélectionné(s)</string>
     <string name="bookmark_empty">Pas de marque-page.</string>
-    <string name="bookmark_already_exists">Le fichier a déjà été marqué</string>
     <string name="search_hint">Rechercher des fichiers</string>
     <string name="query_error">Erreur de requête</string>
     <string name="search_empty">Pas de fichier correspondant trouvé!</string>
     <string name="item_icon">Icône de l\'élément</string>
-    <string name="scanning">Recherche&#8230;</string>
     <string name="delete_success">Suppression réussie</string>
     <string name="delete_failure">Des fichiers n\'ont pas été supprimés</string>
     <string name="deleting">Suppression&#8230;</string>
@@ -137,10 +134,8 @@
     <string name="moved">Déplacement réussi</string>
     <string name="move_error">Une ou plusieurs entrées ne peuvent pas être déplacées!</string>
     <string name="nothing_to_paste">Rien à copier. Coupez ou copiez des fichiers.</string>
-    <string name="modified">Modifié</string>
     <string name="about_forked_from">Adapté de OI File Manager</string>
     <string name="about_created_by">Créée par George Venios</string>
-    <string name="about_thanks_oifm">Merci aux contributeurs de OpenIntents et OIFM!</string>
     <string name="about">A propos</string>
     <string name="about_share">Partager</string>
     <string name="about_shareSubject">Télécharger Dir sur Google Play</string>
