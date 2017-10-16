@@ -135,7 +135,7 @@
     <string name="move_error">Некоторые или все элементы не могут быть перемещены!</string>
     <string name="nothing_to_paste">Нечего вставить. Скопируйте или переместите файлы.</string>
     <string name="about_forked_from">Форк с OI File Manager</string>
-    <string name="about_created_by">Создано George Venios</string>
+    <string name="about_created_by">Создано pxHouse</string>
     <string name="about">О программе</string>
     <string name="about_share">Отправить</string>
     <string name="about_shareSubject">Взять Dir на Google Play</string>

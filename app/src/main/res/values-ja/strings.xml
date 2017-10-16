@@ -129,7 +129,7 @@
     <string name="move_error">Some or all items couldn\'t be moved!</string>
     <string name="nothing_to_paste">貼り付けるファイルはありません。まずファイルの切り取り、またはコピーをしてください。</string>
     <string name="about_forked_from">OI File Managerからフォークされたファイルマネージャアプリです。</string>
-    <string name="about_created_by">作者: George Venios</string>
+    <string name="about_created_by">作者: pxHouse</string>
     <string name="about">Dirについて</string>
     <string name="about_share">共有</string>
     <string name="about_shareSubject">Google PlayからDirをダウンロード</string>
