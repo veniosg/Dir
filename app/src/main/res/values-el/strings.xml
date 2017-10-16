@@ -65,7 +65,7 @@
     <string name="saveas_error">Προέκυψε ένα σφάλμα.</string>
     <string name="saveas_file_saved">Το αρχείο αποθηκεύτηκε επιτυχώς!</string>
     <string name="extracting">\u0391\u03c0\u03bf\u03c3\u03c5\u03bc\u03c0\u03af\u03b5\u03c3\u03b7&#8230;</string>
-    <string name="compressing">\u03a3\u03c5\u03bc\u03c0\u03af\u03b5\u03c3\u03b7&#8230;</string>
+    <string name="compressing">Συμπίεση&#8230;</string>
     <string name="menu_search">Αναζήτηση</string>
     <string name="menu_create_folder">Δημιουργία φακέλου</string>
     <string name="menu_paste">Επικόλληση</string>
@@ -126,7 +126,7 @@
     <string name="filename_hint">Όνομα αρχείου</string>
     <string name="choose_filename">Το όνομα αρχείου δεν μπορεί να είναι άδειο!</string>
     <string name="pick_button_default">Επιλογή αρχείου</string>
-    <string name="copying">\u0391\u03bd\u03c4\u03b9\u03b3\u03c1\u03b1\u03c6\u03ae&#8230;</string>
+    <string name="copying">Αντιγραφή&#8230;</string>
     <string name="copied">Επιτυχής αντιγραφή</string>
     <string name="copy_error">Κάποια αρχεία δεν μπόρεσαν να αντιγραφούν!</string>
     <string name="moving">\u039c\u03b5\u03c4\u03b1\u03ba\u03af\u03bd\u03b7\u03c3\u03b7&#8230;</string>
@@ -134,7 +134,7 @@
     <string name="move_error">Κάποια αρχεία δεν μπόρεσαν να μετακινηθούν!</string>
     <string name="nothing_to_paste">Δεν υπάρχουν αρχεία για επικόλληση. Αντιγράψτε ή αποκόψτε αρχεία πρώτα.</string>
     <string name="about_forked_from">Fork του OI File Manager</string>
-    <string name="about_created_by">Αναπτύχθηκε από τον Γιώργο Βενιό</string>
+    <string name="about_created_by">Ανάπτυξη: pxHouse</string>
     <string name="about">Περί</string>
     <string name="about_share">Κοινοποίηση</string>
     <string name="about_shareSubject">Κατεβάστε το Dir στο Google Play</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -58,4 +58,5 @@
     <string name="menu_check_all">Check all</string>
     <!-- Right pathview button description -->
     <!-- Left pathview manual input button description -->
+    <!-- Shown when the Marshmallow permissions have been denied. -->
 </resources>

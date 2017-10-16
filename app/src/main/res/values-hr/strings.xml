@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 <resources>
     <!-- Bookmark action. This is a verb. -->
     <string name="menu_bookmark">Oznaka</string>
+    <string name="bookmarks">Oznake</string>
     <string name="create_new_folder">Napravi novu mapu</string>
     <string name="folder_name">Naziv mape</string>
     <string name="this_folder_is_empty">Prazna mapa</string>
@@ -104,7 +105,7 @@
     <string name="notif_extracted_success">Ekstrahiranje uspijelo</string>
     <string name="notif_extracted_fail">Ekstrahiranje nije uspijelo</string>
     <string name="selected">odabrano</string>
-    <string name="bookmark_empty">Nema dodanih oznaka.</string>
+    <string name="bookmark_empty">Nema oznaka</string>
     <string name="search_hint">Pretraži datoteke</string>
     <string name="query_error">Ispitivanje greške</string>
     <string name="search_empty">Nisu pronađene podudarajuće datoteke!</string>
@@ -115,6 +116,7 @@
     <string name="rename_success">Uspješno preimenovano</string>
     <string name="rename_failure">Ne mogu preimenovati</string>
     <string name="loading">U\u010ditavam&#8230;</string>
+    <string name="searching">Pretražujem&#8230;</string>
     <string name="create_dir_success">Mapa je uspješno kreirana</string>
     <string name="create_dir_failure">Ne mogu kreirati mapu</string>
     <string name="compressed_file_name">Stisni naziv datoteke</string>
@@ -143,5 +145,9 @@
     <string name="yes">Da</string>
     <string name="no">Ne</string>
     <!-- Right pathview button description -->
+    <string name="edit_path">Uređivanje putanju</string>
     <!-- Left pathview manual input button description -->
+    <string name="close_path">Zatvori uređivač</string>
+    <string name="goto_path">Idi na putanju</string>
+    <!-- Shown when the Marshmallow permissions have been denied. -->
 </resources>

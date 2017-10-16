@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
     <string name="menu_bookmark">Marcador</string>
     <string name="create_new_folder">Crear nueva carpeta</string>
     <string name="folder_name">Nombre de carpeta</string>
-    <string name="this_folder_is_empty">Esta carpeta está vacía.</string>
+    <string name="this_folder_is_empty">Carpeta vacía</string>
     <string name="really_delete">¿Borrar %s?</string>
     <string name="really_delete_multiselect">¿Borrar %d archivos?</string>
     <string name="pick_title">Selector de archivos</string>
@@ -103,7 +103,7 @@
     <string name="notif_extracted_success">Extracción satisfactoria</string>
     <string name="notif_extracted_fail">Extracción fallida</string>
     <string name="selected">seleccionado</string>
-    <string name="bookmark_empty">No hay marcadores.</string>
+    <string name="bookmark_empty">No hay marcadores</string>
     <string name="search_hint">Buscar archivos</string>
     <string name="query_error">Consultar error</string>
     <string name="search_empty">No hay archivos coincidentes</string>
@@ -143,4 +143,5 @@
     <string name="no">No</string>
     <!-- Right pathview button description -->
     <!-- Left pathview manual input button description -->
+    <!-- Shown when the Marshmallow permissions have been denied. -->
 </resources>

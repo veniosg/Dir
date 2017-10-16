@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 <resources>
     <!-- Bookmark action. This is a verb. -->
     <string name="menu_bookmark">Bladwijzer maken</string>
+    <string name="bookmarks">Bladwijzers</string>
     <string name="create_new_folder">Nieuwe map aanmaken</string>
     <string name="folder_name">Naam van de map</string>
     <string name="this_folder_is_empty">Lege map</string>
@@ -103,7 +104,7 @@
     <string name="notif_extracted_success">Uitpakken geslaagd</string>
     <string name="notif_extracted_fail">Uitpakken niet geslaagd</string>
     <string name="selected">Geselecteerd</string>
-    <string name="bookmark_empty">Geen bladwijzers toegevoegd.</string>
+    <string name="bookmark_empty">Geen bladwijzers</string>
     <string name="search_hint">Zoek bestanden</string>
     <string name="query_error">Query fout</string>
     <string name="search_empty">Geen overeenkomende bestanden gevonden!</string>
@@ -114,6 +115,7 @@
     <string name="rename_success">Wijzigen van naam geslaagd</string>
     <string name="rename_failure">Kon naam niet wijzigen</string>
     <string name="loading">Laden&#8230;</string>
+    <string name="searching">Zoeken&#8230;</string>
     <string name="create_dir_success">Map succesvol aangemaakt</string>
     <string name="create_dir_failure">Kan geen map maken</string>
     <string name="compressed_file_name">Zip bestand naam</string>
@@ -142,5 +144,9 @@
     <string name="yes">Ja</string>
     <string name="no">Nee</string>
     <!-- Right pathview button description -->
+    <string name="edit_path">Wijzig pad</string>
     <!-- Left pathview manual input button description -->
+    <string name="close_path">Editor sluiten</string>
+    <string name="goto_path">Ga naar pad</string>
+    <!-- Shown when the Marshmallow permissions have been denied. -->
 </resources>

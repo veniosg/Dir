@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@
     <string name="saveas_error">Hiba történt.</string>
     <string name="saveas_file_saved">Fájl sikeresen mentve!</string>
     <string name="extracting">Kicsomagol\u00e1sa&#8230;</string>
-    <string name="compressing">T\u00f6m\u00f6r\u00edt\u00e9se&#8230;</string>
+    <string name="compressing">Tömörítése&#8230;</string>
     <string name="menu_search">Keresés</string>
     <string name="menu_create_folder">Mappa létrehozása</string>
     <string name="menu_paste">Beilleszt</string>
@@ -103,7 +103,7 @@
     <string name="notif_extracted_success">Sikeres kibontás</string>
     <string name="notif_extracted_fail">Sikertelen kibontás</string>
     <string name="selected">kiválasztva</string>
-    <string name="bookmark_empty">Nincs hozzáadott könyvjelző.</string>
+    <string name="bookmark_empty">Nincs hozzáadott könyvjelző</string>
     <string name="search_hint">Fájlok keresése</string>
     <string name="query_error">Query hiba</string>
     <string name="search_empty">Nincs találat!</string>
@@ -123,7 +123,7 @@
     <string name="filename_hint">Fájl neve</string>
     <string name="choose_filename">Fájl neve nem lehet üres!</string>
     <string name="pick_button_default">Válasszon egy fájlt</string>
-    <string name="copying">M\u00e1sol\u00e1s&#8230;</string>
+    <string name="copying">Másolás&#8230;</string>
     <string name="copied">Sikeres másolás</string>
     <string name="copy_error">Néhány fájl nem másolható!</string>
     <string name="moving">\u00c1thelyez\u00e9s&#8230;</string>
@@ -143,4 +143,5 @@
     <string name="no">Nem</string>
     <!-- Right pathview button description -->
     <!-- Left pathview manual input button description -->
+    <!-- Shown when the Marshmallow permissions have been denied. -->
 </resources>

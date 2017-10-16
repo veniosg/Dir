@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
     <!-- Bookmark action. This is a verb. -->
     <string name="create_new_folder">Vytvoriť nový priečinok</string>
     <string name="folder_name">Názov priečinka</string>
-    <string name="this_folder_is_empty">Tento priečinok je prázdny.</string>
+    <string name="this_folder_is_empty">Tento priečinok je prázdny</string>
     <string name="really_delete">Naozaj chcete zmazať %s?</string>
     <string name="really_delete_multiselect">Naozaj chcete zmazať %d súborov?</string>
     <string name="details_type">Typ</string>
@@ -59,4 +59,5 @@
     <string name="menu_check_all">Check all</string>
     <!-- Right pathview button description -->
     <!-- Left pathview manual input button description -->
+    <!-- Shown when the Marshmallow permissions have been denied. -->
 </resources>

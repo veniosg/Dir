@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
     <string name="menu_bookmark">Закладка</string>
     <string name="create_new_folder">Создать новую папку</string>
     <string name="folder_name">Имя папки</string>
-    <string name="this_folder_is_empty">Эта папка пуста.</string>
+    <string name="this_folder_is_empty">Эта папка пуста</string>
     <string name="really_delete">Вы точно хотите удалить %s?</string>
     <string name="really_delete_multiselect">Вы действительно желаете удалить %d файлы?</string>
     <string name="pick_title">Выбор файлов</string>
@@ -62,7 +62,7 @@
     <string name="saveas_error">Произошла ошибка.</string>
     <string name="saveas_file_saved">Файл успешно сохранён!</string>
     <string name="extracting">\u0418\u0437\u0432\u043b\u0435\u0447\u0435\u043d\u0438\u0435&#8230;</string>
-    <string name="compressing">\u0410\u0440\u0445\u0438\u0432\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435&#8230;</string>
+    <string name="compressing">Архивирование&#8230;</string>
     <string name="menu_search">Поиск</string>
     <string name="menu_create_folder">Создать папку</string>
     <string name="menu_paste">Вставить</string>
@@ -107,7 +107,7 @@
     <string name="notif_extracted_success">Распаковка прошла успешно</string>
     <string name="notif_extracted_fail">Ошибка распаковки</string>
     <string name="selected">выбранный</string>
-    <string name="bookmark_empty">Нет добавленных закладок</string>
+    <string name="bookmark_empty">Нет закладок</string>
     <string name="search_hint">Поиск файлов</string>
     <string name="query_error">Ошибочный запрос</string>
     <string name="search_empty">Совпадений не найдено!</string>
@@ -127,7 +127,7 @@
     <string name="filename_hint">Имя файла</string>
     <string name="choose_filename">Имя файла не может быть пустым!</string>
     <string name="pick_button_default">Выберите файл</string>
-    <string name="copying">\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435&#8230;</string>
+    <string name="copying">Копирование&#8230;</string>
     <string name="copied">Успешно скопировано</string>
     <string name="copy_error">Некоторые или все элементы не могут быть скопированы!</string>
     <string name="moving">\u041f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u0435&#8230;</string>
@@ -147,4 +147,5 @@
     <string name="no">Нет</string>
     <!-- Right pathview button description -->
     <!-- Left pathview manual input button description -->
+    <!-- Shown when the Marshmallow permissions have been denied. -->
 </resources>

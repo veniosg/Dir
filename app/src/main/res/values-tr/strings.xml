@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
     <string name="menu_bookmark">Yer işaretine ekle</string>
     <string name="create_new_folder">Yeni klasör oluştur</string>
     <string name="folder_name">Klasör adı</string>
-    <string name="this_folder_is_empty">Bu klasör boş.</string>
+    <string name="this_folder_is_empty">Bu klasör boş</string>
     <string name="really_delete">%s gerçekten silmek istiyor musunuz?</string>
     <string name="really_delete_multiselect">%d dosyayı gerçekten silmek istediğinize emin misiniz?</string>
     <string name="pick_title">Dosya seçici</string>
@@ -62,7 +62,7 @@
     <string name="saveas_error">Hata oluştu.</string>
     <string name="saveas_file_saved">Dosya başarılı bir şekilde kaydedildi!</string>
     <string name="extracting">\u00c7\u0131kar\u0131l\u0131yor&#8230;</string>
-    <string name="compressing">S\u0131k\u0131\u015ft\u0131r\u0131l\u0131yor&#8230;</string>
+    <string name="compressing">Sıkıştırılıyor&#8230;</string>
     <string name="menu_search">Ara</string>
     <string name="menu_create_folder">Klasör oluştur</string>
     <string name="menu_paste">Yapıştır</string>
@@ -103,7 +103,7 @@
     <string name="notif_extracted_success">Çıkarma işlemi tamamlandı</string>
     <string name="notif_extracted_fail">Çıkarma işlemi tamamlanamadı</string>
     <string name="selected">Seçilen</string>
-    <string name="bookmark_empty">Eklenen yer işareti bulunmamaktadır.</string>
+    <string name="bookmark_empty">Eklenen yer işareti bulunmamaktadır</string>
     <string name="search_hint">Dosya ara</string>
     <string name="query_error">Sorgu hatası</string>
     <string name="search_empty">Eşleşen dosya bulunmamaktadır!</string>
@@ -123,7 +123,7 @@
     <string name="filename_hint">Dosya ismi</string>
     <string name="choose_filename">Dosya ismi boş bırakılamaz!</string>
     <string name="pick_button_default">Dosya seç</string>
-    <string name="copying">Kopyalan\u0131yor&#8230;</string>
+    <string name="copying">Kopyalanıyor&#8230;</string>
     <string name="copied">Kopyalama tamamlandı</string>
     <string name="copy_error">Some or all items couldn\'t be copied!</string>
     <string name="moving">Ta\u015f\u0131n\u0131yor&#8230;</string>
@@ -131,7 +131,6 @@
     <string name="move_error">Some or all items couldn\'t be moved!</string>
     <string name="nothing_to_paste">Yapıştırılacak bir şey yok. Önce dosyayı kopyalayın.</string>
     <string name="about_forked_from">OI File Manager\'dan yeni süreç oluşturuldu</string>
-    <string name="about_created_by">pxHouse tarafından oluşturuldu</string>
     <string name="about">Hakkında</string>
     <string name="about_share">Paylaş</string>
     <string name="about_shareSubject">Dir uygulamasını Google Play\'den indir</string>
@@ -143,4 +142,5 @@
     <string name="no">Hayır</string>
     <!-- Right pathview button description -->
     <!-- Left pathview manual input button description -->
+    <!-- Shown when the Marshmallow permissions have been denied. -->
 </resources>

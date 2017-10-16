@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
     <string name="menu_bookmark">添加书签</string>
     <string name="create_new_folder">新建文件夹</string>
     <string name="folder_name">文件夹名称</string>
-    <string name="this_folder_is_empty">该文件夹为空。</string>
+    <string name="this_folder_is_empty">本文件夹为空</string>
     <string name="really_delete">确实要删除 %s 吗？</string>
     <string name="really_delete_multiselect">确定要删除文件%d？</string>
     <string name="pick_title">文件选择器</string>
@@ -62,7 +62,7 @@
     <string name="saveas_error">发生错误。</string>
     <string name="saveas_file_saved">文件保存成功！</string>
     <string name="extracting">\u63d0\u53d6\u4e2d&#8230;</string>
-    <string name="compressing">\u538b\u7f29\u4e2d&#8230;</string>
+    <string name="compressing">压缩中&#8230;</string>
     <string name="menu_search">搜索</string>
     <string name="menu_create_folder">新建文件夹</string>
     <string name="menu_paste">粘贴</string>
@@ -121,7 +121,7 @@
     <string name="filename_hint">文件名</string>
     <string name="choose_filename">文件名不能为空！</string>
     <string name="pick_button_default">选择文件</string>
-    <string name="copying">\u590d\u5236\u4e2d&#8230;</string>
+    <string name="copying">复制中&#8230;</string>
     <string name="copied">复制成功</string>
     <string name="copy_error">部分或所有项复制失败！</string>
     <string name="moving">\u79fb\u52a8\u4e2d&#8230;</string>
@@ -141,4 +141,5 @@
     <string name="no">否</string>
     <!-- Right pathview button description -->
     <!-- Left pathview manual input button description -->
+    <!-- Shown when the Marshmallow permissions have been denied. -->
 </resources>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
     <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2015 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
     <!-- Bookmark action. This is a verb. -->
     <string name="create_new_folder">Opret ny mappe</string>
     <string name="folder_name">Mappenavn</string>
-    <string name="this_folder_is_empty">Denne mappe er tom.</string>
+    <string name="this_folder_is_empty">Denne mappe er tom</string>
     <string name="really_delete">Er du sikker på, at du vil slette %s?</string>
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="application_not_available">Application not available</string>
@@ -28,4 +28,5 @@
     <string name="menu_check_all">Check all</string>
     <!-- Right pathview button description -->
     <!-- Left pathview manual input button description -->
+    <!-- Shown when the Marshmallow permissions have been denied. -->
 </resources>
