@@ -41,7 +41,7 @@ import static java.lang.System.currentTimeMillis;
 public abstract class Notifier {
     private static final int DONE_NOTIF_LOWER_BOUND = 500;
 
-    private static final HashMap<Integer, Long> notificationToStartTime = new HashMap<Integer, Long>();
+    private static final HashMap<Integer, Long> notificationToStartTime = new HashMap<>();
 
     private Notifier() {}
 
@@ -308,9 +308,8 @@ public abstract class Notifier {
     }
 
     private static boolean shouldShowDoneNotification(int notId, boolean operationSuccessful) {
-        long progressDuration = currentTimeMillis() - notificationToStartTime.get(notId);
         boolean durationAboveBound = notificationToStartTime.containsKey(notId)
-                && progressDuration >= DONE_NOTIF_LOWER_BOUND;
+                && currentTimeMillis() - notificationToStartTime.get(notId) >= DONE_NOTIF_LOWER_BOUND;
         return durationAboveBound || !operationSuccessful;
     }
 }
