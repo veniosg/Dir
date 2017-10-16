@@ -16,15 +16,14 @@
 
 package com.veniosg.dir.util;
 
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -61,8 +60,8 @@ public abstract class MediaScannerUtils {
         if (parentFile == null)
             return;
 
-        ArrayList<String> filePaths = new ArrayList<String>();
-        informFolderAddedCore(filePaths, parentFile);
+        ArrayList<String> filePaths = new ArrayList<>();
+        getPathsUnder(filePaths, parentFile);
 
         MediaScannerConnection.scanFile(c.getApplicationContext(), filePaths.toArray(new String[filePaths.size()]), null,
                 sLogScannerListener);
@@ -73,19 +72,22 @@ public abstract class MediaScannerUtils {
      * @param paths An initialized list instance.
      * @param from The root folder.
      */
-    public static void getPathsOfFolder(List<String> paths, File from) {
+    public static void getPathsOfFolder(@NonNull List<String> paths, @Nullable File from) {
         if (from == null)
             return;
 
-        informFolderAddedCore(paths, from);
+        getPathsUnder(paths, from);
     }
 
-    private static void informFolderAddedCore(List<String> pathList, File folder) {
-        for (File f : folder.listFiles()) {
-            if (f.isDirectory()) {
-                informFolderAddedCore(pathList, f);
-            } else {
-                pathList.add(f.getAbsolutePath());
+    private static void getPathsUnder(@NonNull List<String> pathList, @NonNull File folder) {
+        File[] files = folder.listFiles();
+        if (files != null) {
+            for (File f : files) {
+                if (f.isDirectory()) {
+                    getPathsUnder(pathList, f);
+                } else {
+                    pathList.add(f.getAbsolutePath());
+                }
             }
         }
         pathList.add(folder.getAbsolutePath());
@@ -100,7 +102,7 @@ public abstract class MediaScannerUtils {
 	}
 
     public static void informFolderDeleted(Context c, File parentFile) {
-        List<String> paths = new ArrayList<String>();
+        List<String> paths = new ArrayList<>();
         getPathsOfFolder(paths, parentFile);
         informPathsDeleted(c, paths);
     }
@@ -122,6 +124,7 @@ public abstract class MediaScannerUtils {
                 new String[] { filePath }, null);
         if (cursor != null && cursor.moveToFirst()) {
             int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Files.FileColumns._ID));
+            cursor.close();
             return MediaStore.Files.getContentUri("external", id);
         }
 
