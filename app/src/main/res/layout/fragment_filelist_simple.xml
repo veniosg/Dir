@@ -20,13 +20,13 @@
     android:orientation="vertical"
     android:clickable="true">
 
-    <com.veniosg.dir.view.widget.AnimatedFileListContainer
+    <com.veniosg.dir.android.view.widget.AnimatedFileListContainer
         android:id="@+id/zoomview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:attr/colorBackground">
 
         <include layout="@layout/fragment_filelist" />
-    </com.veniosg.dir.view.widget.AnimatedFileListContainer>
+    </com.veniosg.dir.android.view.widget.AnimatedFileListContainer>
 
 </LinearLayout>

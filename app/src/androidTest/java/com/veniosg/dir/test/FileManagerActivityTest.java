@@ -28,9 +28,9 @@ import android.view.ViewParent;
 
 import com.robotium.solo.Solo;
 import com.veniosg.dir.R;
-import com.veniosg.dir.activity.FileManagerActivity;
-import com.veniosg.dir.util.FileUtils;
-import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.android.activity.FileManagerActivity;
+import com.veniosg.dir.android.util.FileUtils;
+import com.veniosg.dir.android.util.Logger;
 
 import junit.framework.Assert;
 

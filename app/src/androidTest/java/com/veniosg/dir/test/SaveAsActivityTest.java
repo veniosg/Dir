@@ -21,13 +21,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
-import android.test.ActivityInstrumentationTestCase2;
 import android.test.InstrumentationTestCase;
 import android.test.suitebuilder.annotation.Suppress;
 
 import com.robotium.solo.Solo;
-import com.veniosg.dir.activity.SaveAsActivity;
-import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.android.activity.SaveAsActivity;
+import com.veniosg.dir.android.util.Logger;
 
 import java.io.File;
 import java.io.IOException;

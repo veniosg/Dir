@@ -29,7 +29,7 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         android:scrollbarStyle="outsideOverlay"
-        tools:context=".activity.AboutActivity">
+        tools:context=".android.activity.AboutActivity">
 
         <LinearLayout
             android:layout_width="match_parent"

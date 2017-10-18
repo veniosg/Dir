@@ -61,8 +61,9 @@ android {
 }
 
 dependencies {
-    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.0.1'
+    androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.0.1'
 
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'com.android.support:appcompat-v7:23.4.0'
+    implementation 'android.arch.lifecycle:runtime:1.0.0'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }

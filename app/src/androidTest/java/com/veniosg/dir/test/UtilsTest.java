@@ -16,7 +16,7 @@
 
 package com.veniosg.dir.test;
 
-import com.veniosg.dir.util.Utils;
+import com.veniosg.dir.android.util.Utils;
 
 import junit.framework.TestCase;
 

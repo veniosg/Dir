@@ -24,8 +24,8 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import com.robotium.solo.Solo;
 import com.veniosg.dir.IntentConstants;
-import com.veniosg.dir.activity.IntentFilterActivity;
-import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.android.activity.IntentFilterActivity;
+import com.veniosg.dir.android.util.Logger;
 
 import java.io.File;
 import java.io.IOException;

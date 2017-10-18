@@ -22,14 +22,14 @@
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
     <application
-        android:name="FileManagerApplication"
+        android:name=".android.FileManagerApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Dir.Launch">
 
-        <activity android:name=".activity.FileManagerActivity">
+        <activity android:name=".android.activity.FileManagerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,14 +48,14 @@
                 android:value=".activity.SearchableActivity" />
         </activity>
         <activity
-            android:name=".activity.PreferenceActivity"
+            android:name=".android.activity.PreferenceActivity"
             android:label="@string/settings" />
         <activity
-            android:name=".activity.AboutActivity"
+            android:name=".android.activity.AboutActivity"
             android:label="@string/about" />
 
         <activity
-            android:name=".activity.SaveAsActivity"
+            android:name=".android.activity.SaveAsActivity"
             android:label="Save as"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
@@ -68,7 +68,7 @@
                     android:scheme="content" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.IntentFilterActivity">
+        <activity android:name=".android.activity.IntentFilterActivity">
             <intent-filter>
                 <action android:name="org.openintents.action.PICK_FILE" />
 
@@ -132,7 +132,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.SearchableActivity"
+            android:name=".android.activity.SearchableActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -144,26 +144,26 @@
         </activity>
 
         <service
-            android:name=".service.CopyService"
+            android:name=".android.service.CopyService"
             android:exported="false" />
         <service
-            android:name=".service.ZipService"
+            android:name=".android.service.ZipService"
             android:exported="false" />
 
         <provider
-            android:name=".provider.BookmarkProvider"
+            android:name=".android.provider.BookmarkProvider"
             android:authorities="com.veniosg.dir.bookmarks"
             android:exported="false" />
         <provider
-            android:name=".provider.SearchResultsProvider"
+            android:name=".android.provider.SearchResultsProvider"
             android:authorities="com.veniosg.dir.search"
             android:exported="false" />
         <provider
-            android:name=".provider.SearchSuggestionsProvider"
+            android:name=".android.provider.SearchSuggestionsProvider"
             android:authorities="com.veniosg.dir.search.suggest"
             android:exported="false" />
         <provider
-            android:name=".provider.FileManagerProvider"
+            android:name=".android.provider.FileManagerProvider"
             android:authorities="com.veniosg.dir.filemanager"
             android:exported="true"
             android:permission="android.permission.READ_EXTERNAL_STORAGE" />
