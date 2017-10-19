@@ -21,8 +21,5 @@
     android:label="@string/app_name"
     android:voiceLanguageModel="web_search"
     android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
-    android:queryAfterZeroResults="false"
-
-    android:searchSuggestAuthority="com.veniosg.dir.search.suggest"
-    android:searchSuggestIntentAction="android.intent.action.VIEW" >
+    android:queryAfterZeroResults="false" >
 </searchable>

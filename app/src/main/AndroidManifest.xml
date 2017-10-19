@@ -159,10 +159,6 @@
             android:authorities="com.veniosg.dir.search"
             android:exported="false" />
         <provider
-            android:name=".android.provider.SearchSuggestionsProvider"
-            android:authorities="com.veniosg.dir.search.suggest"
-            android:exported="false" />
-        <provider
             android:name=".android.provider.FileManagerProvider"
             android:authorities="com.veniosg.dir.filemanager"
             android:exported="true"
