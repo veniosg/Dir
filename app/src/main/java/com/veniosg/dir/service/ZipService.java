@@ -134,6 +134,7 @@ public class ZipService extends IntentService {
             outputStream.close();
             inputStream.close();
         }
+        outputFile.setLastModified(entry.getTime());
     }
 
     /**
@@ -177,11 +178,14 @@ public class ZipService extends IntentService {
             FileInputStream in = new FileInputStream(toCompress);
 
             // Create internal zip file entry.
-            if (internalPath.length() > 0)
-                zipStream.putNextEntry(new ZipEntry(internalPath + "/" + toCompress.getName()));
-            else {
-                zipStream.putNextEntry(new ZipEntry(toCompress.getName()));
+            ZipEntry entry;
+            if (internalPath.length() > 0) {
+                entry = new ZipEntry(internalPath + "/" + toCompress.getName());
+            } else {
+                entry = new ZipEntry(toCompress.getName());
             }
+            entry.setTime(toCompress.lastModified());
+            zipStream.putNextEntry(entry);
 
             // Compress
             while ((len = in.read(buf)) > 0) {
