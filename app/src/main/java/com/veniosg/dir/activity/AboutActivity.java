@@ -56,7 +56,7 @@ public class AboutActivity extends BaseActivity {
         findViewById(R.id.middleText).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openWebLink("https://google.com/+GeorgeVenios");
+                openWebLink("http://pxhouse.co/");
             }
         });
         findViewById(R.id.gplay).setOnClickListener(new View.OnClickListener() {
