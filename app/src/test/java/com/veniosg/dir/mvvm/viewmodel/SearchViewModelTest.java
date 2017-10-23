@@ -3,8 +3,8 @@ package com.veniosg.dir.mvvm.viewmodel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
-import com.veniosg.dir.mvvm.model.Searcher;
-import com.veniosg.dir.mvvm.model.Searcher.SearchConfig;
+import com.veniosg.dir.mvvm.model.search.SearchState;
+import com.veniosg.dir.mvvm.model.search.Searcher;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,8 +29,8 @@ public class SearchViewModelTest {
 
     @Test
     public void delegatesSearchResultsToSearcher() {
-        LiveData searcherLiveResults = new MutableLiveData();
-        when(mockSearcher.getResults(any(SearchConfig.class))).thenReturn(searcherLiveResults);
+        LiveData<SearchState> searcherLiveResults = new MutableLiveData<>();
+        when(mockSearcher.getResults()).thenReturn(searcherLiveResults);
 
         viewModel.init();
 
@@ -55,6 +55,14 @@ public class SearchViewModelTest {
     public void onClearedPausesSearch() {
         viewModel.onCleared();
 
-        verify(mockSearcher).pauseSearch();
+        verify(mockSearcher).stopSearch();
+    }
+
+    @Test
+    public void updateQueryDelegatesToSearcher() {
+        String newQuery = "query2";
+        viewModel.updateQuery(newQuery);
+
+        verify(mockSearcher).updateQuery(newQuery);
     }
 }

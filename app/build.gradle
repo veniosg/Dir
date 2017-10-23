@@ -68,11 +68,13 @@ dependencies {
     implementation "android.arch.lifecycle:runtime:1.0.0"
     implementation "android.arch.lifecycle:extensions:1.0.0-alpha9-1"
     implementation "com.google.dagger:dagger:2.4"
+    implementation "io.reactivex.rxjava2:rxjava:2.1.1"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
     implementation "com.nostra13.universalimageloader:universal-image-loader:1.9.5"
 
     androidTestImplementation "com.jayway.android.robotium:robotium-solo:5.0.1"
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.10.0'
-
+    testImplementation "android.arch.core:core-testing:1.0.0-alpha9-1"
 }

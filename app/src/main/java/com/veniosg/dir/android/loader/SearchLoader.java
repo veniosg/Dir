@@ -24,11 +24,13 @@ import com.veniosg.dir.mvvm.model.FileHolder;
 import com.veniosg.dir.android.util.Utils;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * @author George Venios
  */
+// TODO DELETE
 public class SearchLoader extends AsyncTaskLoader<List<FileHolder>> {
     private List<FileHolder> mData;
     private File mRoot;
@@ -45,10 +47,10 @@ public class SearchLoader extends AsyncTaskLoader<List<FileHolder>> {
 
     @Override
     public List<FileHolder> loadInBackground() {
-        return Utils.searchIn(mRoot, Utils.newFilter(mQuery),
+        return Collections.emptyList();/*Utils.searchIn(mRoot, Utils.newFilter(mQuery),
                 ((FileManagerApplication) getContext().getApplicationContext())
                         .getMimeTypes(),
-                mContext, true, 100);
+                mContext, 100);*/
     }
 
     @Override

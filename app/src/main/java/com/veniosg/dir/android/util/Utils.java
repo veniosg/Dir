@@ -34,18 +34,15 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.veniosg.dir.android.FileManagerApplication;
 import com.veniosg.dir.R;
+import com.veniosg.dir.android.FileManagerApplication;
 import com.veniosg.dir.android.activity.FileManagerActivity;
 import com.veniosg.dir.android.fragment.SimpleFileListFragment;
-import com.veniosg.dir.mvvm.model.FileHolder;
 import com.veniosg.dir.android.misc.MimeTypes;
 import com.veniosg.dir.android.provider.FileManagerProvider;
+import com.veniosg.dir.mvvm.model.FileHolder;
 
 import java.io.File;
-import java.io.FilenameFilter;
-import java.util.ArrayList;
-import java.util.List;
 
 import static android.graphics.Bitmap.Config.ARGB_8888;
 import static android.view.View.MeasureSpec.EXACTLY;
@@ -55,57 +52,6 @@ import static java.lang.Math.abs;
 
 public abstract class Utils {
     private Utils() {
-    }
-
-    /**
-     * @param root      Folder to start search from.
-     * @param filter    The FilenameFilter to use for matching.
-     * @param mimeTypes Initialized MimeTypes instance.
-     * @param context   A context.
-     * @param recursive Whether to recursively follow the paths.
-     * @param maxLevel  How many levels below the current we're allowed to recurse.
-     * @return A list of FileHolders found in root and matching filter.
-     */
-    public static List<FileHolder> searchIn(File root, FilenameFilter filter, MimeTypes mimeTypes,
-                                            Context context, boolean recursive, int maxLevel) {
-        ArrayList<FileHolder> result = new ArrayList<>(10);
-
-        File[] filteredFiles = root.listFiles(filter);
-        if (filteredFiles != null) {
-            for (File f : filteredFiles) {
-                String mimeType = mimeTypes.getMimeType(f.getName());
-
-                result.add(new FileHolder(f, mimeType, getIconForFile(context, mimeType, f)));
-            }
-        }
-
-        File[] files = root.listFiles();
-        if (files != null) {
-            if (recursive && (maxLevel-- != 0)) {
-                for (File f : files) {
-                    // Prevent trying to search invalid folders
-                    if (f.isDirectory() && f.canRead()) {
-                        result.addAll(searchIn(f, filter, mimeTypes, context, true, maxLevel));
-                    }
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public static List<FileHolder> searchIn(File root, final String query, MimeTypes mimeTypes,
-                                            Context context) {
-        return searchIn(root, newFilter(query), mimeTypes, context, false, 0);
-    }
-
-    public static FilenameFilter newFilter(final String query) {
-        return new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String filename) {
-                return query != null && filename.toLowerCase().contains(query.toLowerCase());
-            }
-        };
     }
 
     public static String getLastPathSegment(String path) {
