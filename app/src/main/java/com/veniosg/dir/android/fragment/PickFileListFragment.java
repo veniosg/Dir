@@ -45,9 +45,8 @@ public class PickFileListFragment extends SimpleFileListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-		return inflater.inflate(R.layout.fragment_filelist_pick, null);
+		return inflater.inflate(R.layout.fragment_filelist_pick, container, false);
 	}
-
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
@@ -83,7 +82,6 @@ public class PickFileListFragment extends SimpleFileListFragment {
 			mPickBar.setButtonText(getArguments().getString(IntentConstants.EXTRA_BUTTON_TEXT));
 			 
 			mPickBar.setText(getFilename());
-			// TODO make file visible, i.e. scroll to item 
 			
 			mPickBar.setOnPickRequestedListener(new OnPickRequestedListener() {
 				@Override

@@ -22,11 +22,12 @@ import io.reactivex.Scheduler;
 import static com.veniosg.dir.android.util.Logger.log;
 import static io.reactivex.BackpressureStrategy.BUFFER;
 import static io.reactivex.Flowable.create;
+import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
+import static io.reactivex.schedulers.Schedulers.io;
 import static java.util.Collections.addAll;
 
-public class Searcher {
+public class Searcher { // TODO make livedata, fix viewmodel, listen to active/inactive
     private final MutableLiveData<SearchState> observableResults;
-    private final SearchConfig config;
     private final Scheduler ioScheduler;
     private final Scheduler uiScheduler;
     private final SearchState searchState = new SearchState();
@@ -35,14 +36,13 @@ public class Searcher {
     private Object lock;
 
     @Inject
-    Searcher(SearchConfig config, Scheduler ioScheduler, Scheduler uiScheduler) {
-        this(config, new MutableLiveData<SearchState>(), ioScheduler, uiScheduler);
+    public Searcher() {
+        this(new MutableLiveData<>(), io(), mainThread());
     }
 
     @VisibleForTesting()
-    Searcher(SearchConfig config, MutableLiveData<SearchState> observableResults,
+    Searcher(MutableLiveData<SearchState> observableResults,
              Scheduler ioScheduler, Scheduler uiScheduler) {
-        this.config = config;
         this.ioScheduler = ioScheduler;
         this.uiScheduler = uiScheduler;
         this.observableResults = observableResults;
@@ -68,14 +68,14 @@ public class Searcher {
         if (bfsFlowable != null) bfsFlowable.stopSearching();
     }
 
-    public void updateQuery(String query) {
+    public void updateQuery(SearchRequest request) {
         if (bfsFlowable != null) {
             stopSearch();
             searchState.reset();
             emitStateUpdate();
         }
 
-        bfsFlowable = new BfsFlowable(config.searchRoot, query);
+        bfsFlowable = new BfsFlowable(request.searchRoot, request.query);
         create(bfsFlowable, BUFFER)
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
@@ -86,11 +86,17 @@ public class Searcher {
         observableResults.setValue(new SearchState(searchState));
     }
 
-    static class SearchConfig {
+    public static class SearchRequest {
         String searchRoot;
+        String query;
 
-        SearchConfig(File searchRoot) {
+        SearchRequest(@NonNull File searchRoot, String query) {
             this.searchRoot = searchRoot.getAbsolutePath();
+            this.query = query;
+        }
+
+        public static SearchRequest request(@NonNull File searchRoot, String query) {
+            return new SearchRequest(searchRoot, query);
         }
     }
 

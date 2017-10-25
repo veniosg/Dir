@@ -3,8 +3,6 @@ package com.veniosg.dir.mvvm.model.search;
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
 import android.arch.lifecycle.MutableLiveData;
 
-import com.veniosg.dir.mvvm.model.search.Searcher.SearchConfig;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -16,8 +14,8 @@ import org.mockito.Mock;
 import java.io.File;
 import java.io.IOException;
 
+import static com.veniosg.dir.mvvm.model.search.Searcher.SearchRequest.request;
 import static io.reactivex.schedulers.Schedulers.trampoline;
-import static java.lang.reflect.Array.newInstance;
 import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.verify;
@@ -57,20 +55,19 @@ public class SearcherTest {
         file4 = new File(testFileRoot, "file");
         file4.createNewFile();
 
-        searcher = new Searcher(new SearchConfig(testFileRoot), mockResults,
-                trampoline(), trampoline());
+        searcher = new Searcher(mockResults, trampoline(), trampoline());
     }
 
     @Test
     public void testFindsAll() throws Exception {
-        searcher.updateQuery("file");
+        searcher.updateQuery(request(testFileRoot, "file"));
 
         verifyFoundInOrder(mockResults, file4, file1, file3);
     }
 
     @Test
     public void testFindsOnlyOne() throws Exception {
-        searcher.updateQuery("file2");
+        searcher.updateQuery(request(testFileRoot, "file2"));
 
         verifyFoundInOrder(mockResults, file2);
     }
@@ -80,7 +77,7 @@ public class SearcherTest {
         SearchState searchState = new SearchState();
         searchState.setFinished();
 
-        searcher.updateQuery("file12455");
+        searcher.updateQuery(request(testFileRoot, "file12455"));
 
         verify(mockResults).setValue(refEq(searchState));
     }

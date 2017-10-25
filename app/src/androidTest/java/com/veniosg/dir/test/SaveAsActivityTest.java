@@ -59,7 +59,6 @@ public class SaveAsActivityTest extends InstrumentationTestCase {
 
     @Suppress
     public void testIntentSaveAs() throws IOException {
-        // TODO fix test
         TestUtils.createDirectory(sdcardPath + "oi-filemanager-tests");
         TestUtils.createFile(sdcardPath + "oi-filemanager-tests/oi-to-open.txt", "bbb");
 

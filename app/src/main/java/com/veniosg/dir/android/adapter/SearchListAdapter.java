@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2017 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,32 +16,42 @@
 
 package com.veniosg.dir.android.adapter;
 
-import android.view.View;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.veniosg.dir.mvvm.model.FileHolder;
-import com.veniosg.dir.android.view.ViewHolder;
+import com.veniosg.dir.android.adapter.FileListViewHolder.OnItemClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Simple adapter for displaying search results.
- *
- * @author George Venios
- */
-public class SearchListAdapter extends FileHolderListAdapter {
+public class SearchListAdapter extends RecyclerView.Adapter<FileListViewHolder> {
+    private List<String> data = new ArrayList<>();
+    private OnItemClickListener onItemClickListener;
 
-    public SearchListAdapter(List<FileHolder> files) {
-        super(files);
+    public SearchListAdapter(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setData(@NonNull List<String> data) {
+        this.data = data;
+        // TODO diff
+        // TODO notify right items have changed
+        notifyDataSetChanged();
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View view = super.getView(position, convertView, parent);
+    public FileListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new FileListViewHolder(parent);
+    }
 
-        ((ViewHolder) view.getTag()).secondaryInfo.setText(
-                ((FileHolder) getItem(position)).getFile().getAbsolutePath());
+    @Override
+    public void onBindViewHolder(FileListViewHolder holder, int position) {
+        holder.bind(data.get(position), onItemClickListener);
+    }
 
-        return view;
+    @Override
+    public int getItemCount() {
+        return data.size();
     }
 }

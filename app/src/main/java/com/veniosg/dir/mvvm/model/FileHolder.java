@@ -94,7 +94,7 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
     }
 
     /**
-     * Use this method to get the best iconic represenation for this holder.
+     * Use this method to get the best iconic representation for this holder.
      * @return The preview of this holder, if one exists, else the icon.
      */
     public Drawable getBestIcon() {
