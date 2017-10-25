@@ -1,7 +1,6 @@
 package com.veniosg.dir.mvvm.model.search;
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
-import android.arch.lifecycle.MutableLiveData;
 
 import org.junit.After;
 import org.junit.Before;
@@ -29,7 +28,7 @@ public class SearcherTest {
     public TestRule rule = new InstantTaskExecutorRule();
 
     @Mock
-    private MutableLiveData<SearchState> mockResults;
+    private SearcherLiveData mockResults;
     private File file1;
     private File file2;
     private File file3;
@@ -88,7 +87,7 @@ public class SearcherTest {
     }
 
     @SuppressWarnings("unchecked")
-    private void verifyFoundInOrder(MutableLiveData<SearchState> mockObservable,
+    private void verifyFoundInOrder(SearcherLiveData mockObservable,
                                     File... expectedFiles) {
         InOrder inOrder = inOrder(mockObservable);
 

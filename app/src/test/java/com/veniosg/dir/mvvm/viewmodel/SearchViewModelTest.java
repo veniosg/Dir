@@ -43,20 +43,6 @@ public class SearchViewModelTest {
     }
 
     @Test
-    public void onForegroundedResumesSearch() {
-        viewModel.onForegrounded();
-
-        verify(mockSearcher).resumeSearch();
-    }
-
-    @Test
-    public void onBackgroundedPausesSearch() {
-        viewModel.onBackgrounded();
-
-        verify(mockSearcher).pauseSearch();
-    }
-
-    @Test
     public void onClearedPausesSearch() {
         viewModel.onCleared();
 

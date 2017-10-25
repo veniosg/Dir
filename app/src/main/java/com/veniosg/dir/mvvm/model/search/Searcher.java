@@ -1,7 +1,6 @@
 package com.veniosg.dir.mvvm.model.search;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
@@ -26,8 +25,8 @@ import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 import static java.util.Collections.addAll;
 
-public class Searcher { // TODO make livedata, fix viewmodel, listen to active/inactive
-    private final MutableLiveData<SearchState> observableResults;
+public class Searcher {
+    private final SearcherLiveData observableResults;
     private final Scheduler ioScheduler;
     private final Scheduler uiScheduler;
     private final SearchState searchState = new SearchState();
@@ -37,11 +36,13 @@ public class Searcher { // TODO make livedata, fix viewmodel, listen to active/i
 
     @Inject
     public Searcher() {
-        this(new MutableLiveData<>(), io(), mainThread());
+        this.ioScheduler = io();
+        this.uiScheduler = mainThread();
+        this.observableResults = new SearcherLiveData(this);
     }
 
     @VisibleForTesting()
-    Searcher(MutableLiveData<SearchState> observableResults,
+    Searcher(SearcherLiveData observableResults,
              Scheduler ioScheduler, Scheduler uiScheduler) {
         this.ioScheduler = ioScheduler;
         this.uiScheduler = uiScheduler;
