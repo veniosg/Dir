@@ -75,7 +75,7 @@ public class SearchListFragment extends Fragment {
         } else {
             List<String> results = searchState.results();
 
-            adapter.setData(results);
+            adapter.notifyDataAppended(results);
             showLoading(!results.isEmpty());
         }
     };

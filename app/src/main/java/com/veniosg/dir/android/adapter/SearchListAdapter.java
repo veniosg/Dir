@@ -33,11 +33,14 @@ public class SearchListAdapter extends RecyclerView.Adapter<FileListViewHolder> 
         this.onItemClickListener = onItemClickListener;
     }
 
-    public void setData(@NonNull List<String> data) {
-        this.data = data;
-        // TODO diff
-        // TODO notify right items have changed
-        notifyDataSetChanged();
+    public void notifyDataAppended(@NonNull List<String> updatedData) {
+        List<String> oldData = this.data;
+        this.data = updatedData;
+
+        int newItemCount = updatedData.size() - oldData.size();
+        int firstNewItem = oldData.size();
+
+        notifyItemRangeInserted(firstNewItem, newItemCount);
     }
 
     @Override
