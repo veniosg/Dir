@@ -40,7 +40,6 @@ import com.veniosg.dir.activity.FileManagerActivity;
 import com.veniosg.dir.fragment.SimpleFileListFragment;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.misc.MimeTypes;
-import com.veniosg.dir.provider.FileManagerProvider;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -183,8 +182,7 @@ public abstract class Utils {
         i.setAction(Intent.ACTION_SEND);
         i.setType(fHolder.getMimeType());
         i.putExtra(Intent.EXTRA_SUBJECT, filename);
-        i.putExtra(Intent.EXTRA_STREAM, FileUtils.getUri(fHolder.getFile()));
-        i.putExtra(Intent.EXTRA_STREAM, Uri.parse("content://" + FileManagerProvider.AUTHORITY + fHolder.getFile().getAbsolutePath()));
+        i.putExtra(Intent.EXTRA_STREAM, FileUtils.getUri(fHolder));
 
         i = Intent.createChooser(i, context.getString(R.string.send_chooser_title));
 

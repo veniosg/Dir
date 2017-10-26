@@ -37,15 +37,26 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
 import com.veniosg.dir.FileManagerApplication;
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.adapter.FileHolderListAdapter;
-import com.veniosg.dir.dialog.*;
+import com.veniosg.dir.dialog.CreateDirectoryDialog;
+import com.veniosg.dir.dialog.DetailsDialog;
+import com.veniosg.dir.dialog.MultiCompressDialog;
+import com.veniosg.dir.dialog.MultiDeleteDialog;
+import com.veniosg.dir.dialog.RenameDialog;
+import com.veniosg.dir.dialog.SingleCompressDialog;
+import com.veniosg.dir.dialog.SingleDeleteDialog;
 import com.veniosg.dir.misc.FileHolder;
 import com.veniosg.dir.provider.BookmarkProvider;
 import com.veniosg.dir.service.ZipService;
-import com.veniosg.dir.util.*;
+import com.veniosg.dir.util.CopyHelper;
+import com.veniosg.dir.util.FileUtils;
+import com.veniosg.dir.util.Logger;
+import com.veniosg.dir.util.MediaScannerUtils;
+import com.veniosg.dir.util.Utils;
 import com.veniosg.dir.view.PathController;
 import com.veniosg.dir.view.widget.AnimatedFileListContainer;
 import com.veniosg.dir.view.widget.PathView;
@@ -198,7 +209,7 @@ public class SimpleFileListFragment extends FileListFragment {
 
                 for (FileHolder fh : fItems) {
                     if(!fh.getFile().isDirectory())
-                        uris.add(FileUtils.getUri(fh.getFile()));
+                        uris.add(FileUtils.getUri(fh));
                 }
 
                 intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);

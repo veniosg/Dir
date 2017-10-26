@@ -23,28 +23,22 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
-import android.provider.MediaStore.Audio;
-import android.provider.MediaStore.Video;
 import android.support.annotation.NonNull;
-import android.text.format.DateFormat;
 import android.text.format.Formatter;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.misc.FileHolder;
 
 import java.io.File;
-import java.lang.reflect.Method;
-import java.util.Date;
 import java.util.List;
 
 import static android.content.Intent.ACTION_VIEW;
-import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
+import static com.veniosg.dir.provider.FileManagerProvider.FILE_PROVIDER_PREFIX;
 
 /**
  * @version 2009-07-03
- * 
+ *
  * @author Peli
  *
  */
@@ -54,7 +48,7 @@ public class FileUtils {
 
 	/**
 	 * Gets the extension of a file name, like ".png" or ".jpg".
-	 * 
+	 *
 	 * @param path The file path or name
 	 * @return Extension including the dot("."); "" if there is no extension;
 	 *         null if uri was null.
@@ -71,18 +65,24 @@ public class FileUtils {
         return ext;
 	}
 
-	/**
-	 * Convert File into Uri.
-	 * @param file The file to convert.
-	 * @return The Uri representing the file.
-	 */
-	public static Uri getUri(File file) {
-		if (file != null) {
-			return Uri.fromFile(file);
-		}
-		return null;
-	}
-	
+    public static Uri getUri(Uri uri) {
+        String filePath = uri.getSchemeSpecificPart();
+        return getUri(filePath);
+    }
+
+    public static Uri getUri(FileHolder fileHolder) {
+        return getUri(fileHolder.getFile().getAbsolutePath());
+    }
+
+    private static Uri getUri(String filePath) {
+        if (filePath.startsWith("//")) {
+            filePath = filePath.substring(2);
+        }
+        return Uri.parse(FILE_PROVIDER_PREFIX).buildUpon()
+                .appendPath(filePath)
+                .build();
+    }
+
 	/**
 	 * Convert Uri into File.
 	 * @param uri Uri to convert.
@@ -97,7 +97,7 @@ public class FileUtils {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns the path only (without file name).
 	 * @param file The file whose path to get.
@@ -111,7 +111,7 @@ public class FileUtils {
 			 } else {
 				 String filename = file.getName();
 				 String filepath = file.getAbsolutePath();
-	  
+
 				 // Construct path without file name.
 				 String pathWithoutName = filepath.substring(0, filepath.length() - filename.length());
 				 if (pathWithoutName.endsWith("/")) {
@@ -138,7 +138,7 @@ public class FileUtils {
 					length += folderSize(file);
 		return length;
 	}
-	
+
     /**
      * @param f File which needs to be checked.
      * @return True if the file is a zip archive.
@@ -175,14 +175,14 @@ public class FileUtils {
 
         return fileCount;
     }
-	
+
 	/**
 	 * Native helper method, returns whether the current process has execute privilages.
-	 * @param mContextFile File
+	 * @param file File
 	 * @return returns TRUE if the current process has execute privilages.
 	 */
-	public static boolean canExecute(File mContextFile) {
-		return mContextFile.canExecute();
+	public static boolean canExecute(File file) {
+		return file.canExecute();
 	}
 
 	/**
@@ -193,33 +193,33 @@ public class FileUtils {
 	public static File createUniqueCopyName(Context context, File path, String fileName) {
 		// Does that file exist?
 		File file = new File(path, fileName);
-		
+
 		if (!file.exists()) {
 			// Nope - we can take that.
 			return file;
 		}
-		
+
 		// Split file's name and extension to fix internationalization issue #307
 		String extension = getExtension(file.getPath());
         int extStart = fileName.lastIndexOf(extension);
 		if (extStart > 0) {
 			fileName = fileName.substring(0, extStart);
 		}
-		
+
 		// Try a simple "copy of".
 		file = new File(path, context.getString(R.string.copied_file_name, fileName).concat(extension));
-		
+
 		if (!file.exists()) {
 			// Nope - we can take that.
 			return file;
 		}
-		
+
 		int copyIndex = 2;
-		
+
 		// Well, we gotta find a unique name at some point.
 		while (copyIndex < 500) {
 			file = new File(path, context.getString(R.string.copied_file_name_2, copyIndex, fileName).concat(extension));
-			
+
 			if (!file.exists()) {
 				// Nope - we can take that.
 				return file;
@@ -227,14 +227,14 @@ public class FileUtils {
 
 			copyIndex++;
 		}
-	
+
 		// I GIVE UP.
 		return null;
-	}	
-	
+	}
+
 	/**
 	 * Attempts to open a file for viewing.
-	 * 
+	 *
 	 * @param fileholder The holder of the file to open.
 	 */
 	public static void openFile(FileHolder fileholder, Context c) {
@@ -244,18 +244,15 @@ public class FileUtils {
 
     public static Intent getViewIntentFor(FileHolder fileholder, Context c) {
         Intent intent = new Intent(ACTION_VIEW);
-        Uri data = FileUtils.getUri(fileholder.getFile());
+        Uri data = getUri(fileholder);
         String type = fileholder.getMimeType();
 
         intent.setDataAndType(data, type);
         return intent;
     }
 
-    public static boolean isValidDirectory(@NonNull File file) {
-		return file.exists() && file.isDirectory();
-    }
-
     private static void launchFileIntent(Intent intent, Context c) {
+		intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         try {
             List<ResolveInfo> activities = c.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
             if (activities.size() == 0 || onlyActivityIsOurs(c, activities)) {
@@ -266,6 +263,10 @@ public class FileUtils {
         } catch (ActivityNotFoundException | SecurityException e) {
             Toast.makeText(c.getApplicationContext(), R.string.application_not_available, Toast.LENGTH_SHORT).show();
         }
+	}
+
+	public static boolean isValidDirectory(@NonNull File file) {
+		return file.exists() && file.isDirectory();
 	}
 
     public static boolean isResolverActivity(ResolveInfo resolveInfo) {
@@ -282,7 +283,9 @@ public class FileUtils {
     }
 
     public static String getNameWithoutExtension(File f) {
-		return f.getName().substring(0, f.getName().length() - getExtension(getUri(f).toString()).length());
+        String fileName = f.getName();
+        String extension = getExtension(fileName);
+        return fileName.substring(0, fileName.length() - extension.length());
 	}
 
     public static void deleteDirectory(File fileOrDirectory) {

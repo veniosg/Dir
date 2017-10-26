@@ -26,8 +26,8 @@ import android.widget.Toast;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
+import com.veniosg.dir.util.FileUtils;
 import com.veniosg.dir.util.Logger;
-import com.veniosg.dir.view.Themer;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -44,7 +44,7 @@ public class SaveAsActivity extends BaseActivity {
 	private Uri source;
 	// Whether the scheme is file: (otherwise it's content:)
 	private boolean fileScheme = false;
-	
+
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -62,7 +62,7 @@ public class SaveAsActivity extends BaseActivity {
             finish();
         }
     }
-	
+
 	private void startPickActivity(Intent intent){
 		try {
 			startActivityForResult(intent, REQUEST_CODE_PICK_FILE_OR_DIRECTORY);
@@ -71,20 +71,20 @@ public class SaveAsActivity extends BaseActivity {
 			Toast.makeText(this, R.string.saveas_error, Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	private Intent createPickIntent(){
         Intent intent = new Intent(IntentConstants.ACTION_PICK_FILE);
         intent.setClassName(this, IntentFilterActivity.class.getName());
 		return intent;
 	}
-	
+
 	private void processFile(Uri uri){
 		fileScheme = true;
 		Intent intent = createPickIntent();
-		intent.setData(uri);
+		intent.setData(FileUtils.getUri(uri));
 		startPickActivity(intent);
 	}
-	
+
 	private void processContent(Uri uri){
 		fileScheme = false;
 		String name = getPath(uri);
@@ -92,7 +92,7 @@ public class SaveAsActivity extends BaseActivity {
 		intent.setData(Uri.parse(name));
 		startPickActivity(intent);
 	}
-	
+
 	/*
 	 * Get the default path and filename for the saved file from content: scheme.
 	 * As the directory is always used the SD storage.
@@ -105,18 +105,18 @@ public class SaveAsActivity extends BaseActivity {
 		Uri sd = Uri.fromFile(Environment.getExternalStorageDirectory());
 		if(uri.getHost().equals("gmail-ls")){
 			Cursor cur = managedQuery(uri, new String[]{"_display_name"}, null, null, null);
-			int nameColumn = cur.getColumnIndex("_display_name"); 
+			int nameColumn = cur.getColumnIndex("_display_name");
 			if(cur.moveToFirst()){
 				return sd.buildUpon().appendPath(cur.getString(nameColumn)).toString();
 			}
 		}
 		return sd.getPath();
 	}
-    
+
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		
+
 		switch (requestCode) {
 		case REQUEST_CODE_PICK_FILE_OR_DIRECTORY:
 			if (resultCode == RESULT_OK && data != null) {
@@ -130,7 +130,7 @@ public class SaveAsActivity extends BaseActivity {
 		}
 		finish();
 	}
-    
+
     private void saveFile(File destination){
 		InputStream in = null;
 		OutputStream out = null;
@@ -139,16 +139,13 @@ public class SaveAsActivity extends BaseActivity {
 				in = new BufferedInputStream(new FileInputStream(source.getPath()));
 			else
 				in = new BufferedInputStream(getContentResolver().openInputStream(source));
-			
+
 			out = new BufferedOutputStream(new FileOutputStream(destination));
 	        byte[] buffer = new byte[1024];
-	        
+
 	        while(in.read(buffer) != -1)
 	        	out.write(buffer);
 			Toast.makeText(this, R.string.saveas_file_saved, Toast.LENGTH_SHORT).show();
-		} catch(FileNotFoundException e){
-			//Should never get here
-			Toast.makeText(this, R.string.saveas_error, Toast.LENGTH_SHORT).show();
 		} catch(IOException e){
 			Toast.makeText(this, R.string.saveas_error, Toast.LENGTH_SHORT).show();
 		}
@@ -167,7 +164,6 @@ public class SaveAsActivity extends BaseActivity {
                     Logger.log(e);
                 }
 			}
-			
 		}
     }
 }

@@ -62,6 +62,7 @@ import static android.os.Build.VERSION_CODES.KITKAT;
 import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
 import static com.nostra13.universalimageloader.core.assist.ImageScaleType.EXACTLY;
 import static com.nostra13.universalimageloader.core.assist.ImageScaleType.IN_SAMPLE_POWER_OF_2;
+import static com.veniosg.dir.util.FileUtils.getViewIntentFor;
 import static java.lang.Math.min;
 
 public class ThumbnailHelper {
@@ -85,7 +86,7 @@ public class ThumbnailHelper {
      */
     private static Drawable getAssociatedAppIconDrawable(FileHolder holder, Context context) {
         PackageManager pm = context.getPackageManager();
-        Intent intent = FileUtils.getViewIntentFor(holder, context);
+        Intent intent = getViewIntentFor(holder, context);
         Drawable icon = null;
 
         // Contrary to queryIntentActivities documentation, the first item IS NOT the same
@@ -205,10 +206,8 @@ public class ThumbnailHelper {
                 return ri.activityInfo.packageName;
             } else if (ri.serviceInfo.packageName != null) {
                 return ri.serviceInfo.packageName;
-            } else if (SDK_INT >= KITKAT) {
-                return ri.providerInfo.packageName;
             } else {
-                return "";
+                return ri.providerInfo.packageName;
             }
         } else {
             return ri.resolvePackageName;
