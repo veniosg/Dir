@@ -20,6 +20,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ActionMode;
@@ -33,6 +34,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
+
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.view.PathController;
@@ -193,7 +195,7 @@ public class PathView extends FrameLayout implements PathController {
     }
 
     @Override
-    public boolean cd(String path) {
+    public boolean cd(@NonNull String path) {
         return cd(new File(path));
     }
 
@@ -266,12 +268,15 @@ public class PathView extends FrameLayout implements PathController {
         }
         // Go back.
         else if (mCurrentMode == STANDARD_INPUT) {
-            if (!backWillExit(mInitialDirectory.getAbsolutePath(),
-                    mCurrentDirectory.getAbsolutePath())) {
+            boolean backWillExit = backWillExit(
+                    mInitialDirectory.getAbsolutePath(),
+                    mCurrentDirectory.getAbsolutePath());
+            if (backWillExit || mCurrentDirectory.getParent() == null) {
+                return false;
+            } else {
                 cd(mCurrentDirectory.getParent());
                 return true;
-            } else
-                return false;
+            }
         }
 
         return true;
