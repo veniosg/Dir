@@ -38,6 +38,7 @@ import java.io.File;
 
 import static android.support.v4.view.GravityCompat.START;
 import static com.veniosg.dir.IntentConstants.EXTRA_FROM_OI_FILEMANAGER;
+import static com.veniosg.dir.IntentConstants.EXTRA_SEARCH_INIT_PATH;
 import static com.veniosg.dir.android.util.FileUtils.getFile;
 import static com.veniosg.dir.android.util.FileUtils.openFile;
 import static java.lang.Math.min;
@@ -143,10 +144,10 @@ public class FileManagerActivity extends BaseActivity
 
 	@Override
 	public boolean onSearchRequested() {
-		Bundle appData = new Bundle();
-		appData.putString(IntentConstants.EXTRA_SEARCH_INIT_PATH, mFragment.getPath());
-		startSearch(null, false, appData, false);
-		
+		Intent searchIntent = new Intent(this, SearchableActivity.class);
+		searchIntent.putExtra(EXTRA_SEARCH_INIT_PATH, mFragment.getPath());
+
+		startActivity(searchIntent);
 		return true;
 	}
 
