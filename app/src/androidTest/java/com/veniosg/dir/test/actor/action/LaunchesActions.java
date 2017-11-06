@@ -6,6 +6,10 @@ import android.net.Uri;
 import android.support.test.rule.ActivityTestRule;
 
 import com.veniosg.dir.IntentConstants;
+import com.veniosg.dir.android.util.FileUtils;
+import com.veniosg.dir.android.util.Utils;
+
+import java.io.File;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -13,6 +17,7 @@ import javax.annotation.Nullable;
 import static android.content.Intent.ACTION_GET_CONTENT;
 import static android.content.Intent.ACTION_VIEW;
 import static android.content.Intent.CATEGORY_OPENABLE;
+import static com.veniosg.dir.IntentConstants.ACTION_PICK_DIRECTORY;
 import static com.veniosg.dir.IntentConstants.ACTION_PICK_FILE;
 import static com.veniosg.dir.IntentConstants.EXTRA_TITLE;
 
@@ -28,6 +33,14 @@ public class LaunchesActions {
                 ACTION_PICK_FILE,
                 "file",
                 "fu/bar"   // for */* filter
+        ));
+    }
+
+    public void pickFileWithFileSchemeAndType(String mimeType) {
+        launch(buildIntent(
+                ACTION_PICK_FILE,
+                "file",
+                mimeType
         ));
     }
 
@@ -47,9 +60,15 @@ public class LaunchesActions {
         ));
     }
 
+    public void pickFileWithNoSchemeAndNoTypeAndExtraFilter(String typeFilter) {
+        Intent intent = buildIntent(ACTION_PICK_FILE, null, null);
+        intent.putExtra(IntentConstants.EXTRA_FILTER_MIMETYPE, typeFilter);
+        launch(intent);
+    }
+
     public void pickDirectoryWithFileSchemeAndNoType() {
         launch(buildIntent(
-                IntentConstants.ACTION_PICK_DIRECTORY,
+                ACTION_PICK_DIRECTORY,
                 "file",
                 null
         ));
@@ -57,7 +76,7 @@ public class LaunchesActions {
 
     public void pickDirectoryWithNoSchemeAndNoType() {
         launch(buildIntent(
-                IntentConstants.ACTION_PICK_DIRECTORY,
+                ACTION_PICK_DIRECTORY,
                 null,
                 null
         ));
@@ -87,8 +106,15 @@ public class LaunchesActions {
         ));
     }
 
-    public void openableViewWithContentSchemeAndAnyType() {
-        Intent openableIntent = buildIntent(ACTION_VIEW, "content", "fu/bar");
+    public void saveAs(File sourceData) {
+//        Intent openableIntent = buildIntent(ACTION_VIEW, "content", "fu/bar");
+//        openableIntent.addCategory(CATEGORY_OPENABLE);
+//
+//        launch(openableIntent);
+        Intent openableIntent = new Intent(Intent.ACTION_VIEW, new Uri.Builder()
+                .scheme("content")
+                .path(sourceData.getAbsolutePath())    // TODO this is wrong, we have to resolve to a content uri
+                .build());
         openableIntent.addCategory(CATEGORY_OPENABLE);
 
         launch(openableIntent);

@@ -44,6 +44,8 @@ public class IntentFilterActivityTest {
 
     private final File sdCardDir = Environment.getExternalStorageDirectory();
     private final File markerFile = new File(sdCardDir, SDCARD_MARKER_FILE_NAME);
+    private final File textFile = new File(sdCardDir, "text.txt");
+    private final File imageFile = new File(sdCardDir, "image.png");
     private final File markerDirectory = new File(sdCardDir, SDCARD_MARKER_DIR_NAME);
 
 
@@ -51,6 +53,8 @@ public class IntentFilterActivityTest {
     @Before
     public void setUp() throws Exception {
         markerFile.createNewFile();
+        textFile.createNewFile();
+        imageFile.createNewFile();
         markerDirectory.mkdir();
     }
 
@@ -58,6 +62,8 @@ public class IntentFilterActivityTest {
     @After
     public void tearDown() throws Exception {
         markerFile.delete();
+        textFile.delete();
+        imageFile.delete();
         markerDirectory.delete();
     }
 
@@ -147,12 +153,10 @@ public class IntentFilterActivityTest {
 
     @Test
     public void usesTypeFilterFromExtra() {
-        assertTrue(false);
-    }
+        android.launches().pickFileWithNoSchemeAndNoTypeAndExtraFilter("text/*");
 
-    @Test
-    public void usesTypeFilterFromIntentTypeIfNoExtra() {
-        assertTrue(false);
+        user.sees().fileInList(textFile.getName());
+        user.cannotSee().fileInList(imageFile.getName());
     }
 
     @Test
@@ -177,7 +181,7 @@ public class IntentFilterActivityTest {
     public void showsOnlyDirectoriesIfSpecifiedInExtra() {
         android.launches().pickFileWithDirOnlyExtra();
 
-//        fix these two tests. cannotsee doesn't work
+        // FIXME cannotsee doesn't work
         user.sees().fileInList(SDCARD_MARKER_DIR_NAME);
         user.cannotSee().fileInList(SDCARD_MARKER_FILE_NAME);
     }
@@ -186,6 +190,7 @@ public class IntentFilterActivityTest {
     public void showsOnlyDirectoriesIfActionIsPickDirectory() {
         android.launches().pickDirectoryWithNoSchemeAndNoType();
 
+        // FIXME cannotsee doesn't work
         user.sees().fileInList(SDCARD_MARKER_DIR_NAME);
         user.cannotSee().fileInList(SDCARD_MARKER_FILE_NAME);
     }

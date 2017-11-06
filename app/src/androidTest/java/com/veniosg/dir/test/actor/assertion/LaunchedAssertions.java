@@ -17,10 +17,4 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.AllOf.allOf;
 
 public class LaunchedAssertions {
-    public void dirPickFileForResult() {
-        intended(allOf(
-                hasAction(equalTo(ACTION_PICK_FILE)),
-                hasPackage("com.veniosg.dir")
-        ));
-    }
 }

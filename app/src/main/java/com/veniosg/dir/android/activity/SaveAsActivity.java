@@ -42,8 +42,6 @@ import static android.widget.Toast.makeText;
 public class SaveAsActivity extends BaseActivity {
     private static final int REQUEST_CODE_PICK_FILE_OR_DIRECTORY = 1;
 
-    // Whether the scheme is file: (otherwise it's content:)
-    private boolean fileScheme = false;
     private Uri source;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -55,12 +53,18 @@ public class SaveAsActivity extends BaseActivity {
             Uri uri = receivedIntent.getData();
             source = uri;
 
-            if (uri.getScheme().equals("file")) processFile(uri);
-            else if (uri.getScheme().equals("content")) processContent(uri);
+            processInput(uri);
         } else {
             makeText(this, R.string.saveas_no_file_picked, Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    private void processInput(Uri uri) {
+        String name = getPath(uri);
+        Intent intent = createPickIntent();
+        intent.setData(Uri.parse(name));
+        startPickActivity(intent);
     }
 
     private void startPickActivity(Intent intent) {
@@ -77,21 +81,6 @@ public class SaveAsActivity extends BaseActivity {
         Intent intent = new Intent(IntentConstants.ACTION_PICK_FILE);
         intent.setPackage(this.getPackageName());
         return intent;
-    }
-
-    private void processFile(Uri uri) {
-        fileScheme = true;
-        Intent intent = createPickIntent();
-        intent.setData(uri);
-        startPickActivity(intent);
-    }
-
-    private void processContent(Uri uri) {
-        fileScheme = false;
-        String name = getPath(uri);
-        Intent intent = createPickIntent();
-        intent.setData(Uri.parse(name));
-        startPickActivity(intent);
     }
 
     /*
@@ -136,10 +125,9 @@ public class SaveAsActivity extends BaseActivity {
         InputStream in = null;
         OutputStream out = null;
         try {
-            if (fileScheme) in = new BufferedInputStream(new FileInputStream(source.getPath()));
-            else in = new BufferedInputStream(getContentResolver().openInputStream(source));
-
+            in = new BufferedInputStream(getContentResolver().openInputStream(source));
             out = new BufferedOutputStream(new FileOutputStream(destination));
+
             byte[] buffer = new byte[1024];
 
             while (in.read(buffer) != -1) out.write(buffer);
