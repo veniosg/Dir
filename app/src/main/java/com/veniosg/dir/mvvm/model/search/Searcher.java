@@ -10,8 +10,6 @@ import java.io.File;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import javax.inject.Inject;
-
 import io.reactivex.Emitter;
 import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
@@ -34,7 +32,6 @@ public class Searcher {
     private BfsFlowable bfsFlowable;
     private Object lock;
 
-    @Inject
     public Searcher() {
         this.ioScheduler = io();
         this.uiScheduler = mainThread();
@@ -42,8 +39,7 @@ public class Searcher {
     }
 
     @VisibleForTesting()
-    Searcher(SearcherLiveData observableResults,
-             Scheduler ioScheduler, Scheduler uiScheduler) {
+    Searcher(SearcherLiveData observableResults, Scheduler ioScheduler, Scheduler uiScheduler) {
         this.ioScheduler = ioScheduler;
         this.uiScheduler = uiScheduler;
         this.observableResults = observableResults;

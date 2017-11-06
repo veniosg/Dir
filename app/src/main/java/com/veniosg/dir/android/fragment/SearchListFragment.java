@@ -90,7 +90,7 @@ public class SearchListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState) {
-        return inflater.inflate(R.layout.fragment_filelist, container, false);
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
     @Override
@@ -176,7 +176,6 @@ public class SearchListFragment extends Fragment {
         } else {
             // Intent contents error.
             getActivity().setTitle(R.string.query_error);
-            showLoading(false);
         }
     }
 

@@ -9,15 +9,16 @@ import com.veniosg.dir.mvvm.model.search.Searcher;
 
 import java.io.File;
 
-import javax.inject.Inject;
-
 import static com.veniosg.dir.mvvm.model.search.Searcher.SearchRequest.request;
 
 public class SearchViewModel extends ViewModel {
-    @SuppressWarnings("WeakerAccess")
-    @Inject Searcher searcher;
+    private Searcher searcher;
     private LiveData<SearchState> liveResults;
     private File searchRoot;
+
+    public SearchViewModel() {
+        searcher = new Searcher();
+    }
 
     @VisibleForTesting
     SearchViewModel(Searcher searcher) {
