@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.veniosg.dir.test;
+package com.veniosg.dir.android;
 
 import com.veniosg.dir.android.util.Utils;
 
@@ -28,12 +28,12 @@ public class UtilsTest extends TestCase {
         File file2 = new File("/");
         assertEquals(0, Utils.lastCommonDirectoryIndex(file1, file2));
 
-        // file1 = "/"
+        file1 = new File("/");
         file2 = new File("/sdcard/Pictures");
         assertEquals(0, Utils.lastCommonDirectoryIndex(file1, file2));
 
         file1 = new File("/sdcard");
-        // file2 = "/sdcard/Pictures"
+        file2 = new File("/sdcard/Pictures");
         assertEquals(1, Utils.lastCommonDirectoryIndex(file1, file2));
 
         file1 = new File("/emulated/storage/0/Pictures");

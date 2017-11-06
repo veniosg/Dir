@@ -171,7 +171,7 @@ public class SearchListFragment extends Fragment {
 
             // Init search
             viewModel.init(root);
-            viewModel.getLiveResults().observe(this, resultObserver);
+//            viewModel.getLiveResults().observe(this, resultObserver); TODO uncomment and fix
             viewModel.updateQuery(query);
         } else {
             // Intent contents error.

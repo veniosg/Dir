@@ -32,7 +32,7 @@ import android.net.Uri;
  * @author George Venios
  *
  */
-public class SearchResultsProvider extends ContentProvider {
+public class SearchResultsProvider extends ContentProvider {	// TODO Delete
 	private static final int DATABASE_VERSION = 1;
 	private static final String DATABASE_NAME = "filemanager_search.db";
 
@@ -49,8 +49,7 @@ public class SearchResultsProvider extends ContentProvider {
 
 	public static final String SEARCH_MIMETYPE = "vnd.android.cursor.item/vnd.veniosg.dir.search_result";
 	public static final String PROVIDER_NAME = "com.veniosg.dir.search";
-	public static final Uri CONTENT_URI = Uri.parse("content://"
-			+ PROVIDER_NAME);
+	public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME);
 
 	private DatabaseHelper dbHelper;
 	private SQLiteDatabase db;

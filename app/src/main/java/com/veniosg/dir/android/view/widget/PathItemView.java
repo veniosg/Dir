@@ -40,7 +40,7 @@ import static com.veniosg.dir.android.util.FileUtils.getFileName;
  * A view that supports displaying a drawable to the left and text in the rest of the space
  * and can scale the text independently of the drawable/self measurements.
  */
-class PathItemView extends FrameLayout {
+public class PathItemView extends FrameLayout {
     private static final float SECONDARY_ITEM_ALPHA = 0.54f;
 
     private ImageView mCaretView;

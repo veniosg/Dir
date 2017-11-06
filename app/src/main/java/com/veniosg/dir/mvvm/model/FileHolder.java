@@ -20,6 +20,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 import android.text.format.Formatter;
 
@@ -36,7 +37,7 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
     private Drawable mPreview;
 	private String mMimeType = "";
 	private String mExtension;
-	
+
 	public FileHolder(File f, Context c){
 		mFile = f;
 		mExtension = parseExtension();
@@ -54,7 +55,7 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 		mExtension = parseExtension();
 		mMimeType = m;
 	}
-	
+
 	private FileHolder(Parcel in){
 		mFile = new File(in.readString());
 		mMimeType = in.readString();
@@ -64,7 +65,7 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 	public File getFile(){
 		return mFile;
 	}
-	
+
 	/**
 	 * Gets the icon representation of this file.
 	 * @return The icon.
@@ -107,69 +108,69 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 
     /**
 	 * Shorthand for getFile().getName().
-	 * @return This file's name. 
+	 * @return This file's name.
 	 */
 	public String getName(){
 		return mFile.getName();
 	}
-	
+
 	/**
 	 * Get the contained file's extension.
 	 */
 	public String getExtension() {
 		return mExtension;
 	}
-	
+
 	/**
 	 * @return The held item's mime type.
 	 */
 	public String getMimeType() {
 		return mMimeType;
 	}
-	
+
 	public CharSequence getFormattedModificationDate(Context c){
         return DateUtils.getRelativeDateTimeString(c, mFile.lastModified(),
                         DateUtils.MINUTE_IN_MILLIS, DateUtils.YEAR_IN_MILLIS * 10, 0);
 	}
-	
+
 	/**
 	 * @param recursive Whether to return size of the whole tree below this file (Directories only).
 	 */
 	public String getFormattedSize(Context c, boolean recursive){
 		return Formatter.formatFileSize(c, getSizeInBytes(recursive));
 	}
-	
+
 	private long getSizeInBytes(boolean recursive){
 		if (recursive && mFile.isDirectory())
 			return FileUtils.folderSize(mFile);
 		else
 			return mFile.length();
 	}
-	
+
 	@Override
 	public int describeContents() {
 		return 0;
 	}
-	
+
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(mFile.getAbsolutePath());
 		dest.writeString(mMimeType);
 		dest.writeString(mExtension);
 	}
-	
+
     public static final Parcelable.Creator<FileHolder> CREATOR = new Parcelable.Creator<FileHolder>() {
         public FileHolder createFromParcel(Parcel in) {
             return new FileHolder(in);
         }
- 
+
         public FileHolder[] newArray(int size) {
             return new FileHolder[size];
         }
     };
 
 	@Override
-	public int compareTo(FileHolder another) {
+	public int compareTo(@NonNull FileHolder another) {
 		return mFile.compareTo(another.getFile());
 	}
 
