@@ -26,7 +26,6 @@ import static android.support.test.espresso.intent.matcher.UriMatchers.hasPath;
 import static android.support.test.espresso.intent.matcher.UriMatchers.hasScheme;
 import static com.veniosg.dir.test.injector.ActorInjector.android;
 import static com.veniosg.dir.test.injector.ActorInjector.user;
-import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertThat;
 
@@ -39,7 +38,7 @@ public class IntentFilterActivityTest {
     @Rule
     public final ActivityTestRule<IntentFilterActivity> activityRule =
             new ActivityTestRule<>(IntentFilterActivity.class, false, false);
-    private final User user = user();
+    private final User user = user(activityRule);
     private final Android android = android(activityRule);
 
     private final File sdCardDir = Environment.getExternalStorageDirectory();
@@ -47,7 +46,7 @@ public class IntentFilterActivityTest {
     private final File textFile = new File(sdCardDir, "text.txt");
     private final File imageFile = new File(sdCardDir, "image.png");
     private final File markerDirectory = new File(sdCardDir, SDCARD_MARKER_DIR_NAME);
-
+    private final File markerDirectoryChild = new File(markerDirectory, "aFile");
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Before
@@ -56,6 +55,7 @@ public class IntentFilterActivityTest {
         textFile.createNewFile();
         imageFile.createNewFile();
         markerDirectory.mkdir();
+        markerDirectoryChild.createNewFile();
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -64,12 +64,26 @@ public class IntentFilterActivityTest {
         markerFile.delete();
         textFile.delete();
         imageFile.delete();
+        markerDirectoryChild.delete();
         markerDirectory.delete();
     }
 
     @Test
     public void remembersPickFilePath() {
-        assertTrue(false);
+        // Launch pick with a specific destination
+        user.launches().pickFileIn(sdCardDir);
+
+        // Move to a folder and pick a child
+        user.selects().fileInList(markerDirectory.getName());
+        user.selects().fileInList(markerDirectoryChild.getName());
+        user.selects().pickFileButton();
+
+        // Launch pick without specific destination
+        user.launches().pickFileWithNoSchemeAndNoType();
+
+        // Check that we are in the marker folder
+        user.sees().pathFragmentInPathView(markerDirectory.getName());
+        user.sees().fileInList(markerDirectoryChild.getName());
     }
 
     @Test
@@ -146,6 +160,7 @@ public class IntentFilterActivityTest {
         assertThat(activityRule.getActivityResult(), hasResultCode(RESULT_OK));
         assertThat(activityRule.getActivityResult(), hasResultData(hasData(allOf(
                 hasScheme("content"),
+                // A content provider that respects the contract is registered on this host (tested elsewhere)
                 hasHost("com.veniosg.dir.filemanager"),
                 hasPath(markerFile.getAbsolutePath())
         ))));
