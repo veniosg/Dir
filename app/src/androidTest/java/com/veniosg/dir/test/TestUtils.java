@@ -27,9 +27,6 @@ public abstract class TestUtils {
     public static void cleanDirectory(File file) {
         if (!file.exists()) return;
         for (String name : file.list()) {
-            if (!name.startsWith("oi-") && !name.startsWith(".oi-")) {
-                throw new RuntimeException(file + " contains unexpected file");
-            }
             File child = new File(file, name);
             if (child.isDirectory())
                 cleanDirectory(child);

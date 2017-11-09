@@ -1,13 +1,13 @@
 package com.veniosg.dir.test.actor.action;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.test.rule.ActivityTestRule;
 
 import com.veniosg.dir.IntentConstants;
-import com.veniosg.dir.android.util.FileUtils;
-import com.veniosg.dir.android.util.Utils;
+import com.veniosg.dir.android.activity.FileManagerActivity;
 
 import java.io.File;
 
@@ -15,7 +15,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static android.content.Intent.ACTION_GET_CONTENT;
-import static android.content.Intent.ACTION_VIEW;
 import static android.content.Intent.CATEGORY_OPENABLE;
 import static com.veniosg.dir.IntentConstants.ACTION_PICK_DIRECTORY;
 import static com.veniosg.dir.IntentConstants.ACTION_PICK_FILE;
@@ -26,6 +25,21 @@ public class LaunchesActions {
 
     public LaunchesActions(ActivityTestRule<? extends Activity> activityRule) {
         mActivityRule = activityRule;
+    }
+
+    public void dir() {
+        Intent dirIntent = new Intent(Intent.ACTION_MAIN);
+        dirIntent.setComponent(
+                new ComponentName("com.veniosg.dir", FileManagerActivity.class.getName()));
+        launch(dirIntent);
+    }
+
+    public void viewWithFileScheme(File file) {
+        launch(new Intent(Intent.ACTION_VIEW, Uri.fromFile(file)));
+    }
+
+    public void pickFileIn(File directory) {
+        launch(new Intent(ACTION_PICK_FILE, Uri.fromFile(directory)));
     }
 
     public void pickFileWithFileSchemeAndAnyType() {
@@ -60,6 +74,7 @@ public class LaunchesActions {
         ));
     }
 
+    @SuppressWarnings("SameParameterValue")
     public void pickFileWithNoSchemeAndNoTypeAndExtraFilter(String typeFilter) {
         Intent intent = buildIntent(ACTION_PICK_FILE, null, null);
         intent.putExtra(IntentConstants.EXTRA_FILTER_MIMETYPE, typeFilter);

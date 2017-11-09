@@ -9,8 +9,8 @@ import com.veniosg.dir.test.actor.User;
 public class ActorInjector {
     private ActorInjector() {}
 
-    public static User user() {
-        return new User();
+    public static User user(ActivityTestRule<? extends Activity> activityRule) {
+        return new User(activityRule);
     }
 
     public static Android android(ActivityTestRule<? extends Activity> activityRule) {

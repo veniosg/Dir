@@ -31,7 +31,7 @@ public class SaveAsActivityTest {
     @Rule
     public final IntentsTestRule<SaveAsActivity> mIntentTestRule =
             new IntentsTestRule<>(SaveAsActivity.class, false, false);
-    private final User user = user();
+    private final User user = user(mIntentTestRule);
     private final Android android = android(mIntentTestRule);
 
     private final File sdCardDir = Environment.getExternalStorageDirectory();
@@ -59,7 +59,7 @@ public class SaveAsActivityTest {
         android.launches().saveAs(originalFile);
 
         user.selects().fileInList(DEST_DIR_NAME);
-        user.types().fileName(DEST_FILE_NAME);
+        user.types().pickFileName(DEST_FILE_NAME);
 
         assertTrue(destFile.exists());
         // Ideally this would also check content equality
