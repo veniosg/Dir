@@ -22,9 +22,6 @@ import static com.veniosg.dir.test.injector.ActorInjector.user;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class FileManagerActivityTest {
-    private static final String DIR_NAME = "somedirectory";
-    private static final String FILE_IN_DIR_NAME = "afileinsomedirectory";
-
     @Rule
     public ActivityTestRule<FileManagerActivity> activityRule = new ActivityTestRule<>(
             FileManagerActivity.class, false, false);
@@ -56,8 +53,8 @@ public class FileManagerActivityTest {
     public void showsFolder() throws Exception {
         user.launches().viewWithFileScheme(testDirectory);
 
-        user.sees().pathFragmentInPathView(DIR_NAME);
-        user.sees().fileInList(FILE_IN_DIR_NAME);
+        user.sees().pathFragmentInPathView(testDirectory.getName());
+        user.sees().fileInList(testChildFile.getName());
     }
 
     @Test

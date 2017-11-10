@@ -6,7 +6,6 @@ import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.veniosg.dir.android.activity.SaveAsActivity;
-import com.veniosg.dir.test.actor.Android;
 import com.veniosg.dir.test.actor.User;
 
 import org.junit.After;
@@ -17,7 +16,6 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 
-import static com.veniosg.dir.test.injector.ActorInjector.android;
 import static com.veniosg.dir.test.injector.ActorInjector.user;
 import static org.junit.Assert.assertTrue;
 
@@ -32,7 +30,6 @@ public class SaveAsActivityTest {
     public final IntentsTestRule<SaveAsActivity> mIntentTestRule =
             new IntentsTestRule<>(SaveAsActivity.class, false, false);
     private final User user = user(mIntentTestRule);
-    private final Android android = android(mIntentTestRule);
 
     private final File sdCardDir = Environment.getExternalStorageDirectory();
     private final File originalFile = new File(sdCardDir, ORIGINAL_FILE_NAME);
@@ -56,10 +53,11 @@ public class SaveAsActivityTest {
 
     @Test
     public void savesToPickedDestination() {
-        android.launches().saveAs(originalFile);
+        user.launches().saveAs(originalFile);
 
         user.selects().fileInList(DEST_DIR_NAME);
         user.types().pickFileName(DEST_FILE_NAME);
+        user.selects().pickFileButton();
 
         assertTrue(destFile.exists());
         // Ideally this would also check content equality

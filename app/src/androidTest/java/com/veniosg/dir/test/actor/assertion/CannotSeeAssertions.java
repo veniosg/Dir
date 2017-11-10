@@ -8,6 +8,7 @@ import com.veniosg.dir.mvvm.model.FileHolder;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -23,10 +24,15 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
 public class CannotSeeAssertions {
+    // TODO GV Use this instead:
+    // https://developer.android.com/training/testing/espresso/recipes.html#asserting-data-item-not-in-adapter
     public void fileInList(String filename) {
         onData(allOf(
                 is(instanceOf(FileHolder.class)),
                 hasName(filename))
-        ).check(matches(not(isDisplayed())));
+        ).inAdapterView(allOf(
+                withId(android.R.id.list),
+                isDescendantOfA(withId(R.id.zoomview))
+        )).check(doesNotExist());
     }
 }

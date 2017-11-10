@@ -1,5 +1,7 @@
 package com.veniosg.dir.test.actor.assertion;
 
+import android.support.test.espresso.matcher.ViewMatchers;
+
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.view.widget.PathItemView;
 import com.veniosg.dir.mvvm.model.FileHolder;
@@ -24,7 +26,10 @@ public class SeesAssertions {
         onData(allOf(
                 is(instanceOf(FileHolder.class)),
                 hasName(filename))
-        ).check(matches(isDisplayed()));
+        ).inAdapterView(allOf(
+                withId(android.R.id.list),
+                isDescendantOfA(withId(R.id.zoomview))
+        )).check(matches(isDisplayed()));
     }
 
     public void pathFragmentInPathView(String pathFragmentName) {

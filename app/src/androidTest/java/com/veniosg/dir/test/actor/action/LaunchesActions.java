@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 
 import com.veniosg.dir.IntentConstants;
@@ -15,7 +16,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static android.content.Intent.ACTION_GET_CONTENT;
+import static android.content.Intent.ACTION_VIEW;
 import static android.content.Intent.CATEGORY_OPENABLE;
+import static android.support.v4.content.FileProvider.getUriForFile;
 import static com.veniosg.dir.IntentConstants.ACTION_PICK_DIRECTORY;
 import static com.veniosg.dir.IntentConstants.ACTION_PICK_FILE;
 import static com.veniosg.dir.IntentConstants.EXTRA_TITLE;
@@ -35,7 +38,7 @@ public class LaunchesActions {
     }
 
     public void viewWithFileScheme(File file) {
-        launch(new Intent(Intent.ACTION_VIEW, Uri.fromFile(file)));
+        launch(new Intent(ACTION_VIEW, Uri.fromFile(file)));
     }
 
     public void pickFileIn(File directory) {
@@ -122,14 +125,11 @@ public class LaunchesActions {
     }
 
     public void saveAs(File sourceData) {
-//        Intent openableIntent = buildIntent(ACTION_VIEW, "content", "fu/bar");
-//        openableIntent.addCategory(CATEGORY_OPENABLE);
-//
-//        launch(openableIntent);
-        Intent openableIntent = new Intent(Intent.ACTION_VIEW, new Uri.Builder()
+        Uri sourceUri = new Uri.Builder()
                 .scheme("content")
-                .path(sourceData.getAbsolutePath())    // TODO this is wrong, we have to resolve to a content uri
-                .build());
+                .path(sourceData.getAbsolutePath())
+                .build();
+        Intent openableIntent = new Intent(ACTION_VIEW, sourceUri);
         openableIntent.addCategory(CATEGORY_OPENABLE);
 
         launch(openableIntent);

@@ -31,7 +31,6 @@ import com.veniosg.dir.android.util.Logger;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -93,7 +92,7 @@ public class SaveAsActivity extends BaseActivity {
      */
     private String getPath(Uri uri) {
         Uri sd = Uri.fromFile(Environment.getExternalStorageDirectory());
-        if (uri.getHost().equals("gmail-ls")) {
+        if ("gmail-ls".equals(uri.getHost())) {
             Cursor cur = managedQuery(uri, new String[]{"_display_name"}, null, null, null);
             int nameColumn = cur.getColumnIndex("_display_name");
             if (cur.moveToFirst()) {
