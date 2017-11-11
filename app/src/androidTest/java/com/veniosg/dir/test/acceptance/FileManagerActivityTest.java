@@ -29,6 +29,8 @@ public class FileManagerActivityTest {
     private final User user = user(activityRule);
     private final File sdCardDir = Environment.getExternalStorageDirectory();
     private final File testDirectory = new File(sdCardDir, "testDir");
+    private final File compressedFile = new File(sdCardDir, "lala.zip");
+    private final File testExtractedDirectory = new File(sdCardDir, "lala");
     private final File testChildDirectory = new File(testDirectory, "testChildDir");
     private final File testCopyDestination = new File(testDirectory, "testCopyDestination");
     private final File testChildFile = new File(testDirectory, "testChildFile");
@@ -45,12 +47,16 @@ public class FileManagerActivityTest {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @After
     public void tearDown() throws Exception {
+        if (testExtractedDirectory.exists())
+            testExtractedDirectory.renameTo(new File(testDirectory, "extracted"));
+        if (compressedFile.exists())
+            compressedFile.renameTo(new File(testDirectory, "compressed"));
         cleanDirectory(testDirectory);
         testDirectory.delete();
     }
 
     @Test
-    public void showsFolder() throws Exception {
+    public void showsLaunchedDirectory() throws Exception {
         user.launches().viewWithFileScheme(testDirectory);
 
         user.sees().pathFragmentInPathView(testDirectory.getName());
@@ -58,7 +64,7 @@ public class FileManagerActivityTest {
     }
 
     @Test
-    public void selectingADirectoryNavigates() throws Exception {
+    public void navigatesFwdAndBwd() throws Exception {
         user.launches().dir();
 
         user.selects().fileInList(testDirectory.getName());
@@ -66,7 +72,7 @@ public class FileManagerActivityTest {
         user.sees().fileInList(testChildFile.getName());
 
         user.selects().backButton();
-        user.sees().pathFragmentInPathView(testDirectory.getParent());
+        user.sees().pathFragmentInPathView(sdCardDir.getName());
         user.sees().fileInList(testDirectory.getName());
     }
 
@@ -85,7 +91,7 @@ public class FileManagerActivityTest {
     public void copiesDirectory() throws Exception {
         user.launches().viewWithFileScheme(testDirectory);
 
-        userCopiesFileInList(testChildDirectory.getName());
+        userCopiesFileInList(testChildFile.getName());
         user.selects().fileInList(testCopyDestination.getName());
         user.selects().pasteAction();
 
@@ -165,31 +171,33 @@ public class FileManagerActivityTest {
 
     @Test
     public void renamesFile() throws Exception {
-        String newName = "newName";
+        String nameAppendage = "2";
+        String updatedName = testChildFile.getName() + nameAppendage;
         user.launches().viewWithFileScheme(testDirectory);
 
         user.selects().longFileInList(testChildFile.getName());
         user.selects().operationsAction();
         user.selects().renameAction();
-        user.types().inputFileName(newName);
+        user.types().inputFileName(nameAppendage);
         user.selects().ok();
 
-        user.sees().fileInList(newName);
+        user.sees().fileInList(updatedName);
         user.cannotSee().fileInList(testChildFile.getName());
     }
 
     @Test
     public void renamesDirectory() throws Exception {
-        String newName = "newName";
+        String nameAppendage = "2";
+        String updatedName = testChildDirectory.getName() + nameAppendage;
         user.launches().viewWithFileScheme(testDirectory);
 
         user.selects().longFileInList(testChildDirectory.getName());
         user.selects().operationsAction();
         user.selects().renameAction();
-        user.types().inputFileName(newName);
+        user.types().inputFileName(nameAppendage);
         user.selects().ok();
 
-        user.sees().fileInList(newName);
+        user.sees().fileInList(updatedName);
         user.cannotSee().fileInList(testChildDirectory.getName());
     }
 
@@ -205,17 +213,13 @@ public class FileManagerActivityTest {
         user.types().inputFileName(zipName);
         user.selects().ok();
 
-        // delete original
-        user.selects().longFileInList(testDirectory.getName());
-        user.selects().operationsAction();
-        user.selects().deleteAction();
-
         // uncompress
-        user.selects().longFileInList(zipName);
+        user.selects().longFileInList(zipName + ".zip");
         user.selects().operationsAction();
         user.selects().extractAction();
 
         // assert uncompressed contents
+        user.selects().fileInList(zipName);
         user.selects().fileInList(testDirectory.getName());
         user.sees().fileInList(testChildDirectory.getName());
         user.sees().fileInList(testChildFile.getName());

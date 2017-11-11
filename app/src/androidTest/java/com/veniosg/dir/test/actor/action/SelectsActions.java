@@ -47,7 +47,7 @@ public class SelectsActions {
     }
 
     public void backButton() {
-        pressBack();
+        onView(withId(android.R.id.content)).perform(pressBack());
     }
 
     public void operationsAction() {

@@ -262,6 +262,8 @@ public class FileUtils {
 	}
 
     public static boolean isResolverActivity(ResolveInfo resolveInfo) {
+		if (resolveInfo == null || resolveInfo.activityInfo == null) return false;
+
         // Please kill me..
         return "android".equals(resolveInfo.activityInfo.packageName)
                 && "com.android.internal.app.ResolverActivity".equals(resolveInfo.activityInfo.name);
