@@ -1,6 +1,9 @@
 package com.veniosg.dir.test.acceptance;
 
+import android.content.Context;
 import android.os.Environment;
+import android.preference.PreferenceManager;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -56,6 +59,9 @@ public class IntentFilterActivityTest {
         imageFile.createNewFile();
         markerDirectory.mkdir();
         markerDirectoryChild.createNewFile();
+
+        Context targetContext = InstrumentationRegistry.getTargetContext();
+        PreferenceManager.getDefaultSharedPreferences(targetContext).edit().clear().commit();
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -160,7 +166,7 @@ public class IntentFilterActivityTest {
         assertThat(activityRule.getActivityResult(), hasResultCode(RESULT_OK));
         assertThat(activityRule.getActivityResult(), hasResultData(hasData(allOf(
                 hasScheme("content"),
-                // A content provider that respects the contract is registered on this host (tested elsewhere)
+                // A content provider that respects the contract is registered on this host
                 hasHost("com.veniosg.dir.filemanager"),
                 hasPath(markerFile.getAbsolutePath())
         ))));
