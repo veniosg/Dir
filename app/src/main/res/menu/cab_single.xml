@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  * Copyright (C) 2014 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AppCompatResource">
+    <item
+        android:id="@+id/menu_send"
+        android:icon="@drawable/ic_action_share"
+        android:title="@string/menu_share" />
     <item
         android:id="@+id/menu_file_ops"
         android:icon="@drawable/ic_action_edit"
@@ -49,25 +54,19 @@
         </menu>
     </item>
     <item
-        android:id="@+id/menu_send"
-        android:icon="@drawable/ic_action_share"
-        android:title="@string/menu_share" />
-    <item
-        android:id="@+id/menu_details"
-        android:icon="@drawable/ic_action_info"
-        android:title="@string/menu_details" />
+        android:id="@+id/menu_create_shortcut"
+        android:showAsAction="never"
+        android:title="@string/menu_create_shortcut" />
     <item
         android:id="@+id/menu_bookmark"
-        android:icon="@drawable/ic_action_bookmark"
-        android:title="@string/menu_bookmark"
-        android:showAsAction="never" />
+        android:showAsAction="never"
+        android:title="@string/menu_bookmark" />
     <item
-        android:id="@+id/menu_create_shortcut"
-        android:title="@string/menu_create_shortcut"
-        android:showAsAction="never" />
+        android:id="@+id/menu_details"
+        android:showAsAction="never"
+        android:title="@string/menu_details" />
     <item
         android:id="@+id/menu_select_all"
         android:showAsAction="never"
         android:title="@string/menu_check_all" />
-
 </menu>

@@ -42,7 +42,6 @@
     <item
         android:id="@+id/menu_bookmark"
         android:alphabeticShortcut="b"
-        android:icon="@drawable/ic_action_bookmark"
         android:showAsAction="never"
         android:menuCategory="container"
         android:orderInCategory="4"
