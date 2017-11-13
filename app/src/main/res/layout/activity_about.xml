@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
- * Copyright (C) 2014-2015 George Venios
+ * Copyright (C) 2014-2017 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,6 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:gravity="center"
                     android:background="?android:selectableItemBackground"
                     android:orientation="vertical"
                     android:padding="8dp"
@@ -91,7 +92,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
                         android:text="@string/about_forked_from"
                         android:textAppearance="?android:textAppearanceSmall"
                         android:textColor="?android:textColorTertiary" />
@@ -107,6 +107,26 @@
                 android:gravity="center">
 
                 <ImageButton
+                    android:id="@+id/contribute"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/about_contribute"
+                    android:src="@drawable/ic_about_github" />
+
+                <ImageButton
+                    android:id="@+id/translate"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.0"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/about_translate"
+                    android:src="@drawable/ic_about_translate" />
+
+                <ImageButton
                     android:id="@+id/contact"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
@@ -116,26 +136,6 @@
                     android:contentDescription="@string/about_contact"
                     android:src="@drawable/ic_about_mail"
                     tools:ignore="NestedWeights" />
-
-                <ImageButton
-                    android:id="@+id/beta"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/about_beta"
-                    android:src="@drawable/ic_about_google_plus" />
-
-                <ImageButton
-                    android:id="@+id/contribute"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/about_contribute"
-                    android:src="@drawable/ic_about_github" />
 
                 <ImageButton
                     android:id="@+id/gplay"

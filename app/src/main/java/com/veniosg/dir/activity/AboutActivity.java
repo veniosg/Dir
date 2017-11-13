@@ -18,10 +18,11 @@ package com.veniosg.dir.activity;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -30,6 +31,9 @@ import android.widget.Toast;
 import com.veniosg.dir.R;
 import com.veniosg.dir.util.Logger;
 import com.veniosg.dir.view.CheatSheet;
+
+import static android.content.Intent.ACTION_SENDTO;
+import static android.text.TextUtils.isEmpty;
 
 public class AboutActivity extends BaseActivity {
 
@@ -47,22 +51,16 @@ public class AboutActivity extends BaseActivity {
         }
 
         // Click listeners
-        findViewById(R.id.topText).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openWebLink("http://veniosg.github.io/Dir/");
-            }
-        });
         findViewById(R.id.middleText).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openWebLink("http://pxhouse.co/");
+                viewUri("market://dev?id=8885726315648229405", "https://play.google.com/store/apps/dev?id=8885726315648229405");
             }
         });
         findViewById(R.id.gplay).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openWebLink("market://details?id=com.veniosg.dir");
+                viewUri("market://details?id=com.veniosg.dir", "http://play.google.com/store/apps/details?id=com.veniosg.dir");
             }
         });
         findViewById(R.id.share).setOnClickListener(new View.OnClickListener() {
@@ -80,11 +78,10 @@ public class AboutActivity extends BaseActivity {
         findViewById(R.id.contact).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "dir-support@googlegroups.com", null));
-//                StringBuffer subjectBuilder = new StringBuffer(label).append(" (v")
-//                        .append(versionName)
-//                        .append(")");
-//                i.putExtra(Intent.EXTRA_SUBJECT, subjectBuilder.toString());
+                Intent i = new Intent(
+                        ACTION_SENDTO,
+                        Uri.fromParts("mailto", "dir-support@googlegroups.com", null)
+                );
 
                 try {
                     startActivity(i);
@@ -94,36 +91,39 @@ public class AboutActivity extends BaseActivity {
                 }
             }
         });
-        findViewById(R.id.beta).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.translate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openWebLink("https://plus.google.com/communities/101972691290551957751");
+                viewUri("http://dirapp.oneskyapp.com/collaboration/project?id=27347", null);
             }
         });
         findViewById(R.id.contribute).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openWebLink("https://github.com/veniosg/dir");
+                viewUri("https://github.com/veniosg/dir", null);
             }
         });
 
         // CheatSheets
         CheatSheet.setup(findViewById(R.id.gplay));
-        CheatSheet.setup(findViewById(R.id.beta));
+        CheatSheet.setup(findViewById(R.id.translate));
         CheatSheet.setup(findViewById(R.id.contribute));
         CheatSheet.setup(findViewById(R.id.contact));
         CheatSheet.setup(findViewById(R.id.share));
     }
 
-    private void openWebLink(String url) {
+    private void viewUri(@NonNull String uri, @Nullable String fallbackUrl) {
         Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(url));
         try {
+            i.setData(Uri.parse(uri));
             startActivity(i);
         } catch (ActivityNotFoundException e) {
-            Logger.log(e);
-            Toast.makeText(AboutActivity.this,
-                    R.string.application_not_available, Toast.LENGTH_SHORT).show();
+            if (isEmpty(fallbackUrl)) {
+                Logger.log(e);
+                Toast.makeText(AboutActivity.this, R.string.application_not_available, Toast.LENGTH_SHORT).show();
+            } else {
+                viewUri(fallbackUrl, null);
+            }
         }
     }
 
