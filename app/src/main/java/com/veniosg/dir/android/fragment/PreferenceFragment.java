@@ -20,16 +20,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.ListPreference;
-import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.view.Themer;
+import com.veniosg.dir.android.view.Themer.Theme;
 
+import static android.os.Environment.MEDIA_MOUNTED;
+import static android.os.Environment.getExternalStorageDirectory;
+import static android.os.Environment.getExternalStorageState;
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.veniosg.dir.IntentConstants.ACTION_REFRESH_THEME;
+import static java.lang.Integer.parseInt;
 
 public class PreferenceFragment extends android.preference.PreferenceFragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -81,49 +85,39 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
     }
 
     static boolean getMediaScanFromPreference(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREFS_MEDIASCAN, false);
+        return getDefaultSharedPreferences(context).getBoolean(PREFS_MEDIASCAN, false);
     }
 
     static void setDisplayHiddenFiles(Context context, boolean enabled) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(PREFS_DISPLAYHIDDENFILES, enabled);
-        editor.apply();
+        getDefaultSharedPreferences(context).edit()
+                .putBoolean(PREFS_DISPLAYHIDDENFILES, enabled)
+                .apply();
     }
 
     public static boolean getDisplayHiddenFiles(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREFS_DISPLAYHIDDENFILES, false);
+        return getDefaultSharedPreferences(context).getBoolean(PREFS_DISPLAYHIDDENFILES, false);
     }
 
 
     public static int getSortBy(Context context) {
         /* entryValues must be a string-array while we need integers */
-        return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(PREFS_SORTBY, "1"));
+        return parseInt(getDefaultSharedPreferences(context).getString(PREFS_SORTBY, "1"));
     }
 
     public static boolean getAscending(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREFS_ASCENDING, true);
+        return getDefaultSharedPreferences(context).getBoolean(PREFS_ASCENDING, true);
     }
 
     public static void setDefaultPickFilePath(Context context, String path) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(PREFS_DEFAULTPICKFILEPATH, path);
-        editor.apply();
+        getDefaultSharedPreferences(context).edit()
+                .putString(PREFS_DEFAULTPICKFILEPATH, path)
+                .apply();
     }
 
     public static String getDefaultPickFilePath(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(PREFS_DEFAULTPICKFILEPATH,
-                        Environment.getExternalStorageState().equals(
-                                Environment.MEDIA_MOUNTED)
-                                ? Environment.getExternalStorageDirectory().getAbsolutePath()
-                                : "/"
-                );
+        String defaultPath = getExternalStorageState().equals(MEDIA_MOUNTED)
+                ? getExternalStorageDirectory().getAbsolutePath() : "/";
+        return getDefaultSharedPreferences(context).getString(PREFS_DEFAULTPICKFILEPATH, defaultPath);
     }
 
     /**
@@ -133,8 +127,9 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
      */
     public static int getThemeIndex(Context context) {
         /* entryValues must be a string-array while we need integers */
-        return Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(PREFS_THEME, String.valueOf(Themer.Theme.DIR.ordinal())));
+        return parseInt(getDefaultSharedPreferences(context).getString(
+                PREFS_THEME,
+                String.valueOf(Theme.DIR.ordinal()))
+        );
     }
-
 }

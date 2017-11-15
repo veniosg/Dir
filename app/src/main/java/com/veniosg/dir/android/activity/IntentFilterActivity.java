@@ -17,6 +17,7 @@
 package com.veniosg.dir.android.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 
@@ -28,6 +29,7 @@ import com.veniosg.dir.android.util.FileUtils;
 import java.io.File;
 
 import static android.content.Intent.ACTION_GET_CONTENT;
+import static android.text.TextUtils.isEmpty;
 import static com.veniosg.dir.IntentConstants.ACTION_PICK_DIRECTORY;
 import static com.veniosg.dir.IntentConstants.ACTION_PICK_FILE;
 import static com.veniosg.dir.IntentConstants.EXTRA_DIRECTORIES_ONLY;
@@ -64,15 +66,12 @@ public class IntentFilterActivity extends BaseActivity {
 		}
 
 		// Add a path if a path has been specified in this activity's call.
-		File data = FileUtils.getFile(getIntent().getData());
-		if (data != null) {
-			File dir = FileUtils.getPathWithoutFilename(data);
-			if (dir != null) {
-				options.putString(EXTRA_DIR_PATH, data.getAbsolutePath());
-			}
-			if (dir != data){
-				// data is a file
-				options.putString(EXTRA_FILENAME, data.getName());
+		Uri data = intent.getData();
+		if (data != null && !isEmpty(data.getPath())) {
+			File dataFile = FileUtils.getFile(data);
+            options.putString(EXTRA_DIR_PATH, dataFile.getAbsolutePath());
+			if (dataFile.isFile()){
+				options.putString(EXTRA_FILENAME, dataFile.getName());
 			}
 		}
 
