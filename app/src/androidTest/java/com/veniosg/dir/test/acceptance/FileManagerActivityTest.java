@@ -10,6 +10,7 @@ import com.veniosg.dir.test.actor.User;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -235,6 +236,18 @@ public class FileManagerActivityTest {
         user.selects().ok();
 
         user.sees().fileInList(newDirName);
+    }
+
+    @Test
+    @Ignore
+    public void filtersBasedOnMimetypeExtra() {
+
+    }
+
+    @Test
+    @Ignore
+    public void filtersBasedOnFiletypeExtra() {
+
     }
 
     // TODO test other features (pt2)

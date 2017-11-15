@@ -27,7 +27,7 @@ import com.veniosg.dir.android.util.FileUtils;
 
 import java.io.File;
 
-import static android.content.Intent.*;
+import static android.content.Intent.ACTION_GET_CONTENT;
 import static com.veniosg.dir.IntentConstants.ACTION_PICK_DIRECTORY;
 import static com.veniosg.dir.IntentConstants.ACTION_PICK_FILE;
 import static com.veniosg.dir.IntentConstants.EXTRA_DIRECTORIES_ONLY;
@@ -103,8 +103,7 @@ public class IntentFilterActivity extends BaseActivity {
 			if (mFragment == null) {
 				mFragment = new PickFileListFragment();
 
-				// Pass extras through to the list fragment. This helps
-				// centralize the path resolving, etc.
+				// Pass extras through to the list fragment. This helps centralize path resolution etc.
 				extras.putBoolean(
 						EXTRA_IS_GET_CONTENT_INITIATED,
 						intent.getAction().equals(ACTION_GET_CONTENT));

@@ -49,7 +49,7 @@ public class LaunchesActions {
         launch(buildIntent(
                 ACTION_PICK_FILE,
                 "file",
-                "fu/bar"   // for */* filter
+                "text/plain"   // for */* filter
         ));
     }
 
@@ -77,13 +77,6 @@ public class LaunchesActions {
         ));
     }
 
-    @SuppressWarnings("SameParameterValue")
-    public void pickFileWithNoSchemeAndNoTypeAndExtraFilter(String typeFilter) {
-        Intent intent = buildIntent(ACTION_PICK_FILE, null, null);
-        intent.putExtra(IntentConstants.EXTRA_FILTER_MIMETYPE, typeFilter);
-        launch(intent);
-    }
-
     public void pickDirectoryWithFileSchemeAndNoType() {
         launch(buildIntent(
                 ACTION_PICK_DIRECTORY,
@@ -104,7 +97,7 @@ public class LaunchesActions {
         launch(buildIntent(
                 ACTION_GET_CONTENT,
                 null,
-                "fu/bar"    // for */* filter
+                "text/plain"    // for */* filter
         ));
     }
 

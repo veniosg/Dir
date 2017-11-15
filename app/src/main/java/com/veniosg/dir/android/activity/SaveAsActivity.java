@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2017 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,8 +37,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import static android.widget.Toast.makeText;
+import static com.veniosg.dir.IntentConstants.ACTION_PICK_FILE;
 
-public class SaveAsActivity extends BaseActivity {
+public class SaveAsActivity extends BaseActivity {  // TODO Delete this class and contract
     private static final int REQUEST_CODE_PICK_FILE_OR_DIRECTORY = 1;
 
     private Uri source;
@@ -60,9 +61,9 @@ public class SaveAsActivity extends BaseActivity {
     }
 
     private void processInput(Uri uri) {
-        String name = getPath(uri);
-        Intent intent = createPickIntent();
-        intent.setData(Uri.parse(name));
+//        String name = getPath(uri);
+        Intent intent = new Intent(ACTION_PICK_FILE, uri);
+        intent.setPackage(this.getPackageName());
         startPickActivity(intent);
     }
 
@@ -74,12 +75,6 @@ public class SaveAsActivity extends BaseActivity {
             makeText(this, R.string.saveas_error, Toast.LENGTH_SHORT).show();
             finish();
         }
-    }
-
-    private Intent createPickIntent() {
-        Intent intent = new Intent(IntentConstants.ACTION_PICK_FILE);
-        intent.setPackage(this.getPackageName());
-        return intent;
     }
 
     /*

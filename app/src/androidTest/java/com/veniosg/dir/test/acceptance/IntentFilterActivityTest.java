@@ -35,7 +35,6 @@ import static org.junit.Assert.assertThat;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class IntentFilterActivityTest {
-    private static final String SDCARD_MARKER_FILE_NAME = "sdcardmarkerfile";
     private static final String SDCARD_MARKER_DIR_NAME = "sdcardmarkerdirectory";
 
     @Rule
@@ -45,7 +44,6 @@ public class IntentFilterActivityTest {
     private final Android android = android(activityRule);
 
     private final File sdCardDir = Environment.getExternalStorageDirectory();
-    private final File markerFile = new File(sdCardDir, SDCARD_MARKER_FILE_NAME);
     private final File textFile = new File(sdCardDir, "text.txt");
     private final File imageFile = new File(sdCardDir, "image.png");
     private final File markerDirectory = new File(sdCardDir, SDCARD_MARKER_DIR_NAME);
@@ -54,7 +52,6 @@ public class IntentFilterActivityTest {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Before
     public void setUp() throws Exception {
-        markerFile.createNewFile();
         textFile.createNewFile();
         imageFile.createNewFile();
         markerDirectory.mkdir();
@@ -67,7 +64,6 @@ public class IntentFilterActivityTest {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @After
     public void tearDown() throws Exception {
-        markerFile.delete();
         textFile.delete();
         imageFile.delete();
         markerDirectoryChild.delete();
@@ -97,7 +93,7 @@ public class IntentFilterActivityTest {
         android.launches().pickFileWithFileSchemeAndAnyType();
 
         user.sees().pathFragmentInPathView(sdCardDir.getName());
-        user.sees().fileInList(SDCARD_MARKER_FILE_NAME);
+        user.sees().fileInList(textFile.getName());
     }
 
     @Test
@@ -105,7 +101,7 @@ public class IntentFilterActivityTest {
         android.launches().pickFileWithFileSchemeAndNoType();
 
         user.sees().pathFragmentInPathView(sdCardDir.getName());
-        user.sees().fileInList(SDCARD_MARKER_FILE_NAME);
+        user.sees().fileInList(textFile.getName());
     }
 
     @Test
@@ -113,7 +109,7 @@ public class IntentFilterActivityTest {
         android.launches().pickFileWithNoSchemeAndNoType();
 
         user.sees().pathFragmentInPathView(sdCardDir.getName());
-        user.sees().fileInList(SDCARD_MARKER_FILE_NAME);
+        user.sees().fileInList(textFile.getName());
     }
 
     @Test
@@ -137,7 +133,7 @@ public class IntentFilterActivityTest {
         android.launches().getContentWithNoSchemeAndAnyType();
 
         user.sees().pathFragmentInPathView(sdCardDir.getName());
-        user.sees().fileInList(SDCARD_MARKER_FILE_NAME);
+        user.sees().fileInList(textFile.getName());
     }
 
     @Test
@@ -145,7 +141,7 @@ public class IntentFilterActivityTest {
         android.launches().getContentWithFileSchemeAndNoType();
 
         user.sees().pathFragmentInPathView(sdCardDir.getName());
-        user.sees().fileInList(SDCARD_MARKER_FILE_NAME);
+        user.sees().fileInList(textFile.getName());
     }
 
     @Test
@@ -153,14 +149,14 @@ public class IntentFilterActivityTest {
         android.launches().getContentWithNoSchemeAndNoType();
 
         user.sees().pathFragmentInPathView(sdCardDir.getName());
-        user.sees().fileInList(SDCARD_MARKER_FILE_NAME);
+        user.sees().fileInList(textFile.getName());
     }
 
     @Test
     public void respectsOpenableContract() {
         android.launches().openableGetContentWithNoSchemeAndNoType();
 
-        user.selects().fileInList(SDCARD_MARKER_FILE_NAME);
+        user.selects().fileInList(textFile.getName());
         user.selects().pickFileButton();
 
         assertThat(activityRule.getActivityResult(), hasResultCode(RESULT_OK));
@@ -168,13 +164,13 @@ public class IntentFilterActivityTest {
                 hasScheme("content"),
                 // A content provider that respects the contract is registered on this host
                 hasHost("com.veniosg.dir.filemanager"),
-                hasPath(markerFile.getAbsolutePath())
+                hasPath(textFile.getAbsolutePath())
         ))));
     }
 
     @Test
-    public void usesTypeFilterFromExtra() {
-        android.launches().pickFileWithNoSchemeAndNoTypeAndExtraFilter("text/*");
+    public void usesTypeFilterFromData() {
+        android.launches().pickFileWithFileSchemeAndType("text/plain");
 
         user.sees().fileInList(textFile.getName());
         user.cannotSee().fileInList(imageFile.getName());
@@ -202,17 +198,15 @@ public class IntentFilterActivityTest {
     public void showsOnlyDirectoriesIfSpecifiedInExtra() {
         android.launches().pickFileWithDirOnlyExtra();
 
-        // FIXME cannotsee doesn't work
         user.sees().fileInList(SDCARD_MARKER_DIR_NAME);
-        user.cannotSee().fileInList(SDCARD_MARKER_FILE_NAME);
+        user.cannotSee().fileInList(textFile.getName());
     }
 
     @Test
     public void showsOnlyDirectoriesIfActionIsPickDirectory() {
         android.launches().pickDirectoryWithNoSchemeAndNoType();
 
-        // FIXME cannotsee doesn't work
         user.sees().fileInList(SDCARD_MARKER_DIR_NAME);
-        user.cannotSee().fileInList(SDCARD_MARKER_FILE_NAME);
+        user.cannotSee().fileInList(textFile.getName());
     }
 }

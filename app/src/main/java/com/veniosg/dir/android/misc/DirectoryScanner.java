@@ -22,6 +22,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 
 import com.veniosg.dir.android.fragment.PreferenceFragment;
 import com.veniosg.dir.android.util.FileUtils;
@@ -35,6 +36,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import static com.veniosg.dir.android.util.Utils.getIconForFile;
 
 public class DirectoryScanner extends Thread {
 	/** List of contents is ready. */
@@ -50,7 +53,9 @@ public class DirectoryScanner extends Thread {
 	private Context mContext;
     private MimeTypes mMimeTypes;
 	private Handler handler;
+	@NonNull
 	private String mFilterFiletype;
+	@NonNull
 	private String mFilterMimetype;
 
 	private boolean mWriteableOnly;
@@ -68,8 +73,11 @@ public class DirectoryScanner extends Thread {
 	private List<FileHolder> listDir, listFile, listSdCard;
 
 	public DirectoryScanner(File directory, Context context, Handler handler,
-                            MimeTypes mimeTypes, String filterFiletype, String filterMimetype,
-                            boolean writeableOnly, boolean directoriesOnly) {
+							MimeTypes mimeTypes,
+							@NonNull String filterFiletype,
+							@NonNull String filterMimetype,
+							boolean writeableOnly,
+							boolean directoriesOnly) {
 		super("Directory Scanner");
 		currentDirectory = directory;
 		this.mContext = context;
@@ -151,7 +159,7 @@ public class DirectoryScanner extends Thread {
                             String mimetype = mMimeTypes.getMimeType(currentFile.getName());
                             listDir.add(new FileHolder(currentFile,
                                     mMimeTypes.getMimeType(currentFile.getName()),
-                                    Utils.getIconForFile(mContext, mimetype, currentFile)));
+                                    getIconForFile(mContext, mimetype, currentFile)));
 //                      }
 					}
 				// It's a file. Handle it too :P
@@ -162,15 +170,16 @@ public class DirectoryScanner extends Thread {
 					String mimetype = mMimeTypes.getMimeType(fileName);
 					String filetype = FileUtils.getExtension(fileName);
 
-					boolean ext_allow = filetype.equalsIgnoreCase(mFilterFiletype) || mFilterFiletype.equals("");
-					boolean mime_allow = mFilterMimetype != null &&
-							(mimetype.contentEquals(mFilterMimetype) || mFilterMimetype.contentEquals("*/*") ||
-									mFilterFiletype == null);
-					if (!mDirectoriesOnly && (ext_allow || mime_allow)) {
+					boolean fileTypeAllowed = mFilterFiletype.isEmpty()
+							|| filetype.equalsIgnoreCase(mFilterFiletype);
+					boolean mimeTypeAllowed = mFilterMimetype.isEmpty()
+							|| mFilterMimetype.contentEquals("*/*")
+							|| mimetype.contentEquals(mFilterMimetype);
+					if (!mDirectoriesOnly && fileTypeAllowed && mimeTypeAllowed) {
                         listFile.add(new FileHolder(currentFile,
                                 mimetype,
                                 // Take advantage of the already parsed mimetype to set a specific icon.
-                                Utils.getIconForFile(mContext, mimetype, currentFile)));
+                                getIconForFile(mContext, mimetype, currentFile)));
 					}
 				}
 			}
