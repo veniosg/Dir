@@ -92,7 +92,7 @@ public class Searcher {
             this.query = query;
         }
 
-        public static SearchRequest request(@NonNull File searchRoot, String query) {
+        public static SearchRequest searchRequest(@NonNull File searchRoot, String query) {
             return new SearchRequest(searchRoot, query);
         }
     }

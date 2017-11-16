@@ -2,6 +2,7 @@ package com.veniosg.dir.mvvm.viewmodel;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
 import com.veniosg.dir.mvvm.model.search.SearchState;
@@ -9,12 +10,13 @@ import com.veniosg.dir.mvvm.model.search.Searcher;
 
 import java.io.File;
 
-import static com.veniosg.dir.mvvm.model.search.Searcher.SearchRequest.request;
+import static com.veniosg.dir.mvvm.model.search.Searcher.SearchRequest.searchRequest;
 
 public class SearchViewModel extends ViewModel {
     private Searcher searcher;
     private LiveData<SearchState> liveResults;
     private File searchRoot;
+    private String currentQuery;
 
     public SearchViewModel() {
         searcher = new Searcher();
@@ -32,8 +34,11 @@ public class SearchViewModel extends ViewModel {
         liveResults = searcher.getResults();
     }
 
-    public void updateQuery(String query) {
-        searcher.updateQuery(request(searchRoot, query));
+    public void updateQuery(@NonNull String query) {
+        if (!query.equals(currentQuery)) {
+            searcher.updateQuery(searchRequest(searchRoot, query));
+            currentQuery = query;
+        }
     }
 
     @Override

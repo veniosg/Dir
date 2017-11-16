@@ -25,6 +25,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
@@ -48,6 +49,7 @@ import static android.graphics.Bitmap.Config.ARGB_8888;
 import static android.view.View.MeasureSpec.EXACTLY;
 import static android.view.View.MeasureSpec.makeMeasureSpec;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
+import static java.io.File.pathSeparator;
 import static java.lang.Math.abs;
 
 public abstract class Utils {
@@ -164,8 +166,9 @@ public abstract class Utils {
      * This method seems kind of silly, if anyone has a more elegant solution, please lmk.
      */
     public static int lastCommonDirectoryIndex(File file1, File file2) {
-        String[] parts1 = file1.getAbsolutePath().split("/");
-        String[] parts2 = file2.getAbsolutePath().split("/");
+        String sep = File.separatorChar == '\\' ? "\\\\" : File.separator;
+        String[] parts1 = file1.getAbsolutePath().split(sep);
+        String[] parts2 = file2.getAbsolutePath().split(sep);
         int index = 0;
 
         for (String part1 : parts1) {

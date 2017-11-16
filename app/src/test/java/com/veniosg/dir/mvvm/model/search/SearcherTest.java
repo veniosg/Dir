@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import java.io.File;
 import java.io.IOException;
 
-import static com.veniosg.dir.mvvm.model.search.Searcher.SearchRequest.request;
+import static com.veniosg.dir.mvvm.model.search.Searcher.SearchRequest.searchRequest;
 import static io.reactivex.schedulers.Schedulers.trampoline;
 import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.inOrder;
@@ -59,14 +59,14 @@ public class SearcherTest {
 
     @Test
     public void testFindsAll() throws Exception {
-        searcher.updateQuery(request(testFileRoot, "file"));
+        searcher.updateQuery(searchRequest(testFileRoot, "file"));
 
         verifyFoundInOrder(mockResults, file4, file1, file3);
     }
 
     @Test
     public void testFindsOnlyOne() throws Exception {
-        searcher.updateQuery(request(testFileRoot, "file2"));
+        searcher.updateQuery(searchRequest(testFileRoot, "file2"));
 
         verifyFoundInOrder(mockResults, file2);
     }
@@ -76,7 +76,7 @@ public class SearcherTest {
         SearchState searchState = new SearchState();
         searchState.setFinished();
 
-        searcher.updateQuery(request(testFileRoot, "file12455"));
+        searcher.updateQuery(searchRequest(testFileRoot, "file12455"));
 
         verify(mockResults).setValue(refEq(searchState));
     }

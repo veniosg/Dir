@@ -12,13 +12,12 @@ import org.mockito.Mock;
 
 import java.io.File;
 
-import static com.veniosg.dir.mvvm.model.search.Searcher.SearchRequest.request;
+import static com.veniosg.dir.mvvm.model.search.Searcher.SearchRequest.searchRequest;
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
-import static org.mockito.internal.verification.VerificationModeFactory.noMoreInteractions;
 
 public class SearchViewModelTest {
     @Mock
@@ -56,7 +55,7 @@ public class SearchViewModelTest {
 
         viewModel.updateQuery(newQuery);
 
-        verify(mockSearcher).updateQuery(refEq(request(searchRoot, newQuery)));
+        verify(mockSearcher).updateQuery(refEq(searchRequest(searchRoot, newQuery)));
     }
 
     @Test
@@ -67,7 +66,6 @@ public class SearchViewModelTest {
         viewModel.updateQuery(query);
         viewModel.updateQuery(query);
 
-        verify(mockSearcher).updateQuery(refEq(request(searchRoot, query)));
-        verify(mockSearcher, noMoreInteractions());
+        verify(mockSearcher).updateQuery(refEq(searchRequest(searchRoot, query)));
     }
 }
