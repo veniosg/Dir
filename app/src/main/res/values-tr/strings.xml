@@ -58,9 +58,6 @@
     <string name="preference_sortby_last_modified">Son değişiklikler</string>
     <string name="preference_theme_grayscale">Gri ton</string>
     <string name="preference_theme_dark">Koyu</string>
-    <string name="saveas_no_file_picked">Hiç bir dosya seçilmedi.</string>
-    <string name="saveas_error">Hata oluştu.</string>
-    <string name="saveas_file_saved">Dosya başarılı bir şekilde kaydedildi!</string>
     <string name="extracting">\u00c7\u0131kar\u0131l\u0131yor&#8230;</string>
     <string name="compressing">Sıkıştırılıyor&#8230;</string>
     <string name="menu_search">Ara</string>

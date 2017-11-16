@@ -48,9 +48,6 @@
     <string name="preference_sortby_name">Meno</string>
     <string name="preference_sortby_size">Veľkosť</string>
     <string name="preference_sortby_last_modified">Naposledy zmenené</string>
-    <string name="saveas_no_file_picked">Nevybrali ste žiadny súbor.</string>
-    <string name="saveas_error">Nastala chyba.</string>
-    <string name="saveas_file_saved">Súbor bol úspešne uložený!</string>
     <string name="menu_settings">Nastavenia</string>
     <string name="menu_delete">Zmazať</string>
     <string name="menu_copy">Kopírovať</string>

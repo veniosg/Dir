@@ -48,9 +48,6 @@
     <string name="preference_sortby_name">Název</string>
     <string name="preference_sortby_size">Velikost</string>
     <string name="preference_sortby_last_modified">Naposledy upraveno</string>
-    <string name="saveas_no_file_picked">Nevybral/a jste žádný soubor</string>
-    <string name="saveas_error">Vyskytla se chyba.</string>
-    <string name="saveas_file_saved">Soubor úspěšně uložen!</string>
     <string name="menu_settings">Nastavení</string>
     <string name="menu_delete">Odstranit</string>
     <string name="menu_copy">Kopírovat</string>

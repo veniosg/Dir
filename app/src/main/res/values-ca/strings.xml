@@ -47,9 +47,6 @@
     <string name="preference_sortby_name">Nom</string>
     <string name="preference_sortby_size">Mida</string>
     <string name="preference_sortby_last_modified">Modificat per darrer cop</string>
-    <string name="saveas_no_file_picked">No heu escollit cap fitxer.</string>
-    <string name="saveas_error">S\'ha produït un error</string>
-    <string name="saveas_file_saved">S\'ha desat reeixidament el fitxer!</string>
     <string name="menu_settings">Preferències</string>
     <string name="menu_delete">Suprimeix</string>
     <string name="menu_copy">Copia</string>

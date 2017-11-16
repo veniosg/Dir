@@ -47,9 +47,6 @@
     <string name="preference_sortby_name">Nimi</string>
     <string name="preference_sortby_size">Koko</string>
     <string name="preference_sortby_last_modified">Muokattu viimeksi</string>
-    <string name="saveas_no_file_picked">Et ole valinnut yhtään tiedostoa.</string>
-    <string name="saveas_error">Virhe ilmentyi.</string>
-    <string name="saveas_file_saved">Tiedosto tallennettiin onnistuneesti!</string>
     <string name="menu_settings">Asetukset</string>
     <string name="menu_delete">Poista kohde</string>
     <string name="menu_copy">Kopioi</string>

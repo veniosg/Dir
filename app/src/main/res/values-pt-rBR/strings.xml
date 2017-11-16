@@ -58,9 +58,6 @@
     <string name="preference_sortby_last_modified">Ultima motificação</string>
     <string name="preference_theme_grayscale">Escala de cinza</string>
     <string name="preference_theme_dark">Escuro</string>
-    <string name="saveas_no_file_picked">You haven\'t picked any file.</string>
-    <string name="saveas_error">Um erro ocorreu.</string>
-    <string name="saveas_file_saved">Arquivo salvo com sucesso!</string>
     <string name="extracting">Extraindo&#8230;</string>
     <string name="compressing">Compactando&#8230;</string>
     <string name="menu_search">Busca</string>

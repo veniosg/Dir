@@ -48,9 +48,6 @@
     <string name="preference_sortby_name">الإسم</string>
     <string name="preference_sortby_size">الحجم</string>
     <string name="preference_sortby_last_modified">آخر تعديل</string>
-    <string name="saveas_no_file_picked">لم تختر أي ملف.</string>
-    <string name="saveas_error">حدث خطأ.</string>
-    <string name="saveas_file_saved">تم حفظ الملف بنجاح.</string>
     <string name="menu_search">بحث</string>
     <string name="menu_create_folder">مجلد جديد</string>
     <string name="menu_settings">الاعدادات</string>

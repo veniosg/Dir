@@ -14,8 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  -->
-<manifest package="com.veniosg.dir"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.veniosg.dir"
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -24,6 +24,7 @@
     <application
         android:name=".android.FileManagerApplication"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -54,20 +55,6 @@
             android:name=".android.activity.AboutActivity"
             android:label="@string/about" />
 
-        <activity
-            android:name=".android.activity.SaveAsActivity"
-            android:label="Save as"
-            android:theme="@android:style/Theme.NoDisplay">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.OPENABLE" />
-
-                <data
-                    android:mimeType="*/*"
-                    android:scheme="content" />
-            </intent-filter>
-        </activity>
         <activity android:name=".android.activity.IntentFilterActivity">
             <intent-filter>
                 <action android:name="org.openintents.action.PICK_FILE" />
@@ -152,6 +139,5 @@
             android:authorities="com.veniosg.dir.filemanager"
             android:exported="true"
             android:permission="android.permission.READ_EXTERNAL_STORAGE" />
-
     </application>
 </manifest>

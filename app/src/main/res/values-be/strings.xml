@@ -48,9 +48,6 @@
     <string name="preference_sortby_name">Назва</string>
     <string name="preference_sortby_size">Памер</string>
     <string name="preference_sortby_last_modified">Апошняе змяненне</string>
-    <string name="saveas_no_file_picked">Вы не абралі файл.</string>
-    <string name="saveas_error">Адбылася памылка.</string>
-    <string name="saveas_file_saved">Файл паспяхова захаваны!</string>
     <string name="menu_settings">Настройкі</string>
     <string name="menu_delete">Выдаліць</string>
     <string name="menu_copy">Капіяваць</string>

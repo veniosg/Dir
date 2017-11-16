@@ -47,9 +47,6 @@
     <string name="preference_sortby_name">Navn</string>
     <string name="preference_sortby_size">Størrelse</string>
     <string name="preference_sortby_last_modified">Sist endret</string>
-    <string name="saveas_no_file_picked">Du har ikke valgt en fil.</string>
-    <string name="saveas_error">En feil oppstod.</string>
-    <string name="saveas_file_saved">Fil vellykket lagret!</string>
     <string name="menu_settings">Innstillinger</string>
     <string name="menu_delete">Slett</string>
     <string name="menu_copy">Kopier</string>

@@ -48,9 +48,6 @@
     <string name="preference_sortby_name">ئاتى</string>
     <string name="preference_sortby_size">چوڭلۇقى</string>
     <string name="preference_sortby_last_modified">ئاخىرقى ئۆزگەرتىلگىنى</string>
-    <string name="saveas_no_file_picked">ھېچقانداق ھۆججەتنى تاللىمىدىڭىز.</string>
-    <string name="saveas_error">خاتالىق كۆرۈلدى.</string>
-    <string name="saveas_file_saved">ھۆججەت مۇۋەپپەقىيەتلىك ساقلاندى!</string>
     <string name="menu_settings">تەڭشەكلەر</string>
     <string name="menu_delete">ئۆچۈر</string>
     <string name="menu_copy">كۆچۈر</string>

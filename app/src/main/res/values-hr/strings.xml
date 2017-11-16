@@ -59,9 +59,6 @@
     <string name="preference_sortby_last_modified">Posljednje izmjenjeno</string>
     <string name="preference_theme_grayscale">Siva skala</string>
     <string name="preference_theme_dark">Tamna</string>
-    <string name="saveas_no_file_picked">Niste još odabrali ni jednu datoteku</string>
-    <string name="saveas_error">Dogodila se greška.</string>
-    <string name="saveas_file_saved">Datoteka je uspješno spremljena!</string>
     <string name="extracting">Ekstrahiram&#8230;</string>
     <string name="compressing">Kompresiram&#8230;</string>
     <string name="menu_search">Pretraži</string>

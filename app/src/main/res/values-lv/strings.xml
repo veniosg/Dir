@@ -47,9 +47,6 @@
     <string name="preference_sortby_name">Nosaukums</string>
     <string name="preference_sortby_size">Izmērs</string>
     <string name="preference_sortby_last_modified">Pēdējo reizi mainīts</string>
-    <string name="saveas_no_file_picked">Jūs neesat izvēlējies nevienu failu.</string>
-    <string name="saveas_error">Notika kļūda</string>
-    <string name="saveas_file_saved">Fails veiksmīgi saglabāts!</string>
     <string name="menu_settings">Iestatījumi</string>
     <string name="menu_delete">Dzēst</string>
     <string name="menu_copy">Kopēt</string>

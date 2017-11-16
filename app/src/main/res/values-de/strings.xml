@@ -58,9 +58,6 @@
     <string name="preference_sortby_last_modified">Zuletzt geändert</string>
     <string name="preference_theme_grayscale">Graustufe</string>
     <string name="preference_theme_dark">Dunkel</string>
-    <string name="saveas_no_file_picked">Sie haben keine Datei ausgewählt.</string>
-    <string name="saveas_error">Es ist ein Fehler aufgetreten.</string>
-    <string name="saveas_file_saved">Datei erfolgreich gespeichert!</string>
     <string name="extracting">Entpacke&#8230;</string>
     <string name="compressing">Komprimiere&#8230;</string>
     <string name="menu_search">Suchen</string>

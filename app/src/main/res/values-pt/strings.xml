@@ -53,9 +53,6 @@
     <string name="preference_sortby_last_modified">Data de modificação</string>
     <string name="preference_theme_grayscale">Cinza</string>
     <string name="preference_theme_dark">Escuro</string>
-    <string name="saveas_no_file_picked">Não escolheu qualquer ficheiro.</string>
-    <string name="saveas_error">Ocorreu um erro.</string>
-    <string name="saveas_file_saved">Ficheiro gravado com sucesso.</string>
     <string name="extracting">A extrair&#8230;</string>
     <string name="compressing">A comprimir&#8230;</string>
     <string name="menu_search">Pesquisar</string>

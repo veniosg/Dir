@@ -58,9 +58,6 @@
     <string name="preference_sortby_last_modified">Legutóbb módosítva</string>
     <string name="preference_theme_grayscale">Szürkeárnyalatos</string>
     <string name="preference_theme_dark">Sötét</string>
-    <string name="saveas_no_file_picked">Nincs fájl kiválasztva.</string>
-    <string name="saveas_error">Hiba történt.</string>
-    <string name="saveas_file_saved">Fájl sikeresen mentve!</string>
     <string name="extracting">Kicsomagol\u00e1sa&#8230;</string>
     <string name="compressing">Tömörítése&#8230;</string>
     <string name="menu_search">Keresés</string>
