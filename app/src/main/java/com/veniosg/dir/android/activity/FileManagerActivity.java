@@ -173,6 +173,7 @@ public class FileManagerActivity extends BaseActivity
     protected void setupToolbar() {
         super.setupToolbar();
         getActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        getActionBar().setDisplayShowTitleEnabled(false);
     }
 
     /**

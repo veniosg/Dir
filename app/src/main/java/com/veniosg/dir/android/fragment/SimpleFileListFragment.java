@@ -37,19 +37,29 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
-import com.veniosg.dir.android.FileManagerApplication;
+
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
+import com.veniosg.dir.android.FileManagerApplication;
 import com.veniosg.dir.android.adapter.FileHolderListAdapter;
-import com.veniosg.dir.android.dialog.*;
-import com.veniosg.dir.mvvm.model.FileHolder;
+import com.veniosg.dir.android.dialog.CreateDirectoryDialog;
+import com.veniosg.dir.android.dialog.DetailsDialog;
+import com.veniosg.dir.android.dialog.MultiCompressDialog;
+import com.veniosg.dir.android.dialog.MultiDeleteDialog;
+import com.veniosg.dir.android.dialog.RenameDialog;
+import com.veniosg.dir.android.dialog.SingleCompressDialog;
+import com.veniosg.dir.android.dialog.SingleDeleteDialog;
 import com.veniosg.dir.android.provider.BookmarkProvider;
 import com.veniosg.dir.android.service.ZipService;
-import com.veniosg.dir.android.util.*;
+import com.veniosg.dir.android.util.CopyHelper;
+import com.veniosg.dir.android.util.FileUtils;
+import com.veniosg.dir.android.util.Logger;
+import com.veniosg.dir.android.util.MediaScannerUtils;
+import com.veniosg.dir.android.util.Utils;
 import com.veniosg.dir.android.view.PathController;
 import com.veniosg.dir.android.view.widget.AnimatedFileListContainer;
 import com.veniosg.dir.android.view.widget.PathView;
-import com.veniosg.dir.android.view.widget.PathViewCompatibleToolbar;
+import com.veniosg.dir.mvvm.model.FileHolder;
 
 import java.io.File;
 import java.io.IOException;
@@ -116,7 +126,7 @@ public class SimpleFileListFragment extends FileListFragment {
                     for (FileHolder fileHolder : getCheckedItems()) {
                         foldersOnly &= fileHolder.getFile().isDirectory();
                     }
-                    if(foldersOnly) {
+                    if (foldersOnly) {
                         menu.removeItem(R.id.menu_send);
                     }
                     break;
@@ -197,7 +207,7 @@ public class SimpleFileListFragment extends FileListFragment {
                 intent.setType("text/plain");
 
                 for (FileHolder fh : fItems) {
-                    if(!fh.getFile().isDirectory())
+                    if (!fh.getFile().isDirectory())
                         uris.add(FileUtils.getUri(fh.getFile()));
                 }
 
@@ -357,18 +367,6 @@ public class SimpleFileListFragment extends FileListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            firstTimeAnimation(container);
-        }
-
-        PathViewCompatibleToolbar toolbar = (PathViewCompatibleToolbar)
-                getActivity().findViewById(R.id.toolbar);
-        if (!toolbar.hasPathView()) {
-            PathView pathView = new PathView(toolbar.getContext());
-            pathView.setActivityProvider(mActivityProvider);
-            toolbar.addView(pathView);
-        }
-
         return inflater.inflate(R.layout.fragment_filelist_simple, container, false);
     }
 
@@ -376,7 +374,13 @@ public class SimpleFileListFragment extends FileListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mPathBar = (PathController) getActivity().findViewById(R.id.pathview);
+        // We expect the pathbar to add the bottom shadow in this case
+        View toolbar = getActivity().findViewById(R.id.toolbar);
+        if (toolbar != null) toolbar.setElevation(0);
+
+        PathView pathView = (PathView) getActivity().findViewById(R.id.pathview);
+        pathView.setActivityProvider(mActivityProvider);
+        mPathBar = pathView;
         mTransitionView = (AnimatedFileListContainer) view.findViewById(R.id.zoomview);
         final View backButton = view.findViewById(R.id.empty_img);
 
@@ -403,11 +407,6 @@ public class SimpleFileListFragment extends FileListFragment {
         // For animations' sake
         ((ViewFlipper) view.findViewById(R.id.flipper)).setInAnimation(null);
         ((ViewFlipper) view.findViewById(R.id.flipper)).setOutAnimation(null);
-    }
-
-    private void firstTimeAnimation(@SuppressWarnings("UnusedParameters") final View root) {
-        // NO-OP for now. Need to fine tune it on a real device.
-        // Everyone hates lag on launch.
     }
 
     private void initContextualActions() {
@@ -475,7 +474,7 @@ public class SimpleFileListFragment extends FileListFragment {
         if (fileHolder.getFile().getAbsolutePath().equals(getPath()))
             return;
 
-        if(getListAdapter().getCount() > 0) {
+        if (getListAdapter().getCount() > 0) {
             keepFolderScroll();
         }
 
@@ -689,7 +688,7 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     private void useFolderScroll(final ScrollPosition pos) {
-        if(getView() != null) {
+        if (getView() != null) {
             Utils.scrollToPosition(getListView(), pos, false);
         }
     }

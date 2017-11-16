@@ -143,7 +143,6 @@ public class PathView extends FrameLayout implements PathController {
     }
 
     private void init() {
-        setId(R.id.pathview);
         setLayoutParams(toolbarLayoutParams());
         from(getContext()).inflate(R.layout.widget_pathview, this, true);
 
@@ -344,7 +343,7 @@ public class PathView extends FrameLayout implements PathController {
     private void hideKeyboard() {
         InputMethodManager imm = (InputMethodManager) getContext()
                 .getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getWindowToken(), 0);
+        if (imm != null) imm.hideSoftInputFromWindow(getWindowToken(), 0);
     }
 
     private void setManualInputPath(String path) {

@@ -23,7 +23,8 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
-import android.view.View;
+import android.widget.Toolbar;
+
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.view.Themer;
 
@@ -57,8 +58,7 @@ abstract class BaseActivity extends FragmentActivity {
 
     @Override
     protected void onDestroy() {
-        LocalBroadcastManager.getInstance(this)
-                .unregisterReceiver(mThemeReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mThemeReceiver);
         super.onDestroy();
     }
 
@@ -66,9 +66,9 @@ abstract class BaseActivity extends FragmentActivity {
      * Always call this after setContent() or it will not have any effect.
      */
     protected void setupToolbar() {
-        View toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
-            setActionBar((android.widget.Toolbar) toolbar);
+            setActionBar(toolbar);
             //noinspection ConstantConditions
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }

@@ -80,19 +80,39 @@ public class IntentFilterActivity extends BaseActivity {
 			options.putString(EXTRA_FILTER_MIMETYPE, intent.getType());
 		}
 
-		// Actually fill the ui
-		chooseListType(intent, options);
+		bindData(intent, options);
 	}
 
-	private void chooseListType(Intent intent, Bundle extras) {
+    @Override
+    public void onBackPressed() {
+        if (mFragment instanceof PickFileListFragment) {
+            if (!((PickFileListFragment) mFragment).pressBack()) {
+                super.onBackPressed();
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void setupToolbar() {
+        super.setupToolbar();
+        if (getActionBar() != null) {
+            getActionBar().setDisplayShowTitleEnabled(true);
+            getActionBar().setDisplayHomeAsUpEnabled(false);
+            getActionBar().setDisplayShowHomeEnabled(false);
+        }
+    }
+
+	private void bindData(Intent intent, Bundle extras) {
 		// Item pickers
 		if (ACTION_PICK_DIRECTORY.equals(intent.getAction())
 				|| ACTION_PICK_FILE.equals(intent.getAction())
 				|| ACTION_GET_CONTENT.equals(intent.getAction())) {
 			if (intent.hasExtra(EXTRA_TITLE)) {
-				getActionBar().setTitle(intent.getStringExtra(EXTRA_TITLE));
+				setTitle(intent.getStringExtra(EXTRA_TITLE));
 			} else {
-				getActionBar().setTitle(R.string.pick_title);
+				setTitle(R.string.pick_title);
 			}
 
 			mFragment = (PickFileListFragment) getSupportFragmentManager()
@@ -122,25 +142,4 @@ public class IntentFilterActivity extends BaseActivity {
             finish();
         }
 	}
-
-    @Override
-    protected void setupToolbar() {
-        super.setupToolbar();
-        if (getActionBar() != null) {
-            getActionBar().setDisplayShowTitleEnabled(true);
-            getActionBar().setDisplayHomeAsUpEnabled(false);
-            getActionBar().setDisplayShowHomeEnabled(false);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mFragment instanceof PickFileListFragment) {
-            if (!((PickFileListFragment) mFragment).pressBack()) {
-                super.onBackPressed();
-            }
-        } else {
-            super.onBackPressed();
-        }
-    }
 }
