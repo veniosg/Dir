@@ -76,47 +76,47 @@ public class IntentFilterActivityTest {
         user.launches().pickFileIn(sdCardDir);
 
         // Move to a folder and pick a child
-        user.selects().fileInList(markerDirectory.getName());
-        user.selects().fileInList(markerDirectoryChild.getName());
+        user.selects().fileInList(markerDirectory);
+        user.selects().fileInList(markerDirectoryChild);
         user.selects().pickFileButton();
 
         // Launch pick without specific destination
         user.launches().pickFileWithNoSchemeAndNoType();
 
         // Check that we are in the marker folder
-        user.sees().pathFragmentInPathView(markerDirectory.getName());
-        user.sees().fileInList(markerDirectoryChild.getName());
+        user.sees().fileInPath(markerDirectory);
+        user.sees().fileInList(markerDirectoryChild);
     }
 
     @Test
     public void supportsPickFileWithFileSchemeAndAnyType() {
         android.launches().pickFileWithFileSchemeAndAnyType();
 
-        user.sees().pathFragmentInPathView(sdCardDir.getName());
-        user.sees().fileInList(textFile.getName());
+        user.sees().fileInPath(sdCardDir);
+        user.sees().fileInList(textFile);
     }
 
     @Test
     public void supportsPickFileWithFileSchemeAndNoType() {
         android.launches().pickFileWithFileSchemeAndNoType();
 
-        user.sees().pathFragmentInPathView(sdCardDir.getName());
-        user.sees().fileInList(textFile.getName());
+        user.sees().fileInPath(sdCardDir);
+        user.sees().fileInList(textFile);
     }
 
     @Test
     public void supportsPickFileWithNoSchemeAndNoType() {
         android.launches().pickFileWithNoSchemeAndNoType();
 
-        user.sees().pathFragmentInPathView(sdCardDir.getName());
-        user.sees().fileInList(textFile.getName());
+        user.sees().fileInPath(sdCardDir);
+        user.sees().fileInList(textFile);
     }
 
     @Test
     public void supportsPickDirectoryWithFileSchemeAndNoType() {
         android.launches().pickDirectoryWithFileSchemeAndNoType();
 
-        user.sees().pathFragmentInPathView(sdCardDir.getName());
+        user.sees().fileInPath(sdCardDir);
         user.sees().fileInList(SDCARD_MARKER_DIR_NAME);
     }
 
@@ -124,7 +124,7 @@ public class IntentFilterActivityTest {
     public void supportsPickDirectoryWithNoSchemeAndNoType() {
         android.launches().pickDirectoryWithNoSchemeAndNoType();
 
-        user.sees().pathFragmentInPathView(sdCardDir.getName());
+        user.sees().fileInPath(sdCardDir);
         user.sees().fileInList(SDCARD_MARKER_DIR_NAME);
     }
 
@@ -132,31 +132,31 @@ public class IntentFilterActivityTest {
     public void supportsGetContentWithNoSchemeAndAnyType() {
         android.launches().getContentWithNoSchemeAndAnyType();
 
-        user.sees().pathFragmentInPathView(sdCardDir.getName());
-        user.sees().fileInList(textFile.getName());
+        user.sees().fileInPath(sdCardDir);
+        user.sees().fileInList(textFile);
     }
 
     @Test
     public void supportsGetContentWithFileSchemeAndNoType() {
         android.launches().getContentWithFileSchemeAndNoType();
 
-        user.sees().pathFragmentInPathView(sdCardDir.getName());
-        user.sees().fileInList(textFile.getName());
+        user.sees().fileInPath(sdCardDir);
+        user.sees().fileInList(textFile);
     }
 
     @Test
     public void supportsGetContentWithNoSchemeAndNoType() {
         android.launches().getContentWithNoSchemeAndNoType();
 
-        user.sees().pathFragmentInPathView(sdCardDir.getName());
-        user.sees().fileInList(textFile.getName());
+        user.sees().fileInPath(sdCardDir);
+        user.sees().fileInList(textFile);
     }
 
     @Test
     public void respectsOpenableContract() {
         android.launches().openableGetContentWithNoSchemeAndNoType();
 
-        user.selects().fileInList(textFile.getName());
+        user.selects().fileInList(textFile);
         user.selects().pickFileButton();
 
         assertThat(activityRule.getActivityResult(), hasResultCode(RESULT_OK));
@@ -172,8 +172,8 @@ public class IntentFilterActivityTest {
     public void usesTypeFilterFromData() {
         android.launches().pickFileWithFileSchemeAndType("text/plain");
 
-        user.sees().fileInList(textFile.getName());
-        user.cannotSee().fileInList(imageFile.getName());
+        user.sees().fileInList(textFile);
+        user.cannotSee().fileInList(imageFile);
     }
 
     @Test
@@ -199,7 +199,7 @@ public class IntentFilterActivityTest {
         android.launches().pickFileWithDirOnlyExtra();
 
         user.sees().fileInList(SDCARD_MARKER_DIR_NAME);
-        user.cannotSee().fileInList(textFile.getName());
+        user.cannotSee().fileInList(textFile);
     }
 
     @Test
@@ -207,6 +207,6 @@ public class IntentFilterActivityTest {
         android.launches().pickDirectoryWithNoSchemeAndNoType();
 
         user.sees().fileInList(SDCARD_MARKER_DIR_NAME);
-        user.cannotSee().fileInList(textFile.getName());
+        user.cannotSee().fileInList(textFile);
     }
 }

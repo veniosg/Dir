@@ -28,4 +28,11 @@ public class TypesActions {
                 isDisplayed()
         )).perform(typeText(fileName));
     }
+
+    public void searchQuery(String query) {
+        onView(allOf(
+                withId(R.id.searchQuery),
+                isDisplayed()
+        )).perform(typeText(query));
+    }
 }

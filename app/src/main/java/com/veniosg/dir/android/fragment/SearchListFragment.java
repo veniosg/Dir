@@ -46,7 +46,6 @@ import java.util.List;
 import static android.app.SearchManager.APP_DATA;
 import static android.arch.lifecycle.ViewModelProviders.of;
 import static android.view.View.GONE;
-import static com.veniosg.dir.IntentConstants.EXTRA_SEARCH_INIT_PATH;
 import static com.veniosg.dir.android.util.FileUtils.openFile;
 import static com.veniosg.dir.android.view.Themer.getThemedResourceId;
 import static com.veniosg.dir.android.view.widget.WaitingViewFlipper.PAGE_INDEX_CONTENT;
@@ -151,7 +150,7 @@ public class SearchListFragment extends Fragment {
      */
     void showLoading(boolean loading) {
         if (loading) {
-            mFlipper.setDisplayedChildDelayed(PAGE_INDEX_LOADING);
+            mFlipper.setDisplayedChildDelayed(PAGE_INDEX_LOADING);  // TODO GV this is gone
         } else {
             mFlipper.setDisplayedChild(PAGE_INDEX_CONTENT);
         }
@@ -159,23 +158,22 @@ public class SearchListFragment extends Fragment {
 
     private void handleIntent() {
         Intent intent = getActivity().getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction()) && intent.getData() != null) {
             // Get the query.
             String query = intent.getStringExtra(SearchManager.QUERY);
-            getActivity().getActionBar().setTitle(query);
+            getActivity().setTitle(query);
 
             // Get the current path
-            String path = intent.getBundleExtra(APP_DATA).getString(EXTRA_SEARCH_INIT_PATH);
+            String path = intent.getData().getPath();
             File root = new File(path);
             getActivity().getActionBar().setSubtitle(path);
 
             // Init search
             viewModel.init(root);
-//            viewModel.getLiveResults().observe(this, resultObserver); TODO uncomment and fix
+            viewModel.getLiveResults().observe(this, resultObserver);
             viewModel.updateQuery(query);
         } else {
-            // Intent contents error.
-            getActivity().setTitle(R.string.query_error);
+            getActivity().finish();
         }
     }
 

@@ -10,20 +10,32 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
+import java.io.File;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.veniosg.dir.test.matcher.FileHolderHasName.hasName;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 
 public class CannotSeeAssertions {
-    public void fileInList(String filename) {
+    public void fileInList(File file) {
+        String filename = file.getName();
         onView(allOf(
                 withId(android.R.id.list),
                 isDescendantOfA(withId(R.id.zoomview))
         )).check(matches(not(withAdaptedData(hasName(filename)))));
+    }
+
+    public void visibleSearchResult(File result) {
+        onView(allOf(
+                withId(R.id.primary_info),
+                withText(result.getName())
+        )).check(matches(not(isDisplayed())));
     }
 
     private static Matcher<View> withAdaptedData(final Matcher<Object> dataMatcher) {

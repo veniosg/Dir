@@ -1,13 +1,20 @@
 package com.veniosg.dir.test.actor.action;
 
+import android.view.View;
+
 import com.veniosg.dir.R;
 import com.veniosg.dir.mvvm.model.FileHolder;
+
+import org.hamcrest.Matcher;
+
+import java.io.File;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.pressBack;
+import static android.support.test.espresso.contrib.RecyclerViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -19,6 +26,10 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
 public class SelectsActions {
+    public void fileInList(File file) {
+        fileInList(file.getName());
+    }
+
     public void fileInList(String filename) {
         onData(allOf(
                 is(instanceOf(FileHolder.class)),
@@ -27,6 +38,10 @@ public class SelectsActions {
                 withId(android.R.id.list),
                 isDescendantOfA(withId(R.id.zoomview))
         )).perform(click());
+    }
+
+    public void longFileInList(File file) {
+        longFileInList(file.getName());
     }
 
     public void longFileInList(String filename) {
@@ -39,103 +54,18 @@ public class SelectsActions {
         )).perform(longClick());
     }
 
+    public void searchResult(File result) {
+        Matcher<View> resultItemMatcher = allOf(
+                withId(R.id.primary_info),
+                withText(result.getName())
+        );
+        onView(withId(android.R.id.list)).perform(scrollTo(resultItemMatcher));
+        onView(resultItemMatcher).perform(click());
+    }
+
     public void pickFileButton() {
         onView(allOf(
                 withText("Pick file"),
-                isDisplayed()
-        )).perform(click());
-    }
-
-    public void backButton() {
-        onView(withId(android.R.id.content)).perform(pressBack());
-    }
-
-    public void operationsAction() {
-        onView(allOf(
-                anyOf(
-                        withText(R.string.menu_file_ops),
-                        withId(R.id.menu_file_ops)
-                ),
-                isDisplayed()
-        )).perform(click());
-    }
-
-    public void copyAction() {
-        onView(allOf(
-                anyOf(
-                        withText(R.string.menu_copy),
-                        withId(R.id.menu_copy)
-                ),
-                isDisplayed()
-        )).perform(click());
-    }
-
-    public void moveAction() {
-        onView(allOf(
-                anyOf(
-                        withText(R.string.menu_move),
-                        withId(R.id.menu_move)
-                ),
-                isDisplayed()
-        )).perform(click());
-    }
-
-    public void pasteAction() {
-        onView(allOf(
-                anyOf(
-                        withText(R.string.menu_paste),
-                        withId(R.id.menu_paste)
-                ),
-                isDisplayed()
-        )).perform(click());
-    }
-
-    public void createDirectoryAction() {
-        onView(allOf(
-                anyOf(
-                        withText(R.string.menu_create_folder),
-                        withId(R.id.menu_create_folder)
-                ),
-                isDisplayed()
-        )).perform(click());
-    }
-
-    public void compressAction() {
-        onView(allOf(
-                anyOf(
-                        withText(R.string.menu_compress),
-                        withId(R.id.menu_compress)
-                ),
-                isDisplayed()
-        )).perform(click());
-    }
-
-    public void extractAction() {
-        onView(allOf(
-                anyOf(
-                        withText(R.string.menu_extract),
-                        withId(R.id.menu_extract)
-                ),
-                isDisplayed()
-        )).perform(click());
-    }
-
-    public void deleteAction() {
-        onView(allOf(
-                anyOf(
-                        withText(R.string.menu_delete),
-                        withId(R.id.menu_delete)
-                ),
-                isDisplayed()
-        )).perform(click());
-    }
-
-    public void renameAction() {
-        onView(allOf(
-                anyOf(
-                        withText(R.string.menu_rename),
-                        withId(R.id.menu_rename)
-                ),
                 isDisplayed()
         )).perform(click());
     }
@@ -156,6 +86,60 @@ public class SelectsActions {
                         withText("YES"),
                         withText("Yes"),
                         withText("yes")),
+                isDisplayed()
+        )).perform(click());
+    }
+
+    public void backButton() {
+        onView(withId(android.R.id.content)).perform(pressBack());
+    }
+
+    public void operationsAction() {
+        clickOnAction(R.id.menu_file_ops, R.string.menu_file_ops);
+    }
+
+    public void copyAction() {
+        clickOnAction(R.id.menu_copy, R.string.menu_copy);
+    }
+
+    public void moveAction() {
+        clickOnAction(R.id.menu_move, R.string.menu_move);
+    }
+
+    public void pasteAction() {
+        clickOnAction(R.id.menu_paste, R.string.menu_paste);
+    }
+
+    public void createDirectoryAction() {
+        clickOnAction(R.id.menu_create_folder, R.string.menu_create_folder);
+    }
+
+    public void compressAction() {
+        clickOnAction(R.id.menu_compress, R.string.menu_compress);
+    }
+
+    public void extractAction() {
+        clickOnAction(R.id.menu_extract, R.string.menu_extract);
+    }
+
+    public void deleteAction() {
+        clickOnAction(R.id.menu_delete, R.string.menu_delete);
+    }
+
+    public void renameAction() {
+        clickOnAction(R.id.menu_rename, R.string.menu_rename);
+    }
+
+    public void searchAction() {
+        clickOnAction(R.id.menu_search, R.string.menu_search);
+    }
+
+    private void clickOnAction(int id, int label) {
+        onView(allOf(
+                anyOf(
+                        withText(label),
+                        withId(id)
+                ),
                 isDisplayed()
         )).perform(click());
     }

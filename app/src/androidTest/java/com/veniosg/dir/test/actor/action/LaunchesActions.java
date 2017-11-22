@@ -15,6 +15,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static android.content.Intent.ACTION_GET_CONTENT;
+import static android.content.Intent.ACTION_SEARCH;
 import static android.content.Intent.ACTION_VIEW;
 import static android.content.Intent.CATEGORY_OPENABLE;
 import static com.veniosg.dir.IntentConstants.ACTION_PICK_DIRECTORY;
@@ -144,6 +145,14 @@ public class LaunchesActions {
         Intent intent = buildIntent(ACTION_PICK_FILE, null, null);
         intent.putExtra(IntentConstants.EXTRA_DIRECTORIES_ONLY, true);
 
+        launch(intent);
+    }
+
+    public void searchIn(File searchIn) {
+        Intent intent = buildIntent(ACTION_SEARCH, null, null);
+        intent.setData(new Uri.Builder()
+                .path(searchIn.getAbsolutePath())
+                .build());
         launch(intent);
     }
 

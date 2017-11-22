@@ -18,6 +18,7 @@
 package com.veniosg.dir.android.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.widget.DrawerLayout;
@@ -38,7 +39,6 @@ import java.io.File;
 
 import static android.support.v4.view.GravityCompat.START;
 import static com.veniosg.dir.IntentConstants.EXTRA_FROM_OI_FILEMANAGER;
-import static com.veniosg.dir.IntentConstants.EXTRA_SEARCH_INIT_PATH;
 import static com.veniosg.dir.android.util.FileUtils.getFile;
 import static com.veniosg.dir.android.util.FileUtils.openFile;
 import static java.lang.Math.min;
@@ -124,7 +124,7 @@ public class FileManagerActivity extends BaseActivity
                 showBookmarks();
                 return true;
             case R.id.menu_search:
-                onSearchRequested();
+                showSearch();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -142,15 +142,6 @@ public class FileManagerActivity extends BaseActivity
         }
     }
 
-	@Override
-	public boolean onSearchRequested() {
-		Intent searchIntent = new Intent(this, SearchableActivity.class);
-		searchIntent.putExtra(EXTRA_SEARCH_INIT_PATH, mFragment.getPath());
-
-		startActivity(searchIntent);
-		return true;
-	}
-
     @Override
     public void onBookmarkSelected(String path) {
         mFragment.openInformingPathBar(new FileHolder(new File(path), this));
@@ -163,17 +154,17 @@ public class FileManagerActivity extends BaseActivity
         mDrawerLayout.openDrawer(START);
     }
 
-    private void setupDrawer() {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        setOptimalDrawerWidth(findViewById(R.id.bookmarks));
-    }
-
     @SuppressWarnings("ConstantConditions")
     @Override
     protected void setupToolbar() {
         super.setupToolbar();
         getActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         getActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    private void setupDrawer() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        setOptimalDrawerWidth(findViewById(R.id.bookmarks));
     }
 
     /**
@@ -193,5 +184,11 @@ public class FileManagerActivity extends BaseActivity
 
         params.width = min(minScreenWidth - actionBarSize, 5 * actionBarSize);
         drawerContainer.requestLayout();
+    }
+
+    private void showSearch() {
+        Intent searchIntent = new Intent(this, SearchActivity.class);
+        searchIntent.setData(new Uri.Builder().path(mFragment.getPath()).build());
+        startActivity(searchIntent);
     }
 }

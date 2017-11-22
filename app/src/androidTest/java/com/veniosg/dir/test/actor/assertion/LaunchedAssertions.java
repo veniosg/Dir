@@ -1,20 +1,26 @@
 package com.veniosg.dir.test.actor.assertion;
 
-import android.app.Activity;
-import android.support.test.espresso.intent.Intents;
-import android.support.test.espresso.intent.matcher.IntentMatchers;
-import android.support.test.espresso.intent.rule.IntentsTestRule;
+import android.content.Intent;
 
-import com.veniosg.dir.IntentConstants;
+import com.veniosg.dir.android.util.FileUtils;
 
-import org.hamcrest.Matchers;
+import java.io.File;
 
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
-import static android.support.test.espresso.intent.matcher.IntentMatchers.hasPackage;
-import static com.veniosg.dir.IntentConstants.*;
-import static org.hamcrest.Matchers.equalTo;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasData;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasType;
+import static junit.framework.Assert.assertTrue;
+import static org.hamcrest.Matchers.any;
 import static org.hamcrest.core.AllOf.allOf;
 
 public class LaunchedAssertions {
+    public void viewFileIntent(File file) {
+        intended(allOf(
+                hasAction(Intent.ACTION_VIEW),
+                hasData(FileUtils.getUri(file)),
+                hasType(any(String.class))
+        ));
+        assertTrue(false);
+    }
 }

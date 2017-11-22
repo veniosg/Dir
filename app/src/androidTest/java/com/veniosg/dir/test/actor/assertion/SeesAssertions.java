@@ -1,17 +1,26 @@
 package com.veniosg.dir.test.actor.assertion;
 
-import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
+import android.support.test.espresso.ViewInteraction;
+import android.view.View;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.view.widget.PathItemView;
 import com.veniosg.dir.mvvm.model.FileHolder;
 
+import org.hamcrest.Matcher;
+
+import java.io.File;
+
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.RecyclerViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
+import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -22,6 +31,10 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
 public class SeesAssertions {
+    public void fileInList(File file) {
+        fileInList(file.getName());
+    }
+
     public void fileInList(String filename) {
         onData(allOf(
                 is(instanceOf(FileHolder.class)),
@@ -32,7 +45,8 @@ public class SeesAssertions {
         )).check(matches(isDisplayed()));
     }
 
-    public void pathFragmentInPathView(String pathFragmentName) {
+    public void fileInPath(File file) {
+        String pathFragmentName = file.getName();
         onView(allOf(
                 withParent(withClassName(equalTo(PathItemView.class.getName()))),
                 withText(pathFragmentName))
@@ -44,5 +58,34 @@ public class SeesAssertions {
                 isDescendantOfA(withId(R.id.toolbar)),
                 withText(title)
         )).check(matches(isDisplayed()));
+    }
+
+    public void searchResult(File result) {
+        Matcher<View> resultItemMatcher = allOf(
+                withId(R.id.primary_info),
+                withText(result.getName())
+        );
+        onView(withId(android.R.id.list)).perform(scrollTo(resultItemMatcher));
+        onView(resultItemMatcher).check(matches(isDisplayed()));
+    }
+
+    public void searchHintFor(File testDirectory) {
+        String hint = "Search in " + testDirectory.getName();
+        onView(allOf(
+                withId(R.id.searchQuery),
+                withHint(hint)
+        )).check(matches(isDisplayed()));
+    }
+
+    public void searchHintView() {
+        viewWithId(R.id.searchHint);
+    }
+
+    public void searchEmptyView() {
+        viewWithId(android.R.id.empty);
+    }
+
+    private void viewWithId(@IdRes int id) {
+        onView(withId(id)).check(matches(isDisplayed()));
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2014-2017 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,14 +24,7 @@ import com.veniosg.dir.R;
 import com.veniosg.dir.android.fragment.SearchListFragment;
 import com.veniosg.dir.android.util.Utils;
 
-/**
- * The activity that handles queries and shows search results.
- * Also handles search-suggestion triggered intents.
- * 
- * @author George Venios
- * 
- */
-public class SearchableActivity extends BaseActivity {
+public class SearchActivity extends BaseActivity {
     private SearchListFragment mFragment;
 
     @Override
@@ -40,34 +33,35 @@ public class SearchableActivity extends BaseActivity {
         handleRequest();
     }
 
-	protected void onCreate(Bundle savedInstanceState) {
-		// Presentation settings
-		super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        // Presentation settings
+        super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_generic);
         setupToolbar();
 
         // Handle the search request.
         handleRequest();
-	}
+    }
 
     private void handleRequest() {
         // Add fragment only if it hasn't already been added.
         mFragment = (SearchListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-        if(mFragment == null){
+        if (mFragment == null) {
             mFragment = new SearchListFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment, mFragment, FRAGMENT_TAG).commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(android.R.id.content, mFragment, FRAGMENT_TAG)
+                    .commit();
         }
     }
 
     @Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			Utils.showHome(this);
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Utils.showHome(this);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

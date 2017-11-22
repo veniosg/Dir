@@ -43,10 +43,6 @@
 
                 <data android:scheme="file" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".activity.SearchableActivity" />
         </activity>
         <activity
             android:name=".android.activity.PreferenceActivity"
@@ -54,6 +50,14 @@
         <activity
             android:name=".android.activity.AboutActivity"
             android:label="@string/about" />
+        <activity
+            android:name=".android.activity.SearchActivity"
+            android:exported="false"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+        </activity>
 
         <activity android:name=".android.activity.IntentFilterActivity">
             <intent-filter>
@@ -110,17 +114,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.OPENABLE" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".android.activity.SearchableActivity"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
         </activity>
 
         <service

@@ -57,6 +57,11 @@ public class SearcherTest {
         searcher = new Searcher(mockResults, trampoline(), trampoline());
     }
 
+    @After
+    public void tearDown() throws Exception {
+        deleteRecursive(testFileRoot);
+    }
+
     @Test
     public void testFindsAll() throws Exception {
         searcher.updateQuery(searchRequest(testFileRoot, "file"));
@@ -79,11 +84,6 @@ public class SearcherTest {
         searcher.updateQuery(searchRequest(testFileRoot, "file12455"));
 
         verify(mockResults).setValue(refEq(searchState));
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        deleteRecursive(testFileRoot);
     }
 
     @SuppressWarnings("unchecked")

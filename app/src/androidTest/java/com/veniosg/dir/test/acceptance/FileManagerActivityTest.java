@@ -60,69 +60,69 @@ public class FileManagerActivityTest {
     public void showsLaunchedDirectory() throws Exception {
         user.launches().viewWithFileScheme(testDirectory);
 
-        user.sees().pathFragmentInPathView(testDirectory.getName());
-        user.sees().fileInList(testChildFile.getName());
+        user.sees().fileInPath(testDirectory);
+        user.sees().fileInList(testChildFile);
     }
 
     @Test
     public void navigatesFwdAndBwd() throws Exception {
         user.launches().dir();
 
-        user.selects().fileInList(testDirectory.getName());
-        user.sees().pathFragmentInPathView(testDirectory.getName());
-        user.sees().fileInList(testChildFile.getName());
+        user.selects().fileInList(testDirectory);
+        user.sees().fileInPath(testDirectory);
+        user.sees().fileInList(testChildFile);
 
         user.selects().backButton();
-        user.sees().pathFragmentInPathView(sdCardDir.getName());
-        user.sees().fileInList(testDirectory.getName());
+        user.sees().fileInPath(sdCardDir);
+        user.sees().fileInList(testDirectory);
     }
 
     @Test
     public void copiesFile() throws Exception {
         user.launches().viewWithFileScheme(testDirectory);
 
-        userCopiesFileInList(testChildFile.getName());
-        user.selects().fileInList(testCopyDestination.getName());
+        userCopiesFileInList(testChildFile);
+        user.selects().fileInList(testCopyDestination);
         user.selects().pasteAction();
 
-        user.sees().fileInList(testChildFile.getName());
+        user.sees().fileInList(testChildFile);
     }
 
     @Test
     public void copiesDirectory() throws Exception {
         user.launches().viewWithFileScheme(testDirectory);
 
-        userCopiesFileInList(testChildFile.getName());
-        user.selects().fileInList(testCopyDestination.getName());
+        userCopiesFileInList(testChildFile);
+        user.selects().fileInList(testCopyDestination);
         user.selects().pasteAction();
 
-        user.sees().fileInList(testChildFile.getName());
+        user.sees().fileInList(testChildFile);
     }
 
     @Test
     public void movesFile() throws Exception {
         user.launches().viewWithFileScheme(testDirectory);
 
-        userCutsFileInList(testChildFile.getName());
-        user.selects().fileInList(testCopyDestination.getName());
+        userCutsFileInList(testChildFile);
+        user.selects().fileInList(testCopyDestination);
         user.selects().pasteAction();
 
-        user.sees().fileInList(testChildFile.getName());
+        user.sees().fileInList(testChildFile);
         user.selects().backButton();
-        user.cannotSee().fileInList(testChildFile.getName());
+        user.cannotSee().fileInList(testChildFile);
     }
 
     @Test
     public void movesDirectory() throws Exception {
         user.launches().viewWithFileScheme(testDirectory);
 
-        userCutsFileInList(testChildDirectory.getName());
-        user.selects().fileInList(testCopyDestination.getName());
+        userCutsFileInList(testChildDirectory);
+        user.selects().fileInList(testCopyDestination);
         user.selects().pasteAction();
 
-        user.sees().fileInList(testChildDirectory.getName());
+        user.sees().fileInList(testChildDirectory);
         user.selects().backButton();
-        user.cannotSee().fileInList(testChildDirectory.getName());
+        user.cannotSee().fileInList(testChildDirectory);
     }
 
     @Test
@@ -130,76 +130,76 @@ public class FileManagerActivityTest {
         user.launches().viewWithFileScheme(testDirectory);
 
         // Move file in directory-to-move
-        userCutsFileInList(testChildFile.getName());
-        user.selects().fileInList(testChildDirectory.getName());
+        userCutsFileInList(testChildFile);
+        user.selects().fileInList(testChildDirectory);
         user.selects().pasteAction();
         user.selects().backButton();
 
         // Move directory
-        userCutsFileInList(testChildDirectory.getName());
-        user.selects().fileInList(testCopyDestination.getName());
+        userCutsFileInList(testChildDirectory);
+        user.selects().fileInList(testCopyDestination);
         user.selects().pasteAction();
 
         // Assert directory and contents in new place
-        user.sees().fileInList(testChildDirectory.getName());
-        user.selects().fileInList(testChildDirectory.getName());
-        user.sees().fileInList(testChildFile.getName());
+        user.sees().fileInList(testChildDirectory);
+        user.selects().fileInList(testChildDirectory);
+        user.sees().fileInList(testChildFile);
     }
 
     @Test
     public void deletesFile() throws Exception {
         user.launches().viewWithFileScheme(testDirectory);
 
-        user.selects().longFileInList(testChildFile.getName());
+        user.selects().longFileInList(testChildFile);
         user.selects().operationsAction();
         user.selects().deleteAction();
         user.selects().yes();
 
-        user.cannotSee().fileInList(testChildFile.getName());
+        user.cannotSee().fileInList(testChildFile);
     }
 
     @Test
     public void deletesDirectory() throws Exception {
         user.launches().viewWithFileScheme(testDirectory);
 
-        user.selects().longFileInList(testChildDirectory.getName());
+        user.selects().longFileInList(testChildDirectory);
         user.selects().operationsAction();
         user.selects().deleteAction();
         user.selects().yes();
 
-        user.cannotSee().fileInList(testChildDirectory.getName());
+        user.cannotSee().fileInList(testChildDirectory);
     }
 
     @Test
     public void renamesFile() throws Exception {
-        String nameAppendage = "2";
-        String updatedName = testChildFile.getName() + nameAppendage;
+        String nameSuffix = "2";
+        String updatedName = testChildFile + nameSuffix;
         user.launches().viewWithFileScheme(testDirectory);
 
-        user.selects().longFileInList(testChildFile.getName());
+        user.selects().longFileInList(testChildFile);
         user.selects().operationsAction();
         user.selects().renameAction();
-        user.types().inputFileName(nameAppendage);
+        user.types().inputFileName(nameSuffix);
         user.selects().ok();
 
         user.sees().fileInList(updatedName);
-        user.cannotSee().fileInList(testChildFile.getName());
+        user.cannotSee().fileInList(testChildFile);
     }
 
     @Test
     public void renamesDirectory() throws Exception {
-        String nameAppendage = "2";
-        String updatedName = testChildDirectory.getName() + nameAppendage;
+        String nameSuffix = "2";
+        String updatedName = testChildDirectory + nameSuffix;
         user.launches().viewWithFileScheme(testDirectory);
 
-        user.selects().longFileInList(testChildDirectory.getName());
+        user.selects().longFileInList(testChildDirectory);
         user.selects().operationsAction();
         user.selects().renameAction();
-        user.types().inputFileName(nameAppendage);
+        user.types().inputFileName(nameSuffix);
         user.selects().ok();
 
         user.sees().fileInList(updatedName);
-        user.cannotSee().fileInList(testChildDirectory.getName());
+        user.cannotSee().fileInList(testChildDirectory);
     }
 
     @Test
@@ -208,7 +208,7 @@ public class FileManagerActivityTest {
         user.launches().viewWithFileScheme(testDirectory.getParentFile());
 
         // compress
-        user.selects().longFileInList(testDirectory.getName());
+        user.selects().longFileInList(testDirectory);
         user.selects().operationsAction();
         user.selects().compressAction();
         user.types().inputFileName(zipName);
@@ -221,9 +221,9 @@ public class FileManagerActivityTest {
 
         // assert uncompressed contents
         user.selects().fileInList(zipName);
-        user.selects().fileInList(testDirectory.getName());
-        user.sees().fileInList(testChildDirectory.getName());
-        user.sees().fileInList(testChildFile.getName());
+        user.selects().fileInList(testDirectory);
+        user.sees().fileInList(testChildDirectory);
+        user.sees().fileInList(testChildFile);
     }
 
     @Test
@@ -252,14 +252,14 @@ public class FileManagerActivityTest {
 
     // TODO test other features (pt2)
 
-    private void userCopiesFileInList(String name) {
-        user.selects().longFileInList(name);
+    private void userCopiesFileInList(File file) {
+        user.selects().longFileInList(file);
         user.selects().operationsAction();
         user.selects().copyAction();
     }
 
-    private void userCutsFileInList(String name) {
-        user.selects().longFileInList(name);
+    private void userCutsFileInList(File file) {
+        user.selects().longFileInList(file);
         user.selects().operationsAction();
         user.selects().moveAction();
     }
