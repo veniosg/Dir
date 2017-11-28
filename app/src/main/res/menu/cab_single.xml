@@ -17,10 +17,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="AppCompatResource">
     <item
-        android:id="@+id/menu_send"
-        android:icon="@drawable/ic_action_share"
-        android:title="@string/menu_share" />
-    <item
         android:id="@+id/menu_file_ops"
         android:icon="@drawable/ic_action_edit"
         android:title="@string/menu_file_ops">
@@ -53,6 +49,10 @@
             </group>
         </menu>
     </item>
+    <item
+        android:id="@+id/menu_send"
+        android:icon="@drawable/ic_action_share"
+        android:title="@string/menu_share" />
     <item
         android:id="@+id/menu_create_shortcut"
         android:showAsAction="never"
