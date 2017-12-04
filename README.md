@@ -1,16 +1,24 @@
 Dir
 ===========
+http://veniosg.github.io/Dir/
 
-A modern Android file manager.  
-For more information see http://veniosg.github.io/Dir/.
+A modern Android file manager. 
 
 [<img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">](https://play.google.com/store/apps/details?id=com.veniosg.dir)
 
-
 Contributors
 ----
-To get the build running, copy `keystore.properties.example` to `keystore.properties`. 
+Dir welcomes contributions from developers of all levels! 
 
+A good place to start are [issues marked as low effort](https://github.com/veniosg/Dir/labels/loweffort). Much more interesting (and harder) are [issues marked as high effort](https://github.com/veniosg/Dir/labels/higheffort).
+
+For direction, help and coordination feel free to comment on the issues themselves or send an email to [dev@pxhouse.co](mailto:dev@pxhouse.co). If you're planning to build a completely new feature please open an issue before starting to ensure that your efforts are not wasted. 
+
+[Visit our Wiki](https://github.com/veniosg/Dir/wiki) for technical documentation.
+
+Not a developer?
+----
+[Join us on OneSky](http://dirapp.oneskyapp.com/collaboration/project?id=27347) and help improve Dir for your language! 
 
 License
 --------
