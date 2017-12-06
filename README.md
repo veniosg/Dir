@@ -8,7 +8,7 @@ A modern Android file manager.
 
 Contributors
 ----
-Dir welcomes contributions from developers of all levels! 
+Dir welcomes contributions from developers of all experience levels! 
 
 A good place to start are [issues marked as low effort](https://github.com/veniosg/Dir/labels/loweffort). Much more interesting (and harder) are [issues marked as high effort](https://github.com/veniosg/Dir/labels/higheffort).
 
