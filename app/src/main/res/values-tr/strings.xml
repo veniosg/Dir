@@ -101,7 +101,6 @@
     <string name="notif_extracted_fail">Çıkarma işlemi tamamlanamadı</string>
     <string name="selected">Seçilen</string>
     <string name="bookmark_empty">Eklenen yer işareti bulunmamaktadır</string>
-    <string name="search_hint">Dosya ara</string>
     <string name="query_error">Sorgu hatası</string>
     <string name="search_empty">Eşleşen dosya bulunmamaktadır!</string>
     <string name="item_icon">Öğe ikonu</string>

@@ -103,7 +103,6 @@
     <string name="notif_extracted_fail">Αποτυχία αποσυμπίεσης</string>
     <string name="selected">επιλεγμένα</string>
     <string name="bookmark_empty">Κανένας σελιδοδείκτης</string>
-    <string name="search_hint">Αναζήτηση αρχείων</string>
     <string name="query_error">Σφάλμα αναζήτησης</string>
     <string name="search_empty">Δεν βρέθηκαν στοιχεία που ταιριάζουν!</string>
     <string name="item_icon">Εικονίδιο στοιχείου</string>

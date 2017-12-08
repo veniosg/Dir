@@ -34,10 +34,18 @@ public class SearchViewModel extends ViewModel {
         liveResults = searcher.getResults();
     }
 
-    public void updateQuery(@NonNull String query) {
+    /**
+     * Start a new search, using the passed query. If the current search uses the same query, this does nothing.
+     * @param query The text to search filenames for.
+     * @return True if this triggers a new search, false if not.
+     */
+    public boolean updateQuery(@NonNull String query) {
         if (!query.equals(currentQuery)) {
             searcher.updateQuery(searchRequest(searchRoot, query));
             currentQuery = query;
+            return true;
+        } else {
+            return false;
         }
     }
 

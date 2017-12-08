@@ -101,7 +101,6 @@
     <string name="notif_extracted_fail">Extracción fallida</string>
     <string name="selected">seleccionado</string>
     <string name="bookmark_empty">No hay marcadores</string>
-    <string name="search_hint">Buscar archivos</string>
     <string name="query_error">Consultar error</string>
     <string name="search_empty">No hay archivos coincidentes</string>
     <string name="item_icon">Icono</string>

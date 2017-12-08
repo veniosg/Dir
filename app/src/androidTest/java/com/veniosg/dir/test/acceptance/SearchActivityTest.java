@@ -53,6 +53,8 @@ public class SearchActivityTest {
         user.launches().searchIn(testDirectory);
 
         user.types().searchQuery("test");
+        user.types().imeAction();
+
         user.sees().searchResult(testChildDirectory);
         user.sees().searchResult(testChildFile);
     }
@@ -67,24 +69,22 @@ public class SearchActivityTest {
     }
 
     @Test
-    public void showsHintForPath() throws Exception {
-        user.launches().dir();
-        user.selects().fileInList(testDirectory);
-        user.selects().searchAction();
+    public void showsCorrectHint() throws Exception {
+        user.launches().searchIn(testDirectory);
 
         user.sees().searchHintFor(testDirectory);
     }
 
     @Test
-    public void showsCorrectEmptyViews() throws Exception {
+    public void showsEmptyViewAfterQueryOnly() throws Exception {
         user.launches().searchIn(testDirectory);
-        user.sees().searchHintView();
+        user.cannotSee().searchEmptyView();
 
         user.types().searchQuery("querythatwillnotmatchanyfiles");
         user.sees().searchEmptyView();
 
         userDeletesQuery();
-        user.sees().searchHintView();
+        user.cannotSee().searchEmptyView();
     }
 
     @Test

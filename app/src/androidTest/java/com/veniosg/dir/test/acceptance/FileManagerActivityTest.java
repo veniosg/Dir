@@ -6,6 +6,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.veniosg.dir.android.activity.FileManagerActivity;
+import com.veniosg.dir.test.actor.Android;
 import com.veniosg.dir.test.actor.User;
 
 import org.junit.After;
@@ -18,6 +19,7 @@ import org.junit.runner.RunWith;
 import java.io.File;
 
 import static com.veniosg.dir.test.TestUtils.cleanDirectory;
+import static com.veniosg.dir.test.injector.ActorInjector.android;
 import static com.veniosg.dir.test.injector.ActorInjector.user;
 
 @RunWith(AndroidJUnit4.class)
@@ -28,6 +30,7 @@ public class FileManagerActivityTest {
             FileManagerActivity.class, false, false);
 
     private final User user = user(activityRule);
+    private final Android android = android(activityRule);
     private final File sdCardDir = Environment.getExternalStorageDirectory();
     private final File testDirectory = new File(sdCardDir, "testDir");
     private final File compressedFile = new File(sdCardDir, "lala.zip");
@@ -236,6 +239,16 @@ public class FileManagerActivityTest {
         user.selects().ok();
 
         user.sees().fileInList(newDirName);
+    }
+
+    @Test
+    public void launchesSearchForCurrentDirectory() throws Exception {
+        user.launches().viewWithFileScheme(sdCardDir);
+
+        user.selects().fileInList(testDirectory);
+        user.selects().searchAction();
+
+        android.launched().searchIntentFor(testDirectory);
     }
 
     @Test

@@ -102,7 +102,6 @@
     <string name="notif_extracted_fail">Uitpakken niet geslaagd</string>
     <string name="selected">Geselecteerd</string>
     <string name="bookmark_empty">Geen bladwijzers</string>
-    <string name="search_hint">Zoek bestanden</string>
     <string name="query_error">Query fout</string>
     <string name="search_empty">Geen overeenkomende bestanden gevonden!</string>
     <string name="item_icon">Item icoon</string>

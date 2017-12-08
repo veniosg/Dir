@@ -64,7 +64,6 @@
     <string name="menu_check_all">모두 선택하기</string>
     <string name="selected">선택됨</string>
     <string name="bookmark_empty">북마크가 추가되지 않습니다</string>
-    <string name="search_hint">파일 검색</string>
     <string name="query_error">쿼리 오류</string>
     <string name="item_icon">항목 아이콘</string>
     <string name="delete_success">성공적으로 삭제되었습니다.</string>

@@ -105,7 +105,6 @@
     <string name="notif_extracted_fail">Ошибка распаковки</string>
     <string name="selected">выбранный</string>
     <string name="bookmark_empty">Нет закладок</string>
-    <string name="search_hint">Поиск файлов</string>
     <string name="query_error">Ошибочный запрос</string>
     <string name="search_empty">Совпадений не найдено!</string>
     <string name="item_icon">Значок элемента</string>

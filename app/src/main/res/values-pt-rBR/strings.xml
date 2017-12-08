@@ -101,7 +101,6 @@
     <string name="notif_extracted_fail">Extração falhou</string>
     <string name="selected">selecionado</string>
     <string name="bookmark_empty">Nenhum favoritos</string>
-    <string name="search_hint">Procurar arquivos</string>
     <string name="query_error">Erro de query</string>
     <string name="search_empty">Nenhum arquivo encontrado!</string>
     <string name="item_icon">"Ícone "</string>

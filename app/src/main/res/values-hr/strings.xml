@@ -103,7 +103,6 @@
     <string name="notif_extracted_fail">Ekstrahiranje nije uspijelo</string>
     <string name="selected">odabrano</string>
     <string name="bookmark_empty">Nema oznaka</string>
-    <string name="search_hint">Pretraži datoteke</string>
     <string name="query_error">Ispitivanje greške</string>
     <string name="search_empty">Nisu pronađene podudarajuće datoteke!</string>
     <string name="item_icon">Ikona stavke</string>

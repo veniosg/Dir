@@ -55,12 +55,10 @@ public class SelectsActions {
     }
 
     public void searchResult(File result) {
-        Matcher<View> resultItemMatcher = allOf(
+        onView(allOf(
                 withId(R.id.primary_info),
                 withText(result.getName())
-        );
-        onView(withId(android.R.id.list)).perform(scrollTo(resultItemMatcher));
-        onView(resultItemMatcher).perform(click());
+        )).perform(click());
     }
 
     public void pickFileButton() {

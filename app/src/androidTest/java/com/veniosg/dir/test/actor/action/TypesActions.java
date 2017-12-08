@@ -5,6 +5,7 @@ import android.widget.EditText;
 import com.veniosg.dir.R;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.pressImeActionButton;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
@@ -34,5 +35,12 @@ public class TypesActions {
                 withId(R.id.searchQuery),
                 isDisplayed()
         )).perform(typeText(query));
+    }
+
+    public void imeAction() {
+        onView(allOf(
+                withId(R.id.searchQuery),
+                isDisplayed()
+        )).perform(pressImeActionButton());
     }
 }

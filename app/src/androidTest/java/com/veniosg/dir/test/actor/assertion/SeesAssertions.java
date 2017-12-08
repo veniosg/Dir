@@ -1,8 +1,6 @@
 package com.veniosg.dir.test.actor.assertion;
 
 import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
-import android.support.test.espresso.ViewInteraction;
 import android.view.View;
 
 import com.veniosg.dir.R;
@@ -16,7 +14,6 @@ import java.io.File;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.contrib.RecyclerViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
@@ -61,12 +58,10 @@ public class SeesAssertions {
     }
 
     public void searchResult(File result) {
-        Matcher<View> resultItemMatcher = allOf(
+        onView(allOf(
                 withId(R.id.primary_info),
                 withText(result.getName())
-        );
-        onView(withId(android.R.id.list)).perform(scrollTo(resultItemMatcher));
-        onView(resultItemMatcher).check(matches(isDisplayed()));
+        )).check(matches(isDisplayed()));
     }
 
     public void searchHintFor(File testDirectory) {
@@ -77,12 +72,12 @@ public class SeesAssertions {
         )).check(matches(isDisplayed()));
     }
 
-    public void searchHintView() {
-        viewWithId(R.id.searchHint);
-    }
-
     public void searchEmptyView() {
-        viewWithId(android.R.id.empty);
+        onView(allOf(
+                withId(R.id.empty_text),
+                withText("No matching files found!")
+        )).check(matches(isDisplayed()));
+        viewWithId(R.id.empty_img);
     }
 
     private void viewWithId(@IdRes int id) {

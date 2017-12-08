@@ -22,24 +22,31 @@ import static io.reactivex.Flowable.create;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 import static java.util.Collections.addAll;
+import static java.util.Locale.ROOT;
 
 public class Searcher {
+    @NonNull
     private final SearcherLiveData observableResults;
+    @NonNull
     private final Scheduler ioScheduler;
+    @NonNull
     private final Scheduler uiScheduler;
+    @NonNull
     private final SearchState searchState = new SearchState();
+    @NonNull
     private final FlowableSubscriber<? super String> bfsUpdateSubscriber = new BfsSubscriber();
     private BfsFlowable bfsFlowable;
     private Object lock;
 
     public Searcher() {
-        this.ioScheduler = io();
-        this.uiScheduler = mainThread();
-        this.observableResults = new SearcherLiveData(this);
+        ioScheduler = io();
+        uiScheduler = mainThread();
+        observableResults = new SearcherLiveData(this);
     }
 
     @VisibleForTesting()
-    Searcher(SearcherLiveData observableResults, Scheduler ioScheduler, Scheduler uiScheduler) {
+    Searcher(@NonNull SearcherLiveData observableResults,
+             @NonNull Scheduler ioScheduler, @NonNull Scheduler uiScheduler) {
         this.ioScheduler = ioScheduler;
         this.uiScheduler = uiScheduler;
         this.observableResults = observableResults;
@@ -47,22 +54,6 @@ public class Searcher {
 
     public LiveData<SearchState> getResults() {
         return observableResults;
-    }
-
-    public void pauseSearch() {
-        if (lock == null) lock = new Object();
-    }
-
-    public void resumeSearch() {
-        if (lock != null) {
-            lock.notifyAll();
-            lock = null;
-        }
-    }
-
-    public void stopSearch() {
-        resumeSearch();
-        if (bfsFlowable != null) bfsFlowable.stopSearching();
     }
 
     public void updateQuery(SearchRequest request) {
@@ -77,6 +68,31 @@ public class Searcher {
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe(bfsUpdateSubscriber);
+    }
+
+    public void stopSearch() {
+        unlock();
+        if (bfsFlowable != null) bfsFlowable.stopSearching();
+    }
+
+    public void resumeSearch() {
+        unlock();
+    }
+
+    public void pauseSearch() {
+        if (lock == null) lock = new Object();
+    }
+
+    private void unlock() {
+        if (lock != null) {
+            try {
+                lock.notifyAll();
+            } catch (IllegalMonitorStateException e) {
+                log(e);
+            } finally {
+                lock = null;
+            }
+        }
     }
 
     private void emitStateUpdate() {
@@ -109,34 +125,40 @@ public class Searcher {
         }
 
         @Override
-        public void subscribe(FlowableEmitter<String> e) {
+        public void subscribe(FlowableEmitter<String> emitter) {
             try {
                 File root = new File(searchRoot);
-                queue.add(root);
+                addDirectChildren(root, queue);
 
                 while (!queue.isEmpty() && keepSearching) {
                     root = queue.removeFirst();
-                    visit(root, e);
+                    visit(root, emitter);
 
                     if (root.isDirectory()) {
-                        File[] children = root.listFiles();
-                        if (children != null) {
-                            addAll(queue, children);
-                        }
+                        addDirectChildren(root, queue);
                     }
 
                     if (lock != null) lock.wait();
                 }
 
-                e.onComplete();
+                emitter.onComplete();
             } catch (Exception ex) {
                 log(ex);
-                e.onError(ex);
+                emitter.onError(ex);
+            }
+        }
+
+        private void addDirectChildren(File of, Deque<File> into) {
+            File[] children = of.listFiles();
+            if (children != null) {
+                addAll(into, children);
             }
         }
 
         private void visit(@NonNull File file, Emitter<String> e) {
-            if (file.getName().equalsIgnoreCase(query)) e.onNext(file.getAbsolutePath());
+            if (file.getName().toLowerCase(ROOT).contains(query.toLowerCase(ROOT))) {
+                e.onNext(file.getAbsolutePath());
+            }
         }
 
         void stopSearching() {

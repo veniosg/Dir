@@ -17,18 +17,20 @@
 
 package com.veniosg.dir.android.fragment;
 
-import android.app.SearchManager;
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.test.espresso.IdlingRegistry;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.veniosg.dir.R;
@@ -37,29 +39,34 @@ import com.veniosg.dir.android.adapter.FileListViewHolder.OnItemClickListener;
 import com.veniosg.dir.android.adapter.SearchListAdapter;
 import com.veniosg.dir.android.view.widget.WaitingViewFlipper;
 import com.veniosg.dir.mvvm.model.FileHolder;
+import com.veniosg.dir.mvvm.model.search.BooleanIdlingResource;
 import com.veniosg.dir.mvvm.model.search.SearchState;
 import com.veniosg.dir.mvvm.viewmodel.SearchViewModel;
 
 import java.io.File;
 import java.util.List;
 
-import static android.app.SearchManager.APP_DATA;
 import static android.arch.lifecycle.ViewModelProviders.of;
-import static android.view.View.GONE;
+import static android.view.KeyEvent.ACTION_DOWN;
+import static android.view.KeyEvent.KEYCODE_DPAD_CENTER;
+import static android.view.KeyEvent.KEYCODE_ENTER;
+import static android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH;
+import static com.veniosg.dir.BuildConfig.DEBUG;
 import static com.veniosg.dir.android.util.FileUtils.openFile;
 import static com.veniosg.dir.android.view.Themer.getThemedResourceId;
 import static com.veniosg.dir.android.view.widget.WaitingViewFlipper.PAGE_INDEX_CONTENT;
-import static com.veniosg.dir.android.view.widget.WaitingViewFlipper.PAGE_INDEX_LOADING;
 
 public class SearchListFragment extends Fragment {
+    public static final int PAGE_INDEX_EMPTY = 1;
+
 //    private static final String STATE_POS = "pos";
 //    private static final String STATE_TOP = "top";
 
     private WaitingViewFlipper mFlipper;
-    private TextView mEmptyTextView;
-    private ImageView mEmptyImageView;
     private RecyclerView mRecyclerView;
+    private EditText mQueryView;
     private SearchViewModel viewModel;
+    private String hintText;
     private final OnItemClickListener onItemClickListener = (itemView, item) -> {
         if (item.getFile().isDirectory()) {
             browse(Uri.parse(item.getFile().getAbsolutePath()));
@@ -73,18 +80,32 @@ public class SearchListFragment extends Fragment {
             showLoading(false);
         } else {
             List<String> results = searchState.results();
+            boolean isLoading = !searchState.isFinished();
+            boolean finishedAndEmpty = !isLoading && results.isEmpty();
 
             adapter.notifyDataAppended(results);
-            showLoading(!results.isEmpty());
+            mFlipper.setDisplayedChild(finishedAndEmpty ? PAGE_INDEX_EMPTY : PAGE_INDEX_CONTENT);
+            showLoading(isLoading);
         }
     };
+    @NonNull
+    private final BooleanIdlingResource searchIdlingResource = new BooleanIdlingResource(
+            "SearchIdlingResource", DEBUG);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        IdlingRegistry.getInstance().register(searchIdlingResource);
+
         viewModel = of(this).get(SearchViewModel.class);
         handleIntent();
+    }
+
+    @Override
+    public void onDestroy() {
+        IdlingRegistry.getInstance().unregister(searchIdlingResource);
+        super.onDestroy();
     }
 
     @Override
@@ -96,17 +117,15 @@ public class SearchListFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.setBackgroundResource(
-                getThemedResourceId(getActivity(), android.R.attr.colorBackground));
+        int backgroundColorRes = getThemedResourceId(getActivity(), android.R.attr.colorBackground);
+        view.setBackgroundResource(backgroundColorRes);
 
         mRecyclerView = (RecyclerView) view.findViewById(android.R.id.list);
         mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
-        mEmptyTextView = (TextView) view.findViewById(R.id.empty_text);
-        mEmptyImageView = (ImageView) view.findViewById(R.id.empty_img);
+        mQueryView = (EditText) view.findViewById(R.id.searchQuery);
 
-        setupStaticViews(view);
+        setupStaticViews();
         setupList();
-        showLoading(true);
         restoreScroll(savedInstanceState);
     }
 
@@ -134,10 +153,26 @@ public class SearchListFragment extends Fragment {
 //        }
     }
 
-    private void setupStaticViews(View view) {
-        mEmptyTextView.setText(R.string.search_empty);
-        ((TextView) view.findViewById(R.id.loading_text)).setText(R.string.searching);
-        mEmptyImageView.setVisibility(GONE);
+    private void setupStaticViews() {
+        mQueryView.setHint(hintText);
+        mQueryView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean pressedDpadDownOrEnter = false;
+                if (event != null) {
+                    int eventCode = event.getKeyCode();
+                    boolean dpadCenterOrEnter = eventCode == KEYCODE_DPAD_CENTER || eventCode == KEYCODE_ENTER;
+                    pressedDpadDownOrEnter = event.getAction() == ACTION_DOWN && dpadCenterOrEnter;
+                }
+
+                if (actionId == IME_ACTION_SEARCH || pressedDpadDownOrEnter) {
+                    boolean startedNewSearch = viewModel.updateQuery(v.getText().toString());
+                    if (startedNewSearch) searchIdlingResource.setBusy();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void setupList() {
@@ -145,33 +180,23 @@ public class SearchListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
-    /**
-     * Make the UI indicate loading.
-     */
     void showLoading(boolean loading) {
-        if (loading) {
-            mFlipper.setDisplayedChildDelayed(PAGE_INDEX_LOADING);  // TODO GV this is gone
-        } else {
-            mFlipper.setDisplayedChild(PAGE_INDEX_CONTENT);
-        }
+        if (!loading) searchIdlingResource.setIdle();
+        // TODO GV handle (progressbar/hint visibility)
     }
 
     private void handleIntent() {
         Intent intent = getActivity().getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction()) && intent.getData() != null) {
-            // Get the query.
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            getActivity().setTitle(query);
-
             // Get the current path
             String path = intent.getData().getPath();
             File root = new File(path);
-            getActivity().getActionBar().setSubtitle(path);
 
             // Init search
             viewModel.init(root);
             viewModel.getLiveResults().observe(this, resultObserver);
-            viewModel.updateQuery(query);
+
+            hintText = getResources().getString(R.string.search_hint, root.getName());
         } else {
             getActivity().finish();
         }
@@ -196,6 +221,4 @@ public class SearchListFragment extends Fragment {
 
         startActivity(intent);
     }
-
-
 }

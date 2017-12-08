@@ -10,7 +10,6 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasData;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasType;
-import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.any;
 import static org.hamcrest.core.AllOf.allOf;
 
@@ -21,6 +20,13 @@ public class LaunchedAssertions {
                 hasData(FileUtils.getUri(file)),
                 hasType(any(String.class))
         ));
-        assertTrue(false);
+    }
+
+    public void searchIntentFor(File file) {
+        intended(allOf(
+                hasAction(Intent.ACTION_SEARCH),
+                hasData(FileUtils.getUri(file)),
+                hasType(any(String.class))
+        ));
     }
 }

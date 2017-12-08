@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  * Copyright (C) 2014-2017 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,17 +22,23 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
-        style="?android:toolbarStyle"
+        android:background="?android:colorPrimary"
+        android:elevation="@dimen/elevation_toolbar"
         android:padding="8dp">
 
-        <TextView
+        <!-- Dummy hint to silence warnings. Actual set in code and tested -->
+        <EditText
             android:id="@+id/searchQuery"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingStart="@dimen/item_text_margin_left"
-            tools:ignore="RtlSymmetry"
             android:background="#FFF"
-            android:elevation="8dp"/>
+            android:elevation="8dp"
+            android:hint=""
+            android:imeOptions="actionSearch"
+            android:inputType="textFilter"
+            android:outlineProvider="background"
+            android:paddingStart="@dimen/item_text_margin_left"
+            tools:ignore="RtlSymmetry" />
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -41,11 +46,12 @@
             android:layout_gravity="center_vertical|start"
             android:animateLayoutChanges="true">
 
+            <!-- TODO GV update drawable! -->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:importantForAccessibility="no"
-                android:src="?searchIcon" />
+                android:src="@drawable/ic_sidenav_about" />
 
             <ProgressBar
                 android:id="@+id/progressHint"
@@ -64,87 +70,48 @@
         android:inAnimation="@android:anim/fade_in"
         android:outAnimation="@android:anim/fade_out">
 
-        <!-- Content -->
-        <FrameLayout
+        <!-- List -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:clipToPadding="false"
+            android:fastScrollEnabled="true"
+            android:numColumns="@integer/grid_columns"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:scrollbarStyle="outsideOverlay" />
 
-            <!-- List -->
-            <android.support.v7.widget.RecyclerView
-                android:id="@android:id/list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:fastScrollEnabled="true"
-                android:numColumns="@integer/grid_columns"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:scrollbarStyle="outsideOverlay" />
+        <!-- Empty state (no results) -->
+        <LinearLayout
+            android:id="@android:id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="24dp"
+            tools:ignore="UseCompoundDrawables">
 
-            <!-- Empty state -->
-            <LinearLayout
-                android:id="@android:id/empty"
+            <TextView
+                android:id="@+id/empty_text"
+                style="@style/TextAppearance.Dir.Empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="vertical"
-                android:paddingBottom="24dp"
-                tools:ignore="UseCompoundDrawables">
+                android:text="@string/search_empty" />
 
-                <TextView
-                    android:id="@+id/empty_text"
-                    style="@style/TextAppearance.Dir.Empty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/this_folder_is_empty" />
-
-                <ImageView
-                    android:id="@+id/empty_img"
-                    android:layout_width="88dp"
-                    android:layout_height="88dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/bg_empty_state_circle"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_button_back"
-                    android:stateListAnimator="@anim/state_list_anim_material"
-                    tools:ignore="ContentDescription" />
-            </LinearLayout>
-
-            <!-- Pre-search state -->
-            <LinearLayout
-                android:id="@+id/searchHint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical"
-                android:paddingBottom="24dp"
-                tools:ignore="UseCompoundDrawables">
-
-                <TextView
-                    android:id="@+id/hint_text"
-                    style="@style/TextAppearance.Dir.Empty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/this_folder_is_empty" />
-
-                <ImageView
-                    android:id="@+id/hint_img"
-                    android:layout_width="88dp"
-                    android:layout_height="88dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/bg_empty_state_circle"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_button_back"
-                    android:stateListAnimator="@anim/state_list_anim_material"
-                    tools:ignore="ContentDescription" />
-            </LinearLayout>
-        </FrameLayout>
+            <!-- TODO GV update image -->
+            <ImageView
+                android:id="@+id/empty_img"
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="24dp"
+                android:padding="40dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_hint_search"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
     </com.veniosg.dir.android.view.widget.WaitingViewFlipper>
 </LinearLayout>

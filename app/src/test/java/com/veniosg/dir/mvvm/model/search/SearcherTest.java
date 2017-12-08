@@ -47,11 +47,11 @@ public class SearcherTest {
         dir2.mkdir();
         file1 = new File(dir1, "file");
         file1.createNewFile();
-        file2 = new File(dir1, "file2");
+        file2 = new File(dir1, "aSecondOne");
         file2.createNewFile();
-        file3 = new File(dir2, "file");
+        file3 = new File(dir2, "aFile");
         file3.createNewFile();
-        file4 = new File(testFileRoot, "file");
+        file4 = new File(testFileRoot, "thisIsFile3");
         file4.createNewFile();
 
         searcher = new Searcher(mockResults, trampoline(), trampoline());
@@ -63,15 +63,25 @@ public class SearcherTest {
     }
 
     @Test
-    public void testFindsAll() throws Exception {
+    public void doesNotFindRoot() throws Exception {
+        SearchState searchState = new SearchState();
+        searchState.setFinished();
+
+        searcher.updateQuery(searchRequest(testFileRoot, testFileRoot.getName()));
+
+        verify(mockResults).setValue(refEq(searchState));
+    }
+
+    @Test
+    public void findsAll() throws Exception {
         searcher.updateQuery(searchRequest(testFileRoot, "file"));
 
         verifyFoundInOrder(mockResults, file4, file1, file3);
     }
 
     @Test
-    public void testFindsOnlyOne() throws Exception {
-        searcher.updateQuery(searchRequest(testFileRoot, "file2"));
+    public void findsOnlyOne() throws Exception {
+        searcher.updateQuery(searchRequest(testFileRoot, "aSecondOne"));
 
         verifyFoundInOrder(mockResults, file2);
     }

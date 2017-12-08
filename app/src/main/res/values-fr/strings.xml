@@ -104,7 +104,6 @@
     <string name="notif_extracted_fail">Extraction échouée</string>
     <string name="selected">sélectionné(s)</string>
     <string name="bookmark_empty">Pas de marque-page</string>
-    <string name="search_hint">Rechercher des fichiers</string>
     <string name="query_error">Erreur de requête</string>
     <string name="search_empty">Pas de fichier correspondant trouvé!</string>
     <string name="item_icon">Icône de l\'élément</string>

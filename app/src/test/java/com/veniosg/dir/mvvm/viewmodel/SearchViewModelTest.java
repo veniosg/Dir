@@ -14,6 +14,8 @@ import java.io.File;
 
 import static com.veniosg.dir.mvvm.model.search.Searcher.SearchRequest.searchRequest;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -42,7 +44,7 @@ public class SearchViewModelTest {
     }
 
     @Test
-    public void onClearedPausesSearch() {
+    public void onClearedCleansUp() {
         viewModel.onCleared();
 
         verify(mockSearcher).stopSearch();
@@ -63,9 +65,11 @@ public class SearchViewModelTest {
         String query = "query";
         viewModel.init(searchRoot);
 
-        viewModel.updateQuery(query);
-        viewModel.updateQuery(query);
+        boolean firstSearchStarted = viewModel.updateQuery(query);
+        boolean secondSearchStarted = viewModel.updateQuery(query);
 
+        assertTrue(firstSearchStarted);
+        assertFalse(secondSearchStarted);
         verify(mockSearcher).updateQuery(refEq(searchRequest(searchRoot, query)));
     }
 }

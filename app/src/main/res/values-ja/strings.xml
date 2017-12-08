@@ -99,7 +99,6 @@
     <string name="notif_extracted_fail">解凍が失敗しました</string>
     <string name="selected">件選択中</string>
     <string name="bookmark_empty">ブックマークがありません</string>
-    <string name="search_hint">ファイル検索</string>
     <string name="query_error">クエリエラー</string>
     <string name="search_empty">一致するファイルが見つかりません</string>
     <string name="item_icon">アイテムアイコン</string>

@@ -104,7 +104,7 @@
     <string name="notif_extracted_fail">Extraction failed</string>
     <string name="selected">selected</string>
     <string name="bookmark_empty">No bookmarks</string>
-    <string name="search_hint">Search files</string>
+    <string name="search_hint">Search in %1$s</string>
     <string name="query_error">Query error</string>
     <string name="search_empty">No matching files found!</string>
     <string name="item_icon">Item icon</string>

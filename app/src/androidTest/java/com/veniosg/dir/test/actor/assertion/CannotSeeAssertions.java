@@ -1,5 +1,6 @@
 package com.veniosg.dir.test.actor.assertion;
 
+import android.support.test.espresso.assertion.ViewAssertions;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.veniosg.dir.test.matcher.FileHolderHasName.hasName;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.not;
 
 public class CannotSeeAssertions {
@@ -35,7 +37,14 @@ public class CannotSeeAssertions {
         onView(allOf(
                 withId(R.id.primary_info),
                 withText(result.getName())
-        )).check(matches(not(isDisplayed())));
+        )).check(ViewAssertions.doesNotExist());
+    }
+
+    public void searchEmptyView() {
+        onView(withId(R.id.empty_text))
+                .check(matches(not(isDisplayed())));
+        onView(withId(R.id.empty_img))
+                .check(matches(not(isDisplayed())));
     }
 
     private static Matcher<View> withAdaptedData(final Matcher<Object> dataMatcher) {

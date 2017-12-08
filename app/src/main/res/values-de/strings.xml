@@ -101,7 +101,6 @@
     <string name="notif_extracted_fail">Entpacken fehlgeschlagen</string>
     <string name="selected">ausgewählt</string>
     <string name="bookmark_empty">Keine Lesezeichen</string>
-    <string name="search_hint">Dateien suchen</string>
     <string name="query_error">Abfragefehler</string>
     <string name="search_empty">Keine passenden Dateien gefunden!</string>
     <string name="item_icon">Icon</string>

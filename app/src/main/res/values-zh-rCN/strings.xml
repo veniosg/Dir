@@ -99,7 +99,6 @@
     <string name="notif_extracted_fail">提取失败</string>
     <string name="selected">项已选中</string>
     <string name="bookmark_empty">无书签</string>
-    <string name="search_hint">搜索文件</string>
     <string name="query_error">查询错误</string>
     <string name="search_empty">无匹配文件！</string>
     <string name="item_icon">项目图标</string>
