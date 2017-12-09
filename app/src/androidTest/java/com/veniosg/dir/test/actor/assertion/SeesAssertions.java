@@ -1,13 +1,10 @@
 package com.veniosg.dir.test.actor.assertion;
 
 import android.support.annotation.IdRes;
-import android.view.View;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.view.widget.PathItemView;
 import com.veniosg.dir.mvvm.model.FileHolder;
-
-import org.hamcrest.Matcher;
 
 import java.io.File;
 

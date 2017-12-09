@@ -37,6 +37,7 @@ import com.veniosg.dir.mvvm.model.FileHolder;
 
 import java.io.File;
 
+import static android.content.Intent.ACTION_SEARCH;
 import static android.support.v4.view.GravityCompat.START;
 import static com.veniosg.dir.IntentConstants.EXTRA_FROM_OI_FILEMANAGER;
 import static com.veniosg.dir.android.util.FileUtils.getFile;
@@ -187,7 +188,8 @@ public class FileManagerActivity extends BaseActivity
     }
 
     private void showSearch() {
-        Intent searchIntent = new Intent(this, SearchActivity.class);
+        Intent searchIntent = new Intent(ACTION_SEARCH);
+        searchIntent.setClass(this, SearchActivity.class);
         searchIntent.setData(new Uri.Builder().path(mFragment.getPath()).build());
         startActivity(searchIntent);
     }

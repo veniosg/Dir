@@ -23,7 +23,10 @@ import android.view.ViewGroup;
 import com.veniosg.dir.android.adapter.FileListViewHolder.OnItemClickListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.emptyList;
 
 public class SearchListAdapter extends RecyclerView.Adapter<FileListViewHolder> {
     private List<String> data = new ArrayList<>();
@@ -41,6 +44,11 @@ public class SearchListAdapter extends RecyclerView.Adapter<FileListViewHolder> 
         int firstNewItem = oldData.size();
 
         notifyItemRangeInserted(firstNewItem, newItemCount);
+    }
+
+    public void notifyResultsCleared() {
+        notifyItemRangeRemoved(0, data.size());
+        data = emptyList();
     }
 
     @Override

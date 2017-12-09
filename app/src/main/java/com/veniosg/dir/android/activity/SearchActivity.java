@@ -20,9 +20,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.veniosg.dir.R;
 import com.veniosg.dir.android.fragment.SearchListFragment;
-import com.veniosg.dir.android.util.Utils;
+
+import static com.veniosg.dir.android.util.Utils.showHome;
 
 public class SearchActivity extends BaseActivity {
     private SearchListFragment mFragment;
@@ -50,7 +50,7 @@ public class SearchActivity extends BaseActivity {
             mFragment = new SearchListFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(android.R.id.content, mFragment, FRAGMENT_TAG)
+                    .replace(android.R.id.content, mFragment, FRAGMENT_TAG)
                     .commit();
         }
     }
@@ -59,7 +59,7 @@ public class SearchActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Utils.showHome(this);
+                showHome(this);
                 break;
         }
         return super.onOptionsItemSelected(item);

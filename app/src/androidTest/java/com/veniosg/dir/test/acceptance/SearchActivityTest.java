@@ -1,7 +1,7 @@
 package com.veniosg.dir.test.acceptance;
 
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.veniosg.dir.android.activity.SearchActivity;
@@ -25,7 +25,7 @@ import static com.veniosg.dir.test.injector.ActorInjector.user;
 @LargeTest
 public class SearchActivityTest {
     @Rule
-    public ActivityTestRule<SearchActivity> activityRule = new ActivityTestRule<>(
+    public IntentsTestRule<SearchActivity> activityRule = new IntentsTestRule<>(
             SearchActivity.class, false, false);
     private final User user = user(activityRule);
     private final Android android = android(activityRule);
@@ -76,14 +76,16 @@ public class SearchActivityTest {
     }
 
     @Test
-    public void showsEmptyViewAfterQueryOnly() throws Exception {
+    public void showsEmptyViewOnlyAfterQuery() throws Exception {
         user.launches().searchIn(testDirectory);
         user.cannotSee().searchEmptyView();
 
         user.types().searchQuery("querythatwillnotmatchanyfiles");
+        user.types().imeAction();
         user.sees().searchEmptyView();
 
         userDeletesQuery();
+        user.types().imeAction();
         user.cannotSee().searchEmptyView();
     }
 
@@ -92,6 +94,7 @@ public class SearchActivityTest {
         user.launches().searchIn(testDirectory);
 
         user.types().searchQuery(testChildDirectory.getName());
+        user.types().imeAction();
         user.selects().searchResult(testChildDirectory);
 
         user.sees().fileInPath(testChildDirectory);
@@ -102,6 +105,7 @@ public class SearchActivityTest {
         user.launches().searchIn(testDirectory);
 
         user.types().searchQuery(testChildFile.getName());
+        user.types().imeAction();
         user.selects().searchResult(testChildFile);
 
         android.launched().viewFileIntent(testChildFile);
@@ -112,14 +116,17 @@ public class SearchActivityTest {
         user.launches().searchIn(testDirectory);
 
         user.types().searchQuery(testChildDirectory.getName());
+        user.types().imeAction();
         user.sees().searchResult(testChildDirectory);
 
+        userDeletesQuery();
         user.types().searchQuery(testChildFile.getName());
+        user.types().imeAction();
         user.sees().searchResult(testChildFile);
         user.cannotSee().visibleSearchResult(testChildDirectory);
     }
 
     private void userDeletesQuery() {
-        user.types().searchQuery("");
+        user.types().noSearchQuery();
     }
 }

@@ -47,7 +47,7 @@ import java.io.File;
 import java.util.List;
 
 import static android.arch.lifecycle.ViewModelProviders.of;
-import static android.view.KeyEvent.ACTION_DOWN;
+import static android.view.KeyEvent.ACTION_UP;
 import static android.view.KeyEvent.KEYCODE_DPAD_CENTER;
 import static android.view.KeyEvent.KEYCODE_ENTER;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH;
@@ -78,12 +78,18 @@ public class SearchListFragment extends Fragment {
     private final Observer<SearchState> resultObserver = searchState -> {
         if (searchState == null) {
             showLoading(false);
+            adapter.notifyResultsCleared();
         } else {
             List<String> results = searchState.results();
             boolean isLoading = !searchState.isFinished();
-            boolean finishedAndEmpty = !isLoading && results.isEmpty();
+            boolean resultsEmpty = results.isEmpty();
+            boolean finishedAndEmpty = !isLoading && resultsEmpty;
 
-            adapter.notifyDataAppended(results);
+            if (resultsEmpty) {
+                adapter.notifyResultsCleared();
+            } else {
+                adapter.notifyDataAppended(results);
+            }
             mFlipper.setDisplayedChild(finishedAndEmpty ? PAGE_INDEX_EMPTY : PAGE_INDEX_CONTENT);
             showLoading(isLoading);
         }
@@ -158,14 +164,14 @@ public class SearchListFragment extends Fragment {
         mQueryView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                boolean pressedDpadDownOrEnter = false;
+                boolean pressedDpadOrEnter = false;
                 if (event != null) {
                     int eventCode = event.getKeyCode();
                     boolean dpadCenterOrEnter = eventCode == KEYCODE_DPAD_CENTER || eventCode == KEYCODE_ENTER;
-                    pressedDpadDownOrEnter = event.getAction() == ACTION_DOWN && dpadCenterOrEnter;
+                    pressedDpadOrEnter = event.getAction() == ACTION_UP && dpadCenterOrEnter;
                 }
 
-                if (actionId == IME_ACTION_SEARCH || pressedDpadDownOrEnter) {
+                if (actionId == IME_ACTION_SEARCH || pressedDpadOrEnter) {
                     boolean startedNewSearch = viewModel.updateQuery(v.getText().toString());
                     if (startedNewSearch) searchIdlingResource.setBusy();
                     return true;

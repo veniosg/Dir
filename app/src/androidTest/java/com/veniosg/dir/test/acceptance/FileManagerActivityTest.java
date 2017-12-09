@@ -1,8 +1,8 @@
 package com.veniosg.dir.test.acceptance;
 
 import android.os.Environment;
+import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.veniosg.dir.android.activity.FileManagerActivity;
@@ -26,11 +26,11 @@ import static com.veniosg.dir.test.injector.ActorInjector.user;
 @LargeTest
 public class FileManagerActivityTest {
     @Rule
-    public ActivityTestRule<FileManagerActivity> activityRule = new ActivityTestRule<>(
+    public IntentsTestRule<FileManagerActivity> intentsRule = new IntentsTestRule<>(
             FileManagerActivity.class, false, false);
 
-    private final User user = user(activityRule);
-    private final Android android = android(activityRule);
+    private final User user = user(intentsRule);
+    private final Android android = android(intentsRule);
     private final File sdCardDir = Environment.getExternalStorageDirectory();
     private final File testDirectory = new File(sdCardDir, "testDir");
     private final File compressedFile = new File(sdCardDir, "lala.zip");
@@ -176,7 +176,7 @@ public class FileManagerActivityTest {
     @Test
     public void renamesFile() throws Exception {
         String nameSuffix = "2";
-        String updatedName = testChildFile + nameSuffix;
+        String updatedName = testChildFile.getName() + nameSuffix;
         user.launches().viewWithFileScheme(testDirectory);
 
         user.selects().longFileInList(testChildFile);
@@ -192,7 +192,7 @@ public class FileManagerActivityTest {
     @Test
     public void renamesDirectory() throws Exception {
         String nameSuffix = "2";
-        String updatedName = testChildDirectory + nameSuffix;
+        String updatedName = testChildDirectory.getName() + nameSuffix;
         user.launches().viewWithFileScheme(testDirectory);
 
         user.selects().longFileInList(testChildDirectory);
