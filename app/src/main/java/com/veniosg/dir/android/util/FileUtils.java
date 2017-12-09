@@ -237,6 +237,7 @@ public class FileUtils {
 
     public static Intent getViewIntentFor(FileHolder fileholder, Context c) {
         Intent intent = new Intent(ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Uri data = FileUtils.getUri(fileholder.getFile());
         String type = fileholder.getMimeType();
 
