@@ -49,9 +49,6 @@
     <string name="preference_sortby_ascending_summary_off">내림차순으로 정렬하기</string>
     <string name="preference_sortby_size">용량</string>
     <string name="preference_sortby_last_modified">최종 수정됨</string>
-    <string name="saveas_no_file_picked">파일을 선택하지 않았습니다.</string>
-    <string name="saveas_error">오류가 발생하였습니다.</string>
-    <string name="saveas_file_saved">파일을 성공적으로 저장하였습니다!</string>
     <string name="menu_search">검색</string>
     <string name="menu_create_folder">폴더 만들기</string>
     <string name="menu_paste">붙여 넣기</string>
@@ -67,7 +64,6 @@
     <string name="menu_check_all">모두 선택하기</string>
     <string name="selected">선택됨</string>
     <string name="bookmark_empty">북마크가 추가되지 않습니다</string>
-    <string name="search_hint">파일 검색</string>
     <string name="query_error">쿼리 오류</string>
     <string name="item_icon">항목 아이콘</string>
     <string name="delete_success">성공적으로 삭제되었습니다.</string>

@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
- * Copyright (C) 2014 George Venios
+<?xml version="1.0" encoding="utf-8"?><!--
+ * Copyright (C) 2014-2017 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +16,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:clickable="true">
+    android:clickable="true"
+    android:orientation="vertical">
 
-    <com.veniosg.dir.view.widget.AnimatedFileListContainer
+    <com.veniosg.dir.android.view.widget.PathView
+        android:id="@id/pathview"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="?android:colorPrimary"
+        android:elevation="@dimen/elevation_toolbar"
+        android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar" />
+
+    <com.veniosg.dir.android.view.widget.AnimatedFileListContainer
         android:id="@+id/zoomview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:attr/colorBackground">
 
         <include layout="@layout/fragment_filelist" />
-    </com.veniosg.dir.view.widget.AnimatedFileListContainer>
-
+    </com.veniosg.dir.android.view.widget.AnimatedFileListContainer>
 </LinearLayout>

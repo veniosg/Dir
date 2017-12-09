@@ -48,9 +48,6 @@
     <string name="preference_sortby_name">नाम</string>
     <string name="preference_sortby_size">आकार</string>
     <string name="preference_sortby_last_modified">अंतिम बार संशोधित</string>
-    <string name="saveas_no_file_picked">आपने कोई  भी फाईल नहीं उठाई|</string>
-    <string name="saveas_error">कोई त्रुटि उत्पन्न हुई|</string>
-    <string name="saveas_file_saved">फाईल सफलतापूवक सुरक्षित की गयी!</string>
     <string name="menu_settings">सेटिंग्स</string>
     <string name="menu_delete">मिटाएँ</string>
     <string name="menu_copy">प्रतिलिपि बनाएँ</string>

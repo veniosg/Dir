@@ -53,9 +53,6 @@
     <string name="preference_sortby_last_modified">Data de modificação</string>
     <string name="preference_theme_grayscale">Cinza</string>
     <string name="preference_theme_dark">Escuro</string>
-    <string name="saveas_no_file_picked">Não escolheu qualquer ficheiro.</string>
-    <string name="saveas_error">Ocorreu um erro.</string>
-    <string name="saveas_file_saved">Ficheiro gravado com sucesso.</string>
     <string name="extracting">A extrair&#8230;</string>
     <string name="compressing">A comprimir&#8230;</string>
     <string name="menu_search">Pesquisar</string>
@@ -96,7 +93,6 @@
     <string name="notif_extracted_fail">Falhou a extração</string>
     <string name="selected">selecionado</string>
     <string name="bookmark_empty">Não existem marcadores</string>
-    <string name="search_hint">Procurar ficheiros</string>
     <string name="query_error">Erro na consulta</string>
     <string name="search_empty">Não foi encontrado nenhum ficheiro!</string>
     <string name="delete_success">Removido com sucesso</string>

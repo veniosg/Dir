@@ -61,9 +61,6 @@
     <string name="preference_sortby_last_modified">Dernière mise à jour</string>
     <string name="preference_theme_grayscale">Noir et blanc</string>
     <string name="preference_theme_dark">Foncé</string>
-    <string name="saveas_no_file_picked">Vous n\'avez pas choisi n\'importe quel fichier.</string>
-    <string name="saveas_error">Une erreur s\'est produite</string>
-    <string name="saveas_file_saved">Fichier sauvegardé avec succès</string>
     <string name="extracting">Extraction&#8230;</string>
     <string name="compressing">Compression&#8230;</string>
     <string name="menu_search">Recherche</string>
@@ -107,7 +104,6 @@
     <string name="notif_extracted_fail">Extraction échouée</string>
     <string name="selected">sélectionné(s)</string>
     <string name="bookmark_empty">Pas de marque-page</string>
-    <string name="search_hint">Rechercher des fichiers</string>
     <string name="query_error">Erreur de requête</string>
     <string name="search_empty">Pas de fichier correspondant trouvé!</string>
     <string name="item_icon">Icône de l\'élément</string>

@@ -68,13 +68,6 @@ public final class IntentConstants {
 	 */
 	public static final String EXTRA_WRITEABLE_ONLY = "org.openintents.extra.WRITEABLE_ONLY";
 
-    /**
-     * The path to prioritize in search. Usually denotes the path the user was on when the search was initiated.
-     *
-     * <p>Constant Value: "org.openintents.extra.SEARCH_INIT_PATH"</p>
-     */
-    public static final String EXTRA_SEARCH_INIT_PATH = "org.openintents.extra.SEARCH_INIT_PATH";
-
 	/**
 	 * The search query as sent to SearchService.
 	 * 

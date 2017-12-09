@@ -59,9 +59,6 @@
     <string name="preference_sortby_last_modified">Laatst gewijzigd</string>
     <string name="preference_theme_grayscale">Grijswaarde</string>
     <string name="preference_theme_dark">Donker</string>
-    <string name="saveas_no_file_picked">U heeft geen bestand gekozen.</string>
-    <string name="saveas_error">Er is een fout opgetreden.</string>
-    <string name="saveas_file_saved">Bestand is succesvol opgeslagen!</string>
     <string name="extracting">Uitpakken&#8230;</string>
     <string name="compressing">Inpakken&#8230;</string>
     <string name="menu_search">Zoeken</string>
@@ -105,7 +102,6 @@
     <string name="notif_extracted_fail">Uitpakken niet geslaagd</string>
     <string name="selected">Geselecteerd</string>
     <string name="bookmark_empty">Geen bladwijzers</string>
-    <string name="search_hint">Zoek bestanden</string>
     <string name="query_error">Query fout</string>
     <string name="search_empty">Geen overeenkomende bestanden gevonden!</string>
     <string name="item_icon">Item icoon</string>

@@ -48,9 +48,6 @@
     <string name="preference_sortby_name">שם</string>
     <string name="preference_sortby_size">גודל</string>
     <string name="preference_sortby_last_modified">עודכן לאחרונה</string>
-    <string name="saveas_no_file_picked">לא בחרת אף קובץ.</string>
-    <string name="saveas_error">ארעה שגיאה.</string>
-    <string name="saveas_file_saved">קובץ נשמר בהצלחה!</string>
     <string name="menu_settings">הגדרות</string>
     <string name="menu_delete">מחיקה</string>
     <string name="menu_copy">העתקה</string>

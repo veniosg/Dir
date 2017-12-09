@@ -46,9 +46,6 @@
     <string name="preference_sortby_name">ਨਾਮ</string>
     <string name="preference_sortby_size">ਸਾਈਜ਼</string>
     <string name="preference_sortby_last_modified">ਆਖਰੀ ਸੋਧ</string>
-    <string name="saveas_no_file_picked">ਕੋਇ ਫਾਇਲ ਨਹੀ ਉਠਾਇ</string>
-    <string name="saveas_error">ਏਰਰ ਆ ਗਯਾ</string>
-    <string name="saveas_file_saved">ਫਾਇਲ ਰਖ ਲੀ ਗਯੀ</string>
     <string name="menu_settings">ਸੈਟਿੰਗ</string>
     <string name="menu_delete">ਹਟਾਉ</string>
     <string name="menu_copy">ਕਾਪੀ</string>

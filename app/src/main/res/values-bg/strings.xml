@@ -48,9 +48,6 @@
     <string name="preference_sortby_name">Име</string>
     <string name="preference_sortby_size">Размер</string>
     <string name="preference_sortby_last_modified">Последна промяна</string>
-    <string name="saveas_no_file_picked">Не сте избрали файл.</string>
-    <string name="saveas_error">Появи се грешка.</string>
-    <string name="saveas_file_saved">Файлът е запазен успешно.</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_delete">Изтрий</string>
     <string name="menu_copy">Копирай</string>

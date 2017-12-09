@@ -47,9 +47,6 @@
     <string name="preference_sortby_name">Nume</string>
     <string name="preference_sortby_size">Dimensiune</string>
     <string name="preference_sortby_last_modified">Modificat ultima dată</string>
-    <string name="saveas_no_file_picked">Nu ați ales niciun fișier.</string>
-    <string name="saveas_error">A apărut o eroare.</string>
-    <string name="saveas_file_saved">Fișierul a fost salvat cu succes!</string>
     <string name="menu_settings">Configurări</string>
     <string name="menu_delete">Șterge</string>
     <string name="menu_copy">Copiază</string>

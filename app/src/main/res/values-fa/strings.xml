@@ -48,9 +48,6 @@
     <string name="preference_sortby_name">نام</string>
     <string name="preference_sortby_size">اندازه‌</string>
     <string name="preference_sortby_last_modified">تعديل گذشته</string>
-    <string name="saveas_no_file_picked">شما هر برداشت پرونده‌....</string>
-    <string name="saveas_error">بهدخت رشديه خطا.</string>
-    <string name="saveas_file_saved">پرونده‌ نجات داد با موفقيت!</string>
     <string name="menu_settings">مک کليلن</string>
     <string name="menu_delete">انداختن‌</string>
     <string name="menu_copy">رونوشت‌</string>

@@ -47,9 +47,6 @@
     <string name="preference_sortby_name">Namn</string>
     <string name="preference_sortby_size">Storlek</string>
     <string name="preference_sortby_last_modified">Senast modifierad</string>
-    <string name="saveas_no_file_picked">Du har inte valt någon fil.</string>
-    <string name="saveas_error">Ett fel uppstod.</string>
-    <string name="saveas_file_saved">Fil sparad!</string>
     <string name="menu_settings">Inställningar</string>
     <string name="menu_delete">Ta Bort</string>
     <string name="menu_copy">Kopiera</string>

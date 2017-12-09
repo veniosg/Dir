@@ -48,9 +48,6 @@
     <string name="preference_sortby_name">Imię</string>
     <string name="preference_sortby_size">Rozmiar</string>
     <string name="preference_sortby_last_modified">Ostatnio modyfikowane</string>
-    <string name="saveas_no_file_picked">Nie zaznaczono żadnych plików</string>
-    <string name="saveas_error">Wystąpił błąd.</string>
-    <string name="saveas_file_saved">Plik zapisany pomyślnie!</string>
     <string name="menu_settings">Ustawienia</string>
     <string name="menu_delete">Usuń</string>
     <string name="menu_copy">Kopiuj</string>

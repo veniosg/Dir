@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
- * Copyright (C) 2014-2015 George Venios
+<?xml version="1.0" encoding="utf-8"?><!--
+ * Copyright (C) 2014-2017 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  -->
-<com.veniosg.dir.view.widget.WaitingViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+<com.veniosg.dir.android.view.widget.WaitingViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/flipper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:inAnimation="@android:anim/fade_in"
-    android:outAnimation="@android:anim/fade_out"
+    android:animateFirstView="false"
     android:clickable="true"
-    android:animateFirstView="false">
+    android:inAnimation="@android:anim/fade_in"
+    android:outAnimation="@android:anim/fade_out">
 
     <!-- Content -->
     <FrameLayout
@@ -31,15 +30,15 @@
         android:orientation="vertical">
 
         <!-- List -->
-        <com.veniosg.dir.view.widget.DividerGridView
+        <com.veniosg.dir.android.view.widget.DividerGridView
             android:id="@android:id/list"
-            android:numColumns="@integer/grid_columns"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
             android:clipToPadding="false"
             android:fastScrollEnabled="true"
+            android:numColumns="@integer/grid_columns"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
             android:scrollbarStyle="outsideOverlay" />
 
         <!-- Empty state -->
@@ -54,21 +53,21 @@
 
             <TextView
                 android:id="@+id/empty_text"
+                style="@style/TextAppearance.Dir.Empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/this_folder_is_empty"
-                style="@style/TextAppearance.Dir.Empty" />
+                android:text="@string/this_folder_is_empty" />
 
             <ImageView
                 android:id="@+id/empty_img"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
                 android:layout_marginTop="24dp"
                 android:background="@drawable/bg_empty_state_circle"
                 android:scaleType="centerInside"
-                android:layout_marginBottom="4dp"
                 android:src="@drawable/ic_button_back"
                 android:stateListAnimator="@anim/state_list_anim_material"
                 tools:ignore="ContentDescription" />
@@ -105,23 +104,23 @@
         tools:ignore="UseCompoundDrawables">
 
         <TextView
+            style="@style/TextAppearance.Dir.Empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/permissions_denied"
-            style="@style/TextAppearance.Dir.Empty" />
+            android:text="@string/permissions_denied" />
 
         <ImageView
             android:id="@+id/permissions_button"
             android:layout_width="88dp"
             android:layout_height="88dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="4dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/bg_empty_state_circle"
             android:scaleType="centerInside"
-            android:layout_marginBottom="4dp"
             android:src="@drawable/ic_button_permission"
             android:stateListAnimator="@anim/state_list_anim_material"
             tools:ignore="ContentDescription" />
     </LinearLayout>
-</com.veniosg.dir.view.widget.WaitingViewFlipper>
+</com.veniosg.dir.android.view.widget.WaitingViewFlipper>

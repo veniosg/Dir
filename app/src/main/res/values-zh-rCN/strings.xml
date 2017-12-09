@@ -58,9 +58,6 @@
     <string name="preference_sortby_last_modified">最近修改</string>
     <string name="preference_theme_grayscale">浅灰</string>
     <string name="preference_theme_dark">黑色</string>
-    <string name="saveas_no_file_picked">你没有选择任何文件。</string>
-    <string name="saveas_error">发生错误。</string>
-    <string name="saveas_file_saved">文件保存成功！</string>
     <string name="extracting">\u63d0\u53d6\u4e2d&#8230;</string>
     <string name="compressing">压缩中&#8230;</string>
     <string name="menu_search">搜索</string>
@@ -102,7 +99,6 @@
     <string name="notif_extracted_fail">提取失败</string>
     <string name="selected">项已选中</string>
     <string name="bookmark_empty">无书签</string>
-    <string name="search_hint">搜索文件</string>
     <string name="query_error">查询错误</string>
     <string name="search_empty">无匹配文件！</string>
     <string name="item_icon">项目图标</string>

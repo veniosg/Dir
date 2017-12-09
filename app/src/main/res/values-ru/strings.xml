@@ -58,9 +58,6 @@
     <string name="preference_sortby_last_modified">Последнее изменение</string>
     <string name="preference_theme_grayscale">Черно-белый</string>
     <string name="preference_theme_dark">Темная</string>
-    <string name="saveas_no_file_picked">Вы не выбрали файл.</string>
-    <string name="saveas_error">Произошла ошибка.</string>
-    <string name="saveas_file_saved">Файл успешно сохранён!</string>
     <string name="extracting">\u0418\u0437\u0432\u043b\u0435\u0447\u0435\u043d\u0438\u0435&#8230;</string>
     <string name="compressing">Архивирование&#8230;</string>
     <string name="menu_search">Поиск</string>
@@ -108,7 +105,6 @@
     <string name="notif_extracted_fail">Ошибка распаковки</string>
     <string name="selected">выбранный</string>
     <string name="bookmark_empty">Нет закладок</string>
-    <string name="search_hint">Поиск файлов</string>
     <string name="query_error">Ошибочный запрос</string>
     <string name="search_empty">Совпадений не найдено!</string>
     <string name="item_icon">Значок элемента</string>

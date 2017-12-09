@@ -58,9 +58,6 @@
     <string name="preference_sortby_last_modified">Zuletzt geändert</string>
     <string name="preference_theme_grayscale">Graustufe</string>
     <string name="preference_theme_dark">Dunkel</string>
-    <string name="saveas_no_file_picked">Sie haben keine Datei ausgewählt.</string>
-    <string name="saveas_error">Es ist ein Fehler aufgetreten.</string>
-    <string name="saveas_file_saved">Datei erfolgreich gespeichert!</string>
     <string name="extracting">Entpacke&#8230;</string>
     <string name="compressing">Komprimiere&#8230;</string>
     <string name="menu_search">Suchen</string>
@@ -104,7 +101,6 @@
     <string name="notif_extracted_fail">Entpacken fehlgeschlagen</string>
     <string name="selected">ausgewählt</string>
     <string name="bookmark_empty">Keine Lesezeichen</string>
-    <string name="search_hint">Dateien suchen</string>
     <string name="query_error">Abfragefehler</string>
     <string name="search_empty">Keine passenden Dateien gefunden!</string>
     <string name="item_icon">Icon</string>
