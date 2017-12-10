@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.misc.ThumbnailHelper;
+import com.veniosg.dir.android.view.Themer;
 import com.veniosg.dir.mvvm.model.FileHolder;
 
 import java.io.File;
@@ -17,6 +18,7 @@ import java.io.File;
 import static android.view.LayoutInflater.from;
 import static com.veniosg.dir.android.misc.ThumbnailHelper.requestIcon;
 import static com.veniosg.dir.android.util.FileUtils.openFile;
+import static com.veniosg.dir.android.view.Themer.getThemedResourceId;
 
 public class FileListViewHolder extends RecyclerView.ViewHolder {
     private ImageView icon;
@@ -25,13 +27,15 @@ public class FileListViewHolder extends RecyclerView.ViewHolder {
     private TextView tertiaryInfo;
 
     FileListViewHolder(ViewGroup parent) {
-        super(from(parent.getContext())
-                .inflate(R.layout.item_filelist, parent, false));
+        super(from(parent.getContext()).inflate(R.layout.item_filelist, parent, false));
 
         icon = (ImageView) itemView.findViewById(R.id.icon);
         primaryInfo = (TextView) itemView.findViewById(R.id.primary_info);
         secondaryInfo = (TextView) itemView.findViewById(R.id.secondary_info);
         tertiaryInfo = (TextView) itemView.findViewById(R.id.tertiary_info);
+
+        int selectorRes = getThemedResourceId(parent.getContext(), android.R.attr.listChoiceBackgroundIndicator);
+        itemView.setBackgroundResource(selectorRes);
     }
 
     void bind(String filePath, OnItemClickListener listener) {

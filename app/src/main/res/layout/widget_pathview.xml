@@ -70,7 +70,7 @@
             android:paddingStart="@dimen/item_icon_margin_left"
             android:src="@drawable/ic_navbar_close"
             android:tint="?android:textColorPrimary"
-            android:contentDescription="@string/close_path"/>
+            android:contentDescription="@string/close"/>
 
         <ImageView
             android:id="@+id/pathview_manual_button_right"

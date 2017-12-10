@@ -142,8 +142,6 @@
     <string name="no">Όχι</string>
     <!-- Right pathview button description -->
     <string name="edit_path">Επεξεργασία</string>
-    <!-- Left pathview manual input button description -->
-    <string name="close_path">Κλείσιμο</string>
     <string name="goto_path">Επιβεβαίωση</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
     <string name="permissions_denied">Το Dir χρειάζεται άδεια ανάγνωσης της μνήμης</string>

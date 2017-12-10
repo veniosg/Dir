@@ -24,40 +24,41 @@
         android:layout_height="?android:actionBarSize"
         android:background="?android:colorPrimary"
         android:elevation="@dimen/elevation_toolbar"
-        android:padding="8dp">
+        android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar">
 
         <!-- Dummy hint to silence warnings. Actual set in code and tested -->
         <EditText
             android:id="@+id/searchQuery"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FFF"
-            android:elevation="8dp"
+            android:background="@null"
             android:hint=""
             android:imeOptions="actionSearch"
             android:inputType="textFilter"
-            android:outlineProvider="background"
+            android:paddingEnd="@dimen/action_button_min_width_material"
             android:paddingStart="@dimen/item_text_margin_left"
             tools:ignore="RtlSymmetry" />
 
-        <FrameLayout
+        <ImageView
+            android:id="@+id/homeAsUp"
+            style="@android:style/Widget.Material.Toolbar.Button.Navigation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|start"
-            android:animateLayoutChanges="true">
+            android:contentDescription="@string/back"
+            android:src="?android:homeAsUpIndicator" />
 
-            <!-- TODO GV update drawable! -->
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:importantForAccessibility="no"
-                android:src="@drawable/ic_sidenav_about" />
+        <FrameLayout
+            android:layout_width="@dimen/action_button_min_width_material"
+            android:layout_height="@dimen/action_button_min_height_material"
+            android:layout_gravity="center_vertical|end"
+            android:animateLayoutChanges="true">
 
             <ProgressBar
                 android:id="@+id/progressHint"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="center_vertical"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
                 android:visibility="gone" />
         </FrameLayout>
     </FrameLayout>
@@ -76,11 +77,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:fastScrollEnabled="true"
-            android:numColumns="@integer/grid_columns"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
-            android:scrollbarStyle="outsideOverlay" />
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical" />
 
         <!-- Empty state (no results) -->
         <LinearLayout
@@ -89,8 +89,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:paddingBottom="24dp"
+            android:padding="24dp"
             tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/empty_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_hint_search"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/empty_text"
@@ -100,18 +110,6 @@
                 android:layout_gravity="center"
                 android:text="@string/search_empty" />
 
-            <!-- TODO GV update image -->
-            <ImageView
-                android:id="@+id/empty_img"
-                android:layout_width="88dp"
-                android:layout_height="88dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"
-                android:layout_marginTop="24dp"
-                android:padding="40dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_hint_search"
-                tools:ignore="ContentDescription" />
         </LinearLayout>
     </com.veniosg.dir.android.view.widget.WaitingViewFlipper>
 </LinearLayout>

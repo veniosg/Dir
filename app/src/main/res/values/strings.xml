@@ -145,9 +145,10 @@
     <string name="no">No</string>
     <!-- Right pathview button description -->
     <string name="edit_path">Edit path</string>
-    <!-- Left pathview manual input button description -->
-    <string name="close_path">Close editor</string>
     <string name="goto_path">Go to path</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
     <string name="permissions_denied">Dir needs your permission to access storage</string>
+
+    <string name="back">Back</string>
+    <string name="close">Close</string>
 </resources>

@@ -142,8 +142,6 @@
     <string name="no">Ne</string>
     <!-- Right pathview button description -->
     <string name="edit_path">Uređivanje putanju</string>
-    <!-- Left pathview manual input button description -->
-    <string name="close_path">Zatvori uređivač</string>
     <string name="goto_path">Idi na putanju</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
 </resources>

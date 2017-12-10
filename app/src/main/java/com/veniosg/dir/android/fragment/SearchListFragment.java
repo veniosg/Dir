@@ -50,6 +50,8 @@ import static android.arch.lifecycle.ViewModelProviders.of;
 import static android.view.KeyEvent.ACTION_UP;
 import static android.view.KeyEvent.KEYCODE_DPAD_CENTER;
 import static android.view.KeyEvent.KEYCODE_ENTER;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH;
 import static com.veniosg.dir.BuildConfig.DEBUG;
 import static com.veniosg.dir.android.util.FileUtils.openFile;
@@ -59,12 +61,11 @@ import static com.veniosg.dir.android.view.widget.WaitingViewFlipper.PAGE_INDEX_
 public class SearchListFragment extends Fragment {
     public static final int PAGE_INDEX_EMPTY = 1;
 
-//    private static final String STATE_POS = "pos";
-//    private static final String STATE_TOP = "top";
-
     private WaitingViewFlipper mFlipper;
     private RecyclerView mRecyclerView;
     private EditText mQueryView;
+    private View mUpView;
+    private View mProgressIndicator;
     private SearchViewModel viewModel;
     private String hintText;
     private final OnItemClickListener onItemClickListener = (itemView, item) -> {
@@ -129,34 +130,17 @@ public class SearchListFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(android.R.id.list);
         mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
         mQueryView = (EditText) view.findViewById(R.id.searchQuery);
+        mUpView = view.findViewById(R.id.homeAsUp);
+        mProgressIndicator = view.findViewById(R.id.progressHint);
 
         setupStaticViews();
         setupList();
-        restoreScroll(savedInstanceState);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        // TODO still needed?
-//        int top = 0;
-//        if (mRecyclerView.getChildCount() != 0) {
-//            top = mRecyclerView.getChildAt(0).getTop();
-//        }
-//
-//        LinearLayoutManager linearLayoutMgr = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-//        outState.putInt(STATE_POS, linearLayoutMgr.findFirstVisibleItemPosition());
-//        outState.putInt(STATE_TOP, top);
-    }
+    void showLoading(boolean loading) {
+        if (!loading) searchIdlingResource.setIdle();
 
-    private void restoreScroll(Bundle savedInstanceState) {
-        // TODO still needed?
-//        if (savedInstanceState != null) {
-//            int index = savedInstanceState.getInt(STATE_POS);
-//            int top = savedInstanceState.getInt(STATE_TOP);
-//            ScrollPosition scrollPosition = new ScrollPosition(index, top);
-//            scrollToPosition(mRecyclerView, scrollPosition, true);
-//        }
+        mProgressIndicator.setVisibility(loading ? VISIBLE : GONE);
     }
 
     private void setupStaticViews() {
@@ -179,16 +163,12 @@ public class SearchListFragment extends Fragment {
                 return false;
             }
         });
+        mUpView.setOnClickListener(v -> getActivity().finish());
     }
 
     private void setupList() {
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-    void showLoading(boolean loading) {
-        if (!loading) searchIdlingResource.setIdle();
-        // TODO GV handle (progressbar/hint visibility)
     }
 
     private void handleIntent() {

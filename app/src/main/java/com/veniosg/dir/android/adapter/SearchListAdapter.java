@@ -28,7 +28,7 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 
-public class SearchListAdapter extends RecyclerView.Adapter<FileListViewHolder> {
+public class SearchListAdapter extends RecyclerView.Adapter<SearchListViewHolder> {
     private List<String> data = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
@@ -52,12 +52,12 @@ public class SearchListAdapter extends RecyclerView.Adapter<FileListViewHolder> 
     }
 
     @Override
-    public FileListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new FileListViewHolder(parent);
+    public SearchListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new SearchListViewHolder(parent);
     }
 
     @Override
-    public void onBindViewHolder(FileListViewHolder holder, int position) {
+    public void onBindViewHolder(SearchListViewHolder holder, int position) {
         holder.bind(data.get(position), onItemClickListener);
     }
 

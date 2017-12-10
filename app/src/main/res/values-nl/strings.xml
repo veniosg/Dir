@@ -141,8 +141,6 @@
     <string name="no">Nee</string>
     <!-- Right pathview button description -->
     <string name="edit_path">Wijzig pad</string>
-    <!-- Left pathview manual input button description -->
-    <string name="close_path">Editor sluiten</string>
     <string name="goto_path">Ga naar pad</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
 </resources>

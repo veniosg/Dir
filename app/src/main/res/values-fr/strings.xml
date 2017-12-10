@@ -143,8 +143,6 @@
     <string name="no">Non</string>
     <!-- Right pathview button description -->
     <string name="edit_path">Modifier le chemin</string>
-    <!-- Left pathview manual input button description -->
-    <string name="close_path">Fermer</string>
     <string name="goto_path">Aller à</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
     <string name="permissions_denied">Dir a besoin de votre autorisation pour accéder au stockage</string>
