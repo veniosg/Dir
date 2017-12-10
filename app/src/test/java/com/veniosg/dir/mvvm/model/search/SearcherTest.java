@@ -64,12 +64,12 @@ public class SearcherTest {
 
     @Test
     public void doesNotFindRoot() throws Exception {
-        SearchState searchState = new SearchState();
-        searchState.setFinished();
+        SearchState expectedSearchState = new SearchState();
+        expectedSearchState.setFinished();
 
         searcher.updateQuery(searchRequest(testFileRoot, testFileRoot.getName()));
 
-        verify(mockResults).setValue(refEq(searchState));
+        verify(mockResults).setValue(refEq(expectedSearchState));
     }
 
     @Test
@@ -87,13 +87,23 @@ public class SearcherTest {
     }
 
     @Test
-    public void notifiesEmpty() throws Exception {
-        SearchState searchState = new SearchState();
-        searchState.setFinished();
+    public void findsNothingIfEmptyQuery() {
+        SearchState expectedSearchState = new SearchState();
+        expectedSearchState.setFinished();
+        
+        searcher.updateQuery(searchRequest(testFileRoot, ""));
+
+        verify(mockResults).setValue(refEq(expectedSearchState));
+    }
+
+    @Test
+    public void findsNothingIfNoFilesMatching() throws Exception {
+        SearchState expectedSearchState = new SearchState();
+        expectedSearchState.setFinished();
 
         searcher.updateQuery(searchRequest(testFileRoot, "file12455"));
 
-        verify(mockResults).setValue(refEq(searchState));
+        verify(mockResults).setValue(refEq(expectedSearchState));
     }
 
     @SuppressWarnings("unchecked")

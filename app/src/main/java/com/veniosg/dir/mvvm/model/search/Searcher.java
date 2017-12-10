@@ -22,6 +22,7 @@ import static io.reactivex.Flowable.create;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 import static java.util.Collections.addAll;
+import static java.util.Collections.emptyMap;
 import static java.util.Locale.ROOT;
 
 public class Searcher {
@@ -126,6 +127,8 @@ public class Searcher {
 
         @Override
         public void subscribe(FlowableEmitter<String> emitter) {
+            if (query.isEmpty()) emitter.onComplete();
+
             try {
                 File root = new File(searchRoot);
                 addDirectChildren(root, queue);
