@@ -29,7 +29,7 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 
 public class SearchListAdapter extends RecyclerView.Adapter<SearchListViewHolder> {
-    private List<String> data = new ArrayList<>();
+    private List<String> data = emptyList();
     private OnItemClickListener onItemClickListener;
 
     public SearchListAdapter(OnItemClickListener onItemClickListener) {
@@ -37,13 +37,11 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListViewHolder
     }
 
     public void notifyDataAppended(@NonNull List<String> updatedData) {
-        List<String> oldData = this.data;
+        int oldItemCount = this.data.size();
         this.data = updatedData;
 
-        int newItemCount = updatedData.size() - oldData.size();
-        int firstNewItem = oldData.size();
-
-        notifyItemRangeInserted(firstNewItem, newItemCount);
+        int newItemCount = updatedData.size() - oldItemCount;
+        notifyItemRangeInserted(oldItemCount, newItemCount);
     }
 
     public void notifyResultsCleared() {

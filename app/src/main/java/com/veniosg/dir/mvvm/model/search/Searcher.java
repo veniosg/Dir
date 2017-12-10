@@ -4,11 +4,15 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
+import com.veniosg.dir.android.util.FileUtils;
+
 import org.reactivestreams.Subscription;
 
 import java.io.File;
-import java.util.ArrayDeque;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Deque;
+import java.util.LinkedList;
 
 import io.reactivex.Emitter;
 import io.reactivex.FlowableEmitter;
@@ -16,13 +20,13 @@ import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.FlowableSubscriber;
 import io.reactivex.Scheduler;
 
+import static com.veniosg.dir.android.util.FileUtils.isSymlink;
 import static com.veniosg.dir.android.util.Logger.log;
 import static io.reactivex.BackpressureStrategy.BUFFER;
 import static io.reactivex.Flowable.create;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 import static java.util.Collections.addAll;
-import static java.util.Collections.emptyMap;
 import static java.util.Locale.ROOT;
 
 public class Searcher {
@@ -115,7 +119,7 @@ public class Searcher {
     }
 
     private class BfsFlowable implements FlowableOnSubscribe<String> {
-        private final Deque<File> queue = new ArrayDeque<>();
+        private final Deque<File> queue = new LinkedList<>();
         private final String searchRoot;
         private final String query;
         private boolean keepSearching = true;
@@ -127,7 +131,10 @@ public class Searcher {
 
         @Override
         public void subscribe(FlowableEmitter<String> emitter) {
-            if (query.isEmpty()) emitter.onComplete();
+            if (query.isEmpty()) {
+                emitter.onComplete();
+                return;
+            }
 
             try {
                 File root = new File(searchRoot);
@@ -135,13 +142,15 @@ public class Searcher {
 
                 while (!queue.isEmpty() && keepSearching) {
                     root = queue.removeFirst();
-                    visit(root, emitter);
+                    if (!isSymlink(root)) {
+                        visit(root, emitter);
 
-                    if (root.isDirectory()) {
-                        addDirectChildren(root, queue);
+                        if (root.isDirectory()) {
+                            addDirectChildren(root, queue);
+                        }
+
+                        if (lock != null) lock.wait();
                     }
-
-                    if (lock != null) lock.wait();
                 }
 
                 emitter.onComplete();
@@ -151,11 +160,8 @@ public class Searcher {
             }
         }
 
-        private void addDirectChildren(File of, Deque<File> into) {
-            File[] children = of.listFiles();
-            if (children != null) {
-                addAll(into, children);
-            }
+        void stopSearching() {
+            keepSearching = false;
         }
 
         private void visit(@NonNull File file, Emitter<String> e) {
@@ -164,8 +170,11 @@ public class Searcher {
             }
         }
 
-        void stopSearching() {
-            keepSearching = false;
+        private void addDirectChildren(File of, Deque<File> into) {
+            File[] children = of.listFiles();
+            if (children != null) {
+                addAll(into, children);
+            }
         }
     }
 
@@ -194,7 +203,7 @@ public class Searcher {
 
         @Override
         public void onComplete() {
-            searchState.setFinished();
+            searchState.setFinished();  // TODO make sure this is called if leaving midway through a search
             emitStateUpdate();
             subscription.cancel();
         }

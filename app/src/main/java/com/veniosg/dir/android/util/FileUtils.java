@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.text.format.Formatter;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ import com.veniosg.dir.R;
 import com.veniosg.dir.mvvm.model.FileHolder;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static android.content.Intent.ACTION_VIEW;
@@ -301,4 +303,21 @@ public class FileUtils {
             return file.getName();
         }
     }
+
+	public static boolean isSymlink(File file) {
+		// We should probably use NIO on >26 which should give more correct results.
+		try {
+			File canon;
+			if (file.getParent() == null) {
+				canon = file;
+			} else {
+				File canonDir = file.getParentFile().getCanonicalFile();
+				canon = new File(canonDir, file.getName());
+			}
+			return !canon.getCanonicalFile().equals(canon.getAbsoluteFile());
+		} catch (IOException e) {
+			Logger.log(e);
+			return false;
+		}
+	}
 }

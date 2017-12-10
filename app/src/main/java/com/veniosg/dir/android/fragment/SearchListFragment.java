@@ -60,6 +60,7 @@ import static com.veniosg.dir.android.view.widget.WaitingViewFlipper.PAGE_INDEX_
 
 public class SearchListFragment extends Fragment {
     public static final int PAGE_INDEX_EMPTY = 1;
+    // TODO make sure search continues when rotating
 
     private WaitingViewFlipper mFlipper;
     private RecyclerView mRecyclerView;
