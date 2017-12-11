@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import android.text.format.DateUtils;
 import android.text.format.Formatter;
 
+import com.veniosg.dir.R;
 import com.veniosg.dir.android.FileManagerApplication;
 import com.veniosg.dir.android.misc.MimeTypes;
 import com.veniosg.dir.android.util.FileUtils;
@@ -32,9 +33,12 @@ import com.veniosg.dir.android.util.Utils;
 import java.io.File;
 
 public class FileHolder implements Parcelable, Comparable<FileHolder> {
+
+	private static final String EMPTY_STRING = "";
+
 	private File mFile;
 	private Drawable mIcon;
-    private Drawable mPreview;
+	private Drawable mPreview;
 	private String mMimeType = "";
 	private String mExtension;
 
@@ -138,6 +142,28 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 	 */
 	public String getFormattedSize(Context c, boolean recursive){
 		return Formatter.formatFileSize(c, getSizeInBytes(recursive));
+	}
+
+	public String getNumberOfItems(Context context) {
+		if (context == null) {
+			return EMPTY_STRING;
+		}
+
+		boolean isDirectory = mFile.isDirectory();
+
+		if (!isDirectory) {
+			return EMPTY_STRING;
+		}
+
+		int numOfDirectoryItems = mFile.listFiles().length;
+
+		if (numOfDirectoryItems == 0) {
+			return context.getString(R.string.no_items_in_directory);
+		}
+
+		return context
+				.getResources()
+				.getQuantityString(R.plurals.num_of_directory_items, numOfDirectoryItems, numOfDirectoryItems);
 	}
 
 	private long getSizeInBytes(boolean recursive){
