@@ -18,6 +18,7 @@ public class SearchViewModel extends ViewModel {
     private File searchRoot;
     private String currentQuery;
 
+    @SuppressWarnings("unused")
     public SearchViewModel() {
         searcher = new Searcher();
     }
@@ -52,7 +53,7 @@ public class SearchViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        // Safety in case onBackgrounded() wasn't called, to avoid stray search workers
+        // Avoid stray search workers
         searcher.stopSearch();
     }
 

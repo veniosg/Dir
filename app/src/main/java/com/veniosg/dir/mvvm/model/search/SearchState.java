@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import static java.util.Collections.unmodifiableList;
+
 public class SearchState {
     private boolean finished = false;
     private final List<String> results = new LinkedList<>();
@@ -29,7 +31,7 @@ public class SearchState {
     }
 
     public List<String> results() {
-        return Collections.unmodifiableList(results);
+        return unmodifiableList(results);
     }
 
     public boolean isFinished() {

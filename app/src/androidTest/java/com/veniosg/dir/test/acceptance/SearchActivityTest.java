@@ -85,8 +85,13 @@ public class SearchActivityTest {
         user.sees().searchEmptyView();
 
         userDeletesQuery();
+        user.types().searchQuery(testChildFile.getName());
         user.types().imeAction();
         user.cannotSee().searchEmptyView();
+
+        userDeletesQuery();
+        user.types().imeAction();
+        user.sees().searchEmptyView();
     }
 
     @Test

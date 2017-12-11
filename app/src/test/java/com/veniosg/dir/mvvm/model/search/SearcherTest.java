@@ -1,6 +1,7 @@
 package com.veniosg.dir.mvvm.model.search;
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
+import android.arch.lifecycle.MutableLiveData;
 
 import org.junit.After;
 import org.junit.Before;
@@ -28,7 +29,7 @@ public class SearcherTest {
     public TestRule rule = new InstantTaskExecutorRule();
 
     @Mock
-    private SearcherLiveData mockResults;
+    private MutableLiveData<SearchState> mockResults;
     private File file1;
     private File file2;
     private File file3;
@@ -74,16 +75,30 @@ public class SearcherTest {
 
     @Test
     public void findsAll() throws Exception {
-        searcher.updateQuery(searchRequest(testFileRoot, "file"));
+        InOrder inOrder = inOrder(mockResults);
+        SearchState expectedSearchState = new SearchState();
+        expectedSearchState.addResult(file4.getAbsolutePath());
+        expectedSearchState.addResult(file1.getAbsolutePath());
+        expectedSearchState.addResult(file3.getAbsolutePath());
 
-        verifyFoundInOrder(mockResults, file4, file1, file3);
+        searcher.updateQuery(searchRequest(testFileRoot, "file"));
+        inOrder.verify(mockResults).setValue(refEq(expectedSearchState));
+
+        expectedSearchState.setFinished();
+        inOrder.verify(mockResults).setValue(refEq(expectedSearchState));
     }
 
     @Test
     public void findsOnlyOne() throws Exception {
-        searcher.updateQuery(searchRequest(testFileRoot, "aSecondOne"));
+        InOrder inOrder = inOrder(mockResults);
+        SearchState expectedSearchState = new SearchState();
+        expectedSearchState.addResult(file2.getAbsolutePath());
 
-        verifyFoundInOrder(mockResults, file2);
+        searcher.updateQuery(searchRequest(testFileRoot, "aSecondOne"));
+        inOrder.verify(mockResults).setValue(refEq(expectedSearchState));
+
+        expectedSearchState.setFinished();
+        inOrder.verify(mockResults).setValue(refEq(expectedSearchState));
     }
 
     @Test
@@ -104,23 +119,6 @@ public class SearcherTest {
         searcher.updateQuery(searchRequest(testFileRoot, "file12455"));
 
         verify(mockResults).setValue(refEq(expectedSearchState));
-    }
-
-    @SuppressWarnings("unchecked")
-    private void verifyFoundInOrder(SearcherLiveData mockObservable,
-                                    File... expectedFiles) {
-        InOrder inOrder = inOrder(mockObservable);
-
-        // Search updates verification
-        SearchState searchState = new SearchState();
-        for (File file : expectedFiles) {
-            searchState.addResult(file.getAbsolutePath());
-            inOrder.verify(mockObservable).setValue(refEq(searchState));
-        }
-
-        // Search completion verification
-        searchState.setFinished();
-        inOrder.verify(mockObservable).setValue(refEq(searchState));
     }
 
     private void deleteRecursive(File f) throws IOException {

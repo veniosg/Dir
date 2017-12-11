@@ -46,7 +46,6 @@ import com.veniosg.dir.mvvm.viewmodel.SearchViewModel;
 
 import java.io.File;
 import java.util.List;
-import java.util.Locale;
 
 import static android.arch.lifecycle.ViewModelProviders.of;
 import static android.view.KeyEvent.ACTION_UP;

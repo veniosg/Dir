@@ -21,7 +21,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.veniosg.dir.test.matcher.FileHolderHasName.hasName;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.not;
 
 public class CannotSeeAssertions {

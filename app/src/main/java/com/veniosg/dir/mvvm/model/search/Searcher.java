@@ -1,6 +1,7 @@
 package com.veniosg.dir.mvvm.model.search;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
@@ -32,7 +33,7 @@ import static java.util.Locale.ROOT;
 
 public class Searcher {
     @NonNull
-    private final SearcherLiveData observableResults;
+    private final MutableLiveData<SearchState> observableResults;
     @NonNull
     private final Scheduler ioScheduler;
     @NonNull
@@ -42,16 +43,15 @@ public class Searcher {
     @NonNull
     private final FlowableSubscriber<List<String>> bfsUpdateSubscriber = new BfsSubscriber();
     private BfsFlowable bfsFlowable;
-    private Object lock;
 
     public Searcher() {
         ioScheduler = io();
         uiScheduler = mainThread();
-        observableResults = new SearcherLiveData(this);
+        observableResults = new MutableLiveData<SearchState>();
     }
 
     @VisibleForTesting()
-    Searcher(@NonNull SearcherLiveData observableResults,
+    Searcher(@NonNull MutableLiveData<SearchState> observableResults,
              @NonNull Scheduler ioScheduler, @NonNull Scheduler uiScheduler) {
         this.ioScheduler = ioScheduler;
         this.uiScheduler = uiScheduler;
@@ -72,37 +72,16 @@ public class Searcher {
         bfsFlowable = new BfsFlowable(request.searchRoot, request.query);
         create(bfsFlowable, BUFFER)
                 .buffer(1, TimeUnit.SECONDS, 100)
+                .distinct()
+                .onBackpressureBuffer()
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe(bfsUpdateSubscriber);
     }
 
     public void stopSearch() {
-        Logger.logV(TAG_SEARCH, "Stopping search");
-        unlock();
+//        Logger.logV(TAG_SEARCH, "Stopping search");
         if (bfsFlowable != null) bfsFlowable.stopSearching();
-    }
-
-    public void resumeSearch() {
-        Logger.logV(TAG_SEARCH, "Resuming search");
-        unlock();
-    }
-
-    public void pauseSearch() {
-        Logger.logV(TAG_SEARCH, "Pausing search");
-        if (lock == null) lock = new Object();
-    }
-
-    private void unlock() {
-        if (lock != null) {
-            try {
-                lock.notifyAll();
-            } catch (IllegalMonitorStateException e) {
-                log(e);
-            } finally {
-                lock = null;
-            }
-        }
     }
 
     private void emitStateUpdate() {
@@ -153,9 +132,9 @@ public class Searcher {
                         if (root.isDirectory()) {
                             addDirectChildren(root, queue);
                         }
-
-                        if (lock != null) lock.wait();
                     }
+
+//                    while (paused.get()) {}
                 }
 
                 emitter.onComplete();
@@ -188,7 +167,7 @@ public class Searcher {
 
         @Override
         public void onSubscribe(Subscription s) {
-            Logger.logV(TAG_SEARCH, "Search start");
+//            Logger.logV(TAG_SEARCH, "Search start");
             subscription = s;
             subscription.request(1);
         }
@@ -204,7 +183,8 @@ public class Searcher {
 
         @Override
         public void onError(Throwable t) {
-            Logger.logV(TAG_SEARCH, "Search error");
+//            Logger.logV(TAG_SEARCH, "Search error");
+            Logger.log(t);
             searchState.setFinished();
             emitStateUpdate();
             subscription.cancel();
@@ -212,7 +192,7 @@ public class Searcher {
 
         @Override
         public void onComplete() {
-            Logger.logV(TAG_SEARCH, "Search finished");
+//            Logger.logV(TAG_SEARCH, "Search finished");
             searchState.setFinished();
             emitStateUpdate();
             subscription.cancel();
