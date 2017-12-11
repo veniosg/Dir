@@ -33,7 +33,6 @@ import com.veniosg.dir.android.util.Utils;
 import java.io.File;
 
 public class FileHolder implements Parcelable, Comparable<FileHolder> {
-
 	private static final String EMPTY_STRING = "";
 
 	private File mFile;
@@ -137,30 +136,20 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
                         DateUtils.MINUTE_IN_MILLIS, DateUtils.YEAR_IN_MILLIS * 10, 0);
 	}
 
+	public String getSizeInfo(@NonNull Context context, boolean recursive) {
+		boolean isDirectory = mFile.isDirectory();
+		return isDirectory ? getNumberOfItems(context) : getFormattedSize(context, recursive);
+	}
+
 	/**
 	 * @param recursive Whether to return size of the whole tree below this file (Directories only).
 	 */
-	public String getFormattedSize(Context c, boolean recursive){
+	private String getFormattedSize(@NonNull Context c, boolean recursive){
 		return Formatter.formatFileSize(c, getSizeInBytes(recursive));
 	}
 
-	public String getNumberOfItems(Context context) {
-		if (context == null) {
-			return EMPTY_STRING;
-		}
-
-		boolean isDirectory = mFile.isDirectory();
-
-		if (!isDirectory) {
-			return EMPTY_STRING;
-		}
-
+	private String getNumberOfItems(@NonNull Context context) {
 		int numOfDirectoryItems = mFile.listFiles().length;
-
-		if (numOfDirectoryItems == 0) {
-			return context.getString(R.string.no_items_in_directory);
-		}
-
 		return context
 				.getResources()
 				.getQuantityString(R.plurals.num_of_directory_items, numOfDirectoryItems, numOfDirectoryItems);

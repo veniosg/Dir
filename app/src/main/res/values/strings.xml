@@ -150,6 +150,8 @@
     <string name="goto_path">Go to path</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
     <string name="permissions_denied">Dir needs your permission to access storage</string>
-    <!-- No items on a Directory -->
-    <string name="no_items_in_directory">No items</string>
+    <!-- # of items in a Directory -->
+    <string name="zero_items_in_directory">No items</string>
+    <string name="one_item_in_directory">%1$s item</string>
+    <string name="multiple_items_in_directory">%1$s items</string>
 </resources>
