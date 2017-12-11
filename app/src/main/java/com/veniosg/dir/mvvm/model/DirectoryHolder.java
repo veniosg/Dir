@@ -19,7 +19,7 @@ package com.veniosg.dir.mvvm.model;
 import java.util.List;
 
 public class DirectoryHolder {
-	public List<FileHolder> listDir;
+    public List<FileHolder> listDir;
     public List<FileHolder> listFile;
     public List<FileHolder> listSdCard;
     

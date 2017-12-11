@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <plurals name="num_of_directory_items">
+    <item quantity="zero">@string/zero_items_in_directory</item>
+    <item quantity="one">@string/one_item_in_directory</item>
+    <item quantity="other">@string/multiple_items_in_directory</item>
+  </plurals>
+</resources>

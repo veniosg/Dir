@@ -105,8 +105,7 @@ public class FileHolderListAdapter extends BaseAdapter {
 		holder.primaryInfo.setText(item.getName());
 		holder.secondaryInfo.setText(item.getFormattedModificationDate(convertView.getContext()));
 		// Hide directories' size as it's irrelevant if we can't recursively find it.
-		holder.tertiaryInfo.setText(item.getFile().isDirectory()? "" : item.getFormattedSize(
-                convertView.getContext(), false));
+		holder.tertiaryInfo.setText(item.getSizeInfo(convertView.getContext(), false));
 
         ThumbnailHelper.requestIcon(item, holder.icon);
 

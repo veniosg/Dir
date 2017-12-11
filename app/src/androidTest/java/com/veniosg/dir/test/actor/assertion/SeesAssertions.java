@@ -19,6 +19,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.veniosg.dir.test.matcher.FileHolderHasName.hasName;
+import static com.veniosg.dir.test.matcher.FileHolderHasSizeInfo.hasSizeInfo;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -37,6 +38,16 @@ public class SeesAssertions {
                 withId(android.R.id.list),
                 isDescendantOfA(withId(R.id.zoomview))
         )).check(matches(isDisplayed()));
+    }
+
+    public void fileInListWithSizeInfo(String sizeInfo) {
+        onData(allOf(
+            is(instanceOf(FileHolder.class)),
+            hasSizeInfo(sizeInfo))
+        ).inAdapterView(allOf(
+            withId(android.R.id.list),
+            isDescendantOfA(withId(R.id.zoomview))))
+            .check(matches(isDisplayed()));
     }
 
     public void fileInPath(File file) {

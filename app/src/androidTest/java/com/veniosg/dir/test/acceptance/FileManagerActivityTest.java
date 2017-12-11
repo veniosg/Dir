@@ -38,6 +38,13 @@ public class FileManagerActivityTest {
     private final File testChildDirectory = new File(testDirectory, "testChildDir");
     private final File testCopyDestination = new File(testDirectory, "testCopyDestination");
     private final File testChildFile = new File(testDirectory, "testChildFile");
+    private final File testDirectoryWithZeroItems = new File(testDirectory, "testDirWithZeroItems");
+    private final File testDirectoryWithOneItem = new File(testDirectory, "testDirWithOneItem");
+    private final File testDirectoryWithMultipleItems = new File(testDirectory, "testDirWithMultipleItems");
+
+    private final File countTestFile1 = new File(testDirectoryWithOneItem, "countTestFile1");
+    private final File countTestFile2 = new File(testDirectoryWithMultipleItems, "countTestFile2");
+    private final File countTestFile3 = new File(testDirectoryWithMultipleItems, "countTestFile3");
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Before
@@ -46,6 +53,14 @@ public class FileManagerActivityTest {
         testChildDirectory.mkdir();
         testCopyDestination.mkdir();
         testChildFile.createNewFile();
+
+        testDirectoryWithZeroItems.mkdir();
+        testDirectoryWithOneItem.mkdir();
+        testDirectoryWithMultipleItems.mkdir();
+
+        countTestFile1.createNewFile();
+        countTestFile2.createNewFile();
+        countTestFile3.createNewFile();
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -65,6 +80,14 @@ public class FileManagerActivityTest {
 
         user.sees().fileInPath(testDirectory);
         user.sees().fileInList(testChildFile);
+    }
+
+    @Test
+    public void showsCorrectCounts() throws Exception {
+        user.launches().viewWithFileScheme(testDirectory);
+        user.sees().fileInListWithSizeInfo("No items");
+        user.sees().fileInListWithSizeInfo("1 item");
+        user.sees().fileInListWithSizeInfo("2 items");
     }
 
     @Test
