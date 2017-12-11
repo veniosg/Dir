@@ -41,7 +41,7 @@ public class FileListViewHolder extends RecyclerView.ViewHolder {
 
         primaryInfo.setText(item.getName());
         secondaryInfo.setText(item.getFormattedModificationDate(context));
-        tertiaryInfo.setText(isDirectory ? "" : item.getFormattedSize(context, false));
+        tertiaryInfo.setText(isDirectory ? item.getNumberOfItems(context) : item.getFormattedSize(context, false));
         icon.setImageDrawable(item.getBestIcon());
         requestIcon(item, icon);
 
