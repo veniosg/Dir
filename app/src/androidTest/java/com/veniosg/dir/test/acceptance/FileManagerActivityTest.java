@@ -9,6 +9,8 @@ import com.veniosg.dir.android.activity.FileManagerActivity;
 import com.veniosg.dir.test.actor.Android;
 import com.veniosg.dir.test.actor.User;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -38,6 +40,17 @@ public class FileManagerActivityTest {
     private final File testChildDirectory = new File(testDirectory, "testChildDir");
     private final File testCopyDestination = new File(testDirectory, "testCopyDestination");
     private final File testChildFile = new File(testDirectory, "testChildFile");
+    private final File testDirectoryWithZeroItems = new File(sdCardDir, "testDirWithZeroItems");
+    private final File testDirectoryWithOneItem = new File(sdCardDir, "testDirWithOneItem");
+    private final File testDirectoryWithMultipleItems = new File(sdCardDir, "testDirWithMultipleItems");
+
+    private final File zeroItemsContainerDir = new File(testDirectoryWithZeroItems, "zeroItemsContainerDir");
+    private final File oneItemContainerDir = new File(testDirectoryWithOneItem, "oneItemContainerDir");
+    private final File multipleItemsContainerDir = new File(testDirectoryWithMultipleItems, "multipleItemsContainerDir");
+
+    private File oneFile = null;
+    private File multipleFile1 = null;
+    private File multipleFile2 = null;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Before
@@ -46,6 +59,23 @@ public class FileManagerActivityTest {
         testChildDirectory.mkdir();
         testCopyDestination.mkdir();
         testChildFile.createNewFile();
+
+        testDirectoryWithZeroItems.mkdir();
+        testDirectoryWithOneItem.mkdir();
+        testDirectoryWithMultipleItems.mkdir();
+
+        zeroItemsContainerDir.mkdir();
+        oneItemContainerDir.mkdir();
+        multipleItemsContainerDir.mkdir();
+
+        oneFile = new File(oneItemContainerDir, "oneFile");
+        oneFile.createNewFile();
+
+        multipleFile1 = new File(multipleItemsContainerDir, "multipleFile1");
+        multipleFile1.createNewFile();
+
+        multipleFile2 = new File(multipleItemsContainerDir, "multipleFile2");
+        multipleFile2.createNewFile();
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -57,6 +87,48 @@ public class FileManagerActivityTest {
             compressedFile.renameTo(new File(testDirectory, "compressed"));
         cleanDirectory(testDirectory);
         testDirectory.delete();
+
+        if (zeroItemsContainerDir.exists()) {
+            cleanDirectory(zeroItemsContainerDir);
+            zeroItemsContainerDir.delete();
+        }
+
+        if (oneItemContainerDir.exists()) {
+            cleanDirectory(oneItemContainerDir);
+            oneItemContainerDir.delete();
+        }
+
+        if (multipleItemsContainerDir.exists()) {
+            cleanDirectory(multipleItemsContainerDir);
+            multipleItemsContainerDir.delete();
+        }
+
+        if (testDirectoryWithZeroItems.exists()) {
+           cleanDirectory(testDirectoryWithZeroItems);
+           testDirectoryWithZeroItems.delete();
+        }
+
+        if (testDirectoryWithOneItem.exists()) {
+            cleanDirectory(testDirectoryWithOneItem);
+            testDirectoryWithOneItem.delete();
+        }
+
+        if (testDirectoryWithMultipleItems.exists()) {
+            cleanDirectory(testDirectoryWithMultipleItems);
+            testDirectoryWithMultipleItems.delete();
+        }
+
+        if (oneFile.exists()) {
+            oneFile.delete();
+        }
+
+        if (multipleFile1.exists()) {
+            multipleFile1.delete();
+        }
+
+        if (multipleFile2.exists()) {
+            multipleFile2.delete();
+        }
     }
 
     @Test
@@ -65,6 +137,30 @@ public class FileManagerActivityTest {
 
         user.sees().fileInPath(testDirectory);
         user.sees().fileInList(testChildFile);
+    }
+
+    @Test
+    public void showsNoItemsLabelInDirectory() throws Exception {
+        user.launches().viewWithFileScheme(testDirectoryWithZeroItems);
+
+        user.sees().fileInPath(testDirectoryWithZeroItems);
+        user.sees().numOfItemsLabel("No items");
+    }
+
+    @Test
+    public void showsOneItemLabelInDirectory() throws Exception {
+        user.launches().viewWithFileScheme(testDirectoryWithOneItem);
+
+        user.sees().fileInPath(testDirectoryWithOneItem);
+        user.sees().numOfItemsLabel("1 item");
+    }
+
+    @Test
+    public void showsMultipleItemsLabelInDirectory() throws Exception {
+        user.launches().viewWithFileScheme(testDirectoryWithMultipleItems);
+
+        user.sees().fileInPath(testDirectoryWithMultipleItems);
+        user.sees().numOfItemsLabel("2 items");
     }
 
     @Test

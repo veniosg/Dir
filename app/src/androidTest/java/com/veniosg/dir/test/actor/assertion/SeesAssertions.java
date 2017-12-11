@@ -39,6 +39,13 @@ public class SeesAssertions {
         )).check(matches(isDisplayed()));
     }
 
+    public void numOfItemsLabel(String numOfItemsLabel) {
+        onView(allOf(
+            withId(R.id.tertiary_info),
+            withText(numOfItemsLabel)
+        )).check(matches(isDisplayed()));
+    }
+
     public void fileInPath(File file) {
         String pathFragmentName = file.getName();
         onView(allOf(
