@@ -4,15 +4,15 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
-import com.veniosg.dir.android.util.FileUtils;
+import com.veniosg.dir.android.util.Logger;
 
 import org.reactivestreams.Subscription;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Emitter;
 import io.reactivex.FlowableEmitter;
@@ -21,6 +21,7 @@ import io.reactivex.FlowableSubscriber;
 import io.reactivex.Scheduler;
 
 import static com.veniosg.dir.android.util.FileUtils.isSymlink;
+import static com.veniosg.dir.android.util.Logger.TAG_SEARCH;
 import static com.veniosg.dir.android.util.Logger.log;
 import static io.reactivex.BackpressureStrategy.BUFFER;
 import static io.reactivex.Flowable.create;
@@ -39,7 +40,7 @@ public class Searcher {
     @NonNull
     private final SearchState searchState = new SearchState();
     @NonNull
-    private final FlowableSubscriber<? super String> bfsUpdateSubscriber = new BfsSubscriber();
+    private final FlowableSubscriber<List<String>> bfsUpdateSubscriber = new BfsSubscriber();
     private BfsFlowable bfsFlowable;
     private Object lock;
 
@@ -70,21 +71,25 @@ public class Searcher {
 
         bfsFlowable = new BfsFlowable(request.searchRoot, request.query);
         create(bfsFlowable, BUFFER)
+                .buffer(1, TimeUnit.SECONDS, 100)
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe(bfsUpdateSubscriber);
     }
 
     public void stopSearch() {
+        Logger.logV(TAG_SEARCH, "Stopping search");
         unlock();
         if (bfsFlowable != null) bfsFlowable.stopSearching();
     }
 
     public void resumeSearch() {
+        Logger.logV(TAG_SEARCH, "Resuming search");
         unlock();
     }
 
     public void pauseSearch() {
+        Logger.logV(TAG_SEARCH, "Pausing search");
         if (lock == null) lock = new Object();
     }
 
@@ -178,24 +183,28 @@ public class Searcher {
         }
     }
 
-    private class BfsSubscriber implements FlowableSubscriber<String> {
+    private class BfsSubscriber implements FlowableSubscriber<List<String>> {
         private Subscription subscription;
 
         @Override
         public void onSubscribe(Subscription s) {
+            Logger.logV(TAG_SEARCH, "Search start");
             subscription = s;
             subscription.request(1);
         }
 
         @Override
-        public void onNext(String s) {
-            searchState.addResult(s);
+        public void onNext(List<String> strings) {
+            for (String s : strings) {
+                searchState.addResult(s);
+            }
             emitStateUpdate();
             subscription.request(1);
         }
 
         @Override
         public void onError(Throwable t) {
+            Logger.logV(TAG_SEARCH, "Search error");
             searchState.setFinished();
             emitStateUpdate();
             subscription.cancel();
@@ -203,7 +212,8 @@ public class Searcher {
 
         @Override
         public void onComplete() {
-            searchState.setFinished();  // TODO make sure this is called if leaving midway through a search
+            Logger.logV(TAG_SEARCH, "Search finished");
+            searchState.setFinished();
             emitStateUpdate();
             subscription.cancel();
         }

@@ -33,7 +33,7 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:hint=""
-            android:imeOptions="actionSearch"
+            android:imeOptions="actionSearch|flagNoExtractUi"
             android:inputType="textFilter"
             android:paddingEnd="@dimen/action_button_min_width_material"
             android:paddingStart="@dimen/item_text_margin_left"

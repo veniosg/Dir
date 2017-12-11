@@ -37,6 +37,7 @@ import com.veniosg.dir.R;
 import com.veniosg.dir.android.activity.FileManagerActivity;
 import com.veniosg.dir.android.adapter.FileListViewHolder.OnItemClickListener;
 import com.veniosg.dir.android.adapter.SearchListAdapter;
+import com.veniosg.dir.android.util.Logger;
 import com.veniosg.dir.android.view.widget.WaitingViewFlipper;
 import com.veniosg.dir.mvvm.model.FileHolder;
 import com.veniosg.dir.mvvm.model.search.BooleanIdlingResource;
@@ -45,6 +46,7 @@ import com.veniosg.dir.mvvm.viewmodel.SearchViewModel;
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
 
 import static android.arch.lifecycle.ViewModelProviders.of;
 import static android.view.KeyEvent.ACTION_UP;
@@ -55,12 +57,14 @@ import static android.view.View.VISIBLE;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH;
 import static com.veniosg.dir.BuildConfig.DEBUG;
 import static com.veniosg.dir.android.util.FileUtils.openFile;
+import static com.veniosg.dir.android.util.Logger.TAG_SEARCH;
 import static com.veniosg.dir.android.view.Themer.getThemedResourceId;
 import static com.veniosg.dir.android.view.widget.WaitingViewFlipper.PAGE_INDEX_CONTENT;
+import static java.lang.String.format;
+import static java.util.Locale.ENGLISH;
 
 public class SearchListFragment extends Fragment {
     public static final int PAGE_INDEX_EMPTY = 1;
-    // TODO make sure search continues when rotating
 
     private WaitingViewFlipper mFlipper;
     private RecyclerView mRecyclerView;
@@ -94,6 +98,7 @@ public class SearchListFragment extends Fragment {
             }
             mFlipper.setDisplayedChild(finishedAndEmpty ? PAGE_INDEX_EMPTY : PAGE_INDEX_CONTENT);
             showLoading(isLoading);
+            Logger.logV(TAG_SEARCH, format(ENGLISH, "Observed %d search results", results.size()));
         }
     };
     @NonNull

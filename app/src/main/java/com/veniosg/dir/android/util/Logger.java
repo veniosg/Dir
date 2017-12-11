@@ -33,6 +33,7 @@ public class Logger {
     public static final String TAG_MEDIASCANNER = "DIR_MediaScanner";
     public static final String TAG_PATHBAR = "DIR_PathBar";
     public static final String TAG_ANIMATION = "DIR_Animation";
+    public static final String TAG_SEARCH = "DIR_Search";
 
     private Logger(){}
 
