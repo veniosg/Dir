@@ -6,6 +6,7 @@ import org.hamcrest.Factory;
 import org.hamcrest.FeatureMatcher;
 import org.hamcrest.Matcher;
 
+import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 public class FileHolderHasSizeInfo<T> extends FeatureMatcher<T, String> {
@@ -16,7 +17,7 @@ public class FileHolderHasSizeInfo<T> extends FeatureMatcher<T, String> {
   @Override
   protected String featureValueOf(T actual) {
     if (actual instanceof FileHolder) {
-      return ((FileHolder) actual).getSizeInfo(InstrumentationRegistry.getContext(), false);
+      return ((FileHolder) actual).getSizeInfo(getTargetContext());
     } else {
       return null;
     }

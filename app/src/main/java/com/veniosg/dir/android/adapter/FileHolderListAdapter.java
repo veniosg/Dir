@@ -95,17 +95,17 @@ public class FileHolderListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		Context context = parent.getContext();
 		FileHolder item = mItems.get(position);
-		if(convertView == null)
-			convertView = newView(parent.getContext());
+		if (convertView == null) convertView = newView(context);
 		ViewHolder holder = (ViewHolder) convertView.getTag();
 
         getInstance().cancelDisplayTask(holder.icon);
 		holder.icon.setImageDrawable(item.getBestIcon());
 		holder.primaryInfo.setText(item.getName());
-		holder.secondaryInfo.setText(item.getFormattedModificationDate(convertView.getContext()));
+		holder.secondaryInfo.setText(item.getFormattedModificationDate(context));
 		// Hide directories' size as it's irrelevant if we can't recursively find it.
-		holder.tertiaryInfo.setText(item.getSizeInfo(convertView.getContext(), false));
+		holder.tertiaryInfo.setText(item.getSizeInfo(context));
 
         ThumbnailHelper.requestIcon(item, holder.icon);
 

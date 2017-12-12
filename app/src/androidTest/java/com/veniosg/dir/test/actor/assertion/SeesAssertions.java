@@ -40,9 +40,10 @@ public class SeesAssertions {
         )).check(matches(isDisplayed()));
     }
 
-    public void fileInListWithSizeInfo(String sizeInfo) {
+    public void fileInListWithSizeInfo(File file, String sizeInfo) {
         onData(allOf(
             is(instanceOf(FileHolder.class)),
+            hasName(file.getName()),
             hasSizeInfo(sizeInfo))
         ).inAdapterView(allOf(
             withId(android.R.id.list),

@@ -136,19 +136,19 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
                         DateUtils.MINUTE_IN_MILLIS, DateUtils.YEAR_IN_MILLIS * 10, 0);
 	}
 
-	public String getSizeInfo(@NonNull Context context, boolean recursive) {
+	public String getSizeInfo(@NonNull Context context) {
 		boolean isDirectory = mFile.isDirectory();
-		return isDirectory ? getNumberOfItems(context) : getFormattedSize(context, recursive);
+		return isDirectory ? getFormattedNumberOfItems(context) : getFormattedSize(context, false);
 	}
 
 	/**
 	 * @param recursive Whether to return size of the whole tree below this file (Directories only).
 	 */
-	private String getFormattedSize(@NonNull Context c, boolean recursive){
+	public String getFormattedSize(@NonNull Context c, boolean recursive){
 		return Formatter.formatFileSize(c, getSizeInBytes(recursive));
 	}
 
-	private String getNumberOfItems(@NonNull Context context) {
+	private String getFormattedNumberOfItems(@NonNull Context context) {
 		int numOfDirectoryItems = mFile.listFiles().length;
 		return context
 				.getResources()

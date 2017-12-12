@@ -143,7 +143,7 @@ public class DetailsDialog extends DialogFragment {
 
         @Override
         protected String doInBackground(Void... params) {
-            return mFileHolder.getSizeInfo(getActivity(), true);
+            return mFileHolder.getFormattedSize(getActivity(), true);
         }
     }
 

@@ -151,7 +151,7 @@
     <!-- Shown when the Marshmallow permissions have been denied. -->
     <string name="permissions_denied">Dir needs your permission to access storage</string>
     <!-- # of items in a Directory -->
-    <string name="zero_items_in_directory">No items</string>
-    <string name="one_item_in_directory">%1$s item</string>
-    <string name="multiple_items_in_directory">%1$s items</string>
+    <string name="zero_items">No items</string>
+    <string name="one_item">%1$s item</string>
+    <string name="more_items">%1$s items</string>
 </resources>

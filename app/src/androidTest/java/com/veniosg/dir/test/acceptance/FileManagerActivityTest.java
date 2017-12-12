@@ -40,11 +40,11 @@ public class FileManagerActivityTest {
     private final File testChildFile = new File(testDirectory, "testChildFile");
     private final File testDirectoryWithZeroItems = new File(testDirectory, "testDirWithZeroItems");
     private final File testDirectoryWithOneItem = new File(testDirectory, "testDirWithOneItem");
-    private final File testDirectoryWithMultipleItems = new File(testDirectory, "testDirWithMultipleItems");
+    private final File testDirectoryWithTwoItems = new File(testDirectory, "testDirWithMultipleItems");
 
     private final File countTestFile1 = new File(testDirectoryWithOneItem, "countTestFile1");
-    private final File countTestFile2 = new File(testDirectoryWithMultipleItems, "countTestFile2");
-    private final File countTestFile3 = new File(testDirectoryWithMultipleItems, "countTestFile3");
+    private final File countTestFile2 = new File(testDirectoryWithTwoItems, "countTestFile2");
+    private final File countTestFile3 = new File(testDirectoryWithTwoItems, "countTestFile3");
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Before
@@ -56,7 +56,7 @@ public class FileManagerActivityTest {
 
         testDirectoryWithZeroItems.mkdir();
         testDirectoryWithOneItem.mkdir();
-        testDirectoryWithMultipleItems.mkdir();
+        testDirectoryWithTwoItems.mkdir();
 
         countTestFile1.createNewFile();
         countTestFile2.createNewFile();
@@ -85,9 +85,9 @@ public class FileManagerActivityTest {
     @Test
     public void showsCorrectCounts() throws Exception {
         user.launches().viewWithFileScheme(testDirectory);
-        user.sees().fileInListWithSizeInfo("No items");
-        user.sees().fileInListWithSizeInfo("1 item");
-        user.sees().fileInListWithSizeInfo("2 items");
+        user.sees().fileInListWithSizeInfo(testDirectoryWithZeroItems, "No items");
+        user.sees().fileInListWithSizeInfo(testDirectoryWithOneItem, "1 item");
+        user.sees().fileInListWithSizeInfo(testDirectoryWithTwoItems, "2 items");
     }
 
     @Test
