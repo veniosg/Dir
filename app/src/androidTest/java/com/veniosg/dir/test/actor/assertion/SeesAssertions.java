@@ -46,16 +46,16 @@ public class SeesAssertions {
             hasSizeInfo(sizeInfo))
         ).inAdapterView(allOf(
             withId(android.R.id.list),
-            isDescendantOfA(withId(R.id.zoomview))))
-            .check(matches(isDisplayed()));
+            isDescendantOfA(withId(R.id.zoomview))
+        )).check(matches(isDisplayed()));
     }
 
     public void fileInPath(File file) {
         String pathFragmentName = file.getName();
         onView(allOf(
                 withParent(withClassName(equalTo(PathItemView.class.getName()))),
-                withText(pathFragmentName))
-        ).check(matches(isDisplayed()));
+                withText(pathFragmentName)
+        )).check(matches(isDisplayed()));
     }
 
     public void activityTitle(String title) {
