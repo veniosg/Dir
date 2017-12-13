@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -39,6 +40,7 @@ import java.io.File;
 
 import static android.content.Intent.ACTION_SEARCH;
 import static android.support.v4.view.GravityCompat.START;
+import static android.text.TextUtils.isEmpty;
 import static com.veniosg.dir.IntentConstants.EXTRA_FROM_OI_FILEMANAGER;
 import static com.veniosg.dir.android.util.FileUtils.getFile;
 import static com.veniosg.dir.android.util.FileUtils.openFile;
@@ -144,7 +146,8 @@ public class FileManagerActivity extends BaseActivity
     }
 
     @Override
-    public void onBookmarkSelected(String path) {
+    public void onBookmarkSelected(@Nullable String path) {
+	    if (isEmpty(path)) return;
         mFragment.openInformingPathBar(new FileHolder(new File(path), this));
         mFragment.closeActionMode();
         mDrawerLayout.closeDrawer(START);
