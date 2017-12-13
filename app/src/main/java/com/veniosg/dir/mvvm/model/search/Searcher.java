@@ -38,16 +38,12 @@ public class Searcher {
     private final Scheduler ioScheduler;
     @NonNull
     private final Scheduler uiScheduler;
-    @NonNull
-    private final SearchState searchState = new SearchState();
-    @NonNull
-    private final FlowableSubscriber<List<String>> bfsUpdateSubscriber = new BfsSubscriber();
     private BfsFlowable bfsFlowable;
 
     public Searcher() {
         ioScheduler = io();
         uiScheduler = mainThread();
-        observableResults = new MutableLiveData<SearchState>();
+        observableResults = new MutableLiveData<>();
     }
 
     @VisibleForTesting()
@@ -64,9 +60,8 @@ public class Searcher {
 
     public void updateQuery(SearchRequest request) {
         if (bfsFlowable != null) {
-            stopSearch();
-            searchState.reset();
-            emitStateUpdate();
+//            Logger.logV(TAG_SEARCH, "Clearing state");
+            bfsFlowable.stopSearching();
         }
 
         bfsFlowable = new BfsFlowable(request.searchRoot, request.query);
@@ -76,16 +71,12 @@ public class Searcher {
                 .onBackpressureBuffer()
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
-                .subscribe(bfsUpdateSubscriber);
+                .subscribe(new BfsSubscriber());
     }
 
     public void stopSearch() {
 //        Logger.logV(TAG_SEARCH, "Stopping search");
         if (bfsFlowable != null) bfsFlowable.stopSearching();
-    }
-
-    private void emitStateUpdate() {
-        observableResults.setValue(new SearchState(searchState));
     }
 
     public static class SearchRequest {
@@ -133,8 +124,6 @@ public class Searcher {
                             addDirectChildren(root, queue);
                         }
                     }
-
-//                    while (paused.get()) {}
                 }
 
                 emitter.onComplete();
@@ -163,6 +152,7 @@ public class Searcher {
     }
 
     private class BfsSubscriber implements FlowableSubscriber<List<String>> {
+        private final SearchState searchState = new SearchState();
         private Subscription subscription;
 
         @Override
@@ -196,6 +186,10 @@ public class Searcher {
             searchState.setFinished();
             emitStateUpdate();
             subscription.cancel();
+        }
+
+        private void emitStateUpdate() {
+            observableResults.setValue(new SearchState(searchState));
         }
     }
 }

@@ -24,6 +24,7 @@ import com.veniosg.dir.android.adapter.FileListViewHolder.OnItemClickListener;
 
 import java.util.List;
 
+import static com.veniosg.dir.android.util.Utils.firstDifferentItemIndex;
 import static java.util.Collections.emptyList;
 
 public class SearchListAdapter extends RecyclerView.Adapter<SearchListViewHolder> {
@@ -34,17 +35,19 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListViewHolder
         this.onItemClickListener = onItemClickListener;
     }
 
-    public void notifyDataAppended(@NonNull List<String> updatedData) {
-        int oldItemCount = this.data.size();
-        this.data = updatedData;
+    public void notifyDataUpdated(@NonNull List<String> updatedData) {
+        int firstUpdatedIndex = firstDifferentItemIndex(data, updatedData);
+        if (firstUpdatedIndex != -1) {  // Lists are not equal
+            int oldCount = data.size();
+            int newCount = updatedData.size();
+            data = updatedData;
 
-        int newItemCount = updatedData.size() - oldItemCount;
-        notifyItemRangeInserted(oldItemCount, newItemCount);
-    }
-
-    public void notifyResultsCleared() {
-        notifyItemRangeRemoved(0, data.size());
-        data = emptyList();
+            if (firstUpdatedIndex == oldCount) {  // Data appended
+                notifyItemRangeInserted(firstUpdatedIndex, updatedData.size() - oldCount);
+            } else {
+                notifyDataSetChanged();
+            }
+        }
     }
 
     @Override

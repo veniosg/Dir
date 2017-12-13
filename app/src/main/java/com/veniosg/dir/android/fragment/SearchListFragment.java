@@ -60,6 +60,7 @@ import static com.veniosg.dir.android.util.Logger.TAG_SEARCH;
 import static com.veniosg.dir.android.view.Themer.getThemedResourceId;
 import static com.veniosg.dir.android.view.widget.WaitingViewFlipper.PAGE_INDEX_CONTENT;
 import static java.lang.String.format;
+import static java.util.Collections.emptyList;
 import static java.util.Locale.ENGLISH;
 
 public class SearchListFragment extends Fragment {
@@ -83,21 +84,18 @@ public class SearchListFragment extends Fragment {
     private final Observer<SearchState> resultObserver = searchState -> {
         if (searchState == null) {
             showLoading(false);
-            adapter.notifyResultsCleared();
+            adapter.notifyDataUpdated(emptyList());
         } else {
             List<String> results = searchState.results();
             boolean isLoading = !searchState.isFinished();
             boolean resultsEmpty = results.isEmpty();
             boolean finishedAndEmpty = !isLoading && resultsEmpty;
 
-            if (resultsEmpty) {
-                adapter.notifyResultsCleared();
-            } else {
-                adapter.notifyDataAppended(results);
-            }
+            adapter.notifyDataUpdated(results);
             mFlipper.setDisplayedChild(finishedAndEmpty ? PAGE_INDEX_EMPTY : PAGE_INDEX_CONTENT);
             showLoading(isLoading);
-            Logger.logV(TAG_SEARCH, format(ENGLISH, "Observed %d search results", results.size()));
+            Logger.logV(TAG_SEARCH, format(ENGLISH, "Observed %d search results, finished: %b",
+                    results.size(), !isLoading));
         }
     };
     @NonNull

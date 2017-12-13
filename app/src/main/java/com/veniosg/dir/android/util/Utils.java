@@ -25,8 +25,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -40,16 +40,16 @@ import com.veniosg.dir.android.FileManagerApplication;
 import com.veniosg.dir.android.activity.FileManagerActivity;
 import com.veniosg.dir.android.fragment.SimpleFileListFragment;
 import com.veniosg.dir.android.misc.MimeTypes;
-import com.veniosg.dir.android.provider.FileManagerProvider;
 import com.veniosg.dir.mvvm.model.FileHolder;
 
 import java.io.File;
+import java.util.Collection;
+import java.util.Iterator;
 
 import static android.graphics.Bitmap.Config.ARGB_8888;
 import static android.view.View.MeasureSpec.EXACTLY;
 import static android.view.View.MeasureSpec.makeMeasureSpec;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
-import static java.io.File.pathSeparator;
 import static java.lang.Math.abs;
 
 public abstract class Utils {
@@ -195,8 +195,6 @@ public abstract class Utils {
     }
 
     /**
-     * @param file1
-     * @param file2
      * @return 1 if file1 is above file2, -1 otherwise. 0 on errors
      */
     public static int getNavigationDirection(File file1, File file2) {
@@ -225,7 +223,9 @@ public abstract class Utils {
         return "image".equals(type);
     }
 
-    public static void scrollToPosition(final AbsListView listView, final SimpleFileListFragment.ScrollPosition pos, boolean immediate) {
+    public static void scrollToPosition(final AbsListView listView,
+                                        final SimpleFileListFragment.ScrollPosition pos,
+                                        boolean immediate) {
         if (listView instanceof ListView) {
             listView.setSelectionFromTop(pos.index, pos.top);
         } else {
@@ -286,5 +286,21 @@ public abstract class Utils {
         }
 
         return group.getChildAt(childCount - (i + 1));
+    }
+
+    public static <T> int firstDifferentItemIndex(@NonNull Collection<T> c1,
+                                                  @NonNull Collection<T> c2) {
+        int lastSameIndex = -1;
+        Iterator<T> i1 = c1.iterator();
+        Iterator<T> i2 = c2.iterator();
+        while (i1.hasNext() && i2.hasNext() &&
+                i1.next().equals(i2.next())) {
+            lastSameIndex++;
+        }
+
+        if (c1.size() - 1 == lastSameIndex && c2.size() - 1 == lastSameIndex) {
+            return -1;   // Same size and same elements
+        }
+        return lastSameIndex + 1;
     }
 }
