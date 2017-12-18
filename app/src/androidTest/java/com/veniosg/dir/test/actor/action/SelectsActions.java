@@ -1,11 +1,7 @@
 package com.veniosg.dir.test.actor.action;
 
-import android.view.View;
-
 import com.veniosg.dir.R;
 import com.veniosg.dir.mvvm.model.FileHolder;
-
-import org.hamcrest.Matcher;
 
 import java.io.File;
 
@@ -14,7 +10,6 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.pressBack;
-import static android.support.test.espresso.contrib.RecyclerViewActions.scrollTo;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
