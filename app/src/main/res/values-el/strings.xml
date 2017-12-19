@@ -61,7 +61,7 @@
     <string name="preference_sortby_last_modified">Τελευταία τροποποίηση</string>
     <string name="preference_theme_grayscale">Ασπρόμαυρο</string>
     <string name="preference_theme_dark">Σκούρο</string>
-    <string name="extracting">\u0391\u03c0\u03bf\u03c3\u03c5\u03bc\u03c0\u03af\u03b5\u03c3\u03b7&#8230;</string>
+    <string name="extracting">Αποσυμπίεση&#8230;</string>
     <string name="compressing">Συμπίεση&#8230;</string>
     <string name="menu_search">Αναζήτηση</string>
     <string name="menu_create_folder">Δημιουργία φακέλου</string>
@@ -103,15 +103,16 @@
     <string name="notif_extracted_fail">Αποτυχία αποσυμπίεσης</string>
     <string name="selected">επιλεγμένα</string>
     <string name="bookmark_empty">Κανένας σελιδοδείκτης</string>
+    <string name="search_hint">Αναζήτηση σε %1$s</string>
     <string name="query_error">Σφάλμα αναζήτησης</string>
     <string name="search_empty">Δεν βρέθηκαν στοιχεία που ταιριάζουν!</string>
     <string name="item_icon">Εικονίδιο στοιχείου</string>
     <string name="delete_success">Επιτυχής διαγραφή</string>
     <string name="delete_failure">Κάποια αρχεία δεν μπορούσαν να διαγραφούν</string>
-    <string name="deleting">\u0394\u03b9\u03b1\u03b3\u03c1\u03b1\u03c6\u03ae&#8230;</string>
+    <string name="deleting">Διαγραφή&#8230;</string>
     <string name="rename_success">Επιτυχής μετονομασία</string>
     <string name="rename_failure">Μετονομασία αδύνατη</string>
-    <string name="loading">\u03a6\u03cc\u03c1\u03c4\u03c9\u03c3\u03b7&#8230;</string>
+    <string name="loading">Φόρτωση&#8230;</string>
     <string name="searching">Αναζήτηση&#8230;</string>
     <string name="create_dir_success">Επιτυχής δημιουργία φακέλου</string>
     <string name="create_dir_failure">Δημιουργία φακέλου αδύνατη</string>
@@ -125,7 +126,7 @@
     <string name="copying">Αντιγραφή&#8230;</string>
     <string name="copied">Επιτυχής αντιγραφή</string>
     <string name="copy_error">Κάποια αρχεία δεν μπόρεσαν να αντιγραφούν!</string>
-    <string name="moving">\u039c\u03b5\u03c4\u03b1\u03ba\u03af\u03bd\u03b7\u03c3\u03b7&#8230;</string>
+    <string name="moving">Μετακίνηση&#8230;</string>
     <string name="moved">Επιτυχής μετακίνηση</string>
     <string name="move_error">Κάποια αρχεία δεν μπόρεσαν να μετακινηθούν!</string>
     <string name="nothing_to_paste">Δεν υπάρχουν αρχεία για επικόλληση. Αντιγράψτε ή αποκόψτε αρχεία πρώτα.</string>
@@ -136,7 +137,7 @@
     <string name="about_shareSubject">Κατεβάστε το Dir στο Google Play</string>
     <string name="about_gplay">Εμφάνιση στο Google Play</string>
     <string name="about_contact">Υποστήριξη</string>
-    <string name="about_beta">Είσοδος στην Google+ κοινότητα</string>
+    <string name="about_translate">Μετάφρασε το Dir</string>
     <string name="about_contribute">Εμφάνιση στο Github</string>
     <string name="yes">Ναι</string>
     <string name="no">Όχι</string>
@@ -145,4 +146,12 @@
     <string name="goto_path">Επιβεβαίωση</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
     <string name="permissions_denied">Το Dir χρειάζεται άδεια ανάγνωσης της μνήμης</string>
+    <string name="back">Πίσω</string>
+    <string name="close">Κλείσιμο</string>
+    <string name="saveas_no_file_picked">Δεν έχετε επιλεξει κάποιο αρχείο.</string>
+    <string name="saveas_error">Προέκυψε ένα σφάλμα.</string>
+    <string name="saveas_file_saved">Το αρχείο αποθηκεύτηκε επιτυχώς!</string>
+    <string name="about_beta">Είσοδος στην Google+ κοινότητα</string>
+    <!-- Left pathview manual input button description -->
+    <string name="close_path">Κλείσιμο</string>
 </resources>

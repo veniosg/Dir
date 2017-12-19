@@ -17,6 +17,7 @@
 <resources>
     <!-- Bookmark action. This is a verb. -->
     <string name="menu_bookmark">Lesezeichen</string>
+    <string name="bookmarks">Lesezeichen</string>
     <string name="create_new_folder">Neuen Ordner erstellen</string>
     <string name="folder_name">Name des Ordners</string>
     <string name="this_folder_is_empty">Leerer Ordner</string>
@@ -30,6 +31,7 @@
     <string name="details_permissions">Berechtigungen</string>
     <string name="details_hidden">Versteckt</string>
     <string name="details_lastmodified">Zuletzt geändert</string>
+    <string name="details_resolution">Auflösung</string>
     <string name="copied_file_name">Kopie von %s</string>
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="copied_file_name_2">Kopie %1$d von %2$s</string>
@@ -101,15 +103,17 @@
     <string name="notif_extracted_fail">Entpacken fehlgeschlagen</string>
     <string name="selected">ausgewählt</string>
     <string name="bookmark_empty">Keine Lesezeichen</string>
+    <string name="search_hint">Suche in %1$s</string>
     <string name="query_error">Abfragefehler</string>
     <string name="search_empty">Keine passenden Dateien gefunden!</string>
     <string name="item_icon">Icon</string>
     <string name="delete_success">Erfolgreich gelöscht</string>
     <string name="delete_failure">Einige Dateien wurden nicht gelöscht</string>
-    <string name="deleting">L\u00f6sche&#8230;</string>
+    <string name="deleting">Lösche&#8230;</string>
     <string name="rename_success">Erfolgreich umbenannt</string>
     <string name="rename_failure">Umbenennung fehlgeschlagen</string>
     <string name="loading">Lade&#8230;</string>
+    <string name="searching">Suchen&#8230;</string>
     <string name="create_dir_success">Ordner erfolgreich angelegt</string>
     <string name="create_dir_failure">Ordner konnte nicht angelegt werden</string>
     <string name="compressed_file_name">Zip Dateiname</string>
@@ -133,11 +137,17 @@
     <string name="about_shareSubject">Holen Sie sich Dir auf Google Play</string>
     <string name="about_gplay">Auf Google Play ansehen</string>
     <string name="about_contact">Unterstützung anfordern</string>
-    <string name="about_beta">Trete Google+ Community bei</string>
     <string name="about_contribute">Auf Github ansehen</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <!-- Right pathview button description -->
-    <!-- Left pathview manual input button description -->
+    <string name="edit_path">Pfad editieren</string>
+    <string name="goto_path">Gehe zu Pfad</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="saveas_no_file_picked">Sie haben keine Datei ausgewählt.</string>
+    <string name="saveas_error">Es ist ein Fehler aufgetreten.</string>
+    <string name="saveas_file_saved">Datei erfolgreich gespeichert!</string>
+    <string name="about_beta">Trete Google+ Community bei</string>
+    <!-- Left pathview manual input button description -->
+    <string name="close_path">Editor schließen</string>
 </resources>

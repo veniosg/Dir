@@ -58,7 +58,7 @@
     <string name="preference_sortby_last_modified">Legutóbb módosítva</string>
     <string name="preference_theme_grayscale">Szürkeárnyalatos</string>
     <string name="preference_theme_dark">Sötét</string>
-    <string name="extracting">Kicsomagol\u00e1sa&#8230;</string>
+    <string name="extracting">Kicsomagolása&#8230;</string>
     <string name="compressing">Tömörítése&#8230;</string>
     <string name="menu_search">Keresés</string>
     <string name="menu_create_folder">Mappa létrehozása</string>
@@ -106,10 +106,10 @@
     <string name="item_icon">Elem ikonja</string>
     <string name="delete_success">Sikeresen törölve</string>
     <string name="delete_failure">Néhány fájlt nem sikerült törölni</string>
-    <string name="deleting">T\u00f6rl\u00e9s&#8230;</string>
+    <string name="deleting">Törlés&#8230;</string>
     <string name="rename_success">Sikeres átnevezés</string>
     <string name="rename_failure">Sikertelen átnevezés</string>
-    <string name="loading">Bet\u00f6lt\u00e9s&#8230;</string>
+    <string name="loading">Betöltés&#8230;</string>
     <string name="create_dir_success">Mappa létrehozva</string>
     <string name="create_dir_failure">Nem sikerült létrehozni a mappát</string>
     <string name="compressed_file_name">Zip fájl neve</string>
@@ -122,7 +122,7 @@
     <string name="copying">Másolás&#8230;</string>
     <string name="copied">Sikeres másolás</string>
     <string name="copy_error">Néhány fájl nem másolható!</string>
-    <string name="moving">\u00c1thelyez\u00e9s&#8230;</string>
+    <string name="moving">Áthelyezés&#8230;</string>
     <string name="moved">Sikeres áthelyezés</string>
     <string name="move_error">Néhány fájl nem lehet áthelyezni!</string>
     <string name="nothing_to_paste">Nincs mit beilleszteni. Másoljon vagy vágjon ki előbb valamit.</string>
@@ -133,11 +133,13 @@
     <string name="about_shareSubject">Szerezd meg a Dir-t a Google Play-ről</string>
     <string name="about_gplay">Megtekintés Google Play-en</string>
     <string name="about_contact">Kérjen támogatást!</string>
-    <string name="about_beta">Csatlakozz a Google+ Közösségéhez</string>
     <string name="about_contribute">Megtekintés Github-on</string>
     <string name="yes">Igen</string>
     <string name="no">Nem</string>
     <!-- Right pathview button description -->
-    <!-- Left pathview manual input button description -->
     <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="saveas_no_file_picked">Nincs fájl kiválasztva.</string>
+    <string name="saveas_error">Hiba történt.</string>
+    <string name="saveas_file_saved">Fájl sikeresen mentve!</string>
+    <string name="about_beta">Csatlakozz a Google+ Közösségéhez</string>
 </resources>

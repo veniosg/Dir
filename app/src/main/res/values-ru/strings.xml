@@ -58,7 +58,7 @@
     <string name="preference_sortby_last_modified">Последнее изменение</string>
     <string name="preference_theme_grayscale">Черно-белый</string>
     <string name="preference_theme_dark">Темная</string>
-    <string name="extracting">\u0418\u0437\u0432\u043b\u0435\u0447\u0435\u043d\u0438\u0435&#8230;</string>
+    <string name="extracting">Извлечение&#8230;</string>
     <string name="compressing">Архивирование&#8230;</string>
     <string name="menu_search">Поиск</string>
     <string name="menu_create_folder">Создать папку</string>
@@ -110,10 +110,10 @@
     <string name="item_icon">Значок элемента</string>
     <string name="delete_success">Успешно удалено</string>
     <string name="delete_failure">Некоторые файлы не удалены</string>
-    <string name="deleting">\u0423\u0434\u0430\u043b\u0435\u043d\u0438\u0435&#8230;</string>
+    <string name="deleting">Удаление&#8230;</string>
     <string name="rename_success">Успешно переименовано</string>
     <string name="rename_failure">Не удается переименовать</string>
-    <string name="loading">\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430&#8230;</string>
+    <string name="loading">Загрузка&#8230;</string>
     <string name="create_dir_success">Папка успешно создана</string>
     <string name="create_dir_failure">Не удается создать папку</string>
     <string name="compressed_file_name">Имя Zip файла</string>
@@ -126,7 +126,7 @@
     <string name="copying">Копирование&#8230;</string>
     <string name="copied">Успешно скопировано</string>
     <string name="copy_error">Некоторые или все элементы не могут быть скопированы!</string>
-    <string name="moving">\u041f\u0435\u0440\u0435\u043c\u0435\u0449\u0435\u043d\u0438\u0435&#8230;</string>
+    <string name="moving">Перемещение&#8230;</string>
     <string name="moved">Успешно перемещено</string>
     <string name="move_error">Некоторые или все элементы не могут быть перемещены!</string>
     <string name="nothing_to_paste">Нечего вставить. Скопируйте или переместите файлы.</string>
@@ -137,11 +137,13 @@
     <string name="about_shareSubject">Взять Dir на Google Play</string>
     <string name="about_gplay">Посмотреть на Google Play</string>
     <string name="about_contact">Обратить в поддержку</string>
-    <string name="about_beta">Присоедениться к сообществу Google+</string>
     <string name="about_contribute">Посмотреть на Github</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <!-- Right pathview button description -->
-    <!-- Left pathview manual input button description -->
     <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="saveas_no_file_picked">Вы не выбрали файл.</string>
+    <string name="saveas_error">Произошла ошибка.</string>
+    <string name="saveas_file_saved">Файл успешно сохранён!</string>
+    <string name="about_beta">Присоедениться к сообществу Google+</string>
 </resources>

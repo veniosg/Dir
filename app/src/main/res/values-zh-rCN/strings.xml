@@ -58,7 +58,7 @@
     <string name="preference_sortby_last_modified">最近修改</string>
     <string name="preference_theme_grayscale">浅灰</string>
     <string name="preference_theme_dark">黑色</string>
-    <string name="extracting">\u63d0\u53d6\u4e2d&#8230;</string>
+    <string name="extracting">提取中&#8230;</string>
     <string name="compressing">压缩中&#8230;</string>
     <string name="menu_search">搜索</string>
     <string name="menu_create_folder">新建文件夹</string>
@@ -99,15 +99,16 @@
     <string name="notif_extracted_fail">提取失败</string>
     <string name="selected">项已选中</string>
     <string name="bookmark_empty">无书签</string>
+    <string name="search_hint">在%1$s中搜索</string>
     <string name="query_error">查询错误</string>
     <string name="search_empty">无匹配文件！</string>
     <string name="item_icon">项目图标</string>
     <string name="delete_success">成功删除</string>
     <string name="delete_failure">某些文件未删除</string>
-    <string name="deleting">\u5220\u9664\u4e2d&#8230;</string>
+    <string name="deleting">删除中&#8230;</string>
     <string name="rename_success">成功重命名</string>
     <string name="rename_failure">无法重命名</string>
-    <string name="loading">\u8f7d\u5165\u4e2d&#8230;</string>
+    <string name="loading">载入中&#8230;</string>
     <string name="create_dir_success">成功新建目录</string>
     <string name="create_dir_failure">无法新建目录</string>
     <string name="compressed_file_name">Zip 文件名</string>
@@ -120,7 +121,7 @@
     <string name="copying">复制中&#8230;</string>
     <string name="copied">复制成功</string>
     <string name="copy_error">部分或所有项复制失败！</string>
-    <string name="moving">\u79fb\u52a8\u4e2d&#8230;</string>
+    <string name="moving">移动中&#8230;</string>
     <string name="moved">移动成功</string>
     <string name="move_error">部分或所有项移动失败！</string>
     <string name="nothing_to_paste">无可粘贴项。请先进行复制或剪切操作。</string>
@@ -131,11 +132,13 @@
     <string name="about_shareSubject">从 Play 商店中获取 Dir</string>
     <string name="about_gplay">在 Play 商店中查看</string>
     <string name="about_contact">寻求帮助</string>
-    <string name="about_beta">加入 Google+ 社群</string>
     <string name="about_contribute">在 Github 中查看</string>
     <string name="yes">是</string>
     <string name="no">否</string>
     <!-- Right pathview button description -->
-    <!-- Left pathview manual input button description -->
     <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="saveas_no_file_picked">你没有选择任何文件。</string>
+    <string name="saveas_error">发生错误。</string>
+    <string name="saveas_file_saved">文件保存成功！</string>
+    <string name="about_beta">加入 Google+ 社群</string>
 </resources>

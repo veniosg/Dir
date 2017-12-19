@@ -121,11 +121,13 @@
     <string name="about_shareSubject">Descarrega Dir no Google Play</string>
     <string name="about_gplay">Ver no Google Play</string>
     <string name="about_contact">Pedir suporte</string>
-    <string name="about_beta">Juntar-me à comunidade no Google+</string>
     <string name="about_contribute">Ver no Github</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <!-- Right pathview button description -->
-    <!-- Left pathview manual input button description -->
     <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="saveas_no_file_picked">Não escolheu qualquer ficheiro.</string>
+    <string name="saveas_error">Ocorreu um erro.</string>
+    <string name="saveas_file_saved">Ficheiro gravado com sucesso.</string>
+    <string name="about_beta">Juntar-me à comunidade no Google+</string>
 </resources>

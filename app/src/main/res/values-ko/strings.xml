@@ -85,6 +85,8 @@
     <string name="move_error">일부 또는 모든 항목이 이동 되지 않았습니다!</string>
     <string name="nothing_to_paste">붙여 넣을게 없습니다. 먼저 파일을 복사 또는 잘라 내어 주세요.</string>
     <!-- Right pathview button description -->
-    <!-- Left pathview manual input button description -->
     <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="saveas_no_file_picked">파일을 선택하지 않았습니다.</string>
+    <string name="saveas_error">오류가 발생하였습니다.</string>
+    <string name="saveas_file_saved">파일을 성공적으로 저장하였습니다!</string>
 </resources>

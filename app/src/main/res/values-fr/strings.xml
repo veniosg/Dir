@@ -104,6 +104,7 @@
     <string name="notif_extracted_fail">Extraction échouée</string>
     <string name="selected">sélectionné(s)</string>
     <string name="bookmark_empty">Pas de marque-page</string>
+    <string name="search_hint">Rechercher dans %1$s</string>
     <string name="query_error">Erreur de requête</string>
     <string name="search_empty">Pas de fichier correspondant trouvé!</string>
     <string name="item_icon">Icône de l\'élément</string>
@@ -126,7 +127,7 @@
     <string name="copying">Copie&#8230;</string>
     <string name="copied">Copie réussie</string>
     <string name="copy_error">Une ou plusieurs entrées ne peuvent pas être copiées!</string>
-    <string name="moving">D\u00e9placement&#8230;</string>
+    <string name="moving">Déplacement&#8230;</string>
     <string name="moved">Déplacement réussi</string>
     <string name="move_error">Une ou plusieurs entrées ne peuvent pas être déplacées!</string>
     <string name="nothing_to_paste">Rien à copier. Coupez ou copiez des fichiers.</string>
@@ -137,7 +138,6 @@
     <string name="about_shareSubject">Télécharger Dir sur Google Play</string>
     <string name="about_gplay">Voir sur Google Play</string>
     <string name="about_contact">Support</string>
-    <string name="about_beta">Rejoindre la communauté Google+</string>
     <string name="about_contribute">Voir sur GitHub</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
@@ -146,4 +146,10 @@
     <string name="goto_path">Aller à</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
     <string name="permissions_denied">Dir a besoin de votre autorisation pour accéder au stockage</string>
+    <string name="saveas_no_file_picked">Vous n\'avez pas choisi n\'importe quel fichier.</string>
+    <string name="saveas_error">Une erreur s\'est produite</string>
+    <string name="saveas_file_saved">Fichier sauvegardé avec succès</string>
+    <string name="about_beta">Rejoindre la communauté Google+</string>
+    <!-- Left pathview manual input button description -->
+    <string name="close_path">Fermer</string>
 </resources>

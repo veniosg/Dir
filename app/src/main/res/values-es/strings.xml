@@ -101,6 +101,7 @@
     <string name="notif_extracted_fail">Extracción fallida</string>
     <string name="selected">seleccionado</string>
     <string name="bookmark_empty">No hay marcadores</string>
+    <string name="search_hint">Buscar en %1$s</string>
     <string name="query_error">Consultar error</string>
     <string name="search_empty">No hay archivos coincidentes</string>
     <string name="item_icon">Icono</string>
@@ -133,11 +134,13 @@
     <string name="about_shareSubject">Consigue Dir en Google Play</string>
     <string name="about_gplay">Ver en Google Play</string>
     <string name="about_contact">Buscar soporte</string>
-    <string name="about_beta">Únete a la comunidad de Google+</string>
     <string name="about_contribute">Ver en Github</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
     <!-- Right pathview button description -->
-    <!-- Left pathview manual input button description -->
     <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="saveas_no_file_picked">No se ha elegido ningún archivo.</string>
+    <string name="saveas_error">Ocurrió un error.</string>
+    <string name="saveas_file_saved">El archivo se guardó con éxito!</string>
+    <string name="about_beta">Únete a la comunidad de Google+</string>
 </resources>

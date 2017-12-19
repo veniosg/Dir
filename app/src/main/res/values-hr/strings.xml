@@ -103,15 +103,16 @@
     <string name="notif_extracted_fail">Ekstrahiranje nije uspijelo</string>
     <string name="selected">odabrano</string>
     <string name="bookmark_empty">Nema oznaka</string>
+    <string name="search_hint">Pretraži u %1$s</string>
     <string name="query_error">Ispitivanje greške</string>
     <string name="search_empty">Nisu pronađene podudarajuće datoteke!</string>
     <string name="item_icon">Ikona stavke</string>
     <string name="delete_success">Uspješno obrisano</string>
     <string name="delete_failure">Neke datoteke nisu obrisane</string>
-    <string name="deleting">Bri\u0161em&#8230;</string>
+    <string name="deleting">Brišem&#8230;</string>
     <string name="rename_success">Uspješno preimenovano</string>
     <string name="rename_failure">Ne mogu preimenovati</string>
-    <string name="loading">U\u010ditavam&#8230;</string>
+    <string name="loading">Učitavam&#8230;</string>
     <string name="searching">Pretražujem&#8230;</string>
     <string name="create_dir_success">Mapa je uspješno kreirana</string>
     <string name="create_dir_failure">Ne mogu kreirati mapu</string>
@@ -125,7 +126,7 @@
     <string name="copying">Kopiram&#8230;</string>
     <string name="copied">Uspješno kopirano</string>
     <string name="copy_error">Neke ili sve stavke ne mogu biti kopirane!</string>
-    <string name="moving">Premje\u0161tam&#8230;</string>
+    <string name="moving">Premještam&#8230;</string>
     <string name="moved">Uspješno premješteno</string>
     <string name="move_error">Neke ili sve stavke ne mogu biti premještene!</string>
     <string name="nothing_to_paste">Nema ništa za zalijepiti. Prvo kopirajte ili izrežite datoteku.</string>
@@ -136,7 +137,6 @@
     <string name="about_shareSubject">Preuzmite Dir na Trgovini Market</string>
     <string name="about_gplay">Pogledajte na Trgovini Market</string>
     <string name="about_contact">Zatržite podršku</string>
-    <string name="about_beta">Pridružite se Google+ Zajednici</string>
     <string name="about_contribute">Pogledajte na Github-u</string>
     <string name="yes">Da</string>
     <string name="no">Ne</string>
@@ -144,4 +144,10 @@
     <string name="edit_path">Uređivanje putanju</string>
     <string name="goto_path">Idi na putanju</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="saveas_no_file_picked">Niste još odabrali ni jednu datoteku</string>
+    <string name="saveas_error">Dogodila se greška.</string>
+    <string name="saveas_file_saved">Datoteka je uspješno spremljena!</string>
+    <string name="about_beta">Pridružite se Google+ Zajednici</string>
+    <!-- Left pathview manual input button description -->
+    <string name="close_path">Zatvori uređivač</string>
 </resources>

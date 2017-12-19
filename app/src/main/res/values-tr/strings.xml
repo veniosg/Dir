@@ -58,7 +58,7 @@
     <string name="preference_sortby_last_modified">Son değişiklikler</string>
     <string name="preference_theme_grayscale">Gri ton</string>
     <string name="preference_theme_dark">Koyu</string>
-    <string name="extracting">\u00c7\u0131kar\u0131l\u0131yor&#8230;</string>
+    <string name="extracting">Çıkarılıyor&#8230;</string>
     <string name="compressing">Sıkıştırılıyor&#8230;</string>
     <string name="menu_search">Ara</string>
     <string name="menu_create_folder">Klasör oluştur</string>
@@ -101,6 +101,7 @@
     <string name="notif_extracted_fail">Çıkarma işlemi tamamlanamadı</string>
     <string name="selected">Seçilen</string>
     <string name="bookmark_empty">Eklenen yer işareti bulunmamaktadır</string>
+    <string name="search_hint">%1$s\'da ara</string>
     <string name="query_error">Sorgu hatası</string>
     <string name="search_empty">Eşleşen dosya bulunmamaktadır!</string>
     <string name="item_icon">Öğe ikonu</string>
@@ -109,7 +110,7 @@
     <string name="deleting">Siliniyor&#8230;</string>
     <string name="rename_success">Yeniden adlandırma işlemi tamamlandı</string>
     <string name="rename_failure">Couldn\'t rename</string>
-    <string name="loading">Y\u00fckleniyor&#8230;</string>
+    <string name="loading">Yükleniyor&#8230;</string>
     <string name="create_dir_success">Dizin oluşturma işlemi tamamlandı</string>
     <string name="create_dir_failure">Couldn\'t create directory</string>
     <string name="compressed_file_name">Zip dosya ismi</string>
@@ -122,21 +123,24 @@
     <string name="copying">Kopyalanıyor&#8230;</string>
     <string name="copied">Kopyalama tamamlandı</string>
     <string name="copy_error">Some or all items couldn\'t be copied!</string>
-    <string name="moving">Ta\u015f\u0131n\u0131yor&#8230;</string>
+    <string name="moving">Taşınıyor&#8230;</string>
     <string name="moved">Taşıma işlemi tamamlandı</string>
     <string name="move_error">Some or all items couldn\'t be moved!</string>
     <string name="nothing_to_paste">Yapıştırılacak bir şey yok. Önce dosyayı kopyalayın.</string>
     <string name="about_forked_from">OI File Manager\'dan yeni süreç oluşturuldu</string>
+    <string name="about_created_by">pxHouse tarafından oluşturuldu</string>
     <string name="about">Hakkında</string>
     <string name="about_share">Paylaş</string>
     <string name="about_shareSubject">Dir uygulamasını Google Play\'den indir</string>
     <string name="about_gplay">Google Play\'de görüntüle</string>
     <string name="about_contact">Arama desteği</string>
-    <string name="about_beta">Google+ Topluluğuna katıl</string>
     <string name="about_contribute">Github\'da görüntüle</string>
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
     <!-- Right pathview button description -->
-    <!-- Left pathview manual input button description -->
     <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="saveas_no_file_picked">Hiç bir dosya seçilmedi.</string>
+    <string name="saveas_error">Hata oluştu.</string>
+    <string name="saveas_file_saved">Dosya başarılı bir şekilde kaydedildi!</string>
+    <string name="about_beta">Google+ Topluluğuna katıl</string>
 </resources>
