@@ -106,7 +106,7 @@ public class SearchListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        IdlingRegistry.getInstance().register(searchIdlingResource);
+        if (DEBUG) IdlingRegistry.getInstance().register(searchIdlingResource);
 
         viewModel = of(this).get(SearchViewModel.class);
         handleIntent();
@@ -114,7 +114,7 @@ public class SearchListFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        IdlingRegistry.getInstance().unregister(searchIdlingResource);
+        if (DEBUG) IdlingRegistry.getInstance().unregister(searchIdlingResource);
         super.onDestroy();
     }
 
