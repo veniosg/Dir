@@ -132,9 +132,6 @@
     <string name="about">Acerca de</string>
     <string name="about_share">Compartir</string>
     <string name="about_shareSubject">Consigue Dir en Google Play</string>
-    <string name="about_gplay">Ver en Google Play</string>
-    <string name="about_contact">Buscar soporte</string>
-    <string name="about_contribute">Ver en Github</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
     <!-- Right pathview button description -->

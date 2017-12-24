@@ -134,9 +134,6 @@
     <string name="about">Over</string>
     <string name="about_share">Deel</string>
     <string name="about_shareSubject">Verkrijg Dir op Google Play</string>
-    <string name="about_gplay">Bekijk op Google Play</string>
-    <string name="about_contact">Zoek hulp</string>
-    <string name="about_contribute">Bekijk op Github</string>
     <string name="yes">Ja</string>
     <string name="no">Nee</string>
     <!-- Right pathview button description -->

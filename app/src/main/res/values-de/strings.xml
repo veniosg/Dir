@@ -135,9 +135,6 @@
     <string name="about">Über</string>
     <string name="about_share">Teilen</string>
     <string name="about_shareSubject">Holen Sie sich Dir auf Google Play</string>
-    <string name="about_gplay">Auf Google Play ansehen</string>
-    <string name="about_contact">Unterstützung anfordern</string>
-    <string name="about_contribute">Auf Github ansehen</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <!-- Right pathview button description -->

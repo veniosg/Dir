@@ -130,9 +130,6 @@
     <string name="about">关于</string>
     <string name="about_share">分享</string>
     <string name="about_shareSubject">从 Play 商店中获取 Dir</string>
-    <string name="about_gplay">在 Play 商店中查看</string>
-    <string name="about_contact">寻求帮助</string>
-    <string name="about_contribute">在 Github 中查看</string>
     <string name="yes">是</string>
     <string name="no">否</string>
     <!-- Right pathview button description -->

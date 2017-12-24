@@ -137,10 +137,6 @@
     <string name="about">About</string>
     <string name="about_share">Share</string>
     <string name="about_shareSubject">Get Dir on Google Play</string>
-    <string name="about_gplay">View on Google Play</string>
-    <string name="about_contact">Seek support</string>
-    <string name="about_translate">Translate Dir</string>
-    <string name="about_contribute">View on Github</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <!-- Right pathview button description -->
@@ -151,4 +147,11 @@
 
     <string name="back">Back</string>
     <string name="close">Close</string>
+    <string name="develop">Develop</string>
+    <string name="translate">Translate</string>
+    <string name="donate">Donate</string>
+    <string name="review">Review</string>
+    <string name="contact">Contact</string>
+    <string name="donation_thanks">Thanks for supporting Dir! ❤</string>
+    <string name="purchase_cancelled">Purchase canceled</string>
 </resources>

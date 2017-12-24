@@ -77,8 +77,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="center"
                     android:background="?android:selectableItemBackground"
+                    android:gravity="center"
                     android:orientation="vertical"
                     android:padding="8dp"
                     tools:ignore="UselessParent">
@@ -113,7 +113,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:adjustViewBounds="true"
-                    android:contentDescription="@string/about_contribute"
+                    android:contentDescription="@string/develop"
                     android:src="@drawable/ic_about_github" />
 
                 <ImageButton
@@ -123,29 +123,19 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:adjustViewBounds="true"
-                    android:contentDescription="@string/about_translate"
+                    android:contentDescription="@string/translate"
                     android:src="@drawable/ic_about_translate" />
 
                 <ImageButton
-                    android:id="@+id/contact"
+                    android:id="@+id/donate"
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1.0"
                     android:adjustViewBounds="true"
-                    android:contentDescription="@string/about_contact"
-                    android:src="@drawable/ic_about_mail"
-                    tools:ignore="NestedWeights" />
-
-                <ImageButton
-                    android:id="@+id/gplay"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.0"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/about_gplay"
-                    android:src="@drawable/ic_about_google_play" />
+                    android:contentDescription="@string/donate"
+                    android:padding="24dp"
+                    android:src="@drawable/ic_about_donate" />
 
                 <ImageButton
                     android:id="@+id/share"

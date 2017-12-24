@@ -135,9 +135,6 @@
     <string name="about">О программе</string>
     <string name="about_share">Отправить</string>
     <string name="about_shareSubject">Взять Dir на Google Play</string>
-    <string name="about_gplay">Посмотреть на Google Play</string>
-    <string name="about_contact">Обратить в поддержку</string>
-    <string name="about_contribute">Посмотреть на Github</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <!-- Right pathview button description -->

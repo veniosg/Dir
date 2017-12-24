@@ -137,8 +137,6 @@
     <string name="about_share">Partager</string>
     <string name="about_shareSubject">Télécharger Dir sur Google Play</string>
     <string name="about_gplay">Voir sur Google Play</string>
-    <string name="about_contact">Support</string>
-    <string name="about_contribute">Voir sur GitHub</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <!-- Right pathview button description -->

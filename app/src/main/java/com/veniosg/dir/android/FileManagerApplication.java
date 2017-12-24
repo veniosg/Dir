@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 George Venios
+ * Copyright (C) 2014-2017 George Venios
  * Copyright (C) 2012 OpenIntents.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,6 +32,8 @@ import java.lang.reflect.Field;
 import static com.veniosg.dir.android.misc.ThumbnailHelper.imageDecoder;
 
 public class FileManagerApplication extends Application {
+    private static AnimatorSynchroniser sAnimSync = new AnimatorSynchroniser();
+
     private CopyHelper mCopyHelper;
     private MimeTypes mMimeTypes;
 
@@ -42,24 +44,8 @@ public class FileManagerApplication extends Application {
         mCopyHelper = new CopyHelper();
         mMimeTypes = MimeTypes.newInstance(this);
 
-        // Force-enable the action overflow
-        try {
-            ViewConfiguration config = ViewConfiguration.get(this);
-            Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
-            if (menuKeyField != null) {
-                menuKeyField.setAccessible(true);
-                menuKeyField.setBoolean(config, false);
-            }
-        } catch (NoSuchFieldException | IllegalAccessException ex) {
-            // Ignore
-        }
-
-        // UIL
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
-                .diskCacheSize(10240000) // 10MB
-                .imageDecoder(imageDecoder(getApplicationContext()))
-                .build();
-        ImageLoader.getInstance().init(config);
+        forceActionOverflow();
+        initImageLoader();
     }
 
     public CopyHelper getCopyHelper() {
@@ -70,10 +56,28 @@ public class FileManagerApplication extends Application {
         return mMimeTypes;
     }
 
-    // Static for easier access
-    private static AnimatorSynchroniser mAnimSync = new AnimatorSynchroniser();
+    private void forceActionOverflow() {
+        try {
+            ViewConfiguration config = ViewConfiguration.get(this);
+            Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+            if (menuKeyField != null) {
+                menuKeyField.setAccessible(true);
+                menuKeyField.setBoolean(config, false);
+            }
+        } catch (NoSuchFieldException | IllegalAccessException ex) {
+            // Ignore
+        }
+    }
+
+    private void initImageLoader() {
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .diskCacheSize(10240000) // 10MB
+                .imageDecoder(imageDecoder(getApplicationContext()))
+                .build();
+        ImageLoader.getInstance().init(config);
+    }
 
     public static void enqueueAnimator(Animator animator) {
-        mAnimSync.addWaitingAnimation(animator);
+        sAnimSync.addWaitingAnimation(animator);
     }
 }

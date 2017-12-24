@@ -132,9 +132,6 @@
     <string name="about">Hakkında</string>
     <string name="about_share">Paylaş</string>
     <string name="about_shareSubject">Dir uygulamasını Google Play\'den indir</string>
-    <string name="about_gplay">Google Play\'de görüntüle</string>
-    <string name="about_contact">Arama desteği</string>
-    <string name="about_contribute">Github\'da görüntüle</string>
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
     <!-- Right pathview button description -->
