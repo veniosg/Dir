@@ -54,8 +54,7 @@
         <TextView
             android:id="@+id/action_settings"
             android:layout_width="match_parent"
-            android:layout_height="?android:actionBarSize"
-            android:layout_marginTop="8dp"
+            android:layout_height="48dp"
             android:background="?android:selectableItemBackground"
             android:drawablePadding="32dp"
             android:drawableStart="@drawable/ic_sidenav_settings"
@@ -68,7 +67,7 @@
         <TextView
             android:id="@+id/action_about"
             android:layout_width="match_parent"
-            android:layout_height="?android:actionBarSize"
+            android:layout_height="48dp"
             android:background="?android:selectableItemBackground"
             android:drawablePadding="32dp"
             android:drawableStart="@drawable/ic_sidenav_about"
