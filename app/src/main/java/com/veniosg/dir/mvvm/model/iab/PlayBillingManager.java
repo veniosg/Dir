@@ -49,7 +49,7 @@ import static java.lang.String.format;
 import static java.util.Locale.ENGLISH;
 
 public class PlayBillingManager implements BillingManager {
-    private static final String SKU_DONATION = "android.test.purchased";
+    private static final String SKU_DONATION = "donation";
 
     enum ConnectionStatus {
         CONNECTED, CONNECTING, DISCONNECTED
