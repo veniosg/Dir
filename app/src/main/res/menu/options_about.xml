@@ -17,13 +17,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="AppCompatResource">
     <item
-        android:id="@+id/menu_review"
-        android:icon="@drawable/ic_action_review"
-        android:showAsAction="ifRoom"
-        android:title="@string/review" />
-    <item
         android:id="@+id/menu_contact"
         android:icon="@drawable/ic_action_contact"
         android:showAsAction="ifRoom"
         android:title="@string/contact" />
+    <item
+        android:id="@+id/menu_review"
+        android:icon="@drawable/ic_action_review"
+        android:showAsAction="ifRoom"
+        android:title="@string/review" />
 </menu>
