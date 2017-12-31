@@ -1,11 +1,12 @@
 Dir
 ===========
-A modern Android file manager. Please visit http://veniosg.github.io/Dir/ for more informations.
 
-<a href="https://f-droid.org/packages/com.veniosg.dir/" target="_blank">
-<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="80"/></a>
-<a href="https://play.google.com/store/apps/details?id=com.veniosg.dir" target="_blank">
-<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="80"/></a>
+http://veniosg.github.io/Dir/
+
+A modern Android file manager. 
+
+[<img alt="Get it on Google Play" height="80" src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png">](https://play.google.com/store/apps/details?id=com.veniosg.dir)
+[<img alt="Get it on F-Droid" height="80" src="https://f-droid.org/badge/get-it-on.png">](https://f-droid.org/packages/com.veniosg.dir/)
 
 Contributors
 ----
