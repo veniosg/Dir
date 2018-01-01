@@ -37,6 +37,7 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.FileManagerApplication;
@@ -69,6 +70,7 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.veniosg.dir.android.fragment.PreferenceFragment.getMediaScanFromPreference;
 import static com.veniosg.dir.android.util.CopyHelper.Operation.COPY;
+import static com.veniosg.dir.android.util.FileUtils.isZipArchive;
 import static com.veniosg.dir.android.view.PathController.OnDirectoryChangedListener;
 import static com.veniosg.dir.android.view.Themer.setStatusBarColour;
 import static com.veniosg.dir.android.view.widget.PathView.ActivityProvider;
@@ -99,20 +101,22 @@ public class SimpleFileListFragment extends FileListFragment {
             switch (getListView().getCheckedItemCount()) {
                 // Single selection
                 case 1:
-                    File file = ((FileHolder) getListAdapter().getItem(getCheckedItemPosition())).getFile();
+                    FileHolder fHolder = (FileHolder) getListAdapter().getItem(getCheckedItemPosition());
+                    if (fHolder == null) return false;
+                    File file = fHolder.getFile();
                     inflateSingleChoiceMenu(mode.getMenuInflater(), menu);
 
-                    // If selected item is a directory
                     if (file.isDirectory()) {
                         menu.removeItem(R.id.menu_send);
                     }
 
-                    // If selected item is a zip archive
-                    if (!FileUtils.checkIfZipArchive(file)) {
-                        menu.findItem(R.id.menu_file_ops).getSubMenu()
+                    if (!isZipArchive(file)) {
+                        menu.findItem(R.id.menu_file_ops)
+                                .getSubMenu()
                                 .removeItem(R.id.menu_extract);
                     } else {
-                        menu.findItem(R.id.menu_file_ops).getSubMenu()
+                        menu.findItem(R.id.menu_file_ops)
+                                .getSubMenu()
                                 .removeItem(R.id.menu_compress);
                     }
                     break;
@@ -254,6 +258,7 @@ public class SimpleFileListFragment extends FileListFragment {
 
     private boolean handleSingleSelectionAction(ActionMode mode, MenuItem item) {
         FileHolder fItem = (FileHolder) getListAdapter().getItem(getCheckedItemPosition());
+        if (fItem == null) return false;
         DialogFragment dialog;
         Bundle args;
 
@@ -421,9 +426,11 @@ public class SimpleFileListFragment extends FileListFragment {
     @Override
     public void onListItemClick(AbsListView l, View v, int position, long id) {
         FileHolder item = (FileHolder) mAdapter.getItem(position);
-        heroView = v;
-        openInformingPathBar(item);
-        heroView = null;
+        if (item != null) {
+            heroView = v;
+            openInformingPathBar(item);
+            heroView = null;
+        }
     }
 
     /**
@@ -704,7 +711,8 @@ public class SimpleFileListFragment extends FileListFragment {
         ArrayList<FileHolder> items = new ArrayList<FileHolder>();
 
         for (long pos : getListView().getCheckedItemIds()) {
-            items.add((FileHolder) getListAdapter().getItem((int) pos));
+            FileHolder item = (FileHolder) getListAdapter().getItem((int) pos);
+            if (item != null) items.add(item);
         }
 
         return items;

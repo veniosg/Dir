@@ -140,8 +140,8 @@ public class FileUtils {
      * @param f File which needs to be checked.
      * @return True if the file is a zip archive.
      */
-    public static boolean checkIfZipArchive(File f){
-        // Hacky but fast enough
+    public static boolean isZipArchive(File f){
+        // Hacky but fast
         return f.isFile() && FileUtils.getExtension(f.getAbsolutePath()).equals(".zip");
     }
 

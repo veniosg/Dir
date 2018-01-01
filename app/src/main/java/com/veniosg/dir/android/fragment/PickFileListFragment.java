@@ -38,12 +38,14 @@ import com.veniosg.dir.android.view.widget.PickBar.OnPickRequestedListener;
 
 import java.io.File;
 
+import static com.veniosg.dir.IntentConstants.*;
+import static com.veniosg.dir.android.fragment.PreferenceFragment.setDefaultPickFilePath;
+
 public class PickFileListFragment extends SimpleFileListFragment {
 	private PickBar mPickBar;
-	
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 		return inflater.inflate(R.layout.fragment_filelist_pick, container, false);
 	}
@@ -58,31 +60,26 @@ public class PickFileListFragment extends SimpleFileListFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		ViewFlipper modeSelector = (ViewFlipper) view.findViewById(R.id.modeSelector);
-		
+
 		// Folder init
-		if(getArguments().getBoolean(IntentConstants.EXTRA_DIRECTORIES_ONLY)){
+		if (getArguments().getBoolean(EXTRA_DIRECTORIES_ONLY)) {
 			modeSelector.setDisplayedChild(0);
-			
+
 			Button button = (Button) view.findViewById(R.id.button);
-			button.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					pickFileOrFolder(new File(getPath()), false);
-				}
-			});
-			if(getArguments().containsKey(IntentConstants.EXTRA_BUTTON_TEXT)){
-				button.setText(getArguments().getString(IntentConstants.EXTRA_BUTTON_TEXT));
+			button.setOnClickListener(v -> pickFileOrFolder(new File(getPath()), false));
+			if (getArguments().containsKey(EXTRA_BUTTON_TEXT)){
+				button.setText(getArguments().getString(EXTRA_BUTTON_TEXT));
 			}
 		}
 		// Files init
 		else {
 			modeSelector.setDisplayedChild(1);
-			
+
 			mPickBar = (PickBar) view.findViewById(R.id.pickBar);
-			mPickBar.setButtonText(getArguments().getString(IntentConstants.EXTRA_BUTTON_TEXT));
-			 
+			mPickBar.setButtonText(getArguments().getString(EXTRA_BUTTON_TEXT));
+
 			mPickBar.setText(getFilename());
-			
+
 			mPickBar.setOnPickRequestedListener(new OnPickRequestedListener() {
 				@Override
 				public void pickRequested(String filename) {
@@ -92,26 +89,26 @@ public class PickFileListFragment extends SimpleFileListFragment {
 					}
 
 					// Pick
-					pickFileOrFolder(new File(getPath() + (getPath().endsWith("/") ? "" : "/") + filename), 
-							getArguments().getBoolean(IntentConstants.EXTRA_IS_GET_CONTENT_INITIATED, false));
+					pickFileOrFolder(new File(getPath() + (getPath().endsWith("/") ? "" : "/") + filename),
+							getArguments().getBoolean(EXTRA_IS_GET_CONTENT_INITIATED, false));
 				}
 			});
-			
-		}			
+		}
 	}
 
 	@Override
 	public void onListItemClick(AbsListView l, View v, int position, long id) {
 		FileHolder item = (FileHolder) mAdapter.getItem(position);
-		
-		if(item.getFile().isFile())
-			mPickBar.setText(item.getName());
-		else
-			super.onListItemClick(l, v, position, id);
+
+        if (item != null && item.getFile().isFile()) {
+            mPickBar.setText(item.getName());
+        } else {
+            super.onListItemClick(l, v, position, id);
+        }
 	}
-	
+
 	/**
-	 * Act upon picking. 
+	 * Act upon picking.
 	 * @param selection A {@link File} representing the user's selection.
 	 * @param getContentInitiated Whether the fragment was called through a GET_CONTENT intent on
      *                            the IntentFilterActivity. We have to know this so that result
@@ -121,13 +118,14 @@ public class PickFileListFragment extends SimpleFileListFragment {
 		Intent intent = new Intent();
 		intent.putExtras(getArguments());
 
-        PreferenceFragment.setDefaultPickFilePath(getActivity(), selection.getParent() != null
+        setDefaultPickFilePath(getActivity(), selection.getParent() != null
                 ?  selection.getParent() : "/");
-		
-		if(getContentInitiated)
-			intent.setData(Uri.parse(FileManagerProvider.FILE_PROVIDER_PREFIX + selection));
-		else
-			intent.setData(Uri.fromFile(selection));		
+
+		if (getContentInitiated) {
+            intent.setData(Uri.parse(FileManagerProvider.FILE_PROVIDER_PREFIX + selection));
+        } else {
+            intent.setData(Uri.fromFile(selection));
+        }
 		getActivity().setResult(Activity.RESULT_OK, intent);
 		getActivity().finish();
 	}

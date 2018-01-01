@@ -17,6 +17,7 @@
 package com.veniosg.dir.android.adapter;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,14 +33,13 @@ import com.veniosg.dir.android.view.ViewHolder;
 import java.util.List;
 
 import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
+import static com.veniosg.dir.android.misc.ThumbnailHelper.requestIcon;
 
 public class FileHolderListAdapter extends BaseAdapter {
     private List<FileHolder> mItems;
 	private int mItemLayoutId = R.layout.item_filelist;
 
-	// Thumbnail specific
-    private boolean scrolling = false;
-    private OnItemToggleListener mOnItemToggleListener;
+	private OnItemToggleListener mOnItemToggleListener;
 
     public FileHolderListAdapter(List<FileHolder> files){
 		mItems = files;
@@ -56,7 +56,10 @@ public class FileHolderListAdapter extends BaseAdapter {
 	}
 
 	@Override
+    @Nullable
 	public Object getItem(int position) {
+        if (position < 0 || position >= mItems.size()) return null;
+
 		return mItems.get(position);
 	}
 
@@ -80,7 +83,7 @@ public class FileHolderListAdapter extends BaseAdapter {
 	 * Creates a new list item view, along with it's ViewHolder set as a tag.
 	 * @return The new view.
 	 */
-    View newView(Context context){
+	private View newView(Context context){
 		View view = LayoutInflater.from(context).inflate(mItemLayoutId, null);
 
 		ViewHolder holder = new ViewHolder();
@@ -108,7 +111,7 @@ public class FileHolderListAdapter extends BaseAdapter {
 		holder.tertiaryInfo.setText(item.getFile().isDirectory()? "" : item.getFormattedSize(
                 convertView.getContext(), false));
 
-        ThumbnailHelper.requestIcon(item, holder.icon);
+        requestIcon(item, holder.icon);
 
 		return convertView;
 	}
@@ -122,7 +125,7 @@ public class FileHolderListAdapter extends BaseAdapter {
     }
 
     private boolean shouldLoadIcon(FileHolder item){
-		return !scrolling && item.getFile().isFile() && !item.getMimeType().equals("video/mpeg");
+		return item.getFile().isFile() && !item.getMimeType().equals("video/mpeg");
 	}
 
     public interface OnItemToggleListener {
