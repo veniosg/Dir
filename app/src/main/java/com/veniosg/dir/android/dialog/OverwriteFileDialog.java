@@ -16,18 +16,17 @@
 
 package com.veniosg.dir.android.dialog;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 
 import com.veniosg.dir.R;
 
-@SuppressLint("ValidFragment")
-class OverwriteFileDialog extends DialogFragment {
-	
+public class OverwriteFileDialog extends DialogFragment {
+	@NonNull
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		return new AlertDialog.Builder(getActivity())
@@ -35,8 +34,7 @@ class OverwriteFileDialog extends DialogFragment {
 				.setMessage(R.string.overwrite_question)
 				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
+							public void onClick(DialogInterface dialog, int which) {
 								((Overwritable) getTargetFragment()).overwrite();
 							}
 						})
@@ -45,6 +43,6 @@ class OverwriteFileDialog extends DialogFragment {
 	}
 	
 	public interface Overwritable {
-		public void overwrite();
+		void overwrite();
 	}
 }
