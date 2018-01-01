@@ -700,8 +700,13 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     private void keepFolderScroll() {
-        sScrollPositions.put(getPath(), new ScrollPosition(getListView().getFirstVisiblePosition(),
-                getListView().getChildAt(0).getTop()));
+        int firstVisiblePosition = getListView().getFirstVisiblePosition();
+        View firstVisibleChild = getListView().getChildAt(0);
+
+        if (firstVisibleChild != null) {
+            sScrollPositions.put(getPath(), new ScrollPosition(firstVisiblePosition,
+                    firstVisibleChild.getTop()));
+        }
     }
 
     /**
