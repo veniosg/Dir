@@ -213,6 +213,8 @@ public abstract class FileListFragment extends AbsListFragment {
 	}
 
     private boolean hasPermissions() {
+	    if (getActivity() == null) return false;
+
         return checkSelfPermission(getActivity(), WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED;
     }
 
