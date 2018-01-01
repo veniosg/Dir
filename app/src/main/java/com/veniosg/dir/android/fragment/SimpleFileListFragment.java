@@ -96,6 +96,7 @@ public class SimpleFileListFragment extends FileListFragment {
 
         @Override
         public boolean onPrepareActionMode(android.view.ActionMode mode, Menu menu) {
+            if (getView() == null) return false; // Prevent crash from getListView()'s ensureList().
             menu.clear();
 
             switch (getListView().getCheckedItemCount()) {
