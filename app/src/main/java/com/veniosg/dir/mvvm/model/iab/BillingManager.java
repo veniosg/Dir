@@ -21,8 +21,9 @@ import android.content.Context;
 import com.android.billingclient.api.Purchase;
 
 public interface BillingManager {
-    void init(Context context, OnPurchasedListener onPurchasedListener);
-    boolean supportsBilling();
+    void init(Context context,
+              OnPurchasedListener onPurchasedListener,
+              OnBillingUnavailableListener onUnavailableListener);
     boolean hasPurchasedDonation();
     void purchaseDonation(Activity activity);
     void consumePurchase(Purchase p, OnConsumedListener onConsumedListener);
@@ -33,5 +34,9 @@ public interface BillingManager {
 
     interface OnConsumedListener {
         void onConsumed();
+    }
+
+    interface OnBillingUnavailableListener {
+        void onBillingUnavailable();
     }
 }

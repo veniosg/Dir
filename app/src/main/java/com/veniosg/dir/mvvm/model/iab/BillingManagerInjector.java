@@ -16,16 +16,7 @@
 package com.veniosg.dir.mvvm.model.iab;
 
 public abstract class BillingManagerInjector {
-    private static BillingManager sBillingManager;
-
-    public static BillingManager billingManager() {
-        if (sBillingManager == null) {
-            sBillingManager = newManager();
-        }
-        return sBillingManager;
-    }
-
-    private static BillingManager newManager() {
+    public static BillingManager playBillingManager() {
         return new PlayBillingManager();
     }
 }

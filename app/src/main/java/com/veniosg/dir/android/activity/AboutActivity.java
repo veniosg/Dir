@@ -35,29 +35,29 @@ import com.veniosg.dir.mvvm.model.iab.BillingManager;
 import static android.content.Intent.ACTION_SENDTO;
 import static android.text.TextUtils.isEmpty;
 import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
-import static com.veniosg.dir.mvvm.model.iab.BillingManagerInjector.billingManager;
+import static com.veniosg.dir.mvvm.model.iab.BillingManagerInjector.playBillingManager;
 
 public class AboutActivity extends BaseActivity {
-    private BillingManager billingManager = billingManager();
+    private BillingManager billingManager = playBillingManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        billingManager.init(this, p -> {
-            billingManager.consumePurchase(p, () -> {
-                makeText(AboutActivity.this, R.string.donation_thanks, LENGTH_SHORT).show();
-            });
-        });
+        billingManager.init(this,
+                p -> {
+                    billingManager.consumePurchase(p, () -> {
+                        makeText(AboutActivity.this, R.string.donation_thanks, LENGTH_SHORT).show();
+                    });
+                },
+                () -> findViewById(R.id.donate).setVisibility(GONE));
         setupToolbar();
         setupViews();
     }
 
     private void setupViews() {
-        findViewById(R.id.donate).setVisibility(billingManager.supportsBilling() ? VISIBLE : GONE);
         try {
             ((TextView) findViewById(R.id.dirVersion)).setText(
                     getPackageManager().getPackageInfo(getPackageName(), 0).versionName);

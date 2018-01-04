@@ -34,6 +34,7 @@ import java.util.List;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
+import static com.android.billingclient.api.BillingClient.BillingResponse.BILLING_UNAVAILABLE;
 import static com.android.billingclient.api.BillingClient.BillingResponse.ITEM_ALREADY_OWNED;
 import static com.android.billingclient.api.BillingClient.BillingResponse.ITEM_UNAVAILABLE;
 import static com.android.billingclient.api.BillingClient.BillingResponse.OK;
@@ -49,6 +50,7 @@ import static java.util.Locale.ENGLISH;
 
 public class PlayBillingManager implements BillingManager {
     private static final String SKU_DONATION = "donation";
+    private OnBillingUnavailableListener onBillingUnavailableListener;
 
     enum ConnectionStatus {
         CONNECTED, CONNECTING, DISCONNECTED
@@ -62,9 +64,12 @@ public class PlayBillingManager implements BillingManager {
 
     @SuppressWarnings("Convert2Lambda")
     @Override
-    public void init(Context context, OnPurchasedListener onPurchasedListener) {
+    public void init(Context context,
+                     OnPurchasedListener onPurchasedListener,
+                     OnBillingUnavailableListener onBillingUnavailableListener) {
         if (billingClient != null) return;
 
+        this.onBillingUnavailableListener = onBillingUnavailableListener;
         billingClient = BillingClient.newBuilder(context.getApplicationContext())
                 .setListener(new PurchasesUpdatedListener() {
                     @Override
@@ -98,11 +103,6 @@ public class PlayBillingManager implements BillingManager {
                 })
                 .build();
         startConnection();
-    }
-
-    @Override
-    public boolean supportsBilling() {
-        return true;
     }
 
     @Override
@@ -183,9 +183,9 @@ public class PlayBillingManager implements BillingManager {
                     logV(TAG_BILLING, "Failed to connect to billing service");
                     connectionStatus = DISCONNECTED;
 
-                    if (responseCode != SERVICE_UNAVAILABLE) {
-                        // Doesn't seem permanent, retry
-                        startConnection();
+                    if (responseCode == SERVICE_UNAVAILABLE || responseCode == BILLING_UNAVAILABLE) {
+                        logV(TAG_BILLING, "Billing service unavailable");
+                        onBillingUnavailableListener.onBillingUnavailable();
                     }
                 }
             }
