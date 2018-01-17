@@ -10,5 +10,4 @@ import org.junit.runner.RunWith;
 @LargeTest
 @Ignore
 public class SettingsActivityTest {
-    // TODO test (pt2)
 }

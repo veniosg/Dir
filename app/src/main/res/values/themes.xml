@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2018 George Venios
  * Copyright (C) 2012 OpenIntents.org
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -64,6 +64,13 @@
         <item name="android:alertDialogTheme">@style/Theme.Dir.Dialog.Alert</item>
     </style>
 
+    <style name="Theme.Dir.Translucent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+    </style>
+
     <!-- Dark theme -->
     <style name="Theme.Dir.Dark" parent="@android:style/Theme.Material" >
         <!-- Common attributes -->
@@ -108,6 +115,13 @@
         <item name="android:alertDialogTheme">@style/Theme.Dark.Dialog.Alert</item>
     </style>
 
+    <style name="Theme.Dir.Dark.Translucent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+    </style>
+
     <!-- Light grayscale theme -->
     <style name="Theme.Dir.Grayscale" >
         <!-- Base colours -->
@@ -120,6 +134,12 @@
         <item name="android:alertDialogTheme">@style/Theme.Grayscale.Dialog.Alert</item>
     </style>
 
+    <style name="Theme.Dir.Grayscale.Translucent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
+    </style>
 
     <!-- Dialog themes -->
     <style name="Theme.Dir.Dialog.Alert" parent="@android:style/Theme.Material.Light.Dialog.Alert" >
@@ -133,5 +153,4 @@
     <style name="Theme.Grayscale.Dialog.Alert" parent="@style/Theme.Dir.Dialog.Alert" >
         <item name="android:colorAccent">@color/dark_primaryDark</item>
     </style>
-
 </resources>

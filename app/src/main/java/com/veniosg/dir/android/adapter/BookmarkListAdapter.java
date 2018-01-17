@@ -28,7 +28,7 @@ import android.widget.TextView;
 import com.veniosg.dir.R;
 import com.veniosg.dir.mvvm.model.FileHolder;
 import com.veniosg.dir.android.misc.ThumbnailHelper;
-import com.veniosg.dir.android.view.ViewHolder;
+import com.veniosg.dir.android.ui.ViewHolder;
 
 import java.io.File;
 
@@ -56,7 +56,7 @@ public class BookmarkListAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View convertView, Context context, Cursor cursor) {
-        ViewHolder holder = (com.veniosg.dir.android.view.ViewHolder) convertView.getTag();
+        ViewHolder holder = (com.veniosg.dir.android.ui.ViewHolder) convertView.getTag();
         FileHolder item = new FileHolder(new File(cursor.getString(2)), convertView.getContext());
 
         holder.icon.setImageDrawable(item.getBestIcon());

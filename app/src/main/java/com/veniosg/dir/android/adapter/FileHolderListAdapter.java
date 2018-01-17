@@ -27,8 +27,7 @@ import android.widget.TextView;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.mvvm.model.FileHolder;
-import com.veniosg.dir.android.misc.ThumbnailHelper;
-import com.veniosg.dir.android.view.ViewHolder;
+import com.veniosg.dir.android.ui.ViewHolder;
 
 import java.util.List;
 

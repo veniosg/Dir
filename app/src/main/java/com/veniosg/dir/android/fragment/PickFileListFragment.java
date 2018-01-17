@@ -29,12 +29,11 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.mvvm.model.FileHolder;
 import com.veniosg.dir.android.provider.FileManagerProvider;
-import com.veniosg.dir.android.view.widget.PickBar;
-import com.veniosg.dir.android.view.widget.PickBar.OnPickRequestedListener;
+import com.veniosg.dir.android.ui.widget.PickBar;
+import com.veniosg.dir.android.ui.widget.PickBar.OnPickRequestedListener;
 
 import java.io.File;
 

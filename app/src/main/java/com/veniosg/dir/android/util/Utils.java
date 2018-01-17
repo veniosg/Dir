@@ -47,8 +47,11 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import static android.graphics.Bitmap.Config.ARGB_8888;
+import static android.text.TextUtils.isEmpty;
 import static android.view.View.MeasureSpec.EXACTLY;
 import static android.view.View.MeasureSpec.makeMeasureSpec;
+import static android.widget.Toast.LENGTH_SHORT;
+import static android.widget.Toast.makeText;
 import static com.veniosg.dir.AnimationConstants.ANIM_START_DELAY;
 import static java.lang.Math.abs;
 
@@ -74,6 +77,21 @@ public abstract class Utils {
         Intent intent = new Intent(act, FileManagerActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         act.startActivity(intent);
+    }
+
+    public static void viewUri(Context context, @NonNull String uri, @Nullable String fallbackUrl) {
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        try {
+            i.setData(Uri.parse(uri));
+            context.startActivity(i);
+        } catch (ActivityNotFoundException e) {
+            if (isEmpty(fallbackUrl)) {
+                Logger.log(e);
+                makeText(context, R.string.application_not_available, LENGTH_SHORT).show();
+            } else {
+                viewUri(context, fallbackUrl, null);
+            }
+        }
     }
 
     /**

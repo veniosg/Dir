@@ -38,13 +38,13 @@ import com.veniosg.dir.android.activity.AboutActivity;
 import com.veniosg.dir.android.activity.PreferenceActivity;
 import com.veniosg.dir.android.adapter.BookmarkListAdapter;
 import com.veniosg.dir.android.provider.BookmarkProvider;
-import com.veniosg.dir.android.view.widget.WaitingViewFlipper;
+import com.veniosg.dir.android.ui.widget.WaitingViewFlipper;
 
 import java.io.File;
 
 import static android.view.View.GONE;
-import static com.veniosg.dir.android.view.Themer.getThemedResourceId;
-import static com.veniosg.dir.android.view.Themer.setStatusBarColour;
+import static com.veniosg.dir.android.ui.Themer.getThemedResourceId;
+import static com.veniosg.dir.android.ui.Themer.setStatusBarColour;
 
 public class SideNavFragment extends AbsListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private WaitingViewFlipper mFlipper;

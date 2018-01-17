@@ -40,7 +40,7 @@ import com.veniosg.dir.mvvm.model.DirectoryHolder;
 import com.veniosg.dir.android.misc.DirectoryScanner;
 import com.veniosg.dir.mvvm.model.FileHolder;
 import com.veniosg.dir.android.util.Logger;
-import com.veniosg.dir.android.view.widget.WaitingViewFlipper;
+import com.veniosg.dir.android.ui.widget.WaitingViewFlipper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,9 +56,9 @@ import static com.veniosg.dir.IntentConstants.EXTRA_DIR_PATH;
 import static com.veniosg.dir.IntentConstants.EXTRA_FILTER_MIMETYPE;
 import static com.veniosg.dir.IntentConstants.EXTRA_WRITEABLE_ONLY;
 import static com.veniosg.dir.android.fragment.PreferenceFragment.PREFS_THEME;
-import static com.veniosg.dir.android.view.widget.WaitingViewFlipper.PAGE_INDEX_CONTENT;
-import static com.veniosg.dir.android.view.widget.WaitingViewFlipper.PAGE_INDEX_LOADING;
-import static com.veniosg.dir.android.view.widget.WaitingViewFlipper.PAGE_INDEX_PERMISSION_DENIED;
+import static com.veniosg.dir.android.ui.widget.WaitingViewFlipper.PAGE_INDEX_CONTENT;
+import static com.veniosg.dir.android.ui.widget.WaitingViewFlipper.PAGE_INDEX_LOADING;
+import static com.veniosg.dir.android.ui.widget.WaitingViewFlipper.PAGE_INDEX_PERMISSION_DENIED;
 
 /**
  * An {@link AbsListFragment} that displays the contents of a directory.

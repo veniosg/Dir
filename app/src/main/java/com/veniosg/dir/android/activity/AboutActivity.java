@@ -21,22 +21,20 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.veniosg.dir.R;
+import com.veniosg.dir.android.ui.CheatSheet;
 import com.veniosg.dir.android.util.Logger;
-import com.veniosg.dir.android.view.CheatSheet;
 import com.veniosg.dir.mvvm.model.iab.BillingManager;
 
 import static android.content.Intent.ACTION_SENDTO;
-import static android.text.TextUtils.isEmpty;
 import static android.view.View.GONE;
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
+import static com.veniosg.dir.android.util.Utils.viewUri;
 import static com.veniosg.dir.mvvm.model.iab.BillingManagerInjector.playBillingManager;
 
 public class AboutActivity extends BaseActivity {
@@ -67,13 +65,13 @@ public class AboutActivity extends BaseActivity {
 
         // Click listeners
         findViewById(R.id.middleText).setOnClickListener(v -> {
-            viewUri("market://dev?id=8885726315648229405", "https://play.google.com/store/apps/dev?id=8885726315648229405");
+            viewUri(this, "market://dev?id=8885726315648229405", "https://play.google.com/store/apps/dev?id=8885726315648229405");
         });
         findViewById(R.id.contribute).setOnClickListener(v -> {
-            viewUri("https://github.com/veniosg/dir", null);
+            viewUri(this, "https://github.com/veniosg/dir", null);
         });
         findViewById(R.id.translate).setOnClickListener(v -> {
-            viewUri("http://dirapp.oneskyapp.com/collaboration/project?id=27347", null);
+            viewUri(this, "http://dirapp.oneskyapp.com/collaboration/project?id=27347", null);
         });
         findViewById(R.id.donate).setOnClickListener(v -> {
             billingManager.purchaseDonation(this);
@@ -121,25 +119,10 @@ public class AboutActivity extends BaseActivity {
                 }
                 return true;
             case R.id.menu_review:
-                viewUri("market://details?id=com.veniosg.dir", "http://play.google.com/store/apps/details?id=com.veniosg.dir");
+                viewUri(this, "market://details?id=com.veniosg.dir", "http://play.google.com/store/apps/details?id=com.veniosg.dir");
                 return true;
             default:
                 return super.onMenuItemSelected(featureId, item);
-        }
-    }
-
-    private void viewUri(@NonNull String uri, @Nullable String fallbackUrl) {
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        try {
-            i.setData(Uri.parse(uri));
-            startActivity(i);
-        } catch (ActivityNotFoundException e) {
-            if (isEmpty(fallbackUrl)) {
-                Logger.log(e);
-                makeText(AboutActivity.this, R.string.application_not_available, LENGTH_SHORT).show();
-            } else {
-                viewUri(fallbackUrl, null);
-            }
         }
     }
 }

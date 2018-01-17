@@ -34,7 +34,7 @@ import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.veniosg.dir.android.view.widget.DividerGridView;
+import com.veniosg.dir.android.ui.widget.DividerGridView;
 
 /**
  * Static library support version of the framework's {@link android.app.ListFragment}.

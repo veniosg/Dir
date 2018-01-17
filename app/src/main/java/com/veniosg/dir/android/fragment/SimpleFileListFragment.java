@@ -56,9 +56,9 @@ import com.veniosg.dir.android.util.FileUtils;
 import com.veniosg.dir.android.util.Logger;
 import com.veniosg.dir.android.util.MediaScannerUtils;
 import com.veniosg.dir.android.util.Utils;
-import com.veniosg.dir.android.view.PathController;
-import com.veniosg.dir.android.view.widget.AnimatedFileListContainer;
-import com.veniosg.dir.android.view.widget.PathView;
+import com.veniosg.dir.android.ui.PathController;
+import com.veniosg.dir.android.ui.widget.AnimatedFileListContainer;
+import com.veniosg.dir.android.ui.widget.PathView;
 import com.veniosg.dir.mvvm.model.FileHolder;
 
 import java.io.File;
@@ -71,9 +71,9 @@ import static android.view.View.VISIBLE;
 import static com.veniosg.dir.android.fragment.PreferenceFragment.getMediaScanFromPreference;
 import static com.veniosg.dir.android.util.CopyHelper.Operation.COPY;
 import static com.veniosg.dir.android.util.FileUtils.isZipArchive;
-import static com.veniosg.dir.android.view.PathController.OnDirectoryChangedListener;
-import static com.veniosg.dir.android.view.Themer.setStatusBarColour;
-import static com.veniosg.dir.android.view.widget.PathView.ActivityProvider;
+import static com.veniosg.dir.android.ui.PathController.OnDirectoryChangedListener;
+import static com.veniosg.dir.android.ui.Themer.setStatusBarColour;
+import static com.veniosg.dir.android.ui.widget.PathView.ActivityProvider;
 
 /**
  * A file list fragment that supports CAB selection.

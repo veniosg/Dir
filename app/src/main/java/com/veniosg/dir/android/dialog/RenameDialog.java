@@ -18,109 +18,77 @@ package com.veniosg.dir.android.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
+import com.veniosg.dir.android.ui.toast.ToastDisplayer;
 import com.veniosg.dir.mvvm.model.FileHolder;
-import com.veniosg.dir.android.util.MediaScannerUtils;
+import com.veniosg.dir.mvvm.model.storage.operation.RenameOperation;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE;
+import static android.view.inputmethod.EditorInfo.IME_ACTION_GO;
+import static com.veniosg.dir.mvvm.model.storage.operation.FileOperationRunnerInjector.operationRunner;
+import static com.veniosg.dir.mvvm.model.storage.operation.argument.RenameArguments.renameArguments;
 
 public class RenameDialog extends DialogFragment {
-	private FileHolder mFileHolder;
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		mFileHolder = getArguments().getParcelable(IntentConstants.EXTRA_DIALOG_FILE_HOLDER);
-	}
+    private FileHolder mFileHolder;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mFileHolder = getArguments().getParcelable(IntentConstants.EXTRA_DIALOG_FILE_HOLDER);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getDialog().getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        getDialog().getWindow().setSoftInputMode(SOFT_INPUT_STATE_VISIBLE);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-	@Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		LayoutInflater inflater = LayoutInflater.from(getActivity());
-		LinearLayout view = (LinearLayout) inflater.inflate(R.layout.dialog_text_input, null);
-		final EditText v = (EditText) view.findViewById(R.id.foldername);
-		v.setText(mFileHolder.getName());
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        LinearLayout view = (LinearLayout) inflater.inflate(R.layout.dialog_text_input, null);
+        final EditText v = view.findViewById(R.id.textinput);
+        v.setText(mFileHolder.getName());
 
-		v.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-			public boolean onEditorAction(TextView text, int actionId,
-					KeyEvent event) {
-				if (actionId == EditorInfo.IME_ACTION_GO)
-					renameTo(text.getText().toString());
-				dismiss();
-				return true;
-			}
-		});
+        v.setOnEditorActionListener((text, actionId, event) -> {
+            if (actionId == IME_ACTION_GO) renameTo(text.getText().toString());
+            dismiss();
+            return true;
+        });
 
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.menu_rename)
                 .setView(view)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.ok,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog,
-                                                int which) {
-                                renameTo(v.getText().toString());
-
-                            }
-                        })
+                        (dialog1, which) -> renameTo(v.getText().toString()))
                 .create();
         dialog.setIcon(mFileHolder.getIcon());
         return dialog;
-	}
+    }
 
-	private void renameTo(String to){
-		boolean res = false;
-		
-		if(to.length() > 0){
-			File from = mFileHolder.getFile();
-			File dest = new File(mFileHolder.getFile().getParent(), to);
-            List<String> paths = new ArrayList<String>();
-            if(from.isDirectory()) {
-                MediaScannerUtils.getPathsOfFolder(paths, from);
-            }
+    private void renameTo(String newName) {
+        boolean res = false;
 
-			if(!dest.exists()){
-				res = mFileHolder.getFile().renameTo(dest);
-
-				// Inform media scanner
-                if (res) {
-                    if (dest.isFile()) {
-                        MediaScannerUtils.informFileDeleted(getActivity().getApplicationContext(), from);
-                        MediaScannerUtils.informFileAdded(getActivity().getApplicationContext(), dest);
-                    } else {
-                        MediaScannerUtils.informPathsDeleted(getActivity().getApplicationContext(), paths);
-                        MediaScannerUtils.informFolderAdded(getActivity().getApplicationContext(), dest);
-                    }
-                }
-			}
-		}
-		
-		Toast.makeText(getActivity(), res ? R.string.rename_success : R.string.rename_failure, Toast.LENGTH_SHORT).show();
-	}
+        if (newName.length() > 0) {
+            Context c = getContext();
+            operationRunner(c).run(
+                    new RenameOperation(c, new ToastDisplayer(c)),
+                    renameArguments(mFileHolder.getFile(), newName));
+        }
+    }
 }

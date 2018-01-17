@@ -19,7 +19,7 @@
     android:clickable="true"
     android:orientation="vertical">
 
-    <com.veniosg.dir.android.view.widget.PathView
+    <com.veniosg.dir.android.ui.widget.PathView
         android:id="@id/pathview"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
@@ -27,12 +27,12 @@
         android:elevation="@dimen/elevation_toolbar"
         android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar" />
 
-    <com.veniosg.dir.android.view.widget.AnimatedFileListContainer
+    <com.veniosg.dir.android.ui.widget.AnimatedFileListContainer
         android:id="@+id/zoomview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:attr/colorBackground">
 
         <include layout="@layout/fragment_filelist" />
-    </com.veniosg.dir.android.view.widget.AnimatedFileListContainer>
+    </com.veniosg.dir.android.ui.widget.AnimatedFileListContainer>
 </LinearLayout>

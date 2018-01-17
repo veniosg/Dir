@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  -->
-<com.veniosg.dir.android.view.widget.WaitingViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+<com.veniosg.dir.android.ui.widget.WaitingViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/flipper"
     android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         android:orientation="vertical">
 
         <!-- List -->
-        <com.veniosg.dir.android.view.widget.DividerGridView
+        <com.veniosg.dir.android.ui.widget.DividerGridView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -123,4 +123,4 @@
             android:stateListAnimator="@anim/state_list_anim_material"
             tools:ignore="ContentDescription" />
     </LinearLayout>
-</com.veniosg.dir.android.view.widget.WaitingViewFlipper>
+</com.veniosg.dir.android.ui.widget.WaitingViewFlipper>

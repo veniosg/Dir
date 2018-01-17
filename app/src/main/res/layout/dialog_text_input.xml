@@ -17,9 +17,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="match_parent" >
-    
+
 	<EditText
-	    android:id="@+id/foldername"
+	    android:id="@+id/textinput"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:imeOptions="actionGo"

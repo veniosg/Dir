@@ -1,12 +1,11 @@
-/* 
+/*
+ * Copyright (C) 2018 George Venios
  * Copyright (C) 2008 OpenIntents.org
- * Copyright (C) 2014 George Venios
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,6 +21,9 @@ package com.veniosg.dir;
  * <p>These specifiers extend the standard Android specifiers.</p>
  */
 public final class IntentConstants {
+	public static final String ACTION_REFRESH_LIST = "org.openintents.action.REFRESH_LIST";
+	public static final String ACTION_REFRESH_THEME = "org.openintents.action.REFRESH_THEME";
+	public static final String ACTION_STORAGE_ACCESS_RESULT = "com.veniosg.extra.STORAGE_ACCESS_RESULT";
 
 	/**
 	 * Activity Action: Pick a file through the file manager, or let user
@@ -108,6 +110,5 @@ public final class IntentConstants {
 	public static final String EXTRA_FILENAME = "org.openintents.extra.FILENAME";
 
     public static final String EXTRA_FROM_OI_FILEMANAGER = "org.openintents.extra.FROM_OI_FILEMANAGER";
-    public static final String ACTION_REFRESH_LIST = "org.openintents.action.REFRESH_LIST";
-    public static final String ACTION_REFRESH_THEME = "org.openintents.action.REFRESH_THEME";
+	public static final String EXTRA_STORAGE_ACCESS_GRANTED = "com.veniosg.extra.STORAGE_ACCESS_GRANTED";
 }

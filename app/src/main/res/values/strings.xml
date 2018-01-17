@@ -152,6 +152,11 @@
     <string name="donate">Donate</string>
     <string name="review">Review</string>
     <string name="contact">Contact</string>
-    <string name="donation_thanks">Thanks for supporting Dir! ❤</string>
+    <string name="donation_thanks">Thank you for supporting Dir! ❤</string>
     <string name="purchase_cancelled">Purchase canceled</string>
+    <string name="select_sd_root">Please select the SD Card root</string>
+    <string name="write_access_required">Write access required</string>
+    <string name="grant_access">Grant access</string>
+    <string name="help">Help</string>
+    <string name="saf_dialog_message">Select the root directory of your SD Card.</string>
 </resources>

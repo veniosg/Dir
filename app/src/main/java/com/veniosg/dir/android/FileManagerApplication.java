@@ -25,7 +25,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.veniosg.dir.android.misc.MimeTypes;
 import com.veniosg.dir.android.util.CopyHelper;
-import com.veniosg.dir.android.view.AnimatorSynchroniser;
+import com.veniosg.dir.android.ui.AnimatorSynchroniser;
 
 import java.lang.reflect.Field;
 

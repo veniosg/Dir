@@ -42,7 +42,7 @@
                     android:text="@string/directory_pick" />
             </LinearLayout>
 
-            <com.veniosg.dir.android.view.widget.PickBar
+            <com.veniosg.dir.android.ui.widget.PickBar
                 android:id="@+id/pickBar"
                 android:gravity="center_vertical"
                 style="?android:attr/buttonBarStyle"

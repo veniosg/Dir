@@ -26,7 +26,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toolbar;
 
 import com.veniosg.dir.R;
-import com.veniosg.dir.android.view.Themer;
+import com.veniosg.dir.android.ui.Themer;
 
 import static com.veniosg.dir.IntentConstants.ACTION_REFRESH_THEME;
 

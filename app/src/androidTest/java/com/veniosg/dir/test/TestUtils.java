@@ -16,24 +16,45 @@
 
 package com.veniosg.dir.test;
 
+import android.content.Context;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import static com.veniosg.dir.mvvm.model.storage.DocumentFileUtils.safAwareDelete;
 
 public abstract class TestUtils {
     private TestUtils() {
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void cleanDirectory(File file) {
         if (!file.exists()) return;
         for (String name : file.list()) {
             File child = new File(file, name);
-            if (child.isDirectory())
+            if (child.isDirectory()) {
                 cleanDirectory(child);
-            else
+            } else {
                 child.delete();
+            }
         }
         if (!file.delete()) {
+            throw new RuntimeException("Deletion of " + file + " failed");
+        }
+    }
+
+    public static void cleanDirectorySaf(Context context, File file) {
+        if (!file.exists()) return;
+        for (String name : file.list()) {
+            File child = new File(file, name);
+            if (child.isDirectory()) {
+                cleanDirectorySaf(context, child);
+            } else {
+                safAwareDelete(context, file);
+            }
+        }
+        if (!safAwareDelete(context, file)) {
             throw new RuntimeException("Deletion of " + file + " failed");
         }
     }

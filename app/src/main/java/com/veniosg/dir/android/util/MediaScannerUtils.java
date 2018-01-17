@@ -92,14 +92,6 @@ public abstract class MediaScannerUtils {
         }
         pathList.add(folder.getAbsolutePath());
     }
-	
-	public static void informFileDeleted(Context c, File f) {
-        DeleteTaskParams params = new DeleteTaskParams();
-        params.context = c.getApplicationContext();
-        params.file = f;
-
-        new DeleteFromMediaStoreAsyncTask().execute(params);
-	}
 
     public static void informFolderDeleted(Context c, File parentFile) {
         List<String> paths = new ArrayList<>();
@@ -168,6 +160,5 @@ public abstract class MediaScannerUtils {
         Context context;
         File file;
         List<String> paths;
-        Boolean recursive;
     }
 }

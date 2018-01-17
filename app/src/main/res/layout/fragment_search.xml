@@ -63,7 +63,7 @@
         </FrameLayout>
     </FrameLayout>
 
-    <com.veniosg.dir.android.view.widget.WaitingViewFlipper
+    <com.veniosg.dir.android.ui.widget.WaitingViewFlipper
         android:id="@+id/flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -109,5 +109,5 @@
                 android:layout_gravity="center"
                 android:text="@string/search_empty" />
         </LinearLayout>
-    </com.veniosg.dir.android.view.widget.WaitingViewFlipper>
+    </com.veniosg.dir.android.ui.widget.WaitingViewFlipper>
 </LinearLayout>

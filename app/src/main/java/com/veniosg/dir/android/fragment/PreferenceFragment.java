@@ -25,8 +25,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 
 import com.veniosg.dir.R;
-import com.veniosg.dir.android.view.Themer;
-import com.veniosg.dir.android.view.Themer.Theme;
+import com.veniosg.dir.android.ui.Themer;
+import com.veniosg.dir.android.ui.Themer.Theme;
 
 import static android.os.Environment.MEDIA_MOUNTED;
 import static android.os.Environment.getExternalStorageDirectory;
