@@ -141,10 +141,4 @@
     <string name="edit_path">Pfad editieren</string>
     <string name="goto_path">Gehe zu Pfad</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="saveas_no_file_picked">Sie haben keine Datei ausgewählt.</string>
-    <string name="saveas_error">Es ist ein Fehler aufgetreten.</string>
-    <string name="saveas_file_saved">Datei erfolgreich gespeichert!</string>
-    <string name="about_beta">Trete Google+ Community bei</string>
-    <!-- Left pathview manual input button description -->
-    <string name="close_path">Editor schließen</string>
 </resources>

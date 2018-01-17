@@ -17,6 +17,7 @@
 <resources>
     <!-- Bookmark action. This is a verb. -->
     <string name="menu_bookmark">添加书签</string>
+    <string name="bookmarks">书签</string>
     <string name="create_new_folder">新建文件夹</string>
     <string name="folder_name">文件夹名称</string>
     <string name="this_folder_is_empty">本文件夹为空</string>
@@ -109,6 +110,7 @@
     <string name="rename_success">成功重命名</string>
     <string name="rename_failure">无法重命名</string>
     <string name="loading">载入中&#8230;</string>
+    <string name="searching">正在查找&#8230;</string>
     <string name="create_dir_success">成功新建目录</string>
     <string name="create_dir_failure">无法新建目录</string>
     <string name="compressed_file_name">Zip 文件名</string>
@@ -133,9 +135,17 @@
     <string name="yes">是</string>
     <string name="no">否</string>
     <!-- Right pathview button description -->
+    <string name="edit_path">编辑路径</string>
+    <string name="goto_path">转到路径</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="saveas_no_file_picked">你没有选择任何文件。</string>
-    <string name="saveas_error">发生错误。</string>
-    <string name="saveas_file_saved">文件保存成功！</string>
-    <string name="about_beta">加入 Google+ 社群</string>
+    <string name="permissions_denied">Dir需要您授予读写存储空间的权限</string>
+    <string name="back">返回</string>
+    <string name="close">关闭</string>
+    <string name="develop">开发</string>
+    <string name="translate">翻译</string>
+    <string name="donate">捐赠</string>
+    <string name="review">评论</string>
+    <string name="contact">联系</string>
+    <string name="donation_thanks">感谢您支持Dir!♡</string>
+    <string name="purchase_cancelled">购买已取消</string>
 </resources>

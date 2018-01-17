@@ -144,10 +144,4 @@
     <string name="permissions_denied">Το Dir χρειάζεται άδεια ανάγνωσης της μνήμης</string>
     <string name="back">Πίσω</string>
     <string name="close">Κλείσιμο</string>
-    <string name="saveas_no_file_picked">Δεν έχετε επιλεξει κάποιο αρχείο.</string>
-    <string name="saveas_error">Προέκυψε ένα σφάλμα.</string>
-    <string name="saveas_file_saved">Το αρχείο αποθηκεύτηκε επιτυχώς!</string>
-    <string name="about_beta">Είσοδος στην Google+ κοινότητα</string>
-    <!-- Left pathview manual input button description -->
-    <string name="close_path">Κλείσιμο</string>
 </resources>

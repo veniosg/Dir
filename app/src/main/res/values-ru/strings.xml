@@ -139,8 +139,4 @@
     <string name="no">Нет</string>
     <!-- Right pathview button description -->
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="saveas_no_file_picked">Вы не выбрали файл.</string>
-    <string name="saveas_error">Произошла ошибка.</string>
-    <string name="saveas_file_saved">Файл успешно сохранён!</string>
-    <string name="about_beta">Присоедениться к сообществу Google+</string>
 </resources>

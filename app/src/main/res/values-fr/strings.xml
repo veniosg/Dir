@@ -136,7 +136,6 @@
     <string name="about">A propos</string>
     <string name="about_share">Partager</string>
     <string name="about_shareSubject">Télécharger Dir sur Google Play</string>
-    <string name="about_gplay">Voir sur Google Play</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <!-- Right pathview button description -->
@@ -144,10 +143,13 @@
     <string name="goto_path">Aller à</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
     <string name="permissions_denied">Dir a besoin de votre autorisation pour accéder au stockage</string>
-    <string name="saveas_no_file_picked">Vous n\'avez pas choisi n\'importe quel fichier.</string>
-    <string name="saveas_error">Une erreur s\'est produite</string>
-    <string name="saveas_file_saved">Fichier sauvegardé avec succès</string>
-    <string name="about_beta">Rejoindre la communauté Google+</string>
-    <!-- Left pathview manual input button description -->
-    <string name="close_path">Fermer</string>
+    <string name="back">Retour</string>
+    <string name="close">Fermer</string>
+    <string name="develop">Développer</string>
+    <string name="translate">Traduire</string>
+    <string name="donate">Faire un don</string>
+    <string name="review">Noter l\'app</string>
+    <string name="contact">Contacter</string>
+    <string name="donation_thanks">Merci de soutenir Dir ! ❤</string>
+    <string name="purchase_cancelled">Achat annulé</string>
 </resources>

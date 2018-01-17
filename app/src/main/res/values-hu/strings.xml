@@ -135,8 +135,4 @@
     <string name="no">Nem</string>
     <!-- Right pathview button description -->
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="saveas_no_file_picked">Nincs fájl kiválasztva.</string>
-    <string name="saveas_error">Hiba történt.</string>
-    <string name="saveas_file_saved">Fájl sikeresen mentve!</string>
-    <string name="about_beta">Csatlakozz a Google+ Közösségéhez</string>
 </resources>

@@ -141,10 +141,4 @@
     <string name="edit_path">Uređivanje putanju</string>
     <string name="goto_path">Idi na putanju</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="saveas_no_file_picked">Niste još odabrali ni jednu datoteku</string>
-    <string name="saveas_error">Dogodila se greška.</string>
-    <string name="saveas_file_saved">Datoteka je uspješno spremljena!</string>
-    <string name="about_beta">Pridružite se Google+ Zajednici</string>
-    <!-- Left pathview manual input button description -->
-    <string name="close_path">Zatvori uređivač</string>
 </resources>

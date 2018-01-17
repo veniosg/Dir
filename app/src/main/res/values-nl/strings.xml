@@ -140,10 +140,4 @@
     <string name="edit_path">Wijzig pad</string>
     <string name="goto_path">Ga naar pad</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="saveas_no_file_picked">U heeft geen bestand gekozen.</string>
-    <string name="saveas_error">Er is een fout opgetreden.</string>
-    <string name="saveas_file_saved">Bestand is succesvol opgeslagen!</string>
-    <string name="about_beta">Inschrijven voor Google+ Community</string>
-    <!-- Left pathview manual input button description -->
-    <string name="close_path">Editor sluiten</string>
 </resources>

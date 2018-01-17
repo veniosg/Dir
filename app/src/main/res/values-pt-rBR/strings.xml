@@ -29,7 +29,7 @@
     <string name="details_size">Tamanho</string>
     <string name="details_permissions">Permissões</string>
     <string name="details_hidden">Oculto</string>
-    <string name="details_lastmodified">Ultima Modificação</string>
+    <string name="details_lastmodified">Última Modificação</string>
     <string name="copied_file_name">Cópia de %s</string>
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="copied_file_name_2">Copia %1$d de %2$s</string>
@@ -55,7 +55,7 @@
     <string name="preference_medialib_summary_off">Esconder ações de biblioteca multimídia para pastas</string>
     <string name="preference_sortby_name">Nome</string>
     <string name="preference_sortby_size">Tamanho</string>
-    <string name="preference_sortby_last_modified">Ultima motificação</string>
+    <string name="preference_sortby_last_modified">Última modificação</string>
     <string name="preference_theme_grayscale">Escala de cinza</string>
     <string name="preference_theme_dark">Escuro</string>
     <string name="extracting">Extraindo&#8230;</string>
@@ -135,8 +135,4 @@
     <string name="no">Não</string>
     <!-- Right pathview button description -->
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="saveas_no_file_picked">You haven\'t picked any file.</string>
-    <string name="saveas_error">Um erro ocorreu.</string>
-    <string name="saveas_file_saved">Arquivo salvo com sucesso!</string>
-    <string name="about_beta">Participar da comunidade do Google+</string>
 </resources>

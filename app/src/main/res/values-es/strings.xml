@@ -17,6 +17,7 @@
 <resources>
     <!-- Bookmark action. This is a verb. -->
     <string name="menu_bookmark">Marcador</string>
+    <string name="bookmarks">Marcadores</string>
     <string name="create_new_folder">Crear nueva carpeta</string>
     <string name="folder_name">Nombre de carpeta</string>
     <string name="this_folder_is_empty">Carpeta vacía</string>
@@ -30,6 +31,8 @@
     <string name="details_permissions">Permisos</string>
     <string name="details_hidden">Oculto</string>
     <string name="details_lastmodified">Última modificación</string>
+    <string name="details_items">Elementos</string>
+    <string name="details_resolution">Resolución</string>
     <string name="copied_file_name">Copia de %s</string>
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="copied_file_name_2">Copiar %1$d de %2$s</string>
@@ -111,6 +114,7 @@
     <string name="rename_success">Renombrado con éxito</string>
     <string name="rename_failure">No se pudo renombrar</string>
     <string name="loading">Cargando&#8230;</string>
+    <string name="searching">Buscando&#8230;</string>
     <string name="create_dir_success">Carpeta creada con éxito</string>
     <string name="create_dir_failure">No se pudo crear la carpeta</string>
     <string name="compressed_file_name">Nombre de fichero Zip</string>
@@ -135,9 +139,17 @@
     <string name="yes">Sí</string>
     <string name="no">No</string>
     <!-- Right pathview button description -->
+    <string name="edit_path">Editar ruta</string>
+    <string name="goto_path">Ir a la ruta</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="saveas_no_file_picked">No se ha elegido ningún archivo.</string>
-    <string name="saveas_error">Ocurrió un error.</string>
-    <string name="saveas_file_saved">El archivo se guardó con éxito!</string>
-    <string name="about_beta">Únete a la comunidad de Google+</string>
+    <string name="permissions_denied">Dir necesita tu permiso para acceder al almacenamiento</string>
+    <string name="back">Atrás</string>
+    <string name="close">Cerrar</string>
+    <string name="develop">Desarrollo</string>
+    <string name="translate">Traducir</string>
+    <string name="donate">Donar</string>
+    <string name="review">Revisión</string>
+    <string name="contact">Contacto</string>
+    <string name="donation_thanks">Gracias por apoyar Dir! ❤</string>
+    <string name="purchase_cancelled">Compra cancelada</string>
 </resources>
