@@ -56,6 +56,7 @@ public class SafPromptActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         viewUri(SafPromptActivity.this, "http://pxhouse.co/saf", null);
+                        dialog.cancel();
                     }
                 })
                 .setPositiveButton(R.string.grant_access, new DialogInterface.OnClickListener() {
