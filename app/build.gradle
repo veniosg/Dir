@@ -39,22 +39,19 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
 
         publicBeta.initWith(buildTypes.release)
         publicBeta {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             versionNameSuffix " " + versionProps['betaNumber']
         }
 
         publicDebug.initWith(buildTypes.publicBeta)
         publicDebug {
             debuggable true
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             versionNameSuffix " Debug " + versionProps['betaNumber']
         }
     }
