@@ -100,7 +100,6 @@
     <string name="selected">件選択中</string>
     <string name="bookmark_empty">ブックマークがありません</string>
     <string name="search_hint">%1$sで検索</string>
-    <string name="query_error">クエリエラー</string>
     <string name="search_empty">一致するファイルが見つかりません</string>
     <string name="item_icon">アイテムアイコン</string>
     <string name="delete_success">削除が完了しました</string>

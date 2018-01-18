@@ -101,7 +101,6 @@
     <string name="selected">项已选中</string>
     <string name="bookmark_empty">无书签</string>
     <string name="search_hint">在%1$s中搜索</string>
-    <string name="query_error">查询错误</string>
     <string name="search_empty">无匹配文件！</string>
     <string name="item_icon">项目图标</string>
     <string name="delete_success">成功删除</string>
@@ -110,7 +109,6 @@
     <string name="rename_success">成功重命名</string>
     <string name="rename_failure">无法重命名</string>
     <string name="loading">载入中&#8230;</string>
-    <string name="searching">正在查找&#8230;</string>
     <string name="create_dir_success">成功新建目录</string>
     <string name="create_dir_failure">无法新建目录</string>
     <string name="compressed_file_name">Zip 文件名</string>

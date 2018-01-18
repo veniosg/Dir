@@ -103,7 +103,6 @@
     <string name="selected">Geselecteerd</string>
     <string name="bookmark_empty">Geen bladwijzers</string>
     <string name="search_hint">Zoek in %1$s</string>
-    <string name="query_error">Query fout</string>
     <string name="search_empty">Geen overeenkomende bestanden gevonden!</string>
     <string name="item_icon">Item icoon</string>
     <string name="delete_success">Verwijderen geslaagd</string>
@@ -112,7 +111,6 @@
     <string name="rename_success">Wijzigen van naam geslaagd</string>
     <string name="rename_failure">Kon naam niet wijzigen</string>
     <string name="loading">Laden&#8230;</string>
-    <string name="searching">Zoeken&#8230;</string>
     <string name="create_dir_success">Map succesvol aangemaakt</string>
     <string name="create_dir_failure">Kan geen map maken</string>
     <string name="compressed_file_name">Zip bestand naam</string>

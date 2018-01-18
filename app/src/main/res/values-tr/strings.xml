@@ -102,7 +102,6 @@
     <string name="selected">Seçilen</string>
     <string name="bookmark_empty">Eklenen yer işareti bulunmamaktadır</string>
     <string name="search_hint">%1$s\'da ara</string>
-    <string name="query_error">Sorgu hatası</string>
     <string name="search_empty">Eşleşen dosya bulunmamaktadır!</string>
     <string name="item_icon">Öğe ikonu</string>
     <string name="delete_success">Silme işlemi tamamlandı</string>

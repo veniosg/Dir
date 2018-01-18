@@ -101,7 +101,6 @@
     <string name="notif_extracted_fail">Sikertelen kibontás</string>
     <string name="selected">kiválasztva</string>
     <string name="bookmark_empty">Nincs hozzáadott könyvjelző</string>
-    <string name="query_error">Query hiba</string>
     <string name="search_empty">Nincs találat!</string>
     <string name="item_icon">Elem ikonja</string>
     <string name="delete_success">Sikeresen törölve</string>

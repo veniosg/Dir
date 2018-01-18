@@ -104,7 +104,6 @@
     <string name="selected">odabrano</string>
     <string name="bookmark_empty">Nema oznaka</string>
     <string name="search_hint">Pretraži u %1$s</string>
-    <string name="query_error">Ispitivanje greške</string>
     <string name="search_empty">Nisu pronađene podudarajuće datoteke!</string>
     <string name="item_icon">Ikona stavke</string>
     <string name="delete_success">Uspješno obrisano</string>
@@ -113,7 +112,6 @@
     <string name="rename_success">Uspješno preimenovano</string>
     <string name="rename_failure">Ne mogu preimenovati</string>
     <string name="loading">Učitavam&#8230;</string>
-    <string name="searching">Pretražujem&#8230;</string>
     <string name="create_dir_success">Mapa je uspješno kreirana</string>
     <string name="create_dir_failure">Ne mogu kreirati mapu</string>
     <string name="compressed_file_name">Stisni naziv datoteke</string>

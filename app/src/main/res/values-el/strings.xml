@@ -104,7 +104,6 @@
     <string name="selected">επιλεγμένα</string>
     <string name="bookmark_empty">Κανένας σελιδοδείκτης</string>
     <string name="search_hint">Αναζήτηση σε %1$s</string>
-    <string name="query_error">Σφάλμα αναζήτησης</string>
     <string name="search_empty">Δεν βρέθηκαν στοιχεία που ταιριάζουν!</string>
     <string name="item_icon">Εικονίδιο στοιχείου</string>
     <string name="delete_success">Επιτυχής διαγραφή</string>
@@ -113,7 +112,6 @@
     <string name="rename_success">Επιτυχής μετονομασία</string>
     <string name="rename_failure">Μετονομασία αδύνατη</string>
     <string name="loading">Φόρτωση&#8230;</string>
-    <string name="searching">Αναζήτηση&#8230;</string>
     <string name="create_dir_success">Επιτυχής δημιουργία φακέλου</string>
     <string name="create_dir_failure">Δημιουργία φακέλου αδύνατη</string>
     <string name="compressed_file_name">Όνομα συμπιεσμένου αρχείου</string>

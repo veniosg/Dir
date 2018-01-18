@@ -93,7 +93,6 @@
     <string name="notif_extracted_fail">Falhou a extração</string>
     <string name="selected">selecionado</string>
     <string name="bookmark_empty">Não existem marcadores</string>
-    <string name="query_error">Erro na consulta</string>
     <string name="search_empty">Não foi encontrado nenhum ficheiro!</string>
     <string name="delete_success">Removido com sucesso</string>
     <string name="delete_failure">Alguns ficheiros não foram removidos</string>

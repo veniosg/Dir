@@ -106,7 +106,6 @@
     <string name="selected">vybráno</string>
     <string name="bookmark_empty">Žádné záložky</string>
     <string name="search_hint">Hledat v %1$s</string>
-    <string name="query_error">Nerozpoznán dotaz pro vyhledávání</string>
     <string name="search_empty">Nic nenalezeno</string>
     <string name="item_icon">Ikona položky</string>
     <string name="delete_success">Smazáno</string>
@@ -115,7 +114,6 @@
     <string name="rename_success">Přejmenováno</string>
     <string name="rename_failure">Nelze přejmenovat</string>
     <string name="loading">Načítání&#8230;</string>
-    <string name="searching">Hledání&#8230;</string>
     <string name="create_dir_success">Složka vytvořena</string>
     <string name="create_dir_failure">Nepodařilo se vytvořit složku</string>
     <string name="compressed_file_name">Název ZIP archivu</string>

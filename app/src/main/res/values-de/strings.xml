@@ -104,7 +104,6 @@
     <string name="selected">ausgewählt</string>
     <string name="bookmark_empty">Keine Lesezeichen</string>
     <string name="search_hint">Suche in %1$s</string>
-    <string name="query_error">Abfragefehler</string>
     <string name="search_empty">Keine passenden Dateien gefunden!</string>
     <string name="item_icon">Icon</string>
     <string name="delete_success">Erfolgreich gelöscht</string>
@@ -113,7 +112,6 @@
     <string name="rename_success">Erfolgreich umbenannt</string>
     <string name="rename_failure">Umbenennung fehlgeschlagen</string>
     <string name="loading">Lade&#8230;</string>
-    <string name="searching">Suchen&#8230;</string>
     <string name="create_dir_success">Ordner erfolgreich angelegt</string>
     <string name="create_dir_failure">Ordner konnte nicht angelegt werden</string>
     <string name="compressed_file_name">Zip Dateiname</string>

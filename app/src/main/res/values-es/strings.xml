@@ -105,7 +105,6 @@
     <string name="selected">seleccionado</string>
     <string name="bookmark_empty">No hay marcadores</string>
     <string name="search_hint">Buscar en %1$s</string>
-    <string name="query_error">Consultar error</string>
     <string name="search_empty">No hay archivos coincidentes</string>
     <string name="item_icon">Icono</string>
     <string name="delete_success">Borrado con éxito</string>
@@ -114,7 +113,6 @@
     <string name="rename_success">Renombrado con éxito</string>
     <string name="rename_failure">No se pudo renombrar</string>
     <string name="loading">Cargando&#8230;</string>
-    <string name="searching">Buscando&#8230;</string>
     <string name="create_dir_success">Carpeta creada con éxito</string>
     <string name="create_dir_failure">No se pudo crear la carpeta</string>
     <string name="compressed_file_name">Nombre de fichero Zip</string>
