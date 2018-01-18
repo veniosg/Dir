@@ -39,14 +39,14 @@ android {
     buildTypes {
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-rules.txt')
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
 
         publicBeta.initWith(buildTypes.release)
         publicBeta {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-rules.txt')
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             versionNameSuffix " " + versionProps['betaNumber']
         }
 
@@ -54,7 +54,7 @@ android {
         publicDebug {
             debuggable true
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), file('proguard-rules.txt')
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             versionNameSuffix " Debug " + versionProps['betaNumber']
         }
     }
