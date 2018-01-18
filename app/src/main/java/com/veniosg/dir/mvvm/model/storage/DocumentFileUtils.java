@@ -21,13 +21,10 @@ import static com.veniosg.dir.android.util.Logger.log;
 
 public abstract class DocumentFileUtils {
     @NonNull
-    public static OutputStream outputStreamFor(@Nullable DocumentFile outFile, @NonNull Context context)
+    public static OutputStream outputStreamFor(@NonNull DocumentFile outFile, @NonNull Context context)
             throws NullPointerException, FileNotFoundException {
-        String msg = "Could not open DocumentFile OutputStream";
-        if (outFile == null) throw new NullPointerException(msg);
-
         OutputStream out = context.getContentResolver().openOutputStream(outFile.getUri());
-        if (out == null) throw new NullPointerException(msg);
+        if (out == null) throw new NullPointerException("Could not open DocumentFile OutputStream");
 
         return out;
     }

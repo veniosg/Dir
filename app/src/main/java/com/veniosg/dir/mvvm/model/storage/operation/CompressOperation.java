@@ -99,6 +99,8 @@ public class CompressOperation extends FileOperation<CompressArguments> {
 
     @Nullable
     private BufferedOutputStream outputStreamFor(DocumentFile toSaf) {
+        if (toSaf == null) return null;
+        
         try {
             return new BufferedOutputStream(DocumentFileUtils.outputStreamFor(toSaf, context));
         } catch (NullPointerException | FileNotFoundException e) {

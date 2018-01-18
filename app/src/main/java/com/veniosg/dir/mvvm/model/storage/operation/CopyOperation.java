@@ -232,8 +232,21 @@ public class CopyOperation extends FileOperation<CopyArguments> {
         @NonNull
         @Override
         protected OutputStream outputStream(File newFile) throws FileNotFoundException {
-            DocumentFile toSaf = createFile(context, newFile, "*/*");
-            return outputStreamFor(toSaf, context);
+            boolean fileCreated = false;
+            try {
+                // If target is accessible without SAF (in case of cross-media moves)
+                fileCreated = newFile.createNewFile();
+            } catch (IOException e) {
+                log(e);
+            }
+
+            if (fileCreated) {
+                return new FileOutputStream(newFile);
+            } else {
+                DocumentFile toSaf = createFile(context, newFile, "*/*");
+                if (toSaf == null) throw new FileNotFoundException();
+                return outputStreamFor(toSaf, context);
+            }
         }
 
         @Override

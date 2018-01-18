@@ -201,8 +201,9 @@ public class ExtractOperation extends FileOperation<ExtractArguments> {
 
         @NonNull
         @Override
-        OutputStream outputStream(File outputFile) throws FileNotFoundException, NullPointerException {
+        OutputStream outputStream(File outputFile) throws FileNotFoundException {
             DocumentFile toSaf = createFile(context, outputFile, "application/zip");
+            if (toSaf == null) throw new NullPointerException("Could not create new zip archive via SAF");
             return outputStreamFor(toSaf, context);
         }
     }
