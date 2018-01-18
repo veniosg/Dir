@@ -1,6 +1,7 @@
 package com.veniosg.dir.mvvm.model.storage.operation.ui;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -21,11 +22,14 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.O;
 import static android.support.v4.app.NotificationCompat.PRIORITY_DEFAULT;
 import static android.support.v4.app.NotificationCompat.PRIORITY_HIGH;
 import static java.lang.System.currentTimeMillis;
 
 public class NotificationOperationStatusDisplayer implements OperationStatusDisplayer {
+    public static final String CHANNEL_FILEOPS = "com.veniosg.dof.notif_channel.FILEOPS";
     private static final int LONG_OPERATION_MIN_DURATION_MS = 500;
 
     private final SparseLongArray startTimes = new SparseLongArray();
@@ -35,6 +39,16 @@ public class NotificationOperationStatusDisplayer implements OperationStatusDisp
     NotificationOperationStatusDisplayer(Context context) {
         notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         this.context = context.getApplicationContext();
+    }
+
+    @Override
+    public void initChannels() {
+        if (SDK_INT >= O && notificationManager != null) {
+            notificationManager.createNotificationChannel(new NotificationChannel(
+                    CHANNEL_FILEOPS,
+                    context.getString(R.string.ntfchn_title_operations),
+                    NotificationManager.IMPORTANCE_DEFAULT));
+        }
     }
 
     @Override
@@ -107,7 +121,7 @@ public class NotificationOperationStatusDisplayer implements OperationStatusDisp
                                                                String longText,
                                                                File operatingOn,
                                                                int progress, int max) {
-        return new NotificationCompat.Builder(context)
+        return new NotificationCompat.Builder(context, CHANNEL_FILEOPS)
                 .setAutoCancel(false)
                 .setContentTitle(title)
                 .setContentText(operatingOn.getName())
@@ -124,7 +138,7 @@ public class NotificationOperationStatusDisplayer implements OperationStatusDisp
 
     @NonNull
     private Notification generateOperationDoneNotification(File destDir, String msg) {
-        return new NotificationCompat.Builder(context)
+        return new NotificationCompat.Builder(context, CHANNEL_FILEOPS)
                 .setAutoCancel(true)
                 .setContentTitle(msg)
                 .setContentText(destDir.getAbsolutePath())

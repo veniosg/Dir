@@ -34,6 +34,7 @@ import java.util.List;
 
 import static android.app.PendingIntent.FLAG_CANCEL_CURRENT;
 import static android.app.PendingIntent.getActivity;
+import static com.veniosg.dir.mvvm.model.storage.operation.ui.NotificationOperationStatusDisplayer.CHANNEL_FILEOPS;
 import static java.lang.System.currentTimeMillis;
 
 /**
@@ -54,7 +55,7 @@ public abstract class Notifier {
 
     public static void showNotEnoughSpaceNotification(long spaceNeeded, List<FileHolder> files,
                                                       String toPath, Context context) {
-        Notification not = new NotificationCompat.Builder(context)
+        Notification not = new NotificationCompat.Builder(context, CHANNEL_FILEOPS)
                 .setAutoCancel(true)
                 .setContentTitle(context.getString(R.string.notif_no_space))
                 .setContentText(context.getString(R.string.notif_space_more,
@@ -78,7 +79,7 @@ public abstract class Notifier {
     public static void showCompressProgressNotification(int filesCompressed, int fileCount,
                                                         int notId, File zipFile, File srcFile,
                                                         Context context) {
-        Notification not = new NotificationCompat.Builder(context)
+        Notification not = new NotificationCompat.Builder(context, CHANNEL_FILEOPS)
                 .setAutoCancel(false)
                 .setContentTitle(context.getString(R.string.compressing))
                 .setContentText(zipFile.getName())
@@ -105,7 +106,7 @@ public abstract class Notifier {
     public static void showExtractProgressNotification(int extractedCount, int fileCount,
                                                        String fileName, String zipName, int notId,
                                                        Context context) {
-        Notification not = new NotificationCompat.Builder(context)
+        Notification not = new NotificationCompat.Builder(context, CHANNEL_FILEOPS)
                 .setAutoCancel(false)
                 .setContentTitle(context.getString(R.string.extracting))
                 .setContentText(zipName)
@@ -142,7 +143,7 @@ public abstract class Notifier {
                     | Intent.FLAG_ACTIVITY_NEW_TASK);
             browseIntent.setData(Uri.fromFile(zipFile.getParentFile()));
 
-            Notification not = new NotificationCompat.Builder(context)
+            Notification not = new NotificationCompat.Builder(context, CHANNEL_FILEOPS)
                     .setAutoCancel(true)
                     .setContentTitle(context.getString(success ? R.string.notif_compressed_success
                             : R.string.notif_compressed_fail))
@@ -174,7 +175,7 @@ public abstract class Notifier {
                     | Intent.FLAG_ACTIVITY_NEW_TASK);
             browseIntent.setData(Uri.fromFile(extractedTo));
 
-            Notification not = new NotificationCompat.Builder(context)
+            Notification not = new NotificationCompat.Builder(context, CHANNEL_FILEOPS)
                     .setAutoCancel(true)
                     .setContentTitle(context.getString(success ? R.string.notif_extracted_success
                             : R.string.notif_extracted_fail))

@@ -24,12 +24,13 @@ import android.view.ViewConfiguration;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.veniosg.dir.android.misc.MimeTypes;
-import com.veniosg.dir.android.util.CopyHelper;
 import com.veniosg.dir.android.ui.AnimatorSynchroniser;
+import com.veniosg.dir.android.util.CopyHelper;
 
 import java.lang.reflect.Field;
 
 import static com.veniosg.dir.android.misc.ThumbnailHelper.imageDecoder;
+import static com.veniosg.dir.mvvm.model.storage.operation.ui.OperationStatusDisplayerInjector.operationStatusDisplayer;
 
 public class FileManagerApplication extends Application {
     private static AnimatorSynchroniser sAnimSync = new AnimatorSynchroniser();
@@ -44,6 +45,7 @@ public class FileManagerApplication extends Application {
         mCopyHelper = new CopyHelper();
         mMimeTypes = MimeTypes.newInstance(this);
 
+        operationStatusDisplayer(this).initChannels();
         forceActionOverflow();
         initImageLoader();
     }

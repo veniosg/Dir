@@ -7,6 +7,10 @@ import java.io.File;
 public abstract class OperationStatusDisplayerInjector {
     private static final OperationStatusDisplayer NO_OP_DISPLAYER = new OperationStatusDisplayer() {
         @Override
+        public void initChannels() {
+        }
+
+        @Override
         public void showCopySuccess(int operationId, File destDir) {
         }
 

@@ -159,4 +159,5 @@
     <string name="grant_access">Grant access</string>
     <string name="help">Help</string>
     <string name="saf_dialog_message">Select the root directory of your SD Card.</string>
+    <string name="ntfchn_title_operations">File operations</string>
 </resources>
