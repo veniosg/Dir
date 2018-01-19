@@ -55,7 +55,7 @@ public class PlayBillingManager implements BillingManager {
 
     @Retention(SOURCE)
     @IntDef({CONNECTED, CONNECTING, DISCONNECTED})
-    public @interface ConnectionStatus {
+    private @interface ConnectionStatus {
     }
 
     private static final int CONNECTED = 0;
