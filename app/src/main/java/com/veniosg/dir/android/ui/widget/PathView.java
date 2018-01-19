@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 George Venios
+ * Copyright (C) 2014-2018 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,9 +36,9 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.veniosg.dir.R;
-import com.veniosg.dir.android.util.Logger;
 import com.veniosg.dir.android.ui.PathController;
 import com.veniosg.dir.android.ui.Themer;
+import com.veniosg.dir.android.util.Logger;
 
 import java.io.File;
 
@@ -54,16 +54,15 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_GO;
 import static com.veniosg.dir.AnimationConstants.ANIM_DURATION;
 import static com.veniosg.dir.AnimationConstants.IN_INTERPOLATOR;
-import static com.veniosg.dir.android.util.FileUtils.isValidDirectory;
-import static com.veniosg.dir.android.util.Utils.backWillExit;
 import static com.veniosg.dir.android.ui.CheatSheet.setup;
-import static com.veniosg.dir.android.ui.PathController.Mode.MANUAL_INPUT;
-import static com.veniosg.dir.android.ui.PathController.Mode.STANDARD_INPUT;
 import static com.veniosg.dir.android.ui.Themer.getThemedDimension;
 import static com.veniosg.dir.android.ui.widget.PathHorizontalScrollView.RightEdgeRangeListener;
+import static com.veniosg.dir.android.util.FileUtils.isValidDirectory;
+import static com.veniosg.dir.android.util.Utils.backWillExit;
 
 public class PathView extends FrameLayout implements PathController {
-    private Mode mCurrentMode = STANDARD_INPUT;
+    @Mode
+    private int mCurrentMode = STANDARD_INPUT;
     private File mCurrentDirectory = getExternalStorageDirectory();
     private File mInitialDirectory = getExternalStorageDirectory();
 
@@ -170,8 +169,9 @@ public class PathView extends FrameLayout implements PathController {
         setup(buttonManualLeft);
     }
 
+    @Mode
     @Override
-    public Mode getMode() {
+    public int getMode() {
         return mCurrentMode;
     }
 
@@ -383,7 +383,8 @@ public class PathView extends FrameLayout implements PathController {
             }
 
             @Override
-            public void onAnimationRepeat(Animator animation) {}
+            public void onAnimationRepeat(Animator animation) {
+            }
         });
         set.playTogether(
                 ofFloat(manual, "translationY", 0, getHeight()),
@@ -423,7 +424,8 @@ public class PathView extends FrameLayout implements PathController {
             }
 
             @Override
-            public void onAnimationRepeat(Animator animation) {}
+            public void onAnimationRepeat(Animator animation) {
+            }
         });
         set.playTogether(
                 ofFloat(manual, "translationY", getHeight(), 0),

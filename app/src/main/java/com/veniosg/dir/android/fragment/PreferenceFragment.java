@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 George Venios
+ * Copyright (C) 2014-2018 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,7 @@ import static android.os.Environment.getExternalStorageDirectory;
 import static android.os.Environment.getExternalStorageState;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static com.veniosg.dir.IntentConstants.ACTION_REFRESH_THEME;
+import static com.veniosg.dir.android.ui.Themer.DIR;
 import static java.lang.Integer.parseInt;
 
 public class PreferenceFragment extends android.preference.PreferenceFragment
@@ -125,11 +126,11 @@ public class PreferenceFragment extends android.preference.PreferenceFragment
      *
      * @return The theme index as defined in Themer#Theme.
      */
+    @Theme
     public static int getThemeIndex(Context context) {
         /* entryValues must be a string-array while we need integers */
-        return parseInt(getDefaultSharedPreferences(context).getString(
-                PREFS_THEME,
-                String.valueOf(Theme.DIR.ordinal()))
+        return parseInt(getDefaultSharedPreferences(context)
+                .getString(PREFS_THEME, String.valueOf(DIR))
         );
     }
 }

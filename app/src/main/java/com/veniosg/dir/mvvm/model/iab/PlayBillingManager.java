@@ -17,6 +17,7 @@ package com.veniosg.dir.mvvm.model.iab;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -28,6 +29,7 @@ import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.veniosg.dir.R;
 
+import java.lang.annotation.Retention;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,22 +45,27 @@ import static com.android.billingclient.api.BillingClient.BillingResponse.USER_C
 import static com.android.billingclient.api.BillingClient.SkuType.INAPP;
 import static com.veniosg.dir.android.util.Logger.TAG_BILLING;
 import static com.veniosg.dir.android.util.Logger.logV;
-import static com.veniosg.dir.mvvm.model.iab.PlayBillingManager.ConnectionStatus.CONNECTED;
-import static com.veniosg.dir.mvvm.model.iab.PlayBillingManager.ConnectionStatus.DISCONNECTED;
 import static java.lang.String.format;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 import static java.util.Locale.ENGLISH;
 
 public class PlayBillingManager implements BillingManager {
     private static final String SKU_DONATION = "donation";
     private OnBillingUnavailableListener onBillingUnavailableListener;
 
-    enum ConnectionStatus {
-        CONNECTED, CONNECTING, DISCONNECTED
+    @Retention(SOURCE)
+    @IntDef({CONNECTED, CONNECTING, DISCONNECTED})
+    public @interface ConnectionStatus {
     }
+
+    private static final int CONNECTED = 0;
+    private static final int CONNECTING = 1;
+    private static final int DISCONNECTED = 2;
 
     @Nullable
     private String requestedSku = null;
-    private ConnectionStatus connectionStatus = DISCONNECTED;
+    @ConnectionStatus
+    private int connectionStatus = DISCONNECTED;
     private BillingClient billingClient;
     private List<Runnable> onConnectedRunnables = new LinkedList<>();
 
@@ -89,7 +96,7 @@ public class PlayBillingManager implements BillingManager {
                             logV(TAG_BILLING, "User cancelled the purchase");
                         } else if (responseCode == ITEM_ALREADY_OWNED) {
                             logV(TAG_BILLING, "Item already owned... Maybe we didn't consume properly?");
-                        }else if (responseCode != ITEM_UNAVAILABLE) {
+                        } else if (responseCode != ITEM_UNAVAILABLE) {
                             logV(TAG_BILLING, "Item unavailable");
                             // Play store shows appropriate errors in this case.
                         } else {

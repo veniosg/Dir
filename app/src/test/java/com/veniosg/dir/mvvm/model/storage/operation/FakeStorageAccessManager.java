@@ -7,6 +7,7 @@ import com.veniosg.dir.mvvm.model.storage.access.StorageAccessManager;
 import java.io.File;
 
 
+@SuppressWarnings({"UnusedReturnValue", "WeakerAccess"})
 public class FakeStorageAccessManager implements StorageAccessManager {
     private enum Behavior {
         GRANT,

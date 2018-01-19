@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2016 George Venios
+ * Copyright (C) 2014-2018 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,35 +18,44 @@ package com.veniosg.dir.android.ui;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.support.annotation.IntDef;
 
 import java.io.File;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public interface PathController {
+    @Retention(SOURCE)
+    @IntDef({STANDARD_INPUT, MANUAL_INPUT})
+    public @interface Mode {
+    }
+
     /**
-     * The available Modes of this PathBar. <br/>
+     * The button path selection mode.
+     */
+    public static final int STANDARD_INPUT = 0;
+    /**
+     * The text path input mode.
+     */
+    public static final int MANUAL_INPUT = 1;
+
+    /**
      * See {@link com.veniosg.dir.android.ui.widget.PathView#switchToManualInput() switchToManualInput()}
      * and {@link com.veniosg.dir.android.ui.widget.PathView#switchToStandardInput() switchToStandardInput()}.
      */
-    enum Mode {
-        /**
-         * The button path selection mode.
-         */
-        STANDARD_INPUT,
-        /**
-         * The text path input mode.
-         */
-        MANUAL_INPUT
-    }
+    @Mode
+    int getMode();
 
-    Mode getMode();
     void switchToStandardInput();
+
     void switchToManualInput();
 
     /**
-     * @see com.veniosg.dir.android.ui.widget.PathView#cd(File)
-     * @param path
-     *            The path of the Directory to {@code cd} to.
+     * @param path The path of the Directory to {@code cd} to.
      * @return Whether the path entered exists and can be navigated to.
+     * @see com.veniosg.dir.android.ui.widget.PathView#cd(File)
      */
     boolean cd(String path);
 
@@ -57,6 +66,7 @@ public interface PathController {
      * @return Whether the path entered exists and can be navigated to.
      */
     boolean cd(File file);
+
     boolean cd(File file, boolean forceNoAnim);
 
     /**
@@ -72,8 +82,8 @@ public interface PathController {
     File getCurrentDirectory();
 
     /**
-     * @see #setInitialDirectory(File)
      * @return The initial directory.
+     * @see #setInitialDirectory(File)
      */
     File getInitialDirectory();
 

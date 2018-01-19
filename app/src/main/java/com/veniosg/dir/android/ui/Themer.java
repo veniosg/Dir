@@ -20,20 +20,26 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.support.annotation.IntDef;
 import android.support.annotation.StyleRes;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.fragment.PreferenceFragment;
 
+import java.lang.annotation.Retention;
+
+import static java.lang.annotation.RetentionPolicy.SOURCE;
+
 public abstract class Themer {
-    public enum Theme {
-        DIR,
-        GRAYSCALE,
-        DARK
-    }
+    @Retention(SOURCE)
+    @IntDef({DIR, GRAYSCALE, DARK})
+    public @interface Theme {}
+    public static final int DIR = 0;
+    static final int GRAYSCALE = 1;
+    static final int DARK = 2;
 
     public static void applyTheme(Activity act) {
-        switch (Theme.values()[PreferenceFragment.getThemeIndex(act)]) {
+        switch (PreferenceFragment.getThemeIndex(act)) {
             case DIR:
                 act.setTheme(R.style.Theme_Dir);
                 break;
@@ -48,7 +54,7 @@ public abstract class Themer {
 
     @StyleRes
     public static int getTranslucentThemeId(Activity activity) {
-        switch (Theme.values()[PreferenceFragment.getThemeIndex(activity)]) {
+        switch (PreferenceFragment.getThemeIndex(activity)) {
             case DIR:
                 return R.style.Theme_Dir_Translucent;
             case GRAYSCALE:

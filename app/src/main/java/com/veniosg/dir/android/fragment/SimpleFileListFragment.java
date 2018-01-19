@@ -1,6 +1,6 @@
 /*
+ * Copyright (C) 2018 George Venios
  * Copyright (C) 2012 OpenIntents.org
- * Copyright (C) 2017 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,14 +51,14 @@ import com.veniosg.dir.android.dialog.SingleCompressDialog;
 import com.veniosg.dir.android.dialog.SingleDeleteDialog;
 import com.veniosg.dir.android.provider.BookmarkProvider;
 import com.veniosg.dir.android.service.ZipService;
+import com.veniosg.dir.android.ui.PathController;
+import com.veniosg.dir.android.ui.widget.AnimatedFileListContainer;
+import com.veniosg.dir.android.ui.widget.PathView;
 import com.veniosg.dir.android.util.CopyHelper;
 import com.veniosg.dir.android.util.FileUtils;
 import com.veniosg.dir.android.util.Logger;
 import com.veniosg.dir.android.util.MediaScannerUtils;
 import com.veniosg.dir.android.util.Utils;
-import com.veniosg.dir.android.ui.PathController;
-import com.veniosg.dir.android.ui.widget.AnimatedFileListContainer;
-import com.veniosg.dir.android.ui.widget.PathView;
 import com.veniosg.dir.mvvm.model.FileHolder;
 
 import java.io.File;
@@ -69,11 +69,12 @@ import java.util.HashMap;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.veniosg.dir.android.fragment.PreferenceFragment.getMediaScanFromPreference;
-import static com.veniosg.dir.android.util.CopyHelper.Operation.COPY;
-import static com.veniosg.dir.android.util.FileUtils.isZipArchive;
+import static com.veniosg.dir.android.ui.PathController.MANUAL_INPUT;
 import static com.veniosg.dir.android.ui.PathController.OnDirectoryChangedListener;
 import static com.veniosg.dir.android.ui.Themer.setStatusBarColour;
 import static com.veniosg.dir.android.ui.widget.PathView.ActivityProvider;
+import static com.veniosg.dir.android.util.CopyHelper.COPY;
+import static com.veniosg.dir.android.util.FileUtils.isZipArchive;
 
 /**
  * A file list fragment that supports CAB selection.
@@ -662,7 +663,7 @@ public class SimpleFileListFragment extends FileListFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putBoolean(INSTANCE_STATE_PATHBAR_MODE, mPathBar.getMode() == PathController.Mode.MANUAL_INPUT);
+        outState.putBoolean(INSTANCE_STATE_PATHBAR_MODE, mPathBar.getMode() == MANUAL_INPUT);
     }
 
     /**

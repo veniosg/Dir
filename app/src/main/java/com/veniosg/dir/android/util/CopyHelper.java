@@ -17,27 +17,33 @@
 package com.veniosg.dir.android.util;
 
 import android.content.Context;
+import android.support.annotation.IntDef;
 
-import com.veniosg.dir.mvvm.model.FileHolder;
 import com.veniosg.dir.android.service.CopyService;
+import com.veniosg.dir.mvvm.model.FileHolder;
 
 import java.io.File;
+import java.lang.annotation.Retention;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 /**
  * This class helps simplify copying and moving of files and folders by providing
  * a simple interface and handling the actual operation transparently.
- * @author George Venios
- *
  */
 public class CopyHelper {
-    public static enum Operation {
-		COPY, CUT
-	}
-	
+	@Retention(SOURCE)
+	@IntDef({COPY, CUT})
+	private @interface Operation {}
+	public static final int COPY = 0;
+	@SuppressWarnings("WeakerAccess")
+    public static final int CUT = 1;
+
 	private List<FileHolder> mClipboard;
-	private Operation mOperation;
+	@Operation
+	private int mOperation;
 
     public int getItemCount() {
         if (canPaste()){
@@ -48,25 +54,23 @@ public class CopyHelper {
     }
 
     public void copy(List<FileHolder> tbc){
-		mOperation = Operation.COPY;
-		
+		mOperation = COPY;
 		mClipboard = tbc;
 	}
 	
 	public void copy(FileHolder tbc){
-		ArrayList<FileHolder> tbcl = new ArrayList<FileHolder>();
+		ArrayList<FileHolder> tbcl = new ArrayList<>();
 		tbcl.add(tbc);
 		copy(tbcl);
 	}
 	
 	public void cut(List<FileHolder> tbc){
-		mOperation = Operation.CUT;
-		
+		mOperation = CUT;
 		mClipboard = tbc;
 	}
 	
 	public void cut(FileHolder tbc){
-		ArrayList<FileHolder> tbcl = new ArrayList<FileHolder>();
+		ArrayList<FileHolder> tbcl = new ArrayList<>();
 		tbcl.add(tbc);
 		cut(tbcl);
 	}
@@ -81,8 +85,9 @@ public class CopyHelper {
 	public boolean canPaste(){
 		return mClipboard != null && !mClipboard.isEmpty();
 	}
-	
-	public Operation getOperationType(){
+
+    @Operation
+	public int getOperationType() {
 		return mOperation;
 	}
 
