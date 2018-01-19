@@ -17,6 +17,7 @@
 <resources>
     <!-- Bookmark action. This is a verb. -->
     <string name="menu_bookmark">Könyvjelző</string>
+    <string name="bookmarks">Könyvjelzők</string>
     <string name="create_new_folder">Új mappa létrehozása</string>
     <string name="folder_name">Mappa neve</string>
     <string name="this_folder_is_empty">Üres mappa</string>
@@ -30,6 +31,8 @@
     <string name="details_permissions">Engedélyek</string>
     <string name="details_hidden">Rejtett</string>
     <string name="details_lastmodified">Legutóbb módosítva</string>
+    <string name="details_items">Elemek</string>
+    <string name="details_resolution">Felbontás</string>
     <string name="copied_file_name">%s másolata</string>
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="copied_file_name_2">%2$s %1$d másolat</string>
@@ -101,6 +104,7 @@
     <string name="notif_extracted_fail">Sikertelen kibontás</string>
     <string name="selected">kiválasztva</string>
     <string name="bookmark_empty">Nincs hozzáadott könyvjelző</string>
+    <string name="search_hint">Keresés itt: %1$s</string>
     <string name="search_empty">Nincs találat!</string>
     <string name="item_icon">Elem ikonja</string>
     <string name="delete_success">Sikeresen törölve</string>
@@ -133,5 +137,22 @@
     <string name="yes">Igen</string>
     <string name="no">Nem</string>
     <!-- Right pathview button description -->
+    <string name="edit_path">Elérési út szerkesztése</string>
+    <string name="goto_path">Elérési út megadása</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="permissions_denied">Dir-nek tárhely hozzáférésre van szüksége</string>
+    <string name="back">Vissza</string>
+    <string name="close">Bezár</string>
+    <string name="develop">Fejlesztői</string>
+    <string name="translate">Fordítás</string>
+    <string name="donate">Adományozás</string>
+    <string name="review">Vélemény</string>
+    <string name="contact">Kapcsolat</string>
+    <string name="donation_thanks">Köszönöm, hogy támogatod a Dir-t! ❤</string>
+    <string name="purchase_cancelled">Vásárlás megszakítva</string>
+    <string name="select_sd_root">Kérem válassza ki az SD kártya gyökérkönyvtárát</string>
+    <string name="write_access_required">Írás hozzáférési engedély szükséges</string>
+    <string name="grant_access">Hozzáférés biztosítása</string>
+    <string name="help">Segítség</string>
+    <string name="saf_dialog_message">Válassza ki az SD kártyát</string>
 </resources>
