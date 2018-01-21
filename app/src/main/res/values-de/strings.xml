@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ * Copyright (C) 2014-2015 George Venios
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ -->
+<resources>
+    <!-- Bookmark action. This is a verb. -->
+    <string name="menu_bookmark">Lesezeichen</string>
+    <string name="bookmarks">Lesezeichen</string>
+    <string name="create_new_folder">Neuen Ordner erstellen</string>
+    <string name="folder_name">Name des Ordners</string>
+    <string name="this_folder_is_empty">Leerer Ordner</string>
+    <string name="really_delete">Möchten Sie %s wirklich löschen?</string>
+    <string name="really_delete_multiselect">Möchten Sie die %d Daten wirklich löschen?</string>
+    <string name="pick_title">Dateiauswahl</string>
+    <string name="details_type">Typ</string>
+    <string name="details_type_folder">Ordner</string>
+    <string name="details_type_other">Andere</string>
+    <string name="details_size">Größe</string>
+    <string name="details_permissions">Berechtigungen</string>
+    <string name="details_hidden">Versteckt</string>
+    <string name="details_lastmodified">Zuletzt geändert</string>
+    <string name="details_items">Objekte</string>
+    <string name="details_resolution">Auflösung</string>
+    <string name="copied_file_name">Kopie von %s</string>
+    <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
+    <string name="copied_file_name_2">Kopie %1$d von %2$s</string>
+    <string name="error_generic">Ein Fehler ist aufgetreten:</string>
+    <string name="error_media_scan">Konnte Medien-Sucheinstellungen nicht ändern</string>
+    <string name="send_not_available">Keine Anwendung zum Senden vorhanden.</string>
+    <string name="application_not_available">Anwendung nicht vorhanden.</string>
+    <string name="settings">Einstellungen</string>
+    <string name="preference_advanced_features">Erweiterte Features</string>
+    <string name="preference_displayhiddenfiles_title">Versteckte Daten anzeigen</string>
+    <string name="preference_displayhiddenfiles_summary_on">Versteckte Daten anzeigen</string>
+    <string name="preference_displayhiddenfiles_summary_off">Versteckte Dateien verbergen</string>
+    <string name="preference_sort_settings">Sortiereinstellungen</string>
+    <string name="preference_sortby">Sortieren nach</string>
+    <string name="preference_theme">Theme</string>
+    <string name="preference_sortby_ascending">In aufsteigender Reihenfolge</string>
+    <string name="preference_sortby_ascending_summary_on">In aufsteigender Reihenfolge sortieren</string>
+    <string name="preference_sortby_ascending_summary_off">In absteigender Reihenfolge sortieren</string>
+    <string name="media_library_added">Zu Medienbibliothek hinzugefügt.</string>
+    <string name="media_library_removed">Aus Medienbibliothek entfernt.</string>
+    <string name="preference_medialib_title">Medienbibliotheks-Aktion</string>
+    <string name="preference_medialib_summary_on">Zeige Medienbibliotheks-Aktion für Ordner</string>
+    <string name="preference_medialib_summary_off">Verstecke Medienbibliotheks-Aktion für Ordner</string>
+    <string name="preference_sortby_name">Name</string>
+    <string name="preference_sortby_size">Größe</string>
+    <string name="preference_sortby_last_modified">Zuletzt geändert</string>
+    <string name="preference_theme_grayscale">Graustufe</string>
+    <string name="preference_theme_dark">Dunkel</string>
+    <string name="extracting">Entpacke…</string>
+    <string name="compressing">Komprimiere…</string>
+    <string name="menu_search">Suchen</string>
+    <string name="menu_create_folder">Ordner anlegen</string>
+    <string name="menu_paste">Einfügen</string>
+    <string name="menu_settings">Einstellungen</string>
+    <string name="menu_file_ops">Befehle</string>
+    <string name="menu_delete">Löschen</string>
+    <string name="menu_move">Ausschneiden</string>
+    <string name="menu_copy">Kopieren</string>
+    <string name="menu_compress">Komprimieren</string>
+    <string name="menu_rename">Umbenennen</string>
+    <string name="menu_extract">Entpacken</string>
+    <string name="menu_details">Details</string>
+    <string name="menu_create_shortcut">Verknüpfung anlegen</string>
+    <string name="send_chooser_title">Senden mit:</string>
+    <string name="menu_check_all">Alles auswählen</string>
+    <plurals name="menu_copy_items_to">
+        <item quantity="one">Kopiere %1$d Objekt hierher</item>
+        <item quantity="other">Kopiere %1$d Objekte hierher</item>
+    </plurals>
+    <plurals name="menu_move_items_to">
+        <item quantity="one">Verschiebe %1$d Objekt hierher</item>
+        <item quantity="other">Verschiebe %1$d Objekte hierher</item>
+    </plurals>
+    <string name="menu_clear_clipboard">Zwischenablage leeren</string>
+    <string name="menu_remove_bookmark">Entferne Lesezeichen</string>
+    <string name="menu_open_parent">Öffne Ordner-Inhalt</string>
+    <string name="menu_add_to_media">Zu Medienbibliothek hinzufügen</string>
+    <string name="menu_remove_from_media">Aus Medienbibliothek entfernen</string>
+    <string name="menu_share">Teilen</string>
+    <string name="notif_copying_item">Kopiere %1$s nach %2$s.</string>
+    <string name="notif_no_space">Nicht genug Speicher verfügbar</string>
+    <string name="notif_space_more">Sie benötigen %1$s mehr.</string>
+    <string name="notif_moving_item">Verschiebe %1$s nach %2$s.</string>
+    <string name="notif_compressed_success">Komprimierung erfolgreich</string>
+    <string name="notif_compressed_fail">Komprimierung fehlgeschlagen</string>
+    <string name="notif_compressing_into">Füge %1$s zu %2$s hinzu.</string>
+    <string name="notif_extracting_from">Entpacke %1$s aus %2$s.</string>
+    <string name="notif_extracted_success">Entpacken erfolgreich</string>
+    <string name="notif_extracted_fail">Entpacken fehlgeschlagen</string>
+    <string name="selected">ausgewählt</string>
+    <string name="bookmark_empty">Keine Lesezeichen</string>
+    <string name="search_hint">Suche in %1$s</string>
+    <string name="search_empty">Keine passenden Dateien gefunden!</string>
+    <string name="item_icon">Icon</string>
+    <string name="delete_success">Erfolgreich gelöscht</string>
+    <string name="delete_failure">Einige Dateien wurden nicht gelöscht</string>
+    <string name="deleting">Lösche…</string>
+    <string name="rename_success">Erfolgreich umbenannt</string>
+    <string name="rename_failure">Umbenennung fehlgeschlagen</string>
+    <string name="loading">Lade…</string>
+    <string name="create_dir_success">Ordner erfolgreich  erstellt</string>
+    <string name="create_dir_failure">Ordner konnte nicht erstellt werden</string>
+    <string name="compressed_file_name">Zip Dateiname</string>
+    <string name="file_exists">Datei vorhanden</string>
+    <string name="overwrite_question">Alte Datei überschreiben?</string>
+    <string name="directory_pick">Derzeitigen Ordner auswählen</string>
+    <string name="filename_hint">Dateiname</string>
+    <string name="choose_filename">Dateiname darf nicht leer sein!</string>
+    <string name="pick_button_default">Datei auswählen</string>
+    <string name="copying">Kopiere…</string>
+    <string name="copied">Erfolgreich kopiert</string>
+    <string name="copy_error">Einige oder alle Objekte konnten nicht kopiert werden!</string>
+    <string name="moving">Verschiebe…</string>
+    <string name="moved">Erfolgreich verschoben</string>
+    <string name="move_error">Einige oder alle Objekte konnte nicht verschoben werden!</string>
+    <string name="nothing_to_paste">Nichts zum Einfügen. Zuerst Dateien Kopieren oder Ausschneiden</string>
+    <string name="about_forked_from">Abgeleitet vom OI Datei Manager</string>
+    <string name="about_created_by">Erstellt von pxHouse</string>
+    <string name="about">Über</string>
+    <string name="about_share">Teilen</string>
+    <string name="about_shareSubject">Holen Sie sich Dir auf Google Play</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <!-- Right pathview button description -->
+    <string name="edit_path">Pfad editieren</string>
+    <string name="goto_path">Gehe zu Pfad</string>
+    <!-- Shown when the Marshmallow permissions have been denied. -->
+    <string name="permissions_denied">Dir benötigt Deine Erlaubnis, um auf den Speicher zuzugreifen</string>
+
+    <string name="back">Zurück</string>
+    <string name="close">Schliessen</string>
+    <string name="develop">Entwickeln</string>
+    <string name="translate">Übersetzen</string>
+    <string name="donate">Spenden</string>
+    <string name="review">Rezension</string>
+    <string name="contact">Kontakt</string>
+    <string name="donation_thanks">Danke für die Unterstützung von Dir! ❤</string>
+    <string name="purchase_cancelled">Kauf storniert</string>
+    <string name="select_sd_root">Bitte wählen Sie das Speicherkarten Root-Verzeichnis</string>
+    <string name="write_access_required">Schreibzugriff erforderlich</string>
+    <string name="grant_access">Zugriff gewähren</string>
+    <string name="help">Hilfe</string>
+    <string name="saf_dialog_message">Wählen Sie das Root-Verzeichnis Ihrer Speicherkarte.</string>
+    <string name="ntfchn_title_operations">Datei Operationen</string>
+</resources>
