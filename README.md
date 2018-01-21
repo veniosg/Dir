@@ -25,7 +25,7 @@ Not a developer?
 License
 --------
 
-	Copyright (C) 2014-2017 George Venios
+	Copyright (C) 2014-2018 George Venios
     Copyright (C) 2007-2014 OpenIntents.org
 
     Licensed under the Apache License, Version 2.0 (the "License");
