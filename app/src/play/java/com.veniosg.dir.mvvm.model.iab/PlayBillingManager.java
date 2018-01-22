@@ -34,6 +34,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.M;
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
 import static com.android.billingclient.api.BillingClient.BillingResponse.BILLING_UNAVAILABLE;
@@ -75,6 +77,12 @@ public class PlayBillingManager implements BillingManager {
                      OnPurchasedListener onPurchasedListener,
                      OnBillingUnavailableListener onBillingUnavailableListener) {
         if (billingClient != null) return;
+
+        // We don't request billing permission pre-M
+        if (SDK_INT < M) {
+            onBillingUnavailableListener.onBillingUnavailable();
+            return;
+        }
 
         this.onBillingUnavailableListener = onBillingUnavailableListener;
         billingClient = BillingClient.newBuilder(context.getApplicationContext())
