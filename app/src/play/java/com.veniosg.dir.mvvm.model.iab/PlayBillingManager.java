@@ -86,7 +86,9 @@ public class PlayBillingManager implements BillingManager {
                             if (purchases != null) {
                                 logV(TAG_BILLING, purchases.toString());
                                 for (Purchase p : purchases) {
-                                    onPurchasedListener.onPurchased(p);
+                                    onPurchasedListener.onPurchased(
+                                            new com.veniosg.dir.mvvm.model.iab.Purchase(p.getSku(),
+                                                    p.getPurchaseToken()));
                                 }
                             } else {
                                 logV(TAG_BILLING, "No purchases");
@@ -146,7 +148,8 @@ public class PlayBillingManager implements BillingManager {
     }
 
     @Override
-    public void consumePurchase(Purchase p, final OnConsumedListener onConsumedListener) {
+    public void consumePurchase(com.veniosg.dir.mvvm.model.iab.Purchase p,
+                                final OnConsumedListener onConsumedListener) {
         logV(TAG_BILLING, format(ENGLISH, "Consuming purchase: %s", p.getSku()));
         billingClient.consumeAsync(p.getPurchaseToken(), (responseCode, outToken) -> {
             if (responseCode == OK) {

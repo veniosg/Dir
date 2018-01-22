@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 George Venios
+ * Copyright (C) 2014-2018 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,10 +35,10 @@ import static android.view.View.GONE;
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
 import static com.veniosg.dir.android.util.Utils.viewUri;
-import static com.veniosg.dir.mvvm.model.iab.BillingManagerInjector.playBillingManager;
+import static com.veniosg.dir.mvvm.model.iab.BillingManagerInjector.billingManager;
 
 public class AboutActivity extends BaseActivity {
-    private BillingManager billingManager = playBillingManager();
+    private BillingManager billingManager = billingManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,8 @@ public class AboutActivity extends BaseActivity {
 
         // Click listeners
         findViewById(R.id.middleText).setOnClickListener(v -> {
-            viewUri(this, "market://dev?id=8885726315648229405", "https://play.google.com/store/apps/dev?id=8885726315648229405");
+            viewUri(this, "market://dev?id=8885726315648229405",
+                    "https://play.google.com/store/apps/dev?id=8885726315648229405");
         });
         findViewById(R.id.contribute).setOnClickListener(v -> {
             viewUri(this, "https://github.com/veniosg/dir", null);

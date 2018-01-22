@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 George Venios
+ * Copyright (C) 2018 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 package com.veniosg.dir.mvvm.model.iab;
 
 public abstract class BillingManagerInjector {
-    public static BillingManager playBillingManager() {
+    public static BillingManager billingManager() {
         return new PlayBillingManager();
     }
 }

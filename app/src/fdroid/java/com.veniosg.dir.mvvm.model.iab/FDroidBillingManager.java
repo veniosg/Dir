@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 George Venios
+ * Copyright (C) 2018 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,23 +18,23 @@ package com.veniosg.dir.mvvm.model.iab;
 import android.app.Activity;
 import android.content.Context;
 
-public interface BillingManager {
-    void init(Context context,
-              OnPurchasedListener onPurchasedListener,
-              OnBillingUnavailableListener onUnavailableListener);
-    boolean hasPurchasedDonation();
-    void purchaseDonation(Activity activity);
-    void consumePurchase(Purchase p, OnConsumedListener onConsumedListener);
-
-    interface OnPurchasedListener {
-        void onPurchased(Purchase p);
+public class FDroidBillingManager implements BillingManager {
+    @Override
+    public void init(Context context, OnPurchasedListener onPurchasedListener,
+                     OnBillingUnavailableListener onUnavailableListener) {
+        onUnavailableListener.onBillingUnavailable();
     }
 
-    interface OnConsumedListener {
-        void onConsumed();
+    @Override
+    public boolean hasPurchasedDonation() {
+        return false;
     }
 
-    interface OnBillingUnavailableListener {
-        void onBillingUnavailable();
+    @Override
+    public void purchaseDonation(Activity activity) {
+    }
+
+    @Override
+    public void consumePurchase(Purchase p, OnConsumedListener onConsumedListener) {
     }
 }
