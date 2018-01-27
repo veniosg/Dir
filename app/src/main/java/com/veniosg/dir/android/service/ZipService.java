@@ -20,6 +20,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import com.veniosg.dir.mvvm.model.FileHolder;
 import com.veniosg.dir.mvvm.model.storage.operation.CompressOperation;
@@ -55,15 +56,15 @@ public class ZipService extends IntentService {
         }
     }
 
-    public static void extractTo(Context c, final FileHolder tbe, File extractTo) {
+    public static void extractTo(@NonNull Context c, final FileHolder tbe, File extractTo) {
         extractTo(c, singletonList(tbe), extractTo);
     }
 
-    public static void compressTo(Context c, final FileHolder tbc, File compressTo) {
+    public static void compressTo(@NonNull Context c, final FileHolder tbc, File compressTo) {
         compressTo(c, singletonList(tbc), compressTo);
     }
 
-    public static void extractTo(Context c, List<FileHolder> tbe, File extractTo) {
+    public static void extractTo(@NonNull Context c, List<FileHolder> tbe, File extractTo) {
         Intent i = new Intent(ACTION_EXTRACT);
         i.setClassName(c, ZipService.class.getName());
         i.setData(Uri.fromFile(extractTo));
@@ -73,7 +74,7 @@ public class ZipService extends IntentService {
         c.startService(i);
     }
 
-    public static void compressTo(Context c, List<FileHolder> tbc, File compressTo) {
+    public static void compressTo(@NonNull Context c, List<FileHolder> tbc, File compressTo) {
         Intent i = new Intent(ACTION_COMPRESS);
         i.setClassName(c, ZipService.class.getName());
         i.setData(Uri.fromFile(compressTo));

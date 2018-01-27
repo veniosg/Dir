@@ -18,6 +18,7 @@ package com.veniosg.dir.android.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -42,12 +43,14 @@ public class SingleCompressDialog extends DialogFragment implements Overwritable
     private FileHolder mFileHolder;
     private File tbcreated;
     private String zipname;
+    private Context appContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mFileHolder = getArguments().getParcelable(EXTRA_DIALOG_FILE_HOLDER);
+        if (getContext() != null) appContext = getContext().getApplicationContext();
     }
 
     @Override
@@ -89,7 +92,9 @@ public class SingleCompressDialog extends DialogFragment implements Overwritable
             dialog.setTargetFragment(this, 0);
             dialog.show(getFragmentManager(), "OverwriteFileDialog");
         } else {
-            ZipService.compressTo(getActivity(), mFileHolder, tbcreated);
+            Context context = getContext();
+            if (context == null) context = appContext;
+            ZipService.compressTo(context, mFileHolder, tbcreated);
         }
     }
 
