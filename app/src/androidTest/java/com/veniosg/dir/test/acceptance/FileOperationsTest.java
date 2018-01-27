@@ -222,6 +222,38 @@ public abstract class FileOperationsTest {
     }
 
     @Test
+    public void compressesAndOverwrites() throws Exception {
+        String zipName = "lala";
+        user.launches().viewWithFileScheme(testDirectory);
+
+        // compress
+        user.selects().longFileInList(testChildDirectory);
+        user.selects().operationsAction();
+        user.selects().compressAction();
+        user.types().inputFileName(zipName);
+        user.selects().ok();
+
+        // compress again
+        user.selects().longFileInList(testChildFile);
+        user.selects().operationsAction();
+        user.selects().compressAction();
+        user.types().inputFileName(zipName);
+        user.selects().ok();
+
+        // accept overwrite dialog
+        user.selects().yes();
+
+        // extract
+        user.selects().longFileInList(zipName + ".zip");
+        user.selects().operationsAction();
+        user.selects().extractAction();
+
+        // verify extracted structure matches second operation
+        user.selects().fileInList(zipName);
+        user.sees().fileInList(testChildFile);
+    }
+
+    @Test
     public void createsDirectory() throws Exception {
         String newDirName = "newDirectory";
         user.launches().viewWithFileScheme(testDirectory);
