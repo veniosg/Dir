@@ -18,7 +18,7 @@ android {
 
         testApplicationId "com.veniosg.dir.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        resConfigs "en", "cs", "de", "el", "es", "fr", "hr", "hu", "ja", "nl", "pt", "pt-rBR", "ru", "tr", "zh-rCN"
+        resConfigs "en", "cs", "de", "el", "es", "fr", "hr", "hu", "ja", "nl", "pt", "pt-rBR", "ru", "tr", "zh-rCN", "it"
     }
     signingConfigs {
         release {
