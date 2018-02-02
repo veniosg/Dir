@@ -12,7 +12,7 @@ Contributors
 ----
 Dir welcomes contributions from developers of all experience levels! 
 
-A good place to start are [issues marked as low effort](https://github.com/veniosg/Dir/labels/loweffort). Much more interesting (and harder) are [issues marked as high effort](https://github.com/veniosg/Dir/labels/higheffort).
+A good place to start is [this list of issues](https://github.com/veniosg/Dir/labels/good%20first%20issue). Much more interesting (and harder) are [issues marked as high effort](https://github.com/veniosg/Dir/labels/higheffort).
 
 For direction, help and coordination feel free to comment on the issues themselves or send an email to [dev@pxhouse.co](mailto:dev@pxhouse.co). If you're planning to build a completely new feature please open an issue before starting to ensure that your efforts are not wasted. 
 
