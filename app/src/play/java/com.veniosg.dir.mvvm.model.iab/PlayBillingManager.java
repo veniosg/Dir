@@ -183,6 +183,7 @@ public class PlayBillingManager implements BillingManager {
 
     private void startConnection() {
         logV(TAG_BILLING, "Connecting to billing service");
+        connectionStatus = CONNECTING;
         billingClient.startConnection(new BillingClientStateListener() {
             @Override
             public void onBillingSetupFinished(int responseCode) {
