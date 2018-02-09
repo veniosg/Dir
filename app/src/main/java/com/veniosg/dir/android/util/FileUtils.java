@@ -308,13 +308,13 @@ public class FileUtils {
                 if (childFile.isDirectory()) {
                     res &= delete(childFile);
                 } else {
-                    res &= childFile.delete();
+                    res &= deleteFile(childFile);
                 }
             }
         }
 
         // Delete the file itself
-        res &= fileOrDirectory.delete();
+        res &= deleteFile(fileOrDirectory);
 
         return res;
     }
@@ -433,5 +433,9 @@ public class FileUtils {
             paths.add(file.getAbsolutePath());
         }
         return paths;
+    }
+
+    private static boolean deleteFile(File childFile) {
+        return !childFile.exists() || childFile.delete();
     }
 }
