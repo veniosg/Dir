@@ -31,6 +31,8 @@
     <string name="details_permissions">权限</string>
     <string name="details_hidden">隐藏</string>
     <string name="details_lastmodified">最近修改</string>
+    <string name="details_items">包含</string>
+    <string name="details_resolution">分辨率</string>
     <string name="copied_file_name">%s的副本</string>
     <!-- Construct a unique file name with number %1$d of a file called %2$s. -->
     <string name="copied_file_name_2">%2$s的副本%1$d</string>
@@ -146,4 +148,10 @@
     <string name="contact">联系</string>
     <string name="donation_thanks">感谢您支持Dir!♡</string>
     <string name="purchase_cancelled">购买已取消</string>
+    <string name="select_sd_root">请选择 SD 卡根目录</string>
+    <string name="write_access_required">需要写入权限</string>
+    <string name="grant_access">授予权限</string>
+    <string name="help">帮助</string>
+    <string name="saf_dialog_message">选择你 SD 卡的根目录</string>
+    <string name="ntfchn_title_operations">文件操作</string>
 </resources>

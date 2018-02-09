@@ -154,4 +154,5 @@
     <string name="grant_access">Δώσε άδεια</string>
     <string name="help">Βοήθεια</string>
     <string name="saf_dialog_message">Επίλεξε τον αρχικό φάκελο της κάρτας SD.</string>
+    <string name="ntfchn_title_operations">Ενέργειες σε αρχεία</string>
 </resources>
