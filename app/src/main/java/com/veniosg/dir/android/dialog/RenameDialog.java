@@ -27,12 +27,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.ui.toast.ToastDisplayer;
 import com.veniosg.dir.mvvm.model.FileHolder;
 import com.veniosg.dir.mvvm.model.storage.operation.RenameOperation;
+
+import java.io.File;
 
 import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE;
 import static android.view.inputmethod.EditorInfo.IME_ACTION_GO;
@@ -50,7 +53,7 @@ public class RenameDialog extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().getWindow().setSoftInputMode(SOFT_INPUT_STATE_VISIBLE);
 
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -64,9 +67,10 @@ public class RenameDialog extends DialogFragment {
         final EditText v = view.findViewById(R.id.textinput);
         v.setText(mFileHolder.getName());
 
-        v.setOnEditorActionListener((text, actionId, event) -> {
-            if (actionId == IME_ACTION_GO) renameTo(text.getText().toString());
-            dismiss();
+        v.setOnEditorActionListener((tv, actionId, event) -> {
+            if (actionId == IME_ACTION_GO) {
+                tryRename(tv.getText().toString());
+            }
             return true;
         });
 
@@ -75,10 +79,20 @@ public class RenameDialog extends DialogFragment {
                 .setView(view)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(android.R.string.ok,
-                        (dialog1, which) -> renameTo(v.getText().toString()))
+                        (dialog1, which) -> tryRename(v.getText().toString()))
                 .create();
         dialog.setIcon(mFileHolder.getIcon());
         return dialog;
+    }
+
+    private void tryRename(String newName) {
+        File destFile = new File(mFileHolder.getFile().getParent(), newName);
+        if (destFile.exists()) {
+            Toast.makeText(getContext(), R.string.file_exists, Toast.LENGTH_SHORT).show();
+        } else {
+            renameTo(destFile.getName());
+            dismiss();
+        }
     }
 
     private void renameTo(String newName) {
