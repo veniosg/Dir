@@ -46,12 +46,16 @@ public abstract class TestUtils {
 
     public static void cleanDirectorySaf(Context context, File file) {
         if (!file.exists()) return;
-        for (String name : file.list()) {
-            File child = new File(file, name);
-            if (child.isDirectory()) {
-                cleanDirectorySaf(context, child);
-            } else {
-                safAwareDelete(context, file);
+
+        String[] childrenFiles = file.list();
+        if (childrenFiles != null) {
+            for (String name : childrenFiles) {
+                File child = new File(file, name);
+                if (child.isDirectory()) {
+                    cleanDirectorySaf(context, child);
+                } else {
+                    safAwareDelete(context, file);
+                }
             }
         }
         if (!safAwareDelete(context, file)) {
