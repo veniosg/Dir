@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2018 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,47 +16,36 @@
 
 package com.veniosg.dir.android.adapter;
 
-import android.content.Context;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.veniosg.dir.R;
+import com.veniosg.dir.android.adapter.viewholder.FileListViewHolder;
+import com.veniosg.dir.android.adapter.viewholder.FileListViewHolder.OnItemClickListener;
+import com.veniosg.dir.android.fragment.RecyclerViewFragment;
 import com.veniosg.dir.mvvm.model.FileHolder;
-import com.veniosg.dir.android.ui.ViewHolder;
 
 import java.util.List;
 
-import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
-import static com.veniosg.dir.android.misc.ThumbnailHelper.requestIcon;
-
-public class FileHolderListAdapter extends BaseAdapter {
+public class FileHolderListAdapter extends RecyclerView.Adapter<FileListViewHolder>
+        implements RecyclerViewFragment.ClickableAdapter {
     private List<FileHolder> mItems;
-	private int mItemLayoutId = R.layout.item_filelist;
 
-	private OnItemToggleListener mOnItemToggleListener;
+    private OnItemToggleListener mOnItemToggleListener;
+    private OnItemClickListener onItemClickListener;
 
     public FileHolderListAdapter(List<FileHolder> files){
 		mItems = files;
+		setHasStableIds(true);
 	}
 
 	@Override
-	public boolean hasStableIds() {
-		return true;
-	}
-
-	@Override
-	public int getCount() {
+	public int getItemCount() {
 		return mItems.size();
 	}
 
-	@Override
     @Nullable
-	public Object getItem(int position) {
+	public FileHolder getItem(int position) {
         if (position < 0 || position >= mItems.size()) return null;
 
 		return mItems.get(position);
@@ -67,53 +56,15 @@ public class FileHolderListAdapter extends BaseAdapter {
 		return position;
 	}
 
-	/**
-	 * Set the layout to be used for item drawing.
-	 * @param resId The item layout id. 0 to reset.
-	 */
-	public void setItemLayout(int resId){
-		if(resId > 0)
-			mItemLayoutId = resId;
-		else
-			mItemLayoutId = R.layout.item_filelist;
-	}
+    @Override
+    public FileListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new FileListViewHolder(parent);
+    }
 
-	/**
-	 * Creates a new list item view, along with it's ViewHolder set as a tag.
-	 * @return The new view.
-	 */
-	private View newView(Context context){
-		View view = LayoutInflater.from(context).inflate(mItemLayoutId, null);
-
-		ViewHolder holder = new ViewHolder();
-		holder.icon = (ImageView) view.findViewById(R.id.icon);
-		holder.primaryInfo = (TextView) view.findViewById(R.id.primary_info);
-		holder.secondaryInfo = (TextView) view.findViewById(R.id.secondary_info);
-		holder.tertiaryInfo = (TextView) view.findViewById(R.id.tertiary_info);
-
-		view.setTag(holder);
-		return view;
-	}
-
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		FileHolder item = mItems.get(position);
-		if(convertView == null)
-			convertView = newView(parent.getContext());
-		ViewHolder holder = (ViewHolder) convertView.getTag();
-
-        getInstance().cancelDisplayTask(holder.icon);
-		holder.icon.setImageDrawable(item.getBestIcon());
-		holder.primaryInfo.setText(item.getName());
-		holder.secondaryInfo.setText(item.getFormattedModificationDate(convertView.getContext()));
-		// Hide directories' size as it's irrelevant if we can't recursively find it.
-		holder.tertiaryInfo.setText(item.getFile().isDirectory()? "" : item.getFormattedSize(
-                convertView.getContext(), false));
-
-        requestIcon(item, holder.icon);
-
-		return convertView;
-	}
+    @Override
+    public void onBindViewHolder(FileListViewHolder holder, int position) {
+        holder.bind(getItem(position), onItemClickListener);
+    }
 
     public OnItemToggleListener getOnItemToggleListener() {
         return mOnItemToggleListener;
@@ -123,11 +74,12 @@ public class FileHolderListAdapter extends BaseAdapter {
         this.mOnItemToggleListener = mOnItemToggleListener;
     }
 
-    private boolean shouldLoadIcon(FileHolder item){
-		return item.getFile().isFile() && !item.getMimeType().equals("video/mpeg");
-	}
+    @Override
+    public void setOnItemClickListener(OnItemClickListener onClickListener) {
+        this.onItemClickListener = onClickListener;
+    }
 
     public interface OnItemToggleListener {
-        public void onItemToggle(int position);
+        void onItemToggle(int position);
     }
 }

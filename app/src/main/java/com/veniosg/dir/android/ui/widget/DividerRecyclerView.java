@@ -20,28 +20,28 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.GridView;
 
 import static android.R.attr.listDivider;
 import static com.veniosg.dir.android.ui.Themer.getThemedResourceId;
 
-public class DividerGridView extends GridView {
+public class DividerRecyclerView extends RecyclerView {
     private int mDividerSize;
     private Drawable mDivider;
 
-    public DividerGridView(Context context) {
+    public DividerRecyclerView(Context context) {
         super(context);
         init(context);
     }
 
-    public DividerGridView(Context context, AttributeSet attrs) {
+    public DividerRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public DividerGridView(Context context, AttributeSet attrs, int defStyle) {
+    public DividerRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }
@@ -54,6 +54,7 @@ public class DividerGridView extends GridView {
 
     @Override
     protected void dispatchDraw(Canvas canvas) {
+        // TODO move this to default item decoration
         double count = getChildCount();
         int bottom, top, right;
         int numColumns = getNumColumns();

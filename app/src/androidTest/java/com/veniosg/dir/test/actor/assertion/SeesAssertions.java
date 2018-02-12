@@ -77,6 +77,14 @@ public class SeesAssertions {
         viewWithId(R.id.empty_img);
     }
 
+    public void emptyView() {
+        onView(allOf(
+                withId(R.id.empty_text),
+                withText("Folder empty")
+        )).check(matches(isDisplayed()));
+        viewWithId(R.id.empty_img);
+    }
+
     private void viewWithId(@IdRes int id) {
         onView(withId(id)).check(matches(isDisplayed()));
     }

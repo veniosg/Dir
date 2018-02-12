@@ -19,6 +19,7 @@ package com.veniosg.dir.android.fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -29,7 +30,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,41 +46,34 @@ import static android.view.View.GONE;
 import static com.veniosg.dir.android.ui.Themer.getThemedResourceId;
 import static com.veniosg.dir.android.ui.Themer.setStatusBarColour;
 
-public class SideNavFragment extends AbsListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class SideNavFragment extends RecyclerViewFragment
+        implements LoaderManager.LoaderCallbacks<Cursor> {
     private WaitingViewFlipper mFlipper;
-    private View.OnClickListener mSettingsClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), PreferenceActivity.class);
-            startActivity(intent);
-        }
+    private View.OnClickListener mSettingsClickListener = v -> {
+        Intent intent = new Intent(getActivity(), PreferenceActivity.class);
+        startActivity(intent);
     };
-    private View.OnClickListener mAboutClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent intent = new Intent(getActivity(), AboutActivity.class);
-            startActivity(intent);
-        }
+    private View.OnClickListener mAboutClickListener = v -> {
+        Intent intent = new Intent(getActivity(), AboutActivity.class);
+        startActivity(intent);
     };
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_drawer, null);
     }
 
     @Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-        mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
+        mFlipper = view.findViewById(R.id.flipper);
 
         setLoading(true);
         view.findViewById(R.id.empty_img).setVisibility(GONE);
         ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.bookmark_empty);
 
-        if (getListView() instanceof GridView) {
-            ((GridView) getListView()).setNumColumns(1);
-        }
         setListAdapter(new BookmarkListAdapter(getActivity(), null));
         setListChoiceListener();
         view.setBackgroundResource(getThemedResourceId(getActivity(), android.R.attr.colorBackground));
@@ -91,7 +84,7 @@ public class SideNavFragment extends AbsListFragment implements LoaderManager.Lo
 	}
 
     @Override
-	public void onListItemClick(AbsListView l, View v, int position, long id) {
+	public void onListItemClick(View itemView, int position, long id) {
 		Cursor c = ((Cursor) getListAdapter().getItem(position));
 		((BookmarkContract) getActivity()).onBookmarkSelected(c.getString(
                 c.getColumnIndex(BookmarkProvider.PATH)));
@@ -109,13 +102,13 @@ public class SideNavFragment extends AbsListFragment implements LoaderManager.Lo
     }
 
     private void setListChoiceListener() {
-        getListView().setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+        getRecyclerView().setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             @Override
             public boolean onPrepareActionMode(android.view.ActionMode mode, Menu menu) {
                 menu.clear();
                 mode.getMenuInflater().inflate(R.menu.cab_bookmarks, menu);
 
-                if (getListView().getCheckedItemCount() != 1) {
+                if (getRecyclerView().getCheckedItemCount() != 1) {
                     menu.removeItem(R.id.menu_open_parent);
                 }
                 return true;
@@ -136,9 +129,9 @@ public class SideNavFragment extends AbsListFragment implements LoaderManager.Lo
             public boolean onActionItemClicked(android.view.ActionMode mode, MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_delete:
-                        long[] ids = getListView().getCheckedItemIds();
+                        long[] ids = getRecyclerView().getCheckedItemIds();
                         for (long id : ids) {
-                            getListView().getContext().getContentResolver().delete(BookmarkProvider.CONTENT_URI,
+                            getRecyclerView().getContext().getContentResolver().delete(BookmarkProvider.CONTENT_URI,
                                     BookmarkProvider._ID + "=?", new String[]{"" + id});
                         }
                         mode.finish();
@@ -146,8 +139,8 @@ public class SideNavFragment extends AbsListFragment implements LoaderManager.Lo
 
                     case R.id.menu_open_parent:
                         int pos = 0;
-                        SparseBooleanArray checked = getListView().getCheckedItemPositions();
-                        for (int i = 0; i < getListView().getCount(); i++) {
+                        SparseBooleanArray checked = getRecyclerView().getCheckedItemPositions();
+                        for (int i = 0; i < getRecyclerView().getCount(); i++) {
                             if (checked.get(i)) {
                                 pos = i;
                             }
@@ -165,16 +158,16 @@ public class SideNavFragment extends AbsListFragment implements LoaderManager.Lo
             @Override
             public void onItemCheckedStateChanged(android.view.ActionMode mode,
                                                   int position, long id, boolean checked) {
-                if (getListView().getCheckedItemCount() != 0) {
+                if (getRecyclerView().getCheckedItemCount() != 0) {
 
-                    mode.setTitle(getListView().getCheckedItemCount() + " " + getString(R.string.selected));
+                    mode.setTitle(getRecyclerView().getCheckedItemCount() + " " + getString(R.string.selected));
 
                     // Force actions' refresh
                     mode.invalidate();
                 }
             }
         });
-        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        getRecyclerView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
     }
 
     @Override

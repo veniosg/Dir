@@ -30,7 +30,7 @@
         android:orientation="vertical">
 
         <!-- List -->
-        <com.veniosg.dir.android.ui.widget.DividerGridView
+        <com.veniosg.dir.android.ui.widget.DividerRecyclerView
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

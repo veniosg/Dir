@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -44,7 +45,7 @@ public class PickFileListFragment extends SimpleFileListFragment {
 	private PickBar mPickBar;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 		return inflater.inflate(R.layout.fragment_filelist_pick, container, false);
 	}
@@ -56,7 +57,7 @@ public class PickFileListFragment extends SimpleFileListFragment {
     }
 
     @Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		ViewFlipper modeSelector = (ViewFlipper) view.findViewById(R.id.modeSelector);
 
@@ -95,16 +96,14 @@ public class PickFileListFragment extends SimpleFileListFragment {
 		}
 	}
 
-	@Override
-	public void onListItemClick(AbsListView l, View v, int position, long id) {
-		FileHolder item = (FileHolder) mAdapter.getItem(position);
-
+    @Override
+    public void onListItemClick(View itemView, FileHolder item) {
         if (item != null && item.getFile().isFile()) {
             mPickBar.setText(item.getName());
         } else {
-            super.onListItemClick(l, v, position, id);
+            super.onListItemClick(itemView, item);
         }
-	}
+    }
 
 	/**
 	 * Act upon picking.

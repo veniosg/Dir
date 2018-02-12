@@ -25,6 +25,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -97,10 +98,10 @@ public class SimpleFileListFragment extends FileListFragment {
 
         @Override
         public boolean onPrepareActionMode(android.view.ActionMode mode, Menu menu) {
-            if (getView() == null) return false; // Prevent crash from getListView()'s ensureList().
+            if (getView() == null) return false; // Prevent crash from getRecyclerView()'s ensureList().
             menu.clear();
 
-            switch (getListView().getCheckedItemCount()) {
+            switch (getRecyclerView().getCheckedItemCount()) {
                 // Single selection
                 case 1:
                     FileHolder fHolder = (FileHolder) getListAdapter().getItem(getCheckedItemPosition());
@@ -158,12 +159,12 @@ public class SimpleFileListFragment extends FileListFragment {
         @Override
         public boolean onActionItemClicked(android.view.ActionMode mode, MenuItem item) {
             if (item.getItemId() == R.id.menu_select_all) {
-                for (int i = 0; i < getListView().getCount(); i++)
-                    getListView().setItemChecked(i, true);
+                for (int i = 0; i < getRecyclerView().getCount(); i++)
+                    getRecyclerView().setItemChecked(i, true);
                 return true;
             }
 
-            switch (getListView().getCheckedItemCount()) {
+            switch (getRecyclerView().getCheckedItemCount()) {
                 // Single selection
                 case 1:
                     return handleSingleSelectionAction(mode, item);
@@ -176,8 +177,8 @@ public class SimpleFileListFragment extends FileListFragment {
         @Override
         public void onItemCheckedStateChanged(android.view.ActionMode mode,
                                               int position, long id, boolean checked) {
-            if (getListView().getCheckedItemCount() != 0) {
-                mode.setTitle(getListView().getCheckedItemCount() + " "
+            if (getRecyclerView().getCheckedItemCount() != 0) {
+                mode.setTitle(getRecyclerView().getCheckedItemCount() + " "
                         + getString(R.string.selected));
 
                 // Force actions' refresh
@@ -188,8 +189,8 @@ public class SimpleFileListFragment extends FileListFragment {
     private FileHolderListAdapter.OnItemToggleListener mOnItemToggleListener = new FileHolderListAdapter.OnItemToggleListener() {
         @Override
         public void onItemToggle(int position) {
-            getListView().setItemChecked(position,
-                    !Utils.getItemChecked(getListView(), position));
+            getRecyclerView().setItemChecked(position,
+                    !Utils.getItemChecked(getRecyclerView(), position));
         }
     };
     private ActivityProvider mActivityProvider = new ActivityProvider() {
@@ -372,12 +373,12 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_filelist_simple, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // We expect the pathbar to add the bottom shadow in this case
@@ -417,8 +418,8 @@ public class SimpleFileListFragment extends FileListFragment {
 
     private void initContextualActions() {
         if (mActionsEnabled) {
-            getListView().setMultiChoiceModeListener(mMultiChoiceModeListener);
-            getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+            getRecyclerView().setMultiChoiceModeListener(mMultiChoiceModeListener);
+            getRecyclerView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
             ((FileHolderListAdapter) getListAdapter()).setOnItemToggleListener(mOnItemToggleListener);
 
             setHasOptionsMenu(true);
@@ -426,10 +427,9 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     @Override
-    public void onListItemClick(AbsListView l, View v, int position, long id) {
-        FileHolder item = (FileHolder) mAdapter.getItem(position);
+    public void onListItemClick(View itemView, FileHolder item) {
         if (item != null) {
-            heroView = v;
+            heroView = itemView;
             openInformingPathBar(item);
             heroView = null;
         }
@@ -692,18 +692,18 @@ public class SimpleFileListFragment extends FileListFragment {
      * @return
      */
     int getCheckedItemPosition() {
-        return (int) getListView().getCheckedItemIds()[0];
+        return (int) getRecyclerView().getCheckedItemIds()[0];
     }
 
     private void useFolderScroll(final ScrollPosition pos) {
         if (getView() != null) {
-            Utils.scrollToPosition(getListView(), pos, false);
+            Utils.scrollToPosition(getRecyclerView(), pos, false);
         }
     }
 
     private void keepFolderScroll() {
-        int firstVisiblePosition = getListView().getFirstVisiblePosition();
-        View firstVisibleChild = getListView().getChildAt(0);
+        int firstVisiblePosition = getRecyclerView().getFirstVisiblePosition();
+        View firstVisibleChild = getRecyclerView().getChildAt(0);
 
         if (firstVisibleChild != null) {
             sScrollPositions.put(getPath(), new ScrollPosition(firstVisiblePosition,
@@ -717,7 +717,7 @@ public class SimpleFileListFragment extends FileListFragment {
     private ArrayList<FileHolder> getCheckedItems() {
         ArrayList<FileHolder> items = new ArrayList<FileHolder>();
 
-        for (long pos : getListView().getCheckedItemIds()) {
+        for (long pos : getRecyclerView().getCheckedItemIds()) {
             FileHolder item = (FileHolder) getListAdapter().getItem((int) pos);
             if (item != null) items.add(item);
         }

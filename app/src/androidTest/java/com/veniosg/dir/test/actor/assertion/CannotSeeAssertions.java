@@ -40,6 +40,10 @@ public class CannotSeeAssertions {
     }
 
     public void searchEmptyView() {
+        emptyView();
+    }
+
+    public void emptyView() {
         onView(withId(R.id.empty_text))
                 .check(matches(not(isDisplayed())));
         onView(withId(R.id.empty_img))

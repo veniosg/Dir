@@ -49,12 +49,14 @@ public class FileManagerActivityTest {
     private final Android android = android(intentsRule);
     private final File storageDir = Environment.getExternalStorageDirectory();
     private final File testDirectory = new File(storageDir, "testDir");
+    private final File testEmptyDirectory = new File(testDirectory, "emptyDir");
     private final File testChildFile = new File(testDirectory, "testChildFile");
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Before
     public void setUp() throws Exception {
         testDirectory.mkdir();
+        testEmptyDirectory.mkdir();
         testChildFile.createNewFile();
     }
 
@@ -94,6 +96,20 @@ public class FileManagerActivityTest {
         user.selects().searchAction();
 
         android.launched().searchIntentFor(testDirectory);
+    }
+
+    @Test
+    public void showsEmptyViewWhenDirectoryEmpty() throws Exception {
+        user.launches().viewWithFileScheme(testEmptyDirectory);
+
+        user.sees().emptyView();
+    }
+
+    @Test
+    public void doesNotShowEmptyViewWhenDirectoryHasItems() throws Exception {
+        user.launches().viewWithFileScheme(testDirectory);
+
+        user.cannotSee().emptyView();
     }
 
     @Test

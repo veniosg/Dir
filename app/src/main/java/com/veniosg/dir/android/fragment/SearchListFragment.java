@@ -35,7 +35,7 @@ import android.widget.TextView;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.activity.FileManagerActivity;
-import com.veniosg.dir.android.adapter.FileListViewHolder.OnItemClickListener;
+import com.veniosg.dir.android.adapter.viewholder.FileListViewHolder.OnItemClickListener;
 import com.veniosg.dir.android.adapter.SearchListAdapter;
 import com.veniosg.dir.android.util.Logger;
 import com.veniosg.dir.android.ui.widget.WaitingViewFlipper;

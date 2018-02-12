@@ -33,14 +33,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.veniosg.dir.android.FileManagerApplication;
 import com.veniosg.dir.R;
+import com.veniosg.dir.android.FileManagerApplication;
 import com.veniosg.dir.android.adapter.FileHolderListAdapter;
-import com.veniosg.dir.mvvm.model.DirectoryHolder;
 import com.veniosg.dir.android.misc.DirectoryScanner;
-import com.veniosg.dir.mvvm.model.FileHolder;
-import com.veniosg.dir.android.util.Logger;
 import com.veniosg.dir.android.ui.widget.WaitingViewFlipper;
+import com.veniosg.dir.android.util.Logger;
+import com.veniosg.dir.mvvm.model.DirectoryHolder;
+import com.veniosg.dir.mvvm.model.FileHolder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -49,10 +49,11 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.preference.PreferenceManager.getDefaultSharedPreferences;
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
-import static com.veniosg.dir.IntentConstants.*;
 import static com.veniosg.dir.IntentConstants.ACTION_REFRESH_LIST;
 import static com.veniosg.dir.IntentConstants.EXTRA_DIRECTORIES_ONLY;
 import static com.veniosg.dir.IntentConstants.EXTRA_DIR_PATH;
+import static com.veniosg.dir.IntentConstants.EXTRA_FILENAME;
+import static com.veniosg.dir.IntentConstants.EXTRA_FILTER_FILETYPE;
 import static com.veniosg.dir.IntentConstants.EXTRA_FILTER_MIMETYPE;
 import static com.veniosg.dir.IntentConstants.EXTRA_WRITEABLE_ONLY;
 import static com.veniosg.dir.android.fragment.PreferenceFragment.PREFS_THEME;
@@ -61,7 +62,7 @@ import static com.veniosg.dir.android.ui.widget.WaitingViewFlipper.PAGE_INDEX_LO
 import static com.veniosg.dir.android.ui.widget.WaitingViewFlipper.PAGE_INDEX_PERMISSION_DENIED;
 
 /**
- * An {@link AbsListFragment} that displays the contents of a directory.
+ * An {@link RecyclerViewFragment} that displays the contents of a directory.
  * <p>
  *     Clicks do nothing.
  * </p>
@@ -73,8 +74,7 @@ import static com.veniosg.dir.android.ui.widget.WaitingViewFlipper.PAGE_INDEX_PE
  *     Requests permissions if they're not granted.
  * </p>
  */
-public abstract class FileListFragment extends AbsListFragment {
-
+public abstract class FileListFragment extends RecyclerViewFragment {
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 0;
     private static final String INSTANCE_STATE_PATH = "path";
 	private static final String INSTANCE_STATE_FILES = "files";
@@ -150,7 +150,7 @@ public abstract class FileListFragment extends AbsListFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putString(INSTANCE_STATE_PATH, mPath);
@@ -159,12 +159,12 @@ public abstract class FileListFragment extends AbsListFragment {
     }
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_filelist, null);
 	}
 
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
+	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
 		// Set auto refresh on preference change.
@@ -172,10 +172,10 @@ public abstract class FileListFragment extends AbsListFragment {
 				.registerOnSharedPreferenceChangeListener(preferenceListener);
 
 		// Set list properties
-		getListView().requestFocus();
-		getListView().requestFocusFromTouch();
+		getRecyclerView().requestFocus();
+		getRecyclerView().requestFocusFromTouch();
 
-		mFlipper = (WaitingViewFlipper) view.findViewById(R.id.flipper);
+		mFlipper = view.findViewById(R.id.flipper);
         view.findViewById(R.id.empty_img).setOnClickListener(mEmptyViewClickListener);
         view.findViewById(R.id.permissions_button).setOnClickListener(mRequestPermissionsListener);
 
@@ -303,9 +303,11 @@ public abstract class FileListFragment extends AbsListFragment {
                     mFiles.addAll(c.listFile);
                     onDataReady();
 
+                    // TODO Run a diff instead of updating everything
                     mAdapter.notifyDataSetChanged();
+                    // TODO Scroll up, we had other content. Check if needed.
                     if (getView() != null) {
-                        getListView().setSelection(0);
+                        getRecyclerView().setSelection(0);
                     }
                     showLoading(false);
                     onDataApplied();

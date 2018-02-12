@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2011 The Android Open Source Project
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2018 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,21 +20,22 @@ package com.veniosg.dir.android.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.veniosg.dir.android.ui.widget.DividerGridView;
+import com.veniosg.dir.android.adapter.viewholder.FileListViewHolder.OnItemClickListener;
+import com.veniosg.dir.android.ui.widget.DividerRecyclerView;
+import com.veniosg.dir.mvvm.model.FileHolder;
 
 /**
  * Static library support version of the framework's {@link android.app.ListFragment}.
@@ -43,7 +44,7 @@ import com.veniosg.dir.android.ui.widget.DividerGridView;
  * to switch to the framework's implementation.  See the framework SDK
  * documentation for a class overview.
  */
-public class AbsListFragment extends Fragment {
+public class RecyclerViewFragment extends Fragment {
     static final int INTERNAL_EMPTY_ID = 0x00ff0001;
     static final int INTERNAL_PROGRESS_CONTAINER_ID = 0x00ff0002;
     static final int INTERNAL_LIST_CONTAINER_ID = 0x00ff0003;
@@ -56,33 +57,61 @@ public class AbsListFragment extends Fragment {
         }
     };
 
-    final private AdapterView.OnItemClickListener mOnClickListener
-            = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            onListItemClick((AbsListView)parent, v, position, id);
-        }
-    };
+    final private OnItemClickListener mOnClickListener = this::onListItemClick;
 
-    ListAdapter mAdapter;
-    AbsListView mList;
-    View mEmptyView;
+    RecyclerView.Adapter mAdapter;
+    RecyclerView mList;
+    View mCustomEmptyView;
     TextView mStandardEmptyView;
     View mProgressContainer;
     View mListContainer;
     CharSequence mEmptyText;
+    View mEmptyView;
     boolean mListShown;
+    private final RecyclerView.AdapterDataObserver mEmptyViewUpdatingObserver = new RecyclerView.AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            ensureEmptyView(true);
+        }
 
-    public AbsListFragment() {
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount) {
+            onChanged();
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+            onChanged();
+        }
+
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            onChanged();
+        }
+
+        @Override
+        public void onItemRangeRemoved(int positionStart, int itemCount) {
+            onChanged();
+        }
+
+        @Override
+        public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+            onChanged();
+        }
+    };
+
+    public RecyclerViewFragment() {
     }
 
     /**
      * Provide default implementation to return a simple list view.  Subclasses
      * can override to replace with their own layout.  If doing so, the
-     * returned view hierarchy <em>must</em> have a AbsListView whose id
+     * returned view hierarchy <em>must</em> have a RecyclerView whose id
      * is {@link android.R.id#list android.R.id.list} and can optionally
      * have a sibling view id {@link android.R.id#empty android.R.id.empty}
      * that is to be shown when the list is empty.
-     *
+     * <p>
      * <p>If you are overriding this method with your own custom content,
      * consider including the standard layout {@link android.R.layout#list_content}
      * in your layout file, so that you continue to retain all of the standard
@@ -90,7 +119,7 @@ public class AbsListFragment extends Fragment {
      * way to have the built-in indeterminant progress state be shown.
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final Context context = getActivity();
 
@@ -110,7 +139,7 @@ public class AbsListFragment extends Fragment {
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         root.addView(pframe, new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         // ------------------------------------------------------------------
 
@@ -121,21 +150,20 @@ public class AbsListFragment extends Fragment {
         tv.setId(INTERNAL_EMPTY_ID);
         tv.setGravity(Gravity.CENTER);
         lframe.addView(tv, new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        AbsListView lv = new DividerGridView(getActivity());
+        RecyclerView lv = new DividerRecyclerView(getActivity());
         lv.setId(android.R.id.list);
-        lv.setDrawSelectorOnTop(false);
         lframe.addView(lv, new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         root.addView(lframe, new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         // ------------------------------------------------------------------
 
         root.setLayoutParams(new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         return root;
     }
@@ -144,7 +172,7 @@ public class AbsListFragment extends Fragment {
      * Attach to list view once the view hierarchy has been created.
      */
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ensureList();
     }
@@ -157,7 +185,7 @@ public class AbsListFragment extends Fragment {
         mHandler.removeCallbacks(mRequestFocus);
         mList = null;
         mListShown = false;
-        mEmptyView = mProgressContainer = mListContainer = null;
+        mCustomEmptyView = mProgressContainer = mListContainer = null;
         mStandardEmptyView = null;
         super.onDestroyView();
     }
@@ -165,70 +193,73 @@ public class AbsListFragment extends Fragment {
     /**
      * This method will be called when an item in the list is selected.
      * Subclasses should override. Subclasses can call
-     * getListView().getItemAtPosition(position) if they need to access the
+     * getRecyclerView().getItemAtPosition(position) if they need to access the
      * data associated with the selected item.
      *
-     * @param l The AbsListView where the click happened
-     * @param v The view that was clicked within the AbsListView
-     * @param position The position of the view in the list
-     * @param id The row id of the item that was clicked
+     * @param itemView The view that was clicked within the RecyclerView
+     * @param item The data item represented by itemView
      */
-    public void onListItemClick(AbsListView l, View v, int position, long id) {
+    public void onListItemClick(View itemView, FileHolder item) {
     }
 
     /**
      * Provide the cursor for the list view.
      */
-    public void setListAdapter(ListAdapter adapter) {
+    public void setListAdapter(@NonNull RecyclerView.Adapter adapter) {
         boolean hadAdapter = mAdapter != null;
+        if (hadAdapter) {
+            mAdapter.unregisterAdapterDataObserver(mEmptyViewUpdatingObserver);
+        }
         mAdapter = adapter;
         if (mList != null) {
             mList.setAdapter(adapter);
+            boolean shouldAnimate = getView() != null && getView().getWindowToken() != null;
             if (!mListShown && !hadAdapter) {
                 // The list was hidden, and previously didn't have an
-                // adapter.  It is now time to show it.
-                setListShown(true, getView().getWindowToken() != null);
+                // adapter. It is now time to show it.
+                setListShown(true, shouldAnimate);
+            } else {
+                ensureEmptyView(shouldAnimate);
             }
         }
+        mAdapter.registerAdapterDataObserver(mEmptyViewUpdatingObserver);
     }
 
-    /**
-     * Set the currently selected list item to the specified
-     * position with the adapter's data
-     *
-     * @param position
-     */
-    public void setSelection(int position) {
-        ensureList();
-        mList.setSelection(position);
-    }
+    private void ensureEmptyView(boolean animate) {
+        boolean hideEmpty = false;
+        if (mAdapter != null) {
+            hideEmpty = !mListShown || mAdapter.getItemCount() > 0;
+        }
 
-    /**
-     * Get the position of the currently selected list item.
-     */
-    public int getSelectedItemPosition() {
-        ensureList();
-        return mList.getSelectedItemPosition();
-    }
-
-    /**
-     * Get the cursor row ID of the currently selected list item.
-     */
-    public long getSelectedItemId() {
-        ensureList();
-        return mList.getSelectedItemId();
+        if (hideEmpty) {
+            if (animate) {
+                mEmptyView.startAnimation(AnimationUtils.loadAnimation(
+                        getActivity(), android.R.anim.fade_out));
+            } else {
+                mEmptyView.clearAnimation();
+            }
+            mEmptyView.setVisibility(View.GONE);
+        } else {
+            if (animate) {
+                mEmptyView.startAnimation(AnimationUtils.loadAnimation(
+                        getActivity(), android.R.anim.fade_in));
+            } else {
+                mEmptyView.clearAnimation();
+            }
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
      * Get the activity's list view widget.
      */
-    public AbsListView getListView() {
+    public RecyclerView getRecyclerView() {
         ensureList();
         return mList;
     }
 
     /**
-     * The default content for a ListFragment has a TextView that can
+     * The default content for a RecyclerViewFragment has a TextView that can
      * be shown when the list is empty.  If you would like to have it
      * shown, call this method to supply the text it should use.
      */
@@ -239,7 +270,7 @@ public class AbsListFragment extends Fragment {
         }
         mStandardEmptyView.setText(text);
         if (mEmptyText == null) {
-            mList.setEmptyView(mStandardEmptyView);
+            setEmptyView(mStandardEmptyView);
         }
         mEmptyText = text;
     }
@@ -248,15 +279,15 @@ public class AbsListFragment extends Fragment {
      * Control whether the list is being displayed.  You can make it not
      * displayed if you are waiting for the initial data to show in it.  During
      * this time an indeterminant progress indicator will be shown instead.
-     *
+     * <p>
      * <p>Applications do not normally need to use this themselves.  The default
      * behavior of ListFragment is to start with the list not being shown, only
-     * showing it once an adapter is given with {@link #setListAdapter(ListAdapter)}.
+     * showing it once an adapter is given with {@link #setListAdapter(RecyclerView.Adapter)}.
      * If the list at that point had not been shown, when it does get shown
      * it will be do without the user ever seeing the hidden state.
      *
      * @param shown If true, the list view is shown; if false, the progress
-     * indicator.  The initial value is true.
+     *              indicator.  The initial value is true.
      */
     public void setListShown(boolean shown) {
         setListShown(shown, true);
@@ -275,10 +306,10 @@ public class AbsListFragment extends Fragment {
      * displayed if you are waiting for the initial data to show in it.  During
      * this time an indeterminant progress indicator will be shown instead.
      *
-     * @param shown If true, the list view is shown; if false, the progress
-     * indicator.  The initial value is true.
+     * @param shown   If true, the list view is shown; if false, the progress
+     *                indicator.  The initial value is true.
      * @param animate If true, an animation will be used to transition to the
-     * new state.
+     *                new state.
      */
     private void setListShown(boolean shown, boolean animate) {
         ensureList();
@@ -314,12 +345,13 @@ public class AbsListFragment extends Fragment {
             mProgressContainer.setVisibility(View.VISIBLE);
             mListContainer.setVisibility(View.GONE);
         }
+        ensureEmptyView(animate);
     }
 
     /**
-     * Get the ListAdapter associated with this activity's AbsListView.
+     * Get the RecyclerView.Adapter associated with this activity's RecyclerView.
      */
-    public ListAdapter getListAdapter() {
+    public RecyclerView.Adapter getListAdapter() {
         return mAdapter;
     }
 
@@ -331,42 +363,44 @@ public class AbsListFragment extends Fragment {
         if (root == null) {
             throw new IllegalStateException("Content view not yet created");
         }
-        if (root instanceof AbsListView) {
-            mList = (AbsListView)root;
+        if (root instanceof RecyclerView) {
+            mList = (RecyclerView) root;
         } else {
-            mStandardEmptyView = (TextView)root.findViewById(INTERNAL_EMPTY_ID);
+            mStandardEmptyView = (TextView) root.findViewById(INTERNAL_EMPTY_ID);
             if (mStandardEmptyView == null) {
-                mEmptyView = root.findViewById(android.R.id.empty);
+                mCustomEmptyView = root.findViewById(android.R.id.empty);
             } else {
                 mStandardEmptyView.setVisibility(View.GONE);
             }
             mProgressContainer = root.findViewById(INTERNAL_PROGRESS_CONTAINER_ID);
             mListContainer = root.findViewById(INTERNAL_LIST_CONTAINER_ID);
-            View rawAbsListView = root.findViewById(android.R.id.list);
-            if (!(rawAbsListView instanceof AbsListView)) {
-                if (rawAbsListView == null) {
+            View rawRecyclerView = root.findViewById(android.R.id.list);
+            if (!(rawRecyclerView instanceof RecyclerView)) {
+                if (rawRecyclerView == null) {
                     throw new RuntimeException(
-                            "Your content must have a AbsListView whose id attribute is " +
+                            "Your content must have a RecyclerView whose id attribute is " +
                                     "'android.R.id.list'");
                 }
                 throw new RuntimeException(
                         "Content has view with id attribute 'android.R.id.list' "
-                                + "that is not a AbsListView class");
+                                + "that is not a RecyclerView class");
             }
-            mList = (AbsListView)rawAbsListView;
-            if (mEmptyView != null) {
-                mList.setEmptyView(mEmptyView);
+            mList = (RecyclerView) rawRecyclerView;
+            if (mCustomEmptyView != null) {
+                setEmptyView(mCustomEmptyView);
             } else if (mEmptyText != null) {
                 mStandardEmptyView.setText(mEmptyText);
-                mList.setEmptyView(mStandardEmptyView);
+                setEmptyView(mStandardEmptyView);
             }
         }
         mListShown = true;
-        mList.setOnItemClickListener(mOnClickListener);
         if (mAdapter != null) {
-            ListAdapter adapter = mAdapter;
+            RecyclerView.Adapter adapter = mAdapter;
             mAdapter = null;
             setListAdapter(adapter);
+            if (adapter instanceof ClickableAdapter) {
+                ((ClickableAdapter) adapter).setOnItemClickListener(mOnClickListener);
+            }
         } else {
             // We are starting without an adapter, so assume we won't
             // have our data right away and start with the progress indicator.
@@ -375,5 +409,19 @@ public class AbsListFragment extends Fragment {
             }
         }
         mHandler.post(mRequestFocus);
+    }
+
+    private void setEmptyView(View emptyView) {
+        if (emptyView != mEmptyView) {
+            if (mEmptyView != null) {
+                mEmptyView.setVisibility(View.GONE);
+            }
+        }
+        mEmptyView = emptyView;
+        ensureEmptyView(false);
+    }
+
+    public interface ClickableAdapter {
+        void setOnItemClickListener(OnItemClickListener onClickListener);
     }
 }
