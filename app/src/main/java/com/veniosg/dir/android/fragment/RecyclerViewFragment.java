@@ -211,8 +211,11 @@ public class RecyclerViewFragment extends Fragment {
             mAdapter.unregisterAdapterDataObserver(mEmptyViewUpdatingObserver);
         }
         mAdapter = adapter;
+        if (mAdapter instanceof ClickableAdapter) {
+            ((ClickableAdapter) mAdapter).setOnItemClickListener(mOnClickListener);
+        }
         if (mList != null) {
-            mList.setAdapter(adapter);
+            mList.setAdapter(mAdapter);
             boolean shouldAnimate = getView() != null && getView().getWindowToken() != null;
             if (!mListShown && !hadAdapter) {
                 // The list was hidden, and previously didn't have an
@@ -398,9 +401,6 @@ public class RecyclerViewFragment extends Fragment {
             RecyclerView.Adapter adapter = mAdapter;
             mAdapter = null;
             setListAdapter(adapter);
-            if (adapter instanceof ClickableAdapter) {
-                ((ClickableAdapter) adapter).setOnItemClickListener(mOnClickListener);
-            }
         } else {
             // We are starting without an adapter, so assume we won't
             // have our data right away and start with the progress indicator.

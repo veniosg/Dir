@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ import com.veniosg.dir.mvvm.model.FileHolder;
 import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 import static android.graphics.Bitmap.Config.ARGB_8888;
 import static android.text.TextUtils.isEmpty;
@@ -241,6 +243,7 @@ public abstract class Utils {
         return "image".equals(type);
     }
 
+    // TODO delete
     public static void scrollToPosition(final AbsListView listView,
                                         final SimpleFileListFragment.ScrollPosition pos,
                                         boolean immediate) {
@@ -263,6 +266,18 @@ public abstract class Utils {
                     }
                 }
             }, immediate ? 0 : ANIM_START_DELAY);
+        }
+    }
+
+    public static void scrollToPosition(final RecyclerView listView,
+                                        final SimpleFileListFragment.ScrollPosition pos,
+                                        boolean immediate) {
+        if (immediate) {
+            listView.scrollToPosition(pos.index);
+            listView.scrollTo(0, listView.getScrollY() + pos.top);
+        } else {
+            listView.smoothScrollToPosition(pos.index);
+            listView.smoothScrollBy(0, listView.getScrollY() + pos.top);
         }
     }
 
@@ -320,5 +335,15 @@ public abstract class Utils {
             return -1;   // Same size and same elements
         }
         return lastSameIndex + 1;
+    }
+
+    public static int[] integerSetToIntArray(Set<Integer> set) {
+        int[] array = new int[set.size()];
+        Iterator<Integer> setIterator = set.iterator();
+        int i = 0;
+        while (setIterator.hasNext()) {
+            array[i++] = setIterator.next();
+        }
+        return array;
     }
 }

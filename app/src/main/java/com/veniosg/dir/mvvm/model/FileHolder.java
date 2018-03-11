@@ -32,13 +32,14 @@ import com.veniosg.dir.android.util.Utils;
 import java.io.File;
 
 public class FileHolder implements Parcelable, Comparable<FileHolder> {
+	@NonNull
 	private File mFile;
 	private Drawable mIcon;
     private Drawable mPreview;
 	private String mMimeType = "";
 	private String mExtension;
 
-	public FileHolder(File f, Context c){
+	public FileHolder(@NonNull File f, Context c){
 		mFile = f;
 		mExtension = parseExtension();
         MimeTypes mimeTypes = ((FileManagerApplication) c.getApplicationContext()).getMimeTypes();
@@ -49,7 +50,7 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 	/**
 	 * Fastest constructor as it takes everything ready.
 	 */
-	public FileHolder(File f, String m, Drawable i){
+	public FileHolder(@NonNull File f, String m, Drawable i){
 		mFile = f;
 		mIcon = i;
 		mExtension = parseExtension();
@@ -62,6 +63,7 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 		mExtension = in.readString();
 	}
 
+	@NonNull
 	public File getFile(){
 		return mFile;
 	}
@@ -126,6 +128,10 @@ public class FileHolder implements Parcelable, Comparable<FileHolder> {
 	 */
 	public String getMimeType() {
 		return mMimeType;
+	}
+
+	public long getId() {
+		return mFile.getAbsolutePath().hashCode();
 	}
 
 	public CharSequence getFormattedModificationDate(Context c){

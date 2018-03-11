@@ -57,7 +57,7 @@ public class DividerRecyclerView extends RecyclerView {
         // TODO move this to default item decoration
         double count = getChildCount();
         int bottom, top, right;
-        int numColumns = getNumColumns();
+        int numColumns = 1;// TODO getNumColumns();
         Rect bounds = new Rect();
 
         for (int i = 0; i < count; i++) {

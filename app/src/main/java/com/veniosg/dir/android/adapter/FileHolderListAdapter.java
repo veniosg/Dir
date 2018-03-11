@@ -16,8 +16,11 @@
 
 package com.veniosg.dir.android.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.AdapterDataObserver;
+import android.util.LongSparseArray;
 import android.view.ViewGroup;
 
 import com.veniosg.dir.android.adapter.viewholder.FileListViewHolder;
@@ -25,61 +28,220 @@ import com.veniosg.dir.android.adapter.viewholder.FileListViewHolder.OnItemClick
 import com.veniosg.dir.android.fragment.RecyclerViewFragment;
 import com.veniosg.dir.mvvm.model.FileHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class FileHolderListAdapter extends RecyclerView.Adapter<FileListViewHolder>
+import androidx.recyclerview.selection.SelectionTracker;
+
+public class FileHolderListAdapter
+        extends RecyclerView.Adapter<FileListViewHolder>
         implements RecyclerViewFragment.ClickableAdapter {
-    private List<FileHolder> mItems;
+    private final List<FileHolder> mItems;
+    private final List<Long> mIds;
+    private final LongSparseArray<Integer> mIdsToPositions;
+    private SelectionTracker<Long> mSelectionTracker;
+    private OnItemClickListener mOnItemClickListener;
+//    private OnItemToggleListener mOnItemToggleListener;
+//    private final Set<Integer> mSelectedItems = new LinkedHashSet<>();
+//    private OnSelectionModeToggledListener onSelectionModeToggledListener = null;
 
-    private OnItemToggleListener mOnItemToggleListener;
-    private OnItemClickListener onItemClickListener;
-
-    public FileHolderListAdapter(List<FileHolder> files){
-		mItems = files;
-		setHasStableIds(true);
-	}
-
-	@Override
-	public int getItemCount() {
-		return mItems.size();
-	}
-
-    @Nullable
-	public FileHolder getItem(int position) {
-        if (position < 0 || position >= mItems.size()) return null;
-
-		return mItems.get(position);
-	}
-
-	@Override
-	public long getItemId(int position) {
-		return position;
-	}
+    public FileHolderListAdapter(List<FileHolder> files) {
+        mItems = files;
+        mIdsToPositions = new LongSparseArray<>(mItems.size());
+        mIds = new ArrayList<>(mItems.size());
+        refreshIds();
+        setHasStableIds(true);
+        registerAdapterDataObserver(new IdUpdatingAdapterDataObserver(this));
+    }
 
     @Override
-    public FileListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getItemCount() {
+        return mItems.size();
+    }
+
+    @NonNull
+    private FileHolder getItem(int position) {
+        return mItems.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return getItem(position).getId();
+    }
+
+    @NonNull
+    @Override
+    public FileListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new FileListViewHolder(parent);
     }
 
     @Override
-    public void onBindViewHolder(FileListViewHolder holder, int position) {
-        holder.bind(getItem(position), onItemClickListener);
-    }
-
-    public OnItemToggleListener getOnItemToggleListener() {
-        return mOnItemToggleListener;
-    }
-
-    public void setOnItemToggleListener(OnItemToggleListener mOnItemToggleListener) {
-        this.mOnItemToggleListener = mOnItemToggleListener;
+    public void onBindViewHolder(@NonNull FileListViewHolder holder, int position) {
+        FileHolder item = getItem(position);
+        boolean isSelected = mSelectionTracker.isSelected(item.getId());
+        holder.bind(item, isSelected, mOnItemClickListener);
+//        (itemView, item) -> {
+//            if (isInSelectionMode()) {
+//                toggleItem(holder.getAdapterPosition());
+//            } else {
+//                mOnItemClickListener.onClick(itemView, item);
+//            }
+//        });
+//        holder.itemView.setOnLongClickListener(v -> {
+//            toggleItem(holder.getAdapterPosition());
+//            return true;
+//        });
+        // TODO we're never really informed about item update :thinking_face:
     }
 
     @Override
     public void setOnItemClickListener(OnItemClickListener onClickListener) {
-        this.onItemClickListener = onClickListener;
+        this.mOnItemClickListener = onClickListener;
     }
 
-    public interface OnItemToggleListener {
-        void onItemToggle(int position);
+    public void setSelectionTracker(SelectionTracker<Long> selectionTracker) {
+        this.mSelectionTracker = selectionTracker;
+    }
+
+    public Iterable<Long> getItemIds() {
+        return mIds;
+    }
+
+    @Nullable
+    public FileHolder getItem(long id) {
+        Integer position = mIdsToPositions.get(id);
+        return position != null ? getItem(position) : null;
+    }
+
+    private void refreshIds() {
+        mIds.clear();
+        mIdsToPositions.clear();
+        for (int p = 0; p < mItems.size(); p++) {
+            long id = getItemId(p);
+            mIds.add(id);
+            mIdsToPositions.put(id, p);
+        }
+    }
+
+//    @Override
+//    public void selectAllItems() {
+//        mSelectedItems.clear();
+//        for (int i = 0; i < mItems.size(); i++) {
+//            mSelectedItems.add(i);
+//        }
+//        // TODO GV update right items
+//        notifyDataSetChanged();
+//    }
+
+//    @Override
+//    public void clearSelection() {
+//        mSelectedItems.clear();
+//         TODO GV update right items
+//        notifyDataSetChanged();
+//    }
+
+//    @Override
+//    public void setItemSelected(int id, boolean selected) {
+//        boolean wasInSelectionMode = isInSelectionMode();
+//
+//        if (selected) {
+//            mSelectedItems.add(id);
+//        } else {
+//            mSelectedItems.remove(id);
+//        }
+//
+//        boolean selectionModeToggled = wasInSelectionMode != isInSelectionMode();
+//        if (onSelectionModeToggledListener != null && selectionModeToggled) {
+//            if (!wasInSelectionMode) {
+//                onSelectionModeToggledListener.onEnabled();
+//            } else {
+//                onSelectionModeToggledListener.onDisabled();
+//            }
+//        }
+//        // TODO GV update right items
+//        notifyDataSetChanged();
+//    }
+
+//    @Override
+//    public void toggleItem(int id) {
+//        setItemSelected(id, !mSelectedItems.contains(id));
+//    }
+//
+//    @Override
+//    public int getSelectedItemCount() {
+//        return mSelectedItems.size();
+//    }
+
+//    @Override
+//    public int[] getSelectedItemIds() {
+//        int[] selectedItemIds = integerSetToIntArray(mSelectedItems);
+//        Arrays.sort(selectedItemIds);
+//        return selectedItemIds;
+//    }
+//
+//    @Override
+//    public int getFirstSelectedItemId() {
+//        if (mSelectedItems.isEmpty()) {
+//            return -1;
+//        } else if (mSelectedItems.size() == 1) {
+//            return mSelectedItems.iterator().next();
+//        } else {
+//            ArrayList<Integer> selectedItemsList = new ArrayList<>(mSelectedItems.size());
+//            selectedItemsList.addAll(mSelectedItems);
+//            sort(selectedItemsList);
+//            return selectedItemsList.get(0);
+//        }
+//    }
+
+//    @Override
+//    public boolean isInSelectionMode() {
+//        return !mSelectedItems.isEmpty();
+//    }
+
+//    @Override
+//    public void setOnSelectionModeToggledListener(OnSelectionModeToggledListener listener) {
+//        this.onSelectionModeToggledListener = listener;
+//    }
+//
+//    public interface OnItemToggleListener {
+//        void onItemToggle(int position);
+//    }
+
+    private static class IdUpdatingAdapterDataObserver extends AdapterDataObserver {
+        private FileHolderListAdapter mAdapter;
+
+        IdUpdatingAdapterDataObserver(FileHolderListAdapter adapter) {
+            this.mAdapter = adapter;
+        }
+
+        @Override
+        public void onChanged() {
+            mAdapter.refreshIds();
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount) {
+            mAdapter.refreshIds();
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount, @Nullable Object payload) {
+            mAdapter.refreshIds();
+        }
+
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            mAdapter.refreshIds();
+        }
+
+        @Override
+        public void onItemRangeRemoved(int positionStart, int itemCount) {
+            mAdapter.refreshIds();
+        }
+
+        @Override
+        public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
+            mAdapter.refreshIds();
+        }
     }
 }

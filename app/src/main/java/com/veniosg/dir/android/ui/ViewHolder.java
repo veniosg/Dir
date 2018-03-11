@@ -19,7 +19,7 @@ package com.veniosg.dir.android.ui;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ViewHolder {
+public class ViewHolder {	// TODO GV delete
 	public ImageView icon;
 	public TextView primaryInfo;
 	public TextView secondaryInfo;

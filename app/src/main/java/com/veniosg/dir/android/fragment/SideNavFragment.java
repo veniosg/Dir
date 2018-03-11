@@ -23,28 +23,19 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.activity.AboutActivity;
 import com.veniosg.dir.android.activity.PreferenceActivity;
-import com.veniosg.dir.android.adapter.BookmarkListAdapter;
 import com.veniosg.dir.android.provider.BookmarkProvider;
 import com.veniosg.dir.android.ui.widget.WaitingViewFlipper;
 
-import java.io.File;
-
 import static android.view.View.GONE;
 import static com.veniosg.dir.android.ui.Themer.getThemedResourceId;
-import static com.veniosg.dir.android.ui.Themer.setStatusBarColour;
 
 public class SideNavFragment extends RecyclerViewFragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -74,8 +65,8 @@ public class SideNavFragment extends RecyclerViewFragment
         view.findViewById(R.id.empty_img).setVisibility(GONE);
         ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.bookmark_empty);
 
-        setListAdapter(new BookmarkListAdapter(getActivity(), null));
-        setListChoiceListener();
+//        setListAdapter(new BookmarkListAdapter(getActivity(), null)); TODO GV migrate
+//        setListChoiceListener();
         view.setBackgroundResource(getThemedResourceId(getActivity(), android.R.attr.colorBackground));
 
         view.findViewById(R.id.action_settings).setOnClickListener(mSettingsClickListener);
@@ -83,12 +74,13 @@ public class SideNavFragment extends RecyclerViewFragment
         getLoaderManager().initLoader(0, null, this);
 	}
 
-    @Override
-	public void onListItemClick(View itemView, int position, long id) {
-		Cursor c = ((Cursor) getListAdapter().getItem(position));
-		((BookmarkContract) getActivity()).onBookmarkSelected(c.getString(
-                c.getColumnIndex(BookmarkProvider.PATH)));
-	}
+	// TODO GV migrate
+//    @Override
+//	public void onListItemClick(View itemView, int position, long id) {
+//		Cursor c = (Cursor) getListAdapter().getItem(position);
+//		((BookmarkContract) getActivity()).onBookmarkSelected(c.getString(
+//                c.getColumnIndex(BookmarkProvider.PATH)));
+//	}
 
     /**
      * Make the UI indicate loading.
@@ -101,88 +93,93 @@ public class SideNavFragment extends RecyclerViewFragment
         }
     }
 
-    private void setListChoiceListener() {
-        getRecyclerView().setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-            @Override
-            public boolean onPrepareActionMode(android.view.ActionMode mode, Menu menu) {
-                menu.clear();
-                mode.getMenuInflater().inflate(R.menu.cab_bookmarks, menu);
-
-                if (getRecyclerView().getCheckedItemCount() != 1) {
-                    menu.removeItem(R.id.menu_open_parent);
-                }
-                return true;
-            }
-
-            @Override
-            public void onDestroyActionMode(android.view.ActionMode mode) {
-                setStatusBarColour(getActivity(), false);
-            }
-
-            @Override
-            public boolean onCreateActionMode(android.view.ActionMode mode, Menu menu) {
-                setStatusBarColour(getActivity(), true);
-                return true;
-            }
-
-            @Override
-            public boolean onActionItemClicked(android.view.ActionMode mode, MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_delete:
-                        long[] ids = getRecyclerView().getCheckedItemIds();
-                        for (long id : ids) {
-                            getRecyclerView().getContext().getContentResolver().delete(BookmarkProvider.CONTENT_URI,
-                                    BookmarkProvider._ID + "=?", new String[]{"" + id});
-                        }
-                        mode.finish();
-                        return true;
-
-                    case R.id.menu_open_parent:
-                        int pos = 0;
-                        SparseBooleanArray checked = getRecyclerView().getCheckedItemPositions();
-                        for (int i = 0; i < getRecyclerView().getCount(); i++) {
-                            if (checked.get(i)) {
-                                pos = i;
-                            }
-                        }
-
-                        String path = ((Cursor) getListAdapter().getItem(pos)).getString(2);
-                        ((BookmarkContract) getActivity()).onBookmarkSelected(
-                                new File(path).getParent());
-                        mode.finish();
-                        return true;
-                }
-                return false;
-            }
-
-            @Override
-            public void onItemCheckedStateChanged(android.view.ActionMode mode,
-                                                  int position, long id, boolean checked) {
-                if (getRecyclerView().getCheckedItemCount() != 0) {
-
-                    mode.setTitle(getRecyclerView().getCheckedItemCount() + " " + getString(R.string.selected));
-
-                    // Force actions' refresh
-                    mode.invalidate();
-                }
-            }
-        });
-        getRecyclerView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-    }
+    // TODO GV migrate
+//    private void setListChoiceListener() {
+//        getRecyclerView().setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+//            @Override
+//            public boolean onPrepareActionMode(android.view.ActionMode mode, Menu menu) {
+//                menu.clear();
+//                mode.getMenuInflater().inflate(R.menu.cab_bookmarks, menu);
+//
+//                if (getRecyclerView().getCheckedItemCount() != 1) {
+//                    menu.removeItem(R.id.menu_open_parent);
+//                }
+//                return true;
+//            }
+//
+//            @Override
+//            public void onDestroyActionMode(android.view.ActionMode mode) {
+//                setStatusBarColour(getActivity(), false);
+//            }
+//
+//            @Override
+//            public boolean onCreateActionMode(android.view.ActionMode mode, Menu menu) {
+//                setStatusBarColour(getActivity(), true);
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onActionItemClicked(android.view.ActionMode mode, MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.menu_delete:
+//                        long[] ids = getRecyclerView().getCheckedItemIds();
+//                        for (long id : ids) {
+//                            getRecyclerView().getContext().getContentResolver().delete(BookmarkProvider.CONTENT_URI,
+//                                    BookmarkProvider._ID + "=?", new String[]{"" + id});
+//                        }
+//                        mode.finish();
+//                        return true;
+//
+//                    case R.id.menu_open_parent:
+//                        int pos = 0;
+//                        SparseBooleanArray checked = getRecyclerView().getCheckedItemPositions();
+//                        for (int i = 0; i < getRecyclerView().getCount(); i++) {
+//                            if (checked.get(i)) {
+//                                pos = i;
+//                            }
+//                        }
+//
+//                        String path = ((Cursor) getListAdapter().getItem(pos)).getString(2);
+//                        ((BookmarkContract) getActivity()).onBookmarkSelected(
+//                                new File(path).getParent());
+//                        mode.finish();
+//                        return true;
+//                }
+//                return false;
+//            }
+//
+//            @Override
+//            public void onItemCheckedStateChanged(android.view.ActionMode mode,
+//                                                  int position, long id, boolean checked) {
+//                if (getRecyclerView().getCheckedItemCount() != 0) {
+//
+//                    mode.setTitle(getRecyclerView().getCheckedItemCount() + " " + getString(R.string.selected));
+//
+//                    // Force actions' refresh
+//                    mode.invalidate();
+//                }
+//            }
+//        });
+//        getRecyclerView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+//    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(getActivity(), BookmarkProvider.CONTENT_URI, null, null, null, null);
     }
 
+    // TODO GV migrate
+    @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        ((BookmarkListAdapter) getListAdapter()).swapCursor(cursor);
-        setLoading(false);
+//        ((BookmarkListAdapter) getListAdapter()).swapCursor(cursor);
+//        setLoading(false);
     }
 
+    // TODO GV migrate
+    @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        ((BookmarkListAdapter) getListAdapter()).swapCursor(null);
-        setLoading(false);
+//        ((BookmarkListAdapter) getListAdapter()).swapCursor(null);
+//        setLoading(false);
     }
 
     public static interface BookmarkContract {

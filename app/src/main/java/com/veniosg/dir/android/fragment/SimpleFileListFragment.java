@@ -26,7 +26,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,15 +36,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.veniosg.dir.IntentConstants;
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.FileManagerApplication;
-import com.veniosg.dir.android.adapter.FileHolderListAdapter;
 import com.veniosg.dir.android.dialog.CreateDirectoryDialog;
 import com.veniosg.dir.android.dialog.DetailsDialog;
 import com.veniosg.dir.android.dialog.MultiCompressDialog;
@@ -67,6 +66,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import androidx.recyclerview.selection.SelectionTracker;
+import androidx.recyclerview.selection.SelectionTracker.SelectionObserver;
+
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.veniosg.dir.android.fragment.PreferenceFragment.getMediaScanFromPreference;
@@ -85,7 +87,7 @@ public class SimpleFileListFragment extends FileListFragment {
 
     private static final int REQUEST_CODE_MULTISELECT = 2;
 
-    private static HashMap<String, ScrollPosition> sScrollPositions = new HashMap<String, ScrollPosition>();
+    private static HashMap<String, ScrollPosition> sScrollPositions = new HashMap<>();
 
     private PathController mPathBar;
     private AnimatedFileListContainer mTransitionView;
@@ -94,17 +96,17 @@ public class SimpleFileListFragment extends FileListFragment {
     private int mNavigationDirection = 0;
     private View heroView;
 
-    private AbsListView.MultiChoiceModeListener mMultiChoiceModeListener = new AbsListView.MultiChoiceModeListener() {
-
+    private final ActionMode.Callback mActionModeListener = new ActionMode.Callback() {
         @Override
         public boolean onPrepareActionMode(android.view.ActionMode mode, Menu menu) {
-            if (getView() == null) return false; // Prevent crash from getRecyclerView()'s ensureList().
+            if (getView() == null)
+                return false; // Prevent crash from getRecyclerView()'s ensureList().
             menu.clear();
 
-            switch (getRecyclerView().getCheckedItemCount()) {
+            switch (getSelectionTracker().getSelection().size()) {
                 // Single selection
                 case 1:
-                    FileHolder fHolder = (FileHolder) getListAdapter().getItem(getCheckedItemPosition());
+                    FileHolder fHolder = getSelectedItem();
                     if (fHolder == null) return false;
                     File file = fHolder.getFile();
                     inflateSingleChoiceMenu(mode.getMenuInflater(), menu);
@@ -129,7 +131,7 @@ public class SimpleFileListFragment extends FileListFragment {
 
                     // If all items are directories
                     boolean foldersOnly = true;
-                    for (FileHolder fileHolder : getCheckedItems()) {
+                    for (FileHolder fileHolder : getSelectedItems()) {
                         foldersOnly &= fileHolder.getFile().isDirectory();
                     }
                     if (foldersOnly) {
@@ -143,6 +145,7 @@ public class SimpleFileListFragment extends FileListFragment {
         @Override
         public void onDestroyActionMode(android.view.ActionMode mode) {
             mActionMode = null;
+            getSelectionTracker().clearSelection();
             mPathBar.setEnabled(true);
             setStatusBarColour(getActivity(), false);
         }
@@ -159,51 +162,57 @@ public class SimpleFileListFragment extends FileListFragment {
         @Override
         public boolean onActionItemClicked(android.view.ActionMode mode, MenuItem item) {
             if (item.getItemId() == R.id.menu_select_all) {
-                for (int i = 0; i < getRecyclerView().getCount(); i++)
-                    getRecyclerView().setItemChecked(i, true);
+                getSelectionTracker().setItemsSelected(getFileListAdapter().getItemIds(), true);
                 return true;
-            }
-
-            switch (getRecyclerView().getCheckedItemCount()) {
-                // Single selection
-                case 1:
-                    return handleSingleSelectionAction(mode, item);
-                // Multiple selection
-                default:
-                    return handleMultipleSelectionAction(mode, item);
-            }
-        }
-
-        @Override
-        public void onItemCheckedStateChanged(android.view.ActionMode mode,
-                                              int position, long id, boolean checked) {
-            if (getRecyclerView().getCheckedItemCount() != 0) {
-                mode.setTitle(getRecyclerView().getCheckedItemCount() + " "
-                        + getString(R.string.selected));
-
-                // Force actions' refresh
-                mode.invalidate();
+            } else {
+                switch (getSelectionTracker().getSelection().size()) {
+                    // Single selection
+                    case 1:
+                        return handleSingleSelectionAction(mode, item);
+                    // Multiple selection
+                    default:
+                        return handleMultipleSelectionAction(mode, item);
+                }
             }
         }
     };
-    private FileHolderListAdapter.OnItemToggleListener mOnItemToggleListener = new FileHolderListAdapter.OnItemToggleListener() {
-        @Override
-        public void onItemToggle(int position) {
-            getRecyclerView().setItemChecked(position,
-                    !Utils.getItemChecked(getRecyclerView(), position));
-        }
-    };
-    private ActivityProvider mActivityProvider = new ActivityProvider() {
+    private final ActivityProvider mActivityProvider = new ActivityProvider() {
         @Override
         public Activity getActivity() {
             return SimpleFileListFragment.this.getActivity();
+        }
+    };
+    private final SelectionObserver mSelectionTrackerObserver = new SelectionObserver() {
+        @Override
+        public void onItemStateChanged(@NonNull Object key, boolean selected) {
+            if (getActivity() == null) return;
+
+            int selectedItemCount = getSelectionTracker().getSelection().size();
+            boolean firstSelection = selected && selectedItemCount == 1;
+            boolean undidLastSelection = selectedItemCount <= 0;
+            if (firstSelection) {
+                getActivity().startActionMode(mActionModeListener);
+            } else if (undidLastSelection) {
+                closeActionMode();
+            }
+        }
+
+        @Override
+        public void onSelectionChanged() {
+            int selectedItemCount = getSelectionTracker().getSelection().size();
+            if (selectedItemCount > 0) {
+                mActionMode.setTitle(selectedItemCount + " " + getString(R.string.selected));
+
+                // Force actions' refresh
+                mActionMode.invalidate();
+            }
         }
     };
 
     private boolean handleMultipleSelectionAction(ActionMode mode, MenuItem item) {
         DialogFragment dialog;
         Bundle args;
-        ArrayList<FileHolder> fItems = getCheckedItems();
+        ArrayList<FileHolder> fItems = getSelectedItems();
 
         switch (item.getItemId()) {
             case R.id.menu_send:
@@ -260,27 +269,27 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     private boolean handleSingleSelectionAction(ActionMode mode, MenuItem item) {
-        FileHolder fItem = (FileHolder) getListAdapter().getItem(getCheckedItemPosition());
-        if (fItem == null) return false;
+        FileHolder selectedItem = getSelectedItem();
+        if (selectedItem == null) return false;
         DialogFragment dialog;
         Bundle args;
 
         switch (item.getItemId()) {
             case R.id.menu_create_shortcut:
                 mode.finish();
-                Utils.createShortcut(fItem, getActivity());
+                Utils.createShortcut(selectedItem, getActivity());
                 return true;
 
             case R.id.menu_move:
                 mode.finish();
-                ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().cut(fItem);
-                getActivity().supportInvalidateOptionsMenu();
+                ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().cut(selectedItem);
+                getActivity().invalidateOptionsMenu();
                 return true;
 
             case R.id.menu_copy:
                 mode.finish();
-                ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().copy(fItem);
-                getActivity().supportInvalidateOptionsMenu();
+                ((FileManagerApplication) getActivity().getApplication()).getCopyHelper().copy(selectedItem);
+                getActivity().invalidateOptionsMenu();
                 return true;
 
             case R.id.menu_delete:
@@ -288,7 +297,7 @@ public class SimpleFileListFragment extends FileListFragment {
                 dialog = new SingleDeleteDialog();
                 dialog.setTargetFragment(SimpleFileListFragment.this, 0);
                 args = new Bundle();
-                args.putParcelable(IntentConstants.EXTRA_DIALOG_FILE_HOLDER, fItem);
+                args.putParcelable(IntentConstants.EXTRA_DIALOG_FILE_HOLDER, selectedItem);
                 dialog.setArguments(args);
                 dialog.show(getFragmentManager(), SingleDeleteDialog.class.getName());
                 return true;
@@ -298,14 +307,14 @@ public class SimpleFileListFragment extends FileListFragment {
                 dialog = new RenameDialog();
                 dialog.setTargetFragment(SimpleFileListFragment.this, 0);
                 args = new Bundle();
-                args.putParcelable(IntentConstants.EXTRA_DIALOG_FILE_HOLDER, fItem);
+                args.putParcelable(IntentConstants.EXTRA_DIALOG_FILE_HOLDER, selectedItem);
                 dialog.setArguments(args);
                 dialog.show(getFragmentManager(), RenameDialog.class.getName());
                 return true;
 
             case R.id.menu_send:
                 mode.finish();
-                Utils.sendFile(fItem, getActivity());
+                Utils.sendFile(selectedItem, getActivity());
                 return true;
 
             case R.id.menu_details:
@@ -313,7 +322,7 @@ public class SimpleFileListFragment extends FileListFragment {
                 dialog = new DetailsDialog();
                 dialog.setTargetFragment(this, 0);
                 args = new Bundle();
-                args.putParcelable(IntentConstants.EXTRA_DIALOG_FILE_HOLDER, fItem);
+                args.putParcelable(IntentConstants.EXTRA_DIALOG_FILE_HOLDER, selectedItem);
                 dialog.setArguments(args);
                 dialog.show(getFragmentManager(), DetailsDialog.class.getName());
                 return true;
@@ -323,25 +332,25 @@ public class SimpleFileListFragment extends FileListFragment {
                 dialog = new SingleCompressDialog();
                 dialog.setTargetFragment(this, 0);
                 args = new Bundle();
-                args.putParcelable(IntentConstants.EXTRA_DIALOG_FILE_HOLDER, fItem);
+                args.putParcelable(IntentConstants.EXTRA_DIALOG_FILE_HOLDER, selectedItem);
                 dialog.setArguments(args);
                 dialog.show(getFragmentManager(), SingleCompressDialog.class.getName());
                 return true;
 
             case R.id.menu_extract:
                 mode.finish();
-                File extractTo = new File(fItem.getFile().getParentFile(),
-                        FileUtils.getNameWithoutExtension(fItem.getFile()));
+                File extractTo = new File(selectedItem.getFile().getParentFile(),
+                        FileUtils.getNameWithoutExtension(selectedItem.getFile()));
                 extractTo.mkdirs();
 
                 // We just extract on the current directory. If the user needs to put it in another dir,
                 // he/she can copy/cut the file
-                ZipService.extractTo(getActivity(), fItem, extractTo);
+                ZipService.extractTo(getActivity(), selectedItem, extractTo);
                 return true;
 
             case R.id.menu_bookmark:
                 mode.finish();
-                addBookmark(fItem.getFile());
+                addBookmark(selectedItem.getFile());
                 return true;
 
             default:
@@ -418,9 +427,7 @@ public class SimpleFileListFragment extends FileListFragment {
 
     private void initContextualActions() {
         if (mActionsEnabled) {
-            getRecyclerView().setMultiChoiceModeListener(mMultiChoiceModeListener);
-            getRecyclerView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-            ((FileHolderListAdapter) getListAdapter()).setOnItemToggleListener(mOnItemToggleListener);
+            getSelectionTracker().addObserver(mSelectionTrackerObserver);
 
             setHasOptionsMenu(true);
         }
@@ -479,10 +486,11 @@ public class SimpleFileListFragment extends FileListFragment {
      */
     private void openDir(FileHolder fileHolder) {
         // Avoid unnecessary attempts to load.
-        if (fileHolder.getFile().getAbsolutePath().equals(getPath()))
+        if (fileHolder.getFile().getAbsolutePath().equals(getPath())) {
             return;
+        }
 
-        if (getListAdapter().getCount() > 0) {
+        if (getListAdapter().getItemCount() > 0) {
             keepFolderScroll();
         }
 
@@ -660,7 +668,7 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putBoolean(INSTANCE_STATE_PATHBAR_MODE, mPathBar.getMode() == MANUAL_INPUT);
@@ -686,15 +694,6 @@ public class SimpleFileListFragment extends FileListFragment {
         menuInflater.inflate(R.menu.cab_multi, menu);
     }
 
-    /**
-     * This is error free only when FileHolderListAdapter uses stableIds and getItemId(int) returns the int passed (the position of the item).
-     *
-     * @return
-     */
-    int getCheckedItemPosition() {
-        return (int) getRecyclerView().getCheckedItemIds()[0];
-    }
-
     private void useFolderScroll(final ScrollPosition pos) {
         if (getView() != null) {
             Utils.scrollToPosition(getRecyclerView(), pos, false);
@@ -702,23 +701,36 @@ public class SimpleFileListFragment extends FileListFragment {
     }
 
     private void keepFolderScroll() {
-        int firstVisiblePosition = getRecyclerView().getFirstVisiblePosition();
+        int firstVisiblePosition = ((LinearLayoutManager) getRecyclerView().getLayoutManager()).findFirstVisibleItemPosition();
         View firstVisibleChild = getRecyclerView().getChildAt(0);
 
         if (firstVisibleChild != null) {
-            sScrollPositions.put(getPath(), new ScrollPosition(firstVisiblePosition,
-                    firstVisibleChild.getTop()));
+            sScrollPositions.put(getPath(),
+                    new ScrollPosition(firstVisiblePosition, firstVisibleChild.getTop()));
         }
+    }
+
+    /**
+     * Result is undefined when more than one items are selected.
+     *
+     * @return The FileHolder the selected item is representing.
+     */
+    @Nullable
+    private FileHolder getSelectedItem() {
+        ArrayList<FileHolder> selectedItems = getSelectedItems();
+        return selectedItems.size() > 0 ? selectedItems.get(0) : null;
     }
 
     /**
      * @return A {@link FileHolder} list with the currently selected items.
      */
-    private ArrayList<FileHolder> getCheckedItems() {
-        ArrayList<FileHolder> items = new ArrayList<FileHolder>();
+    private ArrayList<FileHolder> getSelectedItems() {
+        ArrayList<FileHolder> items = new ArrayList<>();
 
-        for (long pos : getRecyclerView().getCheckedItemIds()) {
-            FileHolder item = (FileHolder) getListAdapter().getItem((int) pos);
+        //noinspection unchecked
+        Iterable<Long> selectedIds = getSelectionTracker().getSelection();
+        for (Long id : selectedIds) {
+            FileHolder item = getFileListAdapter().getItem(id);
             if (item != null) items.add(item);
         }
 

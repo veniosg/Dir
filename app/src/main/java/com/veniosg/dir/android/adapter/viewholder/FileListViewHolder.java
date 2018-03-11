@@ -17,6 +17,7 @@
 package com.veniosg.dir.android.adapter.viewholder;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +27,15 @@ import android.widget.TextView;
 import com.veniosg.dir.R;
 import com.veniosg.dir.mvvm.model.FileHolder;
 
+import androidx.recyclerview.selection.ItemDetailsLookup;
+
 import static android.view.LayoutInflater.from;
 import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
 import static com.veniosg.dir.android.misc.ThumbnailHelper.requestIcon;
 import static com.veniosg.dir.android.ui.Themer.getThemedResourceId;
 
 public class FileListViewHolder extends RecyclerView.ViewHolder {
+    private FileHolderItemDetails itemDetails;
     private ImageView icon;
     private TextView primaryInfo;
     TextView secondaryInfo;
@@ -49,7 +53,12 @@ public class FileListViewHolder extends RecyclerView.ViewHolder {
         itemView.setBackgroundResource(selectorRes);
     }
 
-    public void bind(FileHolder item, OnItemClickListener listener) {
+    public void bind(FileHolder item, OnItemClickListener itemClickListener) {
+        bind(item, false, itemClickListener);
+    }
+
+    public void bind(FileHolder item, boolean isSelected, OnItemClickListener itemClickListener) {
+        itemDetails = new FileHolderItemDetails(item.getId(), getAdapterPosition());
         Context context = itemView.getContext();
         boolean isDirectory = item.getFile().isDirectory();
 
@@ -61,10 +70,36 @@ public class FileListViewHolder extends RecyclerView.ViewHolder {
         icon.setImageDrawable(item.getBestIcon());
         requestIcon(item, icon);
 
-        itemView.setOnClickListener(view -> listener.onClick(itemView, item));
+        itemView.setOnClickListener(view -> itemClickListener.onClick(view, item));
+        itemView.setActivated(isSelected);
+    }
+
+    public ItemDetailsLookup.ItemDetails<Long> getItemDetails() {
+        return itemDetails;
     }
 
     public interface OnItemClickListener {
         void onClick(View itemView, FileHolder item);
+    }
+
+    private class FileHolderItemDetails extends ItemDetailsLookup.ItemDetails<Long> {
+        private final int adapterPosition;
+        private final long id;
+
+        private FileHolderItemDetails(long id, int position) {
+            this.adapterPosition = position;
+            this.id = id;
+        }
+
+        @Override
+        public int getPosition() {
+            return adapterPosition;
+        }
+
+        @Override
+        @NonNull
+        public Long getSelectionKey() {
+            return id;
+        }
     }
 }

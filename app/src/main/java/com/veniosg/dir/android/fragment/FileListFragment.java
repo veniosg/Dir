@@ -29,6 +29,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ import android.view.ViewGroup;
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.FileManagerApplication;
 import com.veniosg.dir.android.adapter.FileHolderListAdapter;
+import com.veniosg.dir.android.adapter.selection.FileHolderDetailsLookup;
 import com.veniosg.dir.android.misc.DirectoryScanner;
 import com.veniosg.dir.android.ui.widget.WaitingViewFlipper;
 import com.veniosg.dir.android.util.Logger;
@@ -44,6 +46,10 @@ import com.veniosg.dir.mvvm.model.FileHolder;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import androidx.recyclerview.selection.SelectionTracker;
+import androidx.recyclerview.selection.StableIdKeyProvider;
+import androidx.recyclerview.selection.StorageStrategy;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
@@ -106,6 +112,7 @@ public abstract class FileListFragment extends RecyclerViewFragment {
 	private String mPath;
 	private String mFilename;
     private FileObserver mFileObserver;
+    private SelectionTracker<Long> mSelectionTracker;
 
     private WaitingViewFlipper mFlipper;
     private BroadcastReceiver mRefreshReceiver = new BroadcastReceiver() {
@@ -153,15 +160,16 @@ public abstract class FileListFragment extends RecyclerViewFragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        mSelectionTracker.onSaveInstanceState(outState);
         outState.putString(INSTANCE_STATE_PATH, mPath);
         outState.putInt(INSTANCE_STATE_NEEDS_LOADING, isScannerRunning() ? 1 : 0);
         outState.putParcelableArrayList(INSTANCE_STATE_FILES, mFiles);
     }
 
-	@Override
-	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_filelist, null);
-	}
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_filelist, container, false);
+    }
 
 	@Override
 	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -171,11 +179,12 @@ public abstract class FileListFragment extends RecyclerViewFragment {
 		getDefaultSharedPreferences(getActivity())
 				.registerOnSharedPreferenceChangeListener(preferenceListener);
 
-		// Set list properties
-		getRecyclerView().requestFocus();
-		getRecyclerView().requestFocusFromTouch();
+        // Set list properties
+        RecyclerView recyclerView = getRecyclerView();
+        recyclerView.requestFocus();
+        recyclerView.requestFocusFromTouch();
 
-		mFlipper = view.findViewById(R.id.flipper);
+        mFlipper = view.findViewById(R.id.flipper);
         view.findViewById(R.id.empty_img).setOnClickListener(mEmptyViewClickListener);
         view.findViewById(R.id.permissions_button).setOnClickListener(mRequestPermissionsListener);
 
@@ -196,9 +205,25 @@ public abstract class FileListFragment extends RecyclerViewFragment {
             refresh();
         }
 
+        // Set adapter (must be after files are restored)
         mAdapter = new FileHolderListAdapter(mFiles);
         setListAdapter(mAdapter);
-	}
+
+        // Set up selection (must be after adapter is set on RecyclerView)
+        // TODO clicks seem swallowed by the selection library
+        mSelectionTracker = new SelectionTracker.Builder<>("file-list-fragment", recyclerView,
+                new StableIdKeyProvider(recyclerView),new FileHolderDetailsLookup(recyclerView),
+                StorageStrategy.createLongStorage())
+                .withOnItemActivatedListener((item, e) -> {
+                    int position = item.getPosition();
+                    return true;
+                })
+                .build();
+        if (savedInstanceState != null) {
+            mSelectionTracker.onRestoreInstanceState(savedInstanceState);
+        }
+        mAdapter.setSelectionTracker(mSelectionTracker);
+    }
 
     /**
 	 * Reloads {@link #mPath}'s contents.
@@ -303,12 +328,12 @@ public abstract class FileListFragment extends RecyclerViewFragment {
                     mFiles.addAll(c.listFile);
                     onDataReady();
 
-                    // TODO Run a diff instead of updating everything
+                    // TODO Run a diff instead of updating everything (use ListAdapter?)
                     mAdapter.notifyDataSetChanged();
-                    // TODO Scroll up, we had other content. Check if needed.
-                    if (getView() != null) {
-                        getRecyclerView().setSelection(0);
-                    }
+                    // TODO Scroll up, we got new content. Check if still needed.
+//                    if (getView() != null) {
+//                        getRecyclerView().setSelection(0);
+//                    }
                     showLoading(false);
                     onDataApplied();
                     break;
@@ -433,6 +458,16 @@ public abstract class FileListFragment extends RecyclerViewFragment {
     protected void onListVisibilityChanged(boolean visible) {}
 
     protected void onEmptyViewClicked(){}
+
+    @NonNull
+    protected final FileHolderListAdapter getFileListAdapter() {
+        return (FileHolderListAdapter) getListAdapter();
+    }
+
+    @NonNull
+    protected final SelectionTracker<Long> getSelectionTracker() {
+        return mSelectionTracker;
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
