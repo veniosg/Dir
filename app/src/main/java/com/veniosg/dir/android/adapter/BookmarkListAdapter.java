@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 George Venios
+ * Copyright (C) 2018 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,53 +18,54 @@ package com.veniosg.dir.android.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.support.annotation.NonNull;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.veniosg.dir.R;
+import com.veniosg.dir.android.adapter.viewholder.BookmarkListViewHolder;
+import com.veniosg.dir.android.adapter.viewholder.FileListViewHolder;
+import com.veniosg.dir.android.fragment.RecyclerViewFragment;
 import com.veniosg.dir.mvvm.model.FileHolder;
-import com.veniosg.dir.android.misc.ThumbnailHelper;
-import com.veniosg.dir.android.ui.ViewHolder;
 
 import java.io.File;
 
-import static android.view.View.INVISIBLE;
+import androidx.recyclerview.selection.SelectionTracker;
 
-public class BookmarkListAdapter extends CursorAdapter {
-	public BookmarkListAdapter(Context context, Cursor cursor){
-        super(context, cursor, 0);
-	}
+import static com.veniosg.dir.android.fragment.RecyclerViewFragment.ClickableAdapter;
 
+public class BookmarkListAdapter extends CursorAdapter<FileListViewHolder>
+        implements ClickableAdapter, RecyclerViewFragment.SelectableAdapter<Long> {
+    private FileListViewHolder.OnItemClickListener mOnItemClickListener;
+    private SelectionTracker<Long> mSelectionTracker;
+
+    public BookmarkListAdapter(Context context, Cursor cursor) {
+        super(cursor);
+    }
+
+    @NonNull
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        ViewHolder viewHolder;
-        View view = LayoutInflater.from(context).inflate(R.layout.item_filelist, null);
-
-        viewHolder = new ViewHolder();
-        viewHolder.icon = (ImageView) view.findViewById(R.id.icon);
-        viewHolder.primaryInfo = (TextView) view.findViewById(R.id.primary_info);
-        viewHolder.secondaryInfo = (TextView) view.findViewById(R.id.secondary_info);
-        viewHolder.tertiaryInfo = (TextView) view.findViewById(R.id.tertiary_info);
-        view.setTag(viewHolder);
-
-        return view;
+    public FileListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new BookmarkListViewHolder(parent);
     }
 
     @Override
-    public void bindView(View convertView, Context context, Cursor cursor) {
-        ViewHolder holder = (com.veniosg.dir.android.ui.ViewHolder) convertView.getTag();
-        FileHolder item = new FileHolder(new File(cursor.getString(2)), convertView.getContext());
+    protected void onBindViewHolder(FileListViewHolder holder, Cursor cursor) {
+        FileHolder item = new FileHolder(new File(cursor.getString(2)), holder.itemView.getContext());
+        boolean isSelected = isSelected(item);
 
-        holder.icon.setImageDrawable(item.getBestIcon());
-        holder.primaryInfo.setText(item.getName());
-        holder.secondaryInfo.setMaxLines(3);
-        holder.secondaryInfo.setText(item.getFile().getAbsolutePath());
-        holder.tertiaryInfo.setVisibility(INVISIBLE);
+        holder.bind(item, isSelected, mOnItemClickListener);
+    }
 
-        ThumbnailHelper.requestIcon(item, holder.icon);
+    @Override
+    public void setOnItemClickListener(FileListViewHolder.OnItemClickListener onClickListener) {
+        this.mOnItemClickListener = onClickListener;
+    }
+
+    @Override
+    public void setSelectionTracker(SelectionTracker<Long> selectionTracker) {
+        this.mSelectionTracker = selectionTracker;
+    }
+
+    private boolean isSelected(FileHolder item) {
+        return mSelectionTracker != null && mSelectionTracker.isSelected(item.getId());
     }
 }

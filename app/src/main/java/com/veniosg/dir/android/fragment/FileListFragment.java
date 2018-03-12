@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2012 OpenIntents.org
- * Copyright (C) 2014-2015 George Venios
+ * Copyright (C) 2014-2018 George Venios
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,6 +37,7 @@ import android.view.ViewGroup;
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.FileManagerApplication;
 import com.veniosg.dir.android.adapter.FileHolderListAdapter;
+import com.veniosg.dir.android.adapter.SelectableAdapter;
 import com.veniosg.dir.android.adapter.selection.FileHolderDetailsLookup;
 import com.veniosg.dir.android.misc.DirectoryScanner;
 import com.veniosg.dir.android.ui.widget.WaitingViewFlipper;
@@ -224,7 +225,9 @@ public abstract class FileListFragment extends RecyclerViewFragment {
         if (savedInstanceState != null) {
             mSelectionTracker.onRestoreInstanceState(savedInstanceState);
         }
-        mAdapter.setSelectionTracker(mSelectionTracker);
+        if (mAdapter instanceof SelectableAdapter) {
+            mAdapter.setSelectionTracker(mSelectionTracker);
+        }
     }
 
     /**
@@ -330,12 +333,7 @@ public abstract class FileListFragment extends RecyclerViewFragment {
                     mFiles.addAll(c.listFile);
                     onDataReady();
 
-                    // TODO Run a diff instead of updating everything (use ListAdapter?)
                     mAdapter.notifyDataSetChanged();
-                    // TODO Scroll up, we got new content. Check if still needed.
-//                    if (getView() != null) {
-//                        getRecyclerView().setSelection(0);
-//                    }
                     showLoading(false);
                     onDataApplied();
                     break;

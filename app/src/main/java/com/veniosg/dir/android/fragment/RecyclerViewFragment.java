@@ -37,6 +37,8 @@ import com.veniosg.dir.android.adapter.viewholder.FileListViewHolder.OnItemClick
 import com.veniosg.dir.android.ui.widget.DividerRecyclerView;
 import com.veniosg.dir.mvvm.model.FileHolder;
 
+import androidx.recyclerview.selection.SelectionTracker;
+
 /**
  * Static library support version of the framework's {@link android.app.ListFragment}.
  * Used to write apps that run on platforms prior to Android 3.0.  When running
@@ -422,5 +424,9 @@ public class RecyclerViewFragment extends Fragment {
 
     public interface ClickableAdapter {
         void setOnItemClickListener(OnItemClickListener onClickListener);
+    }
+
+    public interface SelectableAdapter<K> {
+        void setSelectionTracker(SelectionTracker<K> tracker);
     }
 }

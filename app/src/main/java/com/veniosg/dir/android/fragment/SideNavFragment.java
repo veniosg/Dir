@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -31,8 +32,10 @@ import android.widget.TextView;
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.activity.AboutActivity;
 import com.veniosg.dir.android.activity.PreferenceActivity;
+import com.veniosg.dir.android.adapter.BookmarkListAdapter;
 import com.veniosg.dir.android.provider.BookmarkProvider;
 import com.veniosg.dir.android.ui.widget.WaitingViewFlipper;
+import com.veniosg.dir.mvvm.model.FileHolder;
 
 import static android.view.View.GONE;
 import static com.veniosg.dir.android.ui.Themer.getThemedResourceId;
@@ -65,22 +68,22 @@ public class SideNavFragment extends RecyclerViewFragment
         view.findViewById(R.id.empty_img).setVisibility(GONE);
         ((TextView) view.findViewById(R.id.empty_text)).setText(R.string.bookmark_empty);
 
-//        setListAdapter(new BookmarkListAdapter(getActivity(), null)); TODO GV migrate
-//        setListChoiceListener();
-        view.setBackgroundResource(getThemedResourceId(getActivity(), android.R.attr.colorBackground));
+        setListAdapter(new BookmarkListAdapter(getActivity(), null));
+        setListChoiceListener();
+        view.setBackgroundResource(getThemedResourceId(view.getContext(), android.R.attr.colorBackground));
 
         view.findViewById(R.id.action_settings).setOnClickListener(mSettingsClickListener);
         view.findViewById(R.id.action_about).setOnClickListener(mAboutClickListener);
         getLoaderManager().initLoader(0, null, this);
 	}
 
-	// TODO GV migrate
-//    @Override
-//	public void onListItemClick(View itemView, int position, long id) {
-//		Cursor c = (Cursor) getListAdapter().getItem(position);
-//		((BookmarkContract) getActivity()).onBookmarkSelected(c.getString(
-//                c.getColumnIndex(BookmarkProvider.PATH)));
-//	}
+    @Override
+    public void onListItemClick(View itemView, FileHolder item) {
+        FragmentActivity activity = getActivity();
+        if (activity instanceof BookmarkContract) {
+            ((BookmarkContract) activity).onBookmarkSelected(item.getFile().getPath());
+        }
+    }
 
     /**
      * Make the UI indicate loading.
@@ -93,8 +96,7 @@ public class SideNavFragment extends RecyclerViewFragment
         }
     }
 
-    // TODO GV migrate
-//    private void setListChoiceListener() {
+    private void setListChoiceListener() {    // TODO GV migrate
 //        getRecyclerView().setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
 //            @Override
 //            public boolean onPrepareActionMode(android.view.ActionMode mode, Menu menu) {
@@ -161,30 +163,28 @@ public class SideNavFragment extends RecyclerViewFragment
 //            }
 //        });
 //        getRecyclerView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-//    }
+    }
 
+    @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(getActivity(), BookmarkProvider.CONTENT_URI, null, null, null, null);
+        return new CursorLoader(getContext(), BookmarkProvider.CONTENT_URI, null, null, null, null);
     }
 
-    // TODO GV migrate
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-//        ((BookmarkListAdapter) getListAdapter()).swapCursor(cursor);
-//        setLoading(false);
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
+        ((BookmarkListAdapter) getListAdapter()).swapCursor(cursor);
+        setLoading(false);
     }
 
-    // TODO GV migrate
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-//        ((BookmarkListAdapter) getListAdapter()).swapCursor(null);
-//        setLoading(false);
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+        ((BookmarkListAdapter) getListAdapter()).swapCursor(null);
+        setLoading(false);
     }
 
     public static interface BookmarkContract {
         void onBookmarkSelected(String path);
-
         void showBookmarks();
     }
 }

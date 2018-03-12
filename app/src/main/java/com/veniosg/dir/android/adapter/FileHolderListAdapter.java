@@ -33,9 +33,8 @@ import java.util.List;
 
 import androidx.recyclerview.selection.SelectionTracker;
 
-public class FileHolderListAdapter
-        extends RecyclerView.Adapter<FileListViewHolder>
-        implements RecyclerViewFragment.ClickableAdapter {
+public class FileHolderListAdapter extends RecyclerView.Adapter<FileListViewHolder>
+        implements RecyclerViewFragment.ClickableAdapter, RecyclerViewFragment.SelectableAdapter<Long> {
     private final List<FileHolder> mItems;
     private final List<Long> mIds;
     private final LongSparseArray<Integer> mIdsToPositions;

@@ -39,7 +39,7 @@ public class FileListViewHolder extends RecyclerView.ViewHolder {
     private ImageView icon;
     private TextView primaryInfo;
     TextView secondaryInfo;
-    private TextView tertiaryInfo;
+    TextView tertiaryInfo;
 
     public FileListViewHolder(ViewGroup parent) {
         super(from(parent.getContext()).inflate(R.layout.item_filelist, parent, false));
