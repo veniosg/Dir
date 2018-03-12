@@ -14,8 +14,8 @@
  * limitations under the License.
  -->
 <com.veniosg.dir.android.ui.widget.WaitingViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/flipper"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -41,7 +41,7 @@
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             android:scrollbarStyle="outsideOverlay"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
         <!-- Empty state -->
         <LinearLayout
@@ -65,9 +65,9 @@
                 android:id="@+id/empty_img"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="4dp"
+                android:layout_gravity="center_horizontal"
                 android:background="@drawable/bg_empty_state_circle"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_button_back"
@@ -116,9 +116,9 @@
             android:id="@+id/permissions_button"
             android:layout_width="88dp"
             android:layout_height="88dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="4dp"
             android:layout_marginTop="24dp"
+            android:layout_marginBottom="4dp"
+            android:layout_gravity="center_horizontal"
             android:background="@drawable/bg_empty_state_circle"
             android:scaleType="centerInside"
             android:src="@drawable/ic_button_permission"

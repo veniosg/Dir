@@ -71,33 +71,32 @@ public class RecyclerViewFragment extends Fragment {
     private final RecyclerView.AdapterDataObserver mEmptyViewUpdatingObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
-            super.onChanged();
-            ensureEmptyView(true);
+            ensureEmptyView(false);
         }
 
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount) {
-            onChanged();
+            ensureEmptyView(true);
         }
 
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-            onChanged();
+            ensureEmptyView(true);
         }
 
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount) {
-            onChanged();
+            ensureEmptyView(true);
         }
 
         @Override
         public void onItemRangeRemoved(int positionStart, int itemCount) {
-            onChanged();
+            ensureEmptyView(true);
         }
 
         @Override
         public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-            onChanged();
+            ensureEmptyView(true);
         }
     };
 
@@ -197,7 +196,7 @@ public class RecyclerViewFragment extends Fragment {
      * data associated with the selected item.
      *
      * @param itemView The view that was clicked within the RecyclerView
-     * @param item The data item represented by itemView
+     * @param item     The data item represented by itemView
      */
     public void onListItemClick(View itemView, FileHolder item) {
     }
@@ -293,7 +292,7 @@ public class RecyclerViewFragment extends Fragment {
      *              indicator.  The initial value is true.
      */
     public void setListShown(boolean shown) {
-        setListShown(shown, true);
+        setListShown(shown, false);
     }
 
     /**

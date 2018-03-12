@@ -210,9 +210,11 @@ public abstract class FileListFragment extends RecyclerViewFragment {
         setListAdapter(mAdapter);
 
         // Set up selection (must be after adapter is set on RecyclerView)
-        // TODO clicks seem swallowed by the selection library
-        mSelectionTracker = new SelectionTracker.Builder<>("file-list-fragment", recyclerView,
-                new StableIdKeyProvider(recyclerView),new FileHolderDetailsLookup(recyclerView),
+        // TODO clicks are swallowed by the selection library
+        RecyclerView recyclerView1 = new RecyclerView(getContext());
+        recyclerView1.setAdapter(mAdapter);
+        mSelectionTracker = new SelectionTracker.Builder<>("file-list-fragment", recyclerView1,
+                new StableIdKeyProvider(recyclerView1),new FileHolderDetailsLookup(recyclerView1),
                 StorageStrategy.createLongStorage())
                 .withOnItemActivatedListener((item, e) -> {
                     int position = item.getPosition();
