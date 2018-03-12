@@ -29,6 +29,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -182,8 +183,7 @@ public abstract class FileListFragment extends RecyclerViewFragment {
 
         // Set list properties
         RecyclerView recyclerView = getRecyclerView();
-        recyclerView.requestFocus();
-        recyclerView.requestFocusFromTouch();
+        recyclerView.setItemAnimator(null);
 
         mFlipper = view.findViewById(R.id.flipper);
         view.findViewById(R.id.empty_img).setOnClickListener(mEmptyViewClickListener);
@@ -218,7 +218,7 @@ public abstract class FileListFragment extends RecyclerViewFragment {
                 new StableIdKeyProvider(recyclerView1),new FileHolderDetailsLookup(recyclerView1),
                 StorageStrategy.createLongStorage())
                 .withOnItemActivatedListener((item, e) -> {
-                    int position = item.getPosition();
+                    item.getSelectionKey();
                     return true;
                 })
                 .build();
