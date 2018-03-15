@@ -87,8 +87,8 @@ public class SelectsActions {
         onView(withId(android.R.id.content)).perform(pressBack());
     }
 
-    public void operationsAction() {
-        clickOnAction(R.id.menu_file_ops, R.string.menu_file_ops);
+    public void overflowAction() {
+        clickOnAction(R.id.menu_more_options, R.string.more_options);
     }
 
     public void copyAction() {

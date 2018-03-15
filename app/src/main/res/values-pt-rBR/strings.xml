@@ -64,7 +64,6 @@
     <string name="menu_create_folder">Criar pasta</string>
     <string name="menu_paste">Colar</string>
     <string name="menu_settings">Configurações</string>
-    <string name="menu_file_ops">Operações</string>
     <string name="menu_delete">Apagar</string>
     <string name="menu_move">Cortar</string>
     <string name="menu_copy">Copiar</string>

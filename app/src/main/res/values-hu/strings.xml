@@ -67,7 +67,6 @@
     <string name="menu_create_folder">Mappa létrehozása</string>
     <string name="menu_paste">Beilleszt</string>
     <string name="menu_settings">Beállítások</string>
-    <string name="menu_file_ops">Műveletek</string>
     <string name="menu_delete">Töröl</string>
     <string name="menu_move">Kivágás</string>
     <string name="menu_copy">Másolás</string>

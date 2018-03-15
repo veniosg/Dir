@@ -132,7 +132,7 @@ public abstract class FileOperationsTest {
         user.launches().viewWithFileScheme(testDirectory);
 
         user.selects().longFileInList(testChildFile);
-        user.selects().operationsAction();
+        user.selects().overflowAction();
         user.selects().deleteAction();
         user.selects().yes();
 
@@ -144,7 +144,7 @@ public abstract class FileOperationsTest {
         user.launches().viewWithFileScheme(testDirectory);
 
         user.selects().longFileInList(testChildDirectory);
-        user.selects().operationsAction();
+        user.selects().overflowAction();
         user.selects().deleteAction();
         user.selects().yes();
 
@@ -157,7 +157,7 @@ public abstract class FileOperationsTest {
 
         user.selects().longFileInList(testChildDirectory);
         user.selects().fileInList(testChildFile);
-        user.selects().operationsAction();
+        user.selects().overflowAction();
         user.selects().deleteAction();
         user.selects().yes();
 
@@ -172,7 +172,7 @@ public abstract class FileOperationsTest {
         user.launches().viewWithFileScheme(testDirectory);
 
         user.selects().longFileInList(testChildFile);
-        user.selects().operationsAction();
+        user.selects().overflowAction();
         user.selects().renameAction();
         user.types().inputFileName(nameSuffix);
         user.selects().ok();
@@ -188,7 +188,7 @@ public abstract class FileOperationsTest {
         user.launches().viewWithFileScheme(testDirectory);
 
         user.selects().longFileInList(testChildDirectory);
-        user.selects().operationsAction();
+        user.selects().overflowAction();
         user.selects().renameAction();
         user.types().inputFileName(nameSuffix);
         user.selects().ok();
@@ -204,14 +204,14 @@ public abstract class FileOperationsTest {
 
         // compress
         user.selects().longFileInList(testDirectory);
-        user.selects().operationsAction();
+        user.selects().overflowAction();
         user.selects().compressAction();
         user.types().inputFileName(zipName);
         user.selects().ok();
 
         // extract
         user.selects().longFileInList(zipName + ".zip");
-        user.selects().operationsAction();
+        user.selects().overflowAction();
         user.selects().extractAction();
 
         // verify extracted structure
@@ -228,14 +228,14 @@ public abstract class FileOperationsTest {
 
         // compress
         user.selects().longFileInList(testChildDirectory);
-        user.selects().operationsAction();
+        user.selects().overflowAction();
         user.selects().compressAction();
         user.types().inputFileName(zipName);
         user.selects().ok();
 
         // compress again
         user.selects().longFileInList(testChildFile);
-        user.selects().operationsAction();
+        user.selects().overflowAction();
         user.selects().compressAction();
         user.types().inputFileName(zipName);
         user.selects().ok();
@@ -245,7 +245,7 @@ public abstract class FileOperationsTest {
 
         // extract
         user.selects().longFileInList(zipName + ".zip");
-        user.selects().operationsAction();
+        user.selects().overflowAction();
         user.selects().extractAction();
 
         // verify extracted structure matches second operation
@@ -267,13 +267,13 @@ public abstract class FileOperationsTest {
 
     private void userCopiesFileInList(File file) {
         user.selects().longFileInList(file);
-        user.selects().operationsAction();
+        user.selects().overflowAction();
         user.selects().copyAction();
     }
 
     private void userCutsFileInList(File file) {
         user.selects().longFileInList(file);
-        user.selects().operationsAction();
+        user.selects().overflowAction();
         user.selects().moveAction();
     }
 

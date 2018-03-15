@@ -64,7 +64,6 @@
     <string name="menu_create_folder">Klasör oluştur</string>
     <string name="menu_paste">Yapıştır</string>
     <string name="menu_settings">Ayarlar</string>
-    <string name="menu_file_ops">İşlemler</string>
     <string name="menu_delete">Sil</string>
     <string name="menu_move">Kes</string>
     <string name="menu_copy">Kopyala</string>

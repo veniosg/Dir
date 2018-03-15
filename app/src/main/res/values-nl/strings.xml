@@ -65,7 +65,6 @@
     <string name="menu_create_folder">Map aanmaken</string>
     <string name="menu_paste">Plakken</string>
     <string name="menu_settings">Instellingen</string>
-    <string name="menu_file_ops">Acties</string>
     <string name="menu_delete">Verwijderen</string>
     <string name="menu_move">Knippen</string>
     <string name="menu_copy">Kopieer</string>

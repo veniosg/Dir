@@ -67,7 +67,6 @@
     <string name="menu_create_folder">新建文件夹</string>
     <string name="menu_paste">粘贴</string>
     <string name="menu_settings">设置</string>
-    <string name="menu_file_ops">操作</string>
     <string name="menu_delete">删除</string>
     <string name="menu_move">剪切</string>
     <string name="menu_copy">复制</string>

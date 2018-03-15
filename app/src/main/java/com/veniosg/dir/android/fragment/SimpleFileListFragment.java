@@ -113,11 +113,11 @@ public class SimpleFileListFragment extends FileListFragment {
                     }
 
                     if (!isZipArchive(file)) {
-                        menu.findItem(R.id.menu_file_ops)
+                        menu.findItem(R.id.menu_more_options)
                                 .getSubMenu()
                                 .removeItem(R.id.menu_extract);
                     } else {
-                        menu.findItem(R.id.menu_file_ops)
+                        menu.findItem(R.id.menu_more_options)
                                 .getSubMenu()
                                 .removeItem(R.id.menu_compress);
                     }

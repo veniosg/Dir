@@ -66,7 +66,6 @@
     <string name="menu_search">Αναζήτηση</string>
     <string name="menu_create_folder">Δημιουργία φακέλου</string>
     <string name="menu_paste">Επικόλληση</string>
-    <string name="menu_file_ops">Ενέργειες</string>
     <string name="menu_delete">Διαγραφή</string>
     <string name="menu_move">Αποκοπή</string>
     <string name="menu_copy">Αντιγραφή</string>

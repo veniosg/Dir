@@ -67,7 +67,6 @@
     <string name="menu_create_folder">Vytvořit složku</string>
     <string name="menu_paste">Vložit</string>
     <string name="menu_settings">Nastavení</string>
-    <string name="menu_file_ops">Operace</string>
     <string name="menu_delete">Odstranit</string>
     <string name="menu_move">Vyjmout</string>
     <string name="menu_copy">Kopírovat</string>

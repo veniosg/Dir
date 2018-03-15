@@ -17,9 +17,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="AppCompatResource">
     <item
-        android:id="@+id/menu_file_ops"
-        android:icon="@drawable/ic_action_edit"
-        android:title="@string/menu_file_ops">
+        android:id="@+id/menu_send"
+        android:icon="@drawable/ic_action_share"
+        android:title="@string/menu_share" />
+    <item
+        android:id="@+id/menu_more_options"
+        android:icon="@drawable/ic_action_overflow"
+        android:title="@string/more_options">
         <menu>
             <group android:checkableBehavior="none">
                 <item
@@ -38,15 +42,11 @@
                     android:id="@+id/menu_delete"
                     android:icon="@drawable/ic_action_delete"
                     android:title="@string/menu_delete" />
+                <item
+                    android:id="@+id/menu_select_all"
+                    android:showAsAction="never"
+                    android:title="@string/menu_check_all" />
             </group>
         </menu>
     </item>
-    <item
-        android:id="@+id/menu_send"
-        android:icon="@drawable/ic_action_share"
-        android:title="@string/menu_share" />
-    <item
-        android:id="@+id/menu_select_all"
-        android:showAsAction="never"
-        android:title="@string/menu_check_all" />
 </menu>

@@ -67,7 +67,6 @@
     <string name="menu_create_folder">Créer un dossier</string>
     <string name="menu_paste">Coller</string>
     <string name="menu_settings">Réglages</string>
-    <string name="menu_file_ops">Opérations</string>
     <string name="menu_delete">Supprimer</string>
     <string name="menu_move">Couper</string>
     <string name="menu_copy">Copier</string>

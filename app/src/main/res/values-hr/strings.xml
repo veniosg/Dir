@@ -64,7 +64,6 @@
     <string name="menu_search">Pretraži</string>
     <string name="menu_create_folder">Kreiraj mapu</string>
     <string name="menu_paste">Zalijepi</string>
-    <string name="menu_file_ops">Operacije</string>
     <string name="menu_delete">Obriši</string>
     <string name="menu_move">Izreži</string>
     <string name="menu_copy">Kopiraj</string>

@@ -67,7 +67,6 @@
     <string name="menu_create_folder">Create folder</string>
     <string name="menu_paste">Paste</string>
     <string name="menu_settings">@string/settings</string>
-    <string name="menu_file_ops">Operations</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_move">Cut</string>
     <string name="menu_copy">Copy</string>
@@ -158,4 +157,5 @@
     <string name="help">Help</string>
     <string name="saf_dialog_message">Select the root directory of your SD Card.</string>
     <string name="ntfchn_title_operations">File operations</string>
+    <string name="more_options">More options</string>
 </resources>

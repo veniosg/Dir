@@ -67,7 +67,6 @@
     <string name="menu_create_folder">Crear carpeta</string>
     <string name="menu_paste">Pegar</string>
     <string name="menu_settings">Configuración</string>
-    <string name="menu_file_ops">Acciones</string>
     <string name="menu_delete">Borrar</string>
     <string name="menu_move">Cortar</string>
     <string name="menu_copy">Copiar</string>

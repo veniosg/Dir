@@ -62,7 +62,6 @@
     <string name="menu_create_folder">Crea cartella</string>
     <string name="menu_paste">Incolla</string>
     <string name="menu_settings">Impostazioni</string>
-    <string name="menu_file_ops">Funzionalità</string>
     <string name="menu_delete">Elimina</string>
     <string name="menu_move">Taglia</string>
     <string name="menu_copy">Copia</string>

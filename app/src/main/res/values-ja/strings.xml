@@ -64,7 +64,6 @@
     <string name="menu_create_folder">フォルダを作成</string>
     <string name="menu_paste">貼り付け</string>
     <string name="menu_settings">設定</string>
-    <string name="menu_file_ops">操作</string>
     <string name="menu_delete">削除</string>
     <string name="menu_move">切り取り</string>
     <string name="menu_copy">コピー</string>
