@@ -59,7 +59,7 @@ public class FileHolderListAdapter extends RecyclerView.Adapter<FileListViewHold
     }
 
     @NonNull
-    private FileHolder getItem(int position) {
+    public FileHolder getItem(int position) {
         return mItems.get(position);
     }
 
@@ -108,8 +108,13 @@ public class FileHolderListAdapter extends RecyclerView.Adapter<FileListViewHold
 
     @Nullable
     public FileHolder getItem(long id) {
-        Integer position = mIdsToPositions.get(id);
+        Integer position = getPosition(id);
         return position != null ? getItem(position) : null;
+    }
+
+    @Nullable
+    public Integer getPosition(long id) {
+        return mIdsToPositions.get(id);
     }
 
     private void refreshIds() {

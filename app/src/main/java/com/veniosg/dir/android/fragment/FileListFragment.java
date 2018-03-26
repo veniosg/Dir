@@ -29,7 +29,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,8 +37,8 @@ import android.view.ViewGroup;
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.FileManagerApplication;
 import com.veniosg.dir.android.adapter.FileHolderListAdapter;
-import com.veniosg.dir.android.adapter.SelectableAdapter;
 import com.veniosg.dir.android.adapter.selection.FileHolderDetailsLookup;
+import com.veniosg.dir.android.adapter.selection.FileHolderListKeyProvider;
 import com.veniosg.dir.android.misc.DirectoryScanner;
 import com.veniosg.dir.android.ui.widget.WaitingViewFlipper;
 import com.veniosg.dir.android.util.Logger;
@@ -50,7 +49,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import androidx.recyclerview.selection.SelectionTracker;
-import androidx.recyclerview.selection.StableIdKeyProvider;
 import androidx.recyclerview.selection.StorageStrategy;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -72,47 +70,43 @@ import static com.veniosg.dir.android.ui.widget.WaitingViewFlipper.PAGE_INDEX_PE
 /**
  * An {@link RecyclerViewFragment} that displays the contents of a directory.
  * <p>
- *     Clicks do nothing.
+ * Clicks do nothing.
  * </p>
  * <p>
- *     Refreshes on OnSharedPreferenceChange and when receiving
- *     a local ACTION_REFRESH_LIST broadcast with EXTRA_DIR_PATH matching this folder.
+ * Refreshes on OnSharedPreferenceChange and when receiving
+ * a local ACTION_REFRESH_LIST broadcast with EXTRA_DIR_PATH matching this folder.
  * </p>
  * <p>
- *     Requests permissions if they're not granted.
+ * Requests permissions if they're not granted.
  * </p>
  */
 public abstract class FileListFragment extends RecyclerViewFragment {
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 0;
     private static final String INSTANCE_STATE_PATH = "path";
-	private static final String INSTANCE_STATE_FILES = "files";
+    private static final String INSTANCE_STATE_FILES = "files";
     private static final String INSTANCE_STATE_NEEDS_LOADING = "needsLoading";
 
     // Not an anonymous inner class because of:
-	// http://stackoverflow.com/questions/2542938/sharedpreferences-onsharedpreferencechangelistener-not-being-called-consistently
-	private OnSharedPreferenceChangeListener preferenceListener = new OnSharedPreferenceChangeListener() {
-		@Override
-		public void onSharedPreferenceChanged(
-				SharedPreferences sharedPreferences, String key) {
-			// We only care for list-altering preferences. This could be dangerous though,
-			// as later contributors might not see this, and have their settings not work in realtime.
-			// Therefore this is commented out, since it's not likely the refresh is THAT heavy.
-			// *****************
-			// if (PreferenceActivity.PREFS_DISPLAYHIDDENFILES.equals(key)
-			// || PreferenceActivity.PREFS_SORTBY.equals(key)
-			// || PreferenceActivity.PREFS_ASCENDING.equals(key))
+    // http://stackoverflow.com/questions/2542938/sharedpreferences-onsharedpreferencechangelistener-not-being-called-consistently
+    private OnSharedPreferenceChangeListener preferenceListener = (sharedPreferences, key) -> {
+        // We only care for list-altering preferences. This could be dangerous though,
+        // as later contributors might not see this, and have their settings not work in realtime.
+        // Therefore this is commented out, since it's not likely the refresh is THAT heavy.
+        // *****************
+        // if (PreferenceActivity.PREFS_DISPLAYHIDDENFILES.equals(key)
+        // || PreferenceActivity.PREFS_SORTBY.equals(key)
+        // || PreferenceActivity.PREFS_ASCENDING.equals(key))
 
-			// Prevent NullPointerException caused from this getting called after the activity is finished.
-			if (getActivity() != null && !key.equals(PREFS_THEME)) // We're restarting, no need for refresh
-				refresh();
-		}
-	};
+        // Prevent NullPointerException caused from this getting called after the activity is finished.
+        if (getActivity() != null && !key.equals(PREFS_THEME)) // We're restarting, no need for refresh
+            refresh();
+    };
 
-	FileHolderListAdapter mAdapter;
-	private DirectoryScanner mScanner;
-	private ArrayList<FileHolder> mFiles = new ArrayList<>();
-	private String mPath;
-	private String mFilename;
+    FileHolderListAdapter mAdapter;
+    private DirectoryScanner mScanner;
+    private ArrayList<FileHolder> mFiles = new ArrayList<>();
+    private String mPath;
+    private String mFilename;
     private FileObserver mFileObserver;
     private SelectionTracker<Long> mSelectionTracker;
 
@@ -173,13 +167,13 @@ public abstract class FileListFragment extends RecyclerViewFragment {
         return inflater.inflate(R.layout.fragment_filelist, container, false);
     }
 
-	@Override
-	public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-		// Set auto refresh on preference change.
-		getDefaultSharedPreferences(getActivity())
-				.registerOnSharedPreferenceChangeListener(preferenceListener);
+        // Set auto refresh on preference change.
+        getDefaultSharedPreferences(getActivity())
+                .registerOnSharedPreferenceChangeListener(preferenceListener);
 
         // Set list properties
         RecyclerView recyclerView = getRecyclerView();
@@ -189,18 +183,18 @@ public abstract class FileListFragment extends RecyclerViewFragment {
         view.findViewById(R.id.empty_img).setOnClickListener(mEmptyViewClickListener);
         view.findViewById(R.id.permissions_button).setOnClickListener(mRequestPermissionsListener);
 
-		// Get arguments
+        // Get arguments
         boolean needsLoading = true;
-		if (savedInstanceState == null) {
+        if (savedInstanceState == null) {
             setPath(new File(getArguments().getString(EXTRA_DIR_PATH)));
-			mFilename = getArguments().getString(EXTRA_FILENAME);
-		} else {
-			setPath(new File(savedInstanceState.getString(INSTANCE_STATE_PATH)));
-			mFiles = savedInstanceState
-					.getParcelableArrayList(INSTANCE_STATE_FILES);
+            mFilename = getArguments().getString(EXTRA_FILENAME);
+        } else {
+            setPath(new File(savedInstanceState.getString(INSTANCE_STATE_PATH)));
+            mFiles = savedInstanceState
+                    .getParcelableArrayList(INSTANCE_STATE_FILES);
             needsLoading = savedInstanceState.getInt(INSTANCE_STATE_NEEDS_LOADING) != 0;
-		}
-		pathCheckAndFix();
+        }
+        pathCheckAndFix();
 
         if (needsLoading) {
             refresh();
@@ -211,14 +205,15 @@ public abstract class FileListFragment extends RecyclerViewFragment {
         setListAdapter(mAdapter);
 
         // Set up selection (must be after adapter is set on RecyclerView)
-        // TODO clicks are swallowed by the selection library
-        RecyclerView recyclerView1 = new RecyclerView(getContext());
-        recyclerView1.setAdapter(mAdapter);
-        mSelectionTracker = new SelectionTracker.Builder<>("file-list-fragment", recyclerView1,
-                new StableIdKeyProvider(recyclerView1),new FileHolderDetailsLookup(recyclerView1),
+        mSelectionTracker = new SelectionTracker.Builder<>("file-list-fragment", recyclerView,
+                new FileHolderListKeyProvider(mAdapter),
+                new FileHolderDetailsLookup(recyclerView),
                 StorageStrategy.createLongStorage())
                 .withOnItemActivatedListener((item, e) -> {
-                    item.getSelectionKey();
+                    int position = item.getPosition();
+                    View itemView = recyclerView.findViewHolderForAdapterPosition(position).itemView;
+                    FileHolder data = getFileListAdapter().getItem(position);
+                    onListItemClick(itemView, data);
                     return true;
                 })
                 .build();
@@ -231,19 +226,19 @@ public abstract class FileListFragment extends RecyclerViewFragment {
     }
 
     /**
-	 * Reloads {@link #mPath}'s contents.
-	 */
-	protected void refresh() {
+     * Reloads {@link #mPath}'s contents.
+     */
+    protected void refresh() {
         if (hasPermissions()) {
             showLoading(true);
             renewScanner().start();
         } else {
             requestPermissions();
         }
-	}
+    }
 
     private boolean hasPermissions() {
-	    if (getActivity() == null) return false;
+        if (getActivity() == null) return false;
 
         return checkSelfPermission(getActivity(), WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED;
     }
@@ -276,30 +271,30 @@ public abstract class FileListFragment extends RecyclerViewFragment {
     }
 
     /**
-	 * Recreates the {@link #mScanner} using the previously set arguments and
-	 * {@link #mPath}.
-	 * 
-	 * @return {@link #mScanner} for convenience.
-	 */
-	protected DirectoryScanner renewScanner() {
+     * Recreates the {@link #mScanner} using the previously set arguments and
+     * {@link #mPath}.
+     *
+     * @return {@link #mScanner} for convenience.
+     */
+    protected DirectoryScanner renewScanner() {
         // Cancel previous scanner so that it doesn't load on top of the new list.
         stopScanner();
 
         String filetypeFilter = getArguments().getString(EXTRA_FILTER_FILETYPE);
-		String mimetypeFilter = getArguments().getString(EXTRA_FILTER_MIMETYPE);
-		boolean writeableOnly = getArguments().getBoolean(EXTRA_WRITEABLE_ONLY);
-		boolean directoriesOnly = getArguments().getBoolean(EXTRA_DIRECTORIES_ONLY);
+        String mimetypeFilter = getArguments().getString(EXTRA_FILTER_MIMETYPE);
+        boolean writeableOnly = getArguments().getBoolean(EXTRA_WRITEABLE_ONLY);
+        boolean directoriesOnly = getArguments().getBoolean(EXTRA_DIRECTORIES_ONLY);
 
-		mScanner = new DirectoryScanner(new File(mPath),
+        mScanner = new DirectoryScanner(new File(mPath),
                 getActivity(),
-				new FileListMessageHandler(),
+                new FileListMessageHandler(),
                 ((FileManagerApplication) getActivity().getApplicationContext()).getMimeTypes(),
-				filetypeFilter == null ? "" : filetypeFilter,
-				mimetypeFilter == null ? "" : mimetypeFilter,
+                filetypeFilter == null ? "" : filetypeFilter,
+                mimetypeFilter == null ? "" : mimetypeFilter,
                 writeableOnly,
-				directoriesOnly);
-		return mScanner;
-	}
+                directoriesOnly);
+        return mScanner;
+    }
 
     private void stopScanner() {
         if (hasScanner()) {
@@ -322,9 +317,9 @@ public abstract class FileListFragment extends RecyclerViewFragment {
     }
 
     private class FileListMessageHandler extends Handler {
-		@Override
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
                 case DirectoryScanner.MESSAGE_SHOW_DIRECTORY_CONTENTS:
                     DirectoryHolder c = (DirectoryHolder) msg.obj;
                     mFiles.clear();
@@ -340,41 +335,41 @@ public abstract class FileListFragment extends RecyclerViewFragment {
                 case DirectoryScanner.MESSAGE_SET_PROGRESS:
                     // Irrelevant.
                     break;
-                }
-		}
-	}
+            }
+        }
+    }
 
-	/**
-	 * @return The currently displayed directory's absolute path.
-	 */
-	public final String getPath() {
-		return mPath;
-	}
+    /**
+     * @return The currently displayed directory's absolute path.
+     */
+    public final String getPath() {
+        return mPath;
+    }
 
-	/**
-	 * This will be ignored if path doesn't pass check as valid.
-	 * 
-	 * @param dir The path to set.
-	 */
-	public final void setPath(File dir) {
+    /**
+     * This will be ignored if path doesn't pass check as valid.
+     *
+     * @param dir The path to set.
+     */
+    public final void setPath(File dir) {
         mPath = dir.getAbsolutePath();
 
-        if (dir.exists()){
+        if (dir.exists()) {
             // Observe the path
             if (mFileObserver != null) {
                 mFileObserver.stopWatching();
             }
             mFileObserver = generateFileObserver(mPath);
             mFileObserver.startWatching();
-		}
-	}
+        }
+    }
 
     private FileObserver generateFileObserver(String pathToObserve) {
         return new FileObserver(pathToObserve,
-                          FileObserver.CREATE
+                FileObserver.CREATE
                         | FileObserver.DELETE
                         | FileObserver.CLOSE_WRITE // Removed since in case of continuous modification
-                                                   // (copy/compress) we would flood with events.
+                        // (copy/compress) we would flood with events.
                         | FileObserver.MOVED_FROM
                         | FileObserver.MOVED_TO) {
             private static final long MIN_REFRESH_INTERVAL = 2 * 1000;
@@ -404,22 +399,23 @@ public abstract class FileListFragment extends RecyclerViewFragment {
     }
 
     private void pathCheckAndFix() {
-		File dir = new File(mPath);
-		// Sanity check that the path (coming from extras_dir_path) is indeed a
-		// directory
-		if (!dir.isDirectory() && dir.getParentFile() != null) {
-			// remember the filename for picking.
-			mFilename = dir.getName();
-			setPath(dir.getParentFile());
-		}
-	}
+        File dir = new File(mPath);
+        // Sanity check that the path (coming from extras_dir_path) is indeed a
+        // directory
+        if (!dir.isDirectory() && dir.getParentFile() != null) {
+            // remember the filename for picking.
+            mFilename = dir.getName();
+            setPath(dir.getParentFile());
+        }
+    }
 
-	public String getFilename() {
-		return mFilename;
-	}
+    public String getFilename() {
+        return mFilename;
+    }
 
     /**
      * Will request a refresh for all active FileListFragment instances currently displaying "directory".
+     *
      * @param directory The directory to refresh.
      */
     public static void refresh(Context c, File directory) {
@@ -433,13 +429,15 @@ public abstract class FileListFragment extends RecyclerViewFragment {
      * Use this callback to handle UI state when the new list data is ready but BEFORE
      * the list is refreshed.
      */
-    protected void onDataReady() {}
+    protected void onDataReady() {
+    }
 
     /**
      * Use this callback to handle UI state when the new list data is ready and the UI
      * has been refreshed.
      */
-    protected void onDataApplied() {}
+    protected void onDataApplied() {
+    }
 
     /**
      * Used to inform subclasses about list visibility changing. Can be used to
@@ -447,7 +445,8 @@ public abstract class FileListFragment extends RecyclerViewFragment {
      *
      * @param visible If the list started or stopped being visible.
      */
-    protected void onListVisibilityChanging(boolean visible) {}
+    protected void onListVisibilityChanging(boolean visible) {
+    }
 
     /**
      * Used to inform subclasses about visible state changing. Can be used to
@@ -455,9 +454,11 @@ public abstract class FileListFragment extends RecyclerViewFragment {
      *
      * @param visible If the list started or stopped being visible.
      */
-    protected void onListVisibilityChanged(boolean visible) {}
+    protected void onListVisibilityChanged(boolean visible) {
+    }
 
-    protected void onEmptyViewClicked(){}
+    protected void onEmptyViewClicked() {
+    }
 
     @NonNull
     protected final FileHolderListAdapter getFileListAdapter() {

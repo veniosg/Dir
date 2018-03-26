@@ -52,7 +52,7 @@ public class DirectoryScanner extends Thread {
 	private String mSdCardPath;
 	private Context mContext;
     private MimeTypes mMimeTypes;
-	private Handler handler;
+	private Handler mHandler;
 	@NonNull
 	private String mFilterFiletype;
 	@NonNull
@@ -81,7 +81,7 @@ public class DirectoryScanner extends Thread {
 		super("Directory Scanner");
 		currentDirectory = directory;
 		this.mContext = context;
-		this.handler = handler;
+		this.mHandler = handler;
 		this.mMimeTypes = mimeTypes;
 		this.mFilterFiletype = filterFiletype;
 		this.mFilterMimetype = filterMimetype;
@@ -208,7 +208,7 @@ public class DirectoryScanner extends Thread {
 			contents.listSdCard = listSdCard;
 			contents.noMedia = noMedia;
 
-			Message msg = handler.obtainMessage(MESSAGE_SHOW_DIRECTORY_CONTENTS);
+			Message msg = mHandler.obtainMessage(MESSAGE_SHOW_DIRECTORY_CONTENTS);
 			msg.obj = contents;
 			msg.sendToTarget();
 		}
@@ -227,7 +227,7 @@ public class DirectoryScanner extends Thread {
 			}
 
 			// Okay, send an update.
-			Message msg = handler.obtainMessage(MESSAGE_SET_PROGRESS);
+			Message msg = mHandler.obtainMessage(MESSAGE_SET_PROGRESS);
 			msg.arg1 = progress;
 			msg.arg2 = maxProgress;
 			msg.sendToTarget();

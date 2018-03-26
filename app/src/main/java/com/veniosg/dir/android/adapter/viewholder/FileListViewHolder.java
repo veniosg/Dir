@@ -32,14 +32,13 @@ import androidx.recyclerview.selection.ItemDetailsLookup;
 import static android.view.LayoutInflater.from;
 import static com.nostra13.universalimageloader.core.ImageLoader.getInstance;
 import static com.veniosg.dir.android.misc.ThumbnailHelper.requestIcon;
-import static com.veniosg.dir.android.ui.Themer.getThemedResourceId;
 
 public class FileListViewHolder extends RecyclerView.ViewHolder {
     private FileHolderItemDetails itemDetails;
-    private ImageView icon;
-    private TextView primaryInfo;
-    TextView secondaryInfo;
-    TextView tertiaryInfo;
+    public final ImageView icon;
+    public final TextView primaryInfo;
+    public final TextView secondaryInfo;
+    public final TextView tertiaryInfo;
 
     public FileListViewHolder(ViewGroup parent) {
         super(from(parent.getContext()).inflate(R.layout.item_filelist, parent, false));
@@ -48,9 +47,6 @@ public class FileListViewHolder extends RecyclerView.ViewHolder {
         primaryInfo = itemView.findViewById(R.id.primary_info);
         secondaryInfo = itemView.findViewById(R.id.secondary_info);
         tertiaryInfo = itemView.findViewById(R.id.tertiary_info);
-
-        int selectorRes = getThemedResourceId(parent.getContext(), android.R.attr.listChoiceBackgroundIndicator);
-        itemView.setBackgroundResource(selectorRes);
     }
 
     public void bind(FileHolder item, OnItemClickListener itemClickListener) {

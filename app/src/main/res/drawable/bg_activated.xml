@@ -26,5 +26,5 @@
             </item>
         </selector>
     </item>
-    <item android:drawable="?android:listSelector" />
+    <item android:drawable="?android:attr/listChoiceBackgroundIndicator" />
 </layer-list>

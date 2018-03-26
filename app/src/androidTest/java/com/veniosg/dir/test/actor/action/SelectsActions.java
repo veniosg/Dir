@@ -1,7 +1,11 @@
 package com.veniosg.dir.test.actor.action;
 
+import android.support.v7.widget.RecyclerView;
+
 import com.veniosg.dir.R;
 import com.veniosg.dir.mvvm.model.FileHolder;
+
+import org.hamcrest.Matcher;
 
 import java.io.File;
 
@@ -10,11 +14,15 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.action.ViewActions.pressBack;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnHolderItem;
+import static android.support.test.espresso.contrib.RecyclerViewActions.scrollToHolder;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.veniosg.dir.test.matcher.FileHolderHasName.hasName;
+import static com.veniosg.dir.test.matcher.RecyclerViewHasItemWithTitle.hasItemWithTitle;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.instanceOf;
@@ -26,13 +34,23 @@ public class SelectsActions {
     }
 
     public void fileInList(String filename) {
-        onData(allOf(
-                is(instanceOf(FileHolder.class)),
-                hasName(filename)
-        )).inAdapterView(allOf(
-                withId(android.R.id.list),
-                isDescendantOfA(withId(R.id.zoomview))
+        onView(allOf(
+                withId(R.id.primary_info),
+                withText(filename)
         )).perform(click());
+
+//        onView(allOf(
+//                withId(android.R.id.list),
+//                isDescendantOfA(withId(R.id.zoomview)))
+//        ).perform(actionOnHolderItem(hasItemWithTitle(filename), click()));
+
+//        onData(allOf(
+//                is(instanceOf(FileHolder.class)),
+//                hasName(filename)
+//        )).inAdapterView(allOf(
+//                withId(android.R.id.list),
+//                isDescendantOfA(withId(R.id.zoomview))
+//        )).perform(click());
     }
 
     public void longFileInList(File file) {

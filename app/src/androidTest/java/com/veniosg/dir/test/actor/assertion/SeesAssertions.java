@@ -1,16 +1,24 @@
 package com.veniosg.dir.test.actor.assertion;
 
 import android.support.annotation.IdRes;
+import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.ui.widget.PathItemView;
 import com.veniosg.dir.mvvm.model.FileHolder;
+import com.veniosg.dir.test.matcher.RecyclerViewHasItemWithTitle;
+
+import org.hamcrest.Matcher;
 
 import java.io.File;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnHolderItem;
+import static android.support.test.espresso.contrib.RecyclerViewActions.scrollToHolder;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
@@ -19,6 +27,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.veniosg.dir.test.matcher.FileHolderHasName.hasName;
+import static com.veniosg.dir.test.matcher.RecyclerViewHasItemWithTitle.hasItemWithTitle;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
@@ -30,13 +39,24 @@ public class SeesAssertions {
     }
 
     public void fileInList(String filename) {
-        onData(allOf(
-                is(instanceOf(FileHolder.class)),
-                hasName(filename))
-        ).inAdapterView(allOf(
-                withId(android.R.id.list),
-                isDescendantOfA(withId(R.id.zoomview))
+        onView(allOf(
+                withId(R.id.primary_info),
+                withText(filename)
         )).check(matches(isDisplayed()));
+
+//        onView(allOf(
+//                withId(android.R.id.list),
+//                isDescendantOfA(withId(R.id.zoomview)))
+//        ).perform(scrollToHolder(hasItemWithTitle(filename)))
+//        .check(matches(isDisplayed()));
+
+//        onData(allOf(
+//                is(instanceOf(FileHolder.class)),
+//                hasName(filename))
+//        ).inAdapterView(allOf(
+//                withId(android.R.id.list),
+//                isDescendantOfA(withId(R.id.zoomview))
+//        )).check(matches(isDisplayed()));
     }
 
     public void fileInPath(File file) {
