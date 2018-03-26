@@ -20,13 +20,12 @@ package com.veniosg.dir.android.util;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.format.Formatter;
-import android.widget.Toast;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.mvvm.model.FileHolder;
@@ -40,7 +39,13 @@ import java.util.List;
 
 import static android.content.Intent.ACTION_INSTALL_PACKAGE;
 import static android.content.Intent.ACTION_VIEW;
-import static android.content.Intent.EXTRA_NOT_UNKNOWN_SOURCE;
+import static android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
+import static android.content.pm.PackageManager.MATCH_DEFAULT_ONLY;
+import static android.net.Uri.fromFile;
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.N;
+import static android.widget.Toast.LENGTH_SHORT;
+import static android.widget.Toast.makeText;
 import static com.veniosg.dir.android.provider.FileManagerProvider.FILE_PROVIDER_PREFIX;
 import static com.veniosg.dir.android.util.Logger.log;
 import static java.lang.Integer.MAX_VALUE;
@@ -75,6 +80,17 @@ public class FileUtils {
 
     public static Uri getUri(FileHolder fileHolder) {
         return getUri(fileHolder.getFile().getAbsolutePath());
+    }
+
+    /**
+     * @deprecated Use getUri() instead. This will intentionally crash on and rafter API 24.
+     */
+    @Deprecated
+    private static Uri getFileUri(FileHolder fileHolder) {
+        if (Build.VERSION.SDK_INT >= N) {
+            throw new IllegalStateException("Tried to use File URI on a new Android version.");
+        }
+        return fromFile(fileHolder.getFile());
     }
 
     private static Uri getUri(String filePath) {
@@ -242,13 +258,12 @@ public class FileUtils {
      * @param fileholder The holder of the file to open.
      */
     public static void openFile(FileHolder fileholder, Context c) {
-        final Intent intent;
+        final Intent intent = getViewIntentFor(fileholder, c);
         if (EXTENSION_APK.equals(fileholder.getExtension())) {
-            intent = getInstallIntentFor(fileholder, c);
+            launchFileIntent(getInstallIntentFor(fileholder, c), intent, c);
         } else {
-            intent = getViewIntentFor(fileholder, c);
+            launchFileIntent(intent, c);
         }
-        launchFileIntent(intent, c);
     }
 
     public static Intent getViewIntentFor(FileHolder fileholder, Context c) {
@@ -262,24 +277,37 @@ public class FileUtils {
     }
 
     private static Intent getInstallIntentFor(FileHolder fileHolder, Context c) {
+        Uri data = SDK_INT >= N ? getUri(fileHolder) : getFileUri(fileHolder);
+        String type = fileHolder.getMimeType();
         Intent intent = new Intent(ACTION_INSTALL_PACKAGE);
-        intent.putExtra(EXTRA_NOT_UNKNOWN_SOURCE, true);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setData(getUri(fileHolder));
+        intent.setDataAndType(data, type);
         return intent;
     }
 
-    private static void launchFileIntent(Intent intent, Context c) {
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+    private static void launchFileIntent(@NonNull Intent intent, @NonNull Context c) {
+        launchFileIntent(intent, null, c);
+    }
+
+    private static void launchFileIntent(@NonNull Intent intent, @Nullable Intent fallbackIntent, @NonNull Context c) {
+        intent.addFlags(FLAG_GRANT_READ_URI_PERMISSION);
         try {
-            List<ResolveInfo> activities = c.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            List<ResolveInfo> activities = c.getPackageManager().queryIntentActivities(intent, MATCH_DEFAULT_ONLY);
             if (activities.size() == 0 || onlyActivityIsOurs(c, activities)) {
-                Toast.makeText(c.getApplicationContext(), R.string.application_not_available, Toast.LENGTH_SHORT).show();
+                launchFallbackOrToast(fallbackIntent, c);
             } else {
                 c.startActivity(intent);
             }
         } catch (ActivityNotFoundException | SecurityException e) {
-            Toast.makeText(c.getApplicationContext(), R.string.application_not_available, Toast.LENGTH_SHORT).show();
+            launchFallbackOrToast(fallbackIntent, c);
+        }
+    }
+
+    private static void launchFallbackOrToast(@Nullable Intent fallbackIntent, @NonNull Context c) {
+        if (fallbackIntent != null) {
+            launchFileIntent(fallbackIntent, c);
+        } else {
+            makeText(c.getApplicationContext(), R.string.application_not_available, LENGTH_SHORT).show();
         }
     }
 
