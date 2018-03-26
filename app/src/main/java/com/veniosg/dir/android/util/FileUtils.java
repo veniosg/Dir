@@ -38,7 +38,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Intent.ACTION_INSTALL_PACKAGE;
 import static android.content.Intent.ACTION_VIEW;
+import static android.content.Intent.EXTRA_NOT_UNKNOWN_SOURCE;
 import static com.veniosg.dir.android.provider.FileManagerProvider.FILE_PROVIDER_PREFIX;
 import static com.veniosg.dir.android.util.Logger.log;
 import static java.lang.Integer.MAX_VALUE;
@@ -50,6 +52,7 @@ import static java.util.Collections.unmodifiableList;
  */
 public class FileUtils {
     public static final String NOMEDIA_FILE_NAME = ".nomedia";
+    private static final String EXTENSION_APK = "apk";
 
     /**
      * Gets the extension of a file name, like ".png" or ".jpg".
@@ -239,17 +242,30 @@ public class FileUtils {
      * @param fileholder The holder of the file to open.
      */
     public static void openFile(FileHolder fileholder, Context c) {
-        Intent intent = getViewIntentFor(fileholder, c);
+        final Intent intent;
+        if (EXTENSION_APK.equals(fileholder.getExtension())) {
+            intent = getInstallIntentFor(fileholder, c);
+        } else {
+            intent = getViewIntentFor(fileholder, c);
+        }
         launchFileIntent(intent, c);
     }
 
     public static Intent getViewIntentFor(FileHolder fileholder, Context c) {
-        Intent intent = new Intent(ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Uri data = getUri(fileholder);
         String type = fileholder.getMimeType();
 
+        Intent intent = new Intent(ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setDataAndType(data, type);
+        return intent;
+    }
+
+    private static Intent getInstallIntentFor(FileHolder fileHolder, Context c) {
+        Intent intent = new Intent(ACTION_INSTALL_PACKAGE);
+        intent.putExtra(EXTRA_NOT_UNKNOWN_SOURCE, true);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setData(getUri(fileHolder));
         return intent;
     }
 
