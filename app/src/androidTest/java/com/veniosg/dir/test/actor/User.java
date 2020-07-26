@@ -1,13 +1,13 @@
-package com.veniosg.dir.test.actor;
+package com.accessifiers.filebrowser.test.actor;
 
 import android.app.Activity;
 import android.support.test.rule.ActivityTestRule;
 
-import com.veniosg.dir.test.actor.action.LaunchesActions;
-import com.veniosg.dir.test.actor.action.SelectsActions;
-import com.veniosg.dir.test.actor.action.TypesActions;
-import com.veniosg.dir.test.actor.assertion.CannotSeeAssertions;
-import com.veniosg.dir.test.actor.assertion.SeesAssertions;
+import com.accessifiers.filebrowser.test.actor.action.LaunchesActions;
+import com.accessifiers.filebrowser.test.actor.action.SelectsActions;
+import com.accessifiers.filebrowser.test.actor.action.TypesActions;
+import com.accessifiers.filebrowser.test.actor.assertion.CannotSeeAssertions;
+import com.accessifiers.filebrowser.test.actor.assertion.SeesAssertions;
 
 public class User {
     private final SeesAssertions sees = new SeesAssertions();

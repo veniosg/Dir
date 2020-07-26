@@ -14,7 +14,7 @@
   ~ limitations under the License.
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.veniosg.dir"
+    package="com.accessifiers.filebrowser"
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -28,7 +28,7 @@
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Dir.Launch">
+        android:theme="@style/Theme.FileBrowser.Launch">
 
         <activity android:name=".android.activity.FileManagerActivity">
             <intent-filter>
@@ -41,7 +41,7 @@
         </activity>
         <activity
             android:name=".android.activity.SafPromptActivity"
-            android:theme="@style/Theme.Dir.Translucent" />
+            android:theme="@style/Theme.FileBrowser.Translucent" />
         <activity
             android:name=".android.activity.PreferenceActivity"
             android:label="@string/settings" />
@@ -136,11 +136,11 @@
 
         <provider
             android:name=".android.provider.BookmarkProvider"
-            android:authorities="com.veniosg.dir.bookmarks"
+            android:authorities="com.accessifiers.filebrowser.bookmarks"
             android:exported="false" />
         <provider
             android:name=".android.provider.FileManagerProvider"
-            android:authorities="com.veniosg.dir.filemanager"
+            android:authorities="com.accessifiers.filebrowser.filemanager"
             android:exported="true"
             android:permission="android.permission.READ_EXTERNAL_STORAGE" />
     </application>

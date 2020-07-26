@@ -133,14 +133,14 @@
     <string name="menu_about">@string/about</string>
     <string name="about">About</string>
     <string name="about_share">Share</string>
-    <string name="about_shareSubject">Get Dir on Google Play</string>
+    <string name="about_shareSubject">App not available on Google Play</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <!-- Right pathview button description -->
     <string name="edit_path">Edit path</string>
     <string name="goto_path">Go to path</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="permissions_denied">Dir needs your permission to access storage</string>
+    <string name="permissions_denied">File Browser needs your permission to access storage</string>
 
     <string name="back">Back</string>
     <string name="close">Close</string>
@@ -149,7 +149,7 @@
     <string name="donate">Donate</string>
     <string name="review">Review</string>
     <string name="contact">Contact</string>
-    <string name="donation_thanks">Thank you for supporting Dir! ❤</string>
+    <string name="donation_thanks">Thank you for supporting File Browser! ❤</string>
     <string name="purchase_cancelled">Purchase canceled</string>
     <string name="select_sd_root">Please select the SD Card root</string>
     <string name="write_access_required">Write access required</string>

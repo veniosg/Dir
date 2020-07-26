@@ -1,4 +1,4 @@
-package com.veniosg.dir.test.acceptance;
+package com.accessifiers.filebrowser.test.acceptance;
 
 import android.content.Context;
 import android.os.Environment;
@@ -8,9 +8,9 @@ import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.veniosg.dir.android.activity.IntentFilterActivity;
-import com.veniosg.dir.test.actor.Android;
-import com.veniosg.dir.test.actor.User;
+import com.accessifiers.filebrowser.android.activity.IntentFilterActivity;
+import com.accessifiers.filebrowser.test.actor.Android;
+import com.accessifiers.filebrowser.test.actor.User;
 
 import org.junit.After;
 import org.junit.Before;
@@ -27,8 +27,8 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasDat
 import static android.support.test.espresso.intent.matcher.UriMatchers.hasHost;
 import static android.support.test.espresso.intent.matcher.UriMatchers.hasPath;
 import static android.support.test.espresso.intent.matcher.UriMatchers.hasScheme;
-import static com.veniosg.dir.test.injector.ActorInjector.android;
-import static com.veniosg.dir.test.injector.ActorInjector.user;
+import static com.accessifiers.filebrowser.test.injector.ActorInjector.android;
+import static com.accessifiers.filebrowser.test.injector.ActorInjector.user;
 import static org.hamcrest.Matchers.allOf;
 import static org.junit.Assert.assertThat;
 
@@ -163,7 +163,7 @@ public class IntentFilterActivityTest {
         assertThat(activityRule.getActivityResult(), hasResultData(hasData(allOf(
                 hasScheme("content"),
                 // A content provider that respects the contract is registered on this host
-                hasHost("com.veniosg.dir.filemanager"),
+                hasHost("com.accessifiers.filebrowser.filemanager"),
                 hasPath(textFile.getAbsolutePath())
         ))));
     }

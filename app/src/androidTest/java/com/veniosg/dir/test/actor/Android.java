@@ -1,10 +1,10 @@
-package com.veniosg.dir.test.actor;
+package com.accessifiers.filebrowser.test.actor;
 
 import android.app.Activity;
 import android.support.test.rule.ActivityTestRule;
 
-import com.veniosg.dir.test.actor.action.LaunchesActions;
-import com.veniosg.dir.test.actor.assertion.LaunchedAssertions;
+import com.accessifiers.filebrowser.test.actor.action.LaunchesActions;
+import com.accessifiers.filebrowser.test.actor.assertion.LaunchedAssertions;
 
 public class Android {
     private final LaunchesActions launches;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.veniosg.dir.test.acceptance;
+package com.accessifiers.filebrowser.test.acceptance;
 
 import android.content.Context;
 import android.os.Environment;
@@ -22,7 +22,7 @@ import android.os.Environment;
 import java.io.File;
 import java.io.IOException;
 
-import static com.veniosg.dir.test.TestUtils.cleanDirectory;
+import static com.accessifiers.filebrowser.test.TestUtils.cleanDirectory;
 
 public class InternalStorageOperationsTest extends FileOperationsTest {
     @Override

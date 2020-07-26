@@ -16,17 +16,17 @@
  -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base text appearance values -->
-    <style name="TextAppearance.Dir.Large" parent="android:TextAppearance.Material.Title">
+    <style name="TextAppearance.FileBrowser.Large" parent="android:TextAppearance.Material.Title">
         <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-thin</item>-->
     </style>
-    <style name="TextAppearance.Dir.Medium" parent="android:TextAppearance.Material.Subhead">
+    <style name="TextAppearance.FileBrowser.Medium" parent="android:TextAppearance.Material.Subhead">
         <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>-->
     </style>
-    <style name="TextAppearance.Dir.Small" parent="android:TextAppearance.Material.Body1">
+    <style name="TextAppearance.FileBrowser.Small" parent="android:TextAppearance.Material.Body1">
         <!--<item name="android:fontFamily" tools:ignore="NewApi">sans-serif-condensed</item>-->
     </style>
 
-    <style name="TextAppearance.Dir.Empty" parent="TextAppearance.Dir.Medium">
+    <style name="TextAppearance.FileBrowser.Empty" parent="TextAppearance.FileBrowser.Medium">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">?android:textColorSecondary</item>
     </style>

@@ -1,8 +1,8 @@
-package com.veniosg.dir.test.actor.action;
+package com.accessifiers.filebrowser.test.actor.action;
 
 import android.widget.EditText;
 
-import com.veniosg.dir.R;
+import com.accessifiers.filebrowser.R;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.clearText;

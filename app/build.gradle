@@ -16,7 +16,7 @@ android {
         versionName versionProps['name']
         versionCode versionProps['code'].toInteger()
 
-        testApplicationId "com.veniosg.dir.test"
+        testApplicationId "com.accessifiers.filebrowser.test"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resConfigs "en", "cs", "de", "el", "es", "fr", "hi-rIN", "hr", "hu", "it", "ja", "nl", "pt", "pt-rBR", "ru", "tr", "zh-rCN"
     }

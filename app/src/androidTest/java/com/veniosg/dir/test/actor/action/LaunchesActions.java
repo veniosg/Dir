@@ -1,4 +1,4 @@
-package com.veniosg.dir.test.actor.action;
+package com.accessifiers.filebrowser.test.actor.action;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.test.rule.ActivityTestRule;
 
-import com.veniosg.dir.IntentConstants;
-import com.veniosg.dir.android.activity.FileManagerActivity;
+import com.accessifiers.filebrowser.IntentConstants;
+import com.accessifiers.filebrowser.android.activity.FileManagerActivity;
 
 import java.io.File;
 
@@ -18,9 +18,9 @@ import static android.content.Intent.ACTION_GET_CONTENT;
 import static android.content.Intent.ACTION_SEARCH;
 import static android.content.Intent.ACTION_VIEW;
 import static android.content.Intent.CATEGORY_OPENABLE;
-import static com.veniosg.dir.IntentConstants.ACTION_PICK_DIRECTORY;
-import static com.veniosg.dir.IntentConstants.ACTION_PICK_FILE;
-import static com.veniosg.dir.IntentConstants.EXTRA_TITLE;
+import static com.accessifiers.filebrowser.IntentConstants.ACTION_PICK_DIRECTORY;
+import static com.accessifiers.filebrowser.IntentConstants.ACTION_PICK_FILE;
+import static com.accessifiers.filebrowser.IntentConstants.EXTRA_TITLE;
 
 public class LaunchesActions {
     private final ActivityTestRule<? extends Activity> mActivityRule;
@@ -32,7 +32,7 @@ public class LaunchesActions {
     public void dir() {
         Intent dirIntent = new Intent(Intent.ACTION_MAIN);
         dirIntent.setComponent(
-                new ComponentName("com.veniosg.dir", FileManagerActivity.class.getName()));
+                new ComponentName("com.accessifiers.filebrowser", FileManagerActivity.class.getName()));
         launch(dirIntent);
     }
 

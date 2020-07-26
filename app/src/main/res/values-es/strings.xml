@@ -132,14 +132,14 @@
     <string name="about_created_by">Creado por pxHouse</string>
     <string name="about">Acerca de</string>
     <string name="about_share">Compartir</string>
-    <string name="about_shareSubject">Consigue Dir en Google Play</string>
+    <string name="about_shareSubject">Consigue File Browser en Google Play</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
     <!-- Right pathview button description -->
     <string name="edit_path">Editar ruta</string>
     <string name="goto_path">Ir a la ruta</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="permissions_denied">Dir necesita tu permiso para acceder al almacenamiento</string>
+    <string name="permissions_denied">File Browser necesita tu permiso para acceder al almacenamiento</string>
     <string name="back">Atrás</string>
     <string name="close">Cerrar</string>
     <string name="develop">Desarrollo</string>
@@ -147,6 +147,6 @@
     <string name="donate">Donar</string>
     <string name="review">Revisión</string>
     <string name="contact">Contacto</string>
-    <string name="donation_thanks">Gracias por apoyar Dir! ❤</string>
+    <string name="donation_thanks">Gracias por apoyar File Browser! ❤</string>
     <string name="purchase_cancelled">Compra cancelada</string>
 </resources>

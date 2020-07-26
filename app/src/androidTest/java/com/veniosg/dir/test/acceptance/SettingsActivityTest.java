@@ -1,4 +1,4 @@
-package com.veniosg.dir.test.acceptance;
+package com.accessifiers.filebrowser.test.acceptance;
 
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;

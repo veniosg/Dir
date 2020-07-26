@@ -15,7 +15,7 @@
  * limitations under the License.
  -->
 <resources>
-    <string name="app_name" translatable="false">Dir</string>
+    <string name="app_name" translatable="false">File Browser</string>
 
     <string-array name="sortby_values" translatable="false">
         <item>1</item>

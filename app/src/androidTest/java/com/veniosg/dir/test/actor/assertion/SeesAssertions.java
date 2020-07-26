@@ -1,10 +1,10 @@
-package com.veniosg.dir.test.actor.assertion;
+package com.accessifiers.filebrowser.test.actor.assertion;
 
 import android.support.annotation.IdRes;
 
-import com.veniosg.dir.R;
-import com.veniosg.dir.android.ui.widget.PathItemView;
-import com.veniosg.dir.mvvm.model.FileHolder;
+import com.accessifiers.filebrowser.R;
+import com.accessifiers.filebrowser.android.ui.widget.PathItemView;
+import com.accessifiers.filebrowser.mvvm.model.FileHolder;
 
 import java.io.File;
 
@@ -18,7 +18,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withHint;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.veniosg.dir.test.matcher.FileHolderHasName.hasName;
+import static com.accessifiers.filebrowser.test.matcher.FileHolderHasName.hasName;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;

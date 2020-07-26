@@ -1,6 +1,6 @@
-package com.veniosg.dir.test.matcher;
+package com.accessifiers.filebrowser.test.matcher;
 
-import com.veniosg.dir.mvvm.model.FileHolder;
+import com.accessifiers.filebrowser.mvvm.model.FileHolder;
 
 import org.hamcrest.Factory;
 import org.hamcrest.FeatureMatcher;

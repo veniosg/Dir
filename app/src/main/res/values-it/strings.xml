@@ -127,14 +127,14 @@
     <string name="about_created_by">Creato da pxHouse</string>
     <string name="about">Informazioni</string>
     <string name="about_share">Condividi</string>
-    <string name="about_shareSubject">Ottieni Dir da Google Play</string>
+    <string name="about_shareSubject">Ottieni File Browser da Google Play</string>
     <string name="yes">Si</string>
     <string name="no">No</string>
     <!-- Right pathview button description -->
     <string name="edit_path">Modifica percorso</string>
     <string name="goto_path">Vai a percorso</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="permissions_denied">Dir ha bisogno del tuo permesso per accedere alla memoria</string>
+    <string name="permissions_denied">File Browser ha bisogno del tuo permesso per accedere alla memoria</string>
     <string name="back">Indietro</string>
     <string name="close">Chiudi</string>
     <string name="develop">Sviluppo</string>
@@ -142,7 +142,7 @@
     <string name="donate">Dona</string>
     <string name="review">Recensisci</string>
     <string name="contact">Contatta</string>
-    <string name="donation_thanks">Grazie per aver supportato Dir! ❤</string>
+    <string name="donation_thanks">Grazie per aver supportato File Browser! ❤</string>
     <string name="purchase_cancelled">Acquisto cancellato</string>
     <string name="select_sd_root">Per favore seleziona la cartella principale della scheda SD</string>
     <string name="write_access_required">Accesso in scrittura richiesto</string>

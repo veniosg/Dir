@@ -20,7 +20,7 @@
 
     <color name="textColorHighlight">#8888</color>
 
-    <!-- Dir colours -->
+    <!-- File Browser colours -->
     <eat-comment />
 
     <color name="dir_primary">#8e24aa</color>

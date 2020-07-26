@@ -132,14 +132,14 @@
     <string name="about_created_by">pxHouse से बनाया गया</string>
     <string name="about">परिचय</string>
     <string name="about_share">शेयर करें</string>
-    <string name="about_shareSubject">गूगल प्ले पर Dir पाएं</string>
+    <string name="about_shareSubject">गूगल प्ले पर File Browser पाएं</string>
     <string name="yes">हां</string>
     <string name="no">नहीं</string>
     <!-- Right pathview button description -->
     <string name="edit_path">पाथ संपादित करें</string>
     <string name="goto_path">पाथ पर जाएं</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="permissions_denied">स्टोरेज एक्सेस के लिए Dir को आपकी अनुमति चाहिए</string>
+    <string name="permissions_denied">स्टोरेज एक्सेस के लिए File Browser को आपकी अनुमति चाहिए</string>
     <string name="back">पीछे</string>
     <string name="close">बंद करें</string>
     <string name="develop">विकसित करें</string>
@@ -147,7 +147,7 @@
     <string name="donate">दान दें</string>
     <string name="review">समीक्षा</string>
     <string name="contact">संपर्क</string>
-    <string name="donation_thanks">Dir को समर्थन के लिए धन्यवाद! ❤</string>
+    <string name="donation_thanks">File Browser को समर्थन के लिए धन्यवाद! ❤</string>
     <string name="purchase_cancelled">खरीद रद्द</string>
     <string name="select_sd_root">कृपया एसडी कार्ड रूट चुनें</string>
     <string name="write_access_required">लिखने की अनुमति जरूरी</string>

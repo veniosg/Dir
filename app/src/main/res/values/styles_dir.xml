@@ -17,10 +17,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Text styles -->
-    <style name="Widget.Dir.TextViewStyle" parent="android:Widget.Material.TextView">
-        <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
+    <style name="Widget.FileBrowser.TextViewStyle" parent="android:Widget.Material.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.FileBrowser.Medium</item>
     </style>
-    <style name="Widget.Dir.ButtonStyle" parent="android:Widget.Material.Button">
-        <item name="android:textAppearance">@style/TextAppearance.Dir.Medium</item>
+    <style name="Widget.FileBrowser.ButtonStyle" parent="android:Widget.Material.Button">
+        <item name="android:textAppearance">@style/TextAppearance.FileBrowser.Medium</item>
     </style>
 </resources>

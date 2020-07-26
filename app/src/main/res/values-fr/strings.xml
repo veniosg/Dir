@@ -132,14 +132,14 @@
     <string name="about_created_by">Créée par pxHouse</string>
     <string name="about">A propos</string>
     <string name="about_share">Partager</string>
-    <string name="about_shareSubject">Télécharger Dir sur Google Play</string>
+    <string name="about_shareSubject">Télécharger File Browser sur Google Play</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <!-- Right pathview button description -->
     <string name="edit_path">Modifier le chemin</string>
     <string name="goto_path">Aller à</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="permissions_denied">Dir a besoin de votre autorisation pour accéder au stockage</string>
+    <string name="permissions_denied">File Browser a besoin de votre autorisation pour accéder au stockage</string>
     <string name="back">Retour</string>
     <string name="close">Fermer</string>
     <string name="develop">Développer</string>
@@ -147,7 +147,7 @@
     <string name="donate">Faire un don</string>
     <string name="review">Noter l\'app</string>
     <string name="contact">Contacter</string>
-    <string name="donation_thanks">Merci de soutenir Dir ! ❤</string>
+    <string name="donation_thanks">Merci de soutenir File Browser ! ❤</string>
     <string name="purchase_cancelled">Achat annulé</string>
     <string name="select_sd_root">Veuillez sélectionner la racine de la carte SD</string>
     <string name="write_access_required">Droits d\'écriture requis</string>

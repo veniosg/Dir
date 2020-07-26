@@ -34,7 +34,7 @@
 
     <fragment
         android:id="@+id/bookmarks"
-        class="com.veniosg.dir.android.fragment.SideNavFragment"
+        class="com.accessifiers.filebrowser.android.fragment.SideNavFragment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

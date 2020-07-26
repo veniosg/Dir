@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.veniosg.dir.test;
+package com.accessifiers.filebrowser.test;
 
 import android.content.Context;
 
@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static com.veniosg.dir.mvvm.model.storage.DocumentFileUtils.safAwareDelete;
+import static com.accessifiers.filebrowser.mvvm.model.storage.DocumentFileUtils.safAwareDelete;
 
 public abstract class TestUtils {
     private TestUtils() {

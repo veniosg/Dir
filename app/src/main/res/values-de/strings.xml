@@ -132,14 +132,14 @@
     <string name="about_created_by">Erstellt von pxHouse</string>
     <string name="about">Über</string>
     <string name="about_share">Teilen</string>
-    <string name="about_shareSubject">Holen Sie sich Dir auf Google Play</string>
+    <string name="about_shareSubject">Holen Sie sich File Browser auf Google Play</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
     <!-- Right pathview button description -->
     <string name="edit_path">Pfad editieren</string>
     <string name="goto_path">Gehe zu Pfad</string>
     <!-- Shown when the Marshmallow permissions have been denied. -->
-    <string name="permissions_denied">Dir benötigt Deine Erlaubnis, um auf den Speicher zuzugreifen</string>
+    <string name="permissions_denied">File Browser benötigt Deine Erlaubnis, um auf den Speicher zuzugreifen</string>
     <string name="back">Zurück</string>
     <string name="close">Schliessen</string>
     <string name="develop">Entwickeln</string>
@@ -147,7 +147,7 @@
     <string name="donate">Spenden</string>
     <string name="review">Rezension</string>
     <string name="contact">Kontakt</string>
-    <string name="donation_thanks">Danke für die Unterstützung von Dir! ❤</string>
+    <string name="donation_thanks">Danke für die Unterstützung von File Browser! ❤</string>
     <string name="purchase_cancelled">Kauf storniert</string>
     <string name="select_sd_root">Bitte wählen Sie das Speicherkarten Root-Verzeichnis</string>
     <string name="write_access_required">Schreibzugriff erforderlich</string>

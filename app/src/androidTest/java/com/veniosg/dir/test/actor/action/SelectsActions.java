@@ -1,7 +1,7 @@
-package com.veniosg.dir.test.actor.action;
+package com.accessifiers.filebrowser.test.actor.action;
 
-import com.veniosg.dir.R;
-import com.veniosg.dir.mvvm.model.FileHolder;
+import com.accessifiers.filebrowser.R;
+import com.accessifiers.filebrowser.mvvm.model.FileHolder;
 
 import java.io.File;
 
@@ -14,7 +14,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.veniosg.dir.test.matcher.FileHolderHasName.hasName;
+import static com.accessifiers.filebrowser.test.matcher.FileHolderHasName.hasName;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.instanceOf;

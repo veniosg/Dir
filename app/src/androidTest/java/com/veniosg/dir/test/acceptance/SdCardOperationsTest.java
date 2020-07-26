@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package com.veniosg.dir.test.acceptance;
+package com.accessifiers.filebrowser.test.acceptance;
 
 import android.content.Context;
 
-import com.veniosg.dir.android.util.FileUtils;
+import com.accessifiers.filebrowser.android.util.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import static com.veniosg.dir.mvvm.model.storage.DocumentFileUtils.createDirectory;
-import static com.veniosg.dir.mvvm.model.storage.DocumentFileUtils.createFile;
-import static com.veniosg.dir.mvvm.model.storage.DocumentFileUtils.safAwareDelete;
-import static com.veniosg.dir.test.TestUtils.cleanDirectorySaf;
+import static com.accessifiers.filebrowser.mvvm.model.storage.DocumentFileUtils.createDirectory;
+import static com.accessifiers.filebrowser.mvvm.model.storage.DocumentFileUtils.createFile;
+import static com.accessifiers.filebrowser.mvvm.model.storage.DocumentFileUtils.safAwareDelete;
+import static com.accessifiers.filebrowser.test.TestUtils.cleanDirectorySaf;
 
 public class SdCardOperationsTest extends FileOperationsTest {
     @Override

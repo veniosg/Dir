@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.veniosg.dir.test.acceptance;
+package com.accessifiers.filebrowser.test.acceptance;
 
 import android.os.Environment;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.veniosg.dir.android.activity.FileManagerActivity;
-import com.veniosg.dir.test.actor.Android;
-import com.veniosg.dir.test.actor.User;
+import com.accessifiers.filebrowser.android.activity.FileManagerActivity;
+import com.accessifiers.filebrowser.test.actor.Android;
+import com.accessifiers.filebrowser.test.actor.User;
 
 import org.junit.After;
 import org.junit.Before;
@@ -34,9 +34,9 @@ import org.junit.runner.RunWith;
 
 import java.io.File;
 
-import static com.veniosg.dir.test.TestUtils.cleanDirectory;
-import static com.veniosg.dir.test.injector.ActorInjector.android;
-import static com.veniosg.dir.test.injector.ActorInjector.user;
+import static com.accessifiers.filebrowser.test.TestUtils.cleanDirectory;
+import static com.accessifiers.filebrowser.test.injector.ActorInjector.android;
+import static com.accessifiers.filebrowser.test.injector.ActorInjector.user;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

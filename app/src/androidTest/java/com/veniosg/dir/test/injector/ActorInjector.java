@@ -1,10 +1,10 @@
-package com.veniosg.dir.test.injector;
+package com.accessifiers.filebrowser.test.injector;
 
 import android.app.Activity;
 import android.support.test.rule.ActivityTestRule;
 
-import com.veniosg.dir.test.actor.Android;
-import com.veniosg.dir.test.actor.User;
+import com.accessifiers.filebrowser.test.actor.Android;
+import com.accessifiers.filebrowser.test.actor.User;
 
 public class ActorInjector {
     private ActorInjector() {}
