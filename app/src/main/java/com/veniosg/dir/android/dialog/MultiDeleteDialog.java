@@ -30,10 +30,6 @@ import java.util.ArrayList;
 import static com.veniosg.dir.IntentConstants.EXTRA_DIALOG_FILE_HOLDER;
 
 public class MultiDeleteDialog extends DialogFragment {
-    Runnable rmBookmarks;
-    public MultiDeleteDialog(final Runnable rmBookmarks) {
-      this.rmBookmarks = rmBookmarks;
-    }
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -45,7 +41,6 @@ public class MultiDeleteDialog extends DialogFragment {
                     .setPositiveButton(R.string.yes, (dialog1, which) -> {
                         FileHolder[] params = holders.toArray(new FileHolder[holders.size()]);
                         new DeleteAsyncTask(getContext()).execute(params);
-                        rmBookmarks.run();
                     })
                     .setNegativeButton(R.string.no, null)
                     .create();

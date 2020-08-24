@@ -203,24 +203,6 @@ public class SimpleFileListFragment extends FileListFragment {
         DialogFragment dialog;
         Bundle args;
         ArrayList<FileHolder> fItems = getCheckedItems();
-        // Runnable rmBookmarks to pass to MultiDeleteDialog() to remove bookmarks after delete dialog confirmation.
-        Runnable rmBookmarks = new Runnable() {
-            @Override
-            public void run() {
-                for (FileHolder fh:fItems) {
-                    String path = fh.getFile().toString();
-                    Cursor query = getActivity().getContentResolver().query(BookmarkProvider.CONTENT_URI,
-                                                                            new String[]{BookmarkProvider._ID}, 
-                                                                            BookmarkProvider.PATH + "=?", 
-                                                                            new String[]{path}, null);
-                    if (query != null) {
-                        getActivity().getContentResolver().delete(BookmarkProvider.CONTENT_URI, 
-                                                                  BookmarkProvider.PATH + "=?", 
-                                                                  new String[]{"" + path});
-                    }
-                }
-            }
-        };
 
         switch (item.getItemId()) {
             case R.id.menu_send:
@@ -245,7 +227,7 @@ public class SimpleFileListFragment extends FileListFragment {
                 }
             case R.id.menu_delete:
                 mode.finish();
-                dialog = new MultiDeleteDialog(rmBookmarks);
+                dialog = new MultiDeleteDialog();
                 dialog.setTargetFragment(this, 0);
                 args = new Bundle();
                 args.putParcelableArrayList(IntentConstants.EXTRA_DIALOG_FILE_HOLDER, new ArrayList<Parcelable>(fItems));
@@ -278,22 +260,6 @@ public class SimpleFileListFragment extends FileListFragment {
 
     private boolean handleSingleSelectionAction(ActionMode mode, MenuItem item) {
         FileHolder fItem = (FileHolder) getListAdapter().getItem(getCheckedItemPosition());
-        // Runnable rmBookmark to pass to SingleDeleteDialog() to remove bookmark after delete dialog confirmation.
-        Runnable rmBookmark = new Runnable() {
-            @Override
-            public void run() {
-                String path = fItem.getFile().toString();
-                Cursor query = getActivity().getContentResolver().query(BookmarkProvider.CONTENT_URI,
-                                                                        new String[]{BookmarkProvider._ID},
-                                                                        BookmarkProvider.PATH + "=?",
-                                                                        new String[]{path}, null);
-                    if (query != null) {
-                        getActivity().getContentResolver().delete(BookmarkProvider.CONTENT_URI, 
-                                                                  BookmarkProvider.PATH + "=?", 
-                                                                  new String[]{"" + path});
-                    }
-            }
-        };
         if (fItem == null) return false;
         DialogFragment dialog;
         Bundle args;
@@ -318,7 +284,7 @@ public class SimpleFileListFragment extends FileListFragment {
 
             case R.id.menu_delete:
                 mode.finish();
-                dialog = new SingleDeleteDialog(rmBookmark);
+                dialog = new SingleDeleteDialog();
                 dialog.setTargetFragment(SimpleFileListFragment.this, 0);
                 args = new Bundle();
                 args.putParcelable(IntentConstants.EXTRA_DIALOG_FILE_HOLDER, fItem);

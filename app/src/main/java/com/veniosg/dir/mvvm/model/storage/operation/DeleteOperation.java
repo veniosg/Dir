@@ -24,6 +24,7 @@ import android.support.v4.provider.DocumentFile;
 
 import com.veniosg.dir.R;
 import com.veniosg.dir.android.fragment.FileListFragment;
+import com.veniosg.dir.android.provider.BookmarkProvider;
 import com.veniosg.dir.android.ui.toast.ToastDisplayer;
 import com.veniosg.dir.android.util.MediaScannerUtils;
 import com.veniosg.dir.mvvm.model.FileHolder;
@@ -50,6 +51,14 @@ public class DeleteOperation extends FileOperation<DeleteArguments> {
         runOnUi(() -> dialog = new ProgressDialog(context));
     }
 
+    private void removeBookmarks(Context context, List<String> paths) {
+        for (String path : paths) {
+            context.getContentResolver().delete(BookmarkProvider.CONTENT_URI, 
+                                                BookmarkProvider.PATH + "=?", 
+                                                new String[]{path});
+        }
+    }
+
     @Override
     public boolean operate(DeleteArguments args) {
         boolean allSucceeded = true;
@@ -61,7 +70,10 @@ public class DeleteOperation extends FileOperation<DeleteArguments> {
             boolean deleted = delete(tbd);
             allSucceeded &= deleted;
 
-            if (deleted) MediaScannerUtils.informPathsDeleted(context, paths);
+            if (deleted) {
+                MediaScannerUtils.informPathsDeleted(context, paths);
+                removeBookmarks(context, paths);
+            }
         }
         return allSucceeded;
     }
@@ -77,7 +89,10 @@ public class DeleteOperation extends FileOperation<DeleteArguments> {
             boolean deleted = tbd != null && tbd.delete();
             allSucceeded &= deleted;
 
-            if (deleted) MediaScannerUtils.informPathsDeleted(context, paths);
+            if (deleted) {
+                MediaScannerUtils.informPathsDeleted(context, paths);
+                removeBookmarks(context, paths);
+            }
         }
         return allSucceeded;
     }

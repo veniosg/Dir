@@ -28,10 +28,6 @@ import com.veniosg.dir.mvvm.model.FileHolder;
 import static com.veniosg.dir.IntentConstants.EXTRA_DIALOG_FILE_HOLDER;
 
 public class SingleDeleteDialog extends DialogFragment {
-    Runnable rmBookmark;
-    public SingleDeleteDialog(final Runnable rmBookmark) {
-      this.rmBookmark = rmBookmark;
-    }
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -42,7 +38,6 @@ public class SingleDeleteDialog extends DialogFragment {
                     .setTitle(getString(R.string.really_delete, holder.getName()))
                     .setPositiveButton(R.string.yes, (dialog1, which) -> {
                         new DeleteAsyncTask(getContext()).execute(holder);
-                        rmBookmark.run();
                     })
                     .setNegativeButton(R.string.no, null)
                     .create();
